@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>修行那些年 · 优化建议</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f8f6f2;
+    min-height: 100vh;
+    font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    padding: 24px;
+    color: #333;
+  }
+
+  .header { text-align: center; padding: 12px 0 8px; }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 3px;
+  }
+  .header .sub {
+    color: #999;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+
+  .update-log {
+    max-width: 720px;
+    margin: 16px auto 24px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .update-log strong { color: #1a1a1a; }
+  .update-log .log-date {
+    display: inline-block;
+    background: #e3f2fd;
+    color: #1565c0;
+    font-size: 11px;
+    padding: 1px 10px;
+    border-radius: 10px;
+    margin-right: 6px;
+  }
+
+  /* 仪表盘 */
+  .dashboard {
+    max-width: 1100px;
+    margin: 0 auto 28px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .dash-card {
+    flex: 1 1 200px;
+    max-width: 360px;
+    min-width: 180px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 18px 14px;
+    border: 1px solid #eee;
+  }
+  .dash-card.p0 { border-top: 3px solid #e53935; }
+  .dash-card.p1 { border-top: 3px solid #ff9800; }
+  .dash-card.p2 { border-top: 3px solid #2196f3; }
+
+  .dash-card .dash-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .dash-card.p0 .dash-label { color: #e53935; }
+  .dash-card.p1 .dash-label { color: #ff9800; }
+  .dash-card.p2 .dash-label { color: #2196f3; }
+
+  .dash-card .dash-count {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+  }
+  .dash-card .dash-desc {
+    font-size: 12px;
+    color: #999;
+    margin-top: 2px;
+    line-height: 1.5;
+  }
+  .dash-card .dash-tags {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .dash-tag {
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    background: #f5f5f5;
+    color: #666;
+  }
+
+  /* 分类标题 */
+  .section-title {
+    max-width: 1100px;
+    margin: 0 auto 14px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 1px;
+    padding: 0 4px;
+  }
+
+  /* 建议卡片 */
+  .branches {
+    max-width: 1100px;
+    margin: 0 auto 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+  }
+
+  .branch {
+    flex: 1 1 300px;
+    max-width: 360px;
+    min-width: 260px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 18px;
+    transition: box-shadow 0.15s;
+    position: relative;
+  }
+
+  .branch-header {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .items { display: flex; flex-direction: column; gap: 10px; }
+
+  .item {
+    padding: 10px 12px;
+    background: #fafafa;
+    border-radius: 8px;
+    border-left: 3px solid #ddd;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .item strong {
+    display: block;
+    font-size: 14px;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+  }
+  .item .desc { color: #666; }
+  .item .evidence {
+    display: block;
+    color: #999;
+    font-size: 12px;
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px dashed #eee;
+  }
+
+  .item .tag {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 1px 8px;
+    border-radius: 10px;
+    vertical-align: middle;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .tag-fixed { background: #e8f5e9; color: #2e7d32; }
+  .tag-wip   { background: #fff3e0; color: #e65100; }
+  .tag-open  { background: #fce4ec; color: #c62828; }
+
+  .pri {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .pri-p0 { background: #ffebee; color: #c62828; }
+  .pri-p1 { background: #fff3e0; color: #e65100; }
+  .pri-p2 { background: #e3f2fd; color: #1565c0; }
+
+  .item.border-p0 { border-left-color: #e53935; }
+  .item.border-p1 { border-left-color: #ff9800; }
+  .item.border-p2 { border-left-color: #2196f3; }
+
+  .legend {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 24px auto 0;
+    padding: 14px;
+    max-width: 700px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #999;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .dg { background: #4caf50; }
+  .do { background: #ff9800; }
+  .dr { background: #e53935; }
+
+  .footer {
+    text-align: center;
+    padding: 24px 0 8px;
+    color: #bbb;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 700px) {
+    body { padding: 12px; }
+    .branch { min-width: unset; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>修行那些年 · 产品优化建议</h1>
+  <div class="sub">基于玩家社群反馈 · 优先级排序 · 2026-06</div>
+</div>
+
+<div class="update-log">
+  <strong>📋 已确认的两轮更新（截至 5/29）：</strong><br>
+  <span class="log-date">5/28</span> 关卡动画加速 3 倍 · 传功改为创角 24h · 聊天后台刷新 · 错别字修复<br>
+  <span class="log-date">5/29</span> 采集/传道默认十次 · 月卡一键采集/传道<br>
+  <span class="log-date">待定</span> 重置系统（"看看能不能出"） · 活动日历（"已收录"）
+</div>
+
+<!-- 仪表盘 -->
+<div class="dashboard">
+  <div class="dash-card p0">
+    <div class="dash-label">P0 · 紧急</div>
+    <div class="dash-count">5</div>
+    <div class="dash-desc">玩家声量最大，需优先处理</div>
+    <div class="dash-tags">
+      <span class="dash-tag">#3 国家差异</span>
+      <span class="dash-tag">#6 打架奖励</span>
+      <span class="dash-tag">#7 令牌归属</span>
+      <span class="dash-tag">#2 元婴化神节奏</span>
+      <span class="dash-tag">#11 战场过多</span>
+    </div>
+  </div>
+  <div class="dash-card p1">
+    <div class="dash-label">P1 · 重要</div>
+    <div class="dash-count">5</div>
+    <div class="dash-desc">玩家有明确需求，影响面大</div>
+    <div class="dash-tags">
+      <span class="dash-tag">#8 集体感</span>
+      <span class="dash-tag">#9 结拜</span>
+      <span class="dash-tag">#13 联盟</span>
+      <span class="dash-tag">#12 抢资源</span>
+      <span class="dash-tag">#5 御兽刷新</span>
+    </div>
+  </div>
+  <div class="dash-card p2">
+    <div class="dash-label">P2 · 改善</div>
+    <div class="dash-count">3</div>
+    <div class="dash-desc">改善体验或纯建议型</div>
+    <div class="dash-tags">
+      <span class="dash-tag">#1 首日操作</span>
+      <span class="dash-tag">#4 衙门布局</span>
+      <span class="dash-tag">#10 官品兑换</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P0 ===== -->
+<div class="section-title">🔴 P0 · 紧急</div>
+<div class="branches">
+
+  <div class="branch">
+    <div class="branch-header">#2 成长节奏</div>
+    <div class="items">
+      <div class="item border-p0">
+        <strong><span class="pri pri-p0">P0</span>元婴太快、化神太慢 <span class="tag tag-open">❌ 未解决</span></strong>
+        <span class="desc">建议：降低元婴门槛→提高元婴至化神过渡平滑度。保持第一天可达元婴的爽感，同时在元婴→化神间增设中期目标与资源投放；化神所需数值大幅降低或增加"突破任务线"替代纯堆数值。</span>
+        <span class="evidence">💬 玩家说："第一天整好了能上元婴""化神太难了""化神300级需要太多升不上去"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <div class="branch-header">#3 国家差异</div>
+    <div class="items">
+      <div class="item border-p0">
+        <strong><span class="pri pri-p0">P0</span>第三天国家差异大，国战崩 <span class="tag tag-open">❌ 未解决</span></strong>
+        <span class="desc">建议：新服选国时可视化各国人数与活跃度，引导均衡分布；赛季结束重置时允许换国；建立弱势国补偿机制（资源加成/保护期），防止一边倒导致大面积弃坑。</span>
+        <span class="evidence">💬 玩家说："三个国家实力差距太大了""这国战没选唐的都麻了""根本抢不过大唐的 我大理就两三个在线的"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <div class="branch-header">#6 打架奖励</div>
+    <div class="items">
+      <div class="item border-p0">
+        <strong><span class="pri pri-p0">P0</span>战场打架打不起来，奖励不吸引 <span class="tag tag-open">❌ 未解决</span></strong>
+        <span class="desc">建议：BOSS战奖励机制重做——死亡/非首伤也应获得部分奖励，按伤害排名给予保底。国战等大型活动奖励大幅提升，与投入时间匹配。增加助战奖励机制。</span>
+        <span class="evidence">💬 玩家说："打了半天死了奖励都没有""没奖励都不愿意打""国战一个月第一只给2000玉""帮人家打没奖励"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <div class="branch-header">#7 令牌归属</div>
+    <div class="items">
+      <div class="item border-p0">
+        <strong><span class="pri pri-p0">P0</span>修士历练牌子难消化 <span class="tag tag-open">❌ 未解决</span></strong>
+        <span class="desc">建议：增加历练令牌非充值获取途径（活跃/宗门/周常等）；归属方产出*2、非归属方产出*1 保底，避免非归属国家玩家"打了白打"。令牌商店增加可兑换内容。</span>
+        <span class="evidence">💬 玩家说："令牌除了兑换和任务没有能买的地方""不是伤害第一就没得拿""没令牌了帮人打啥奖励都没"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <div class="branch-header">#11 战场过多</div>
+    <div class="items">
+      <div class="item border-p0">
+        <strong><span class="pri pri-p0">P0</span>同时战场过多，打不起来 <span class="tag tag-open">❌ 未解决</span></strong>
+        <span class="desc">建议：合并低参与度战场/活动，减少同时开放数量，将玩家热度集中在有限战场中。避免"国战一个月"式的长时间低热度活动。</span>
+        <span class="evidence">💬 玩家说："国战还是少些好""主国战估计人都要散光""没人打元婴BOSS全是大唐的"</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== P1 ===== -->
+<div class="section-title">🟠 P1 · 重要</div>
+<div class="branches">
+
+  <div class="branch">
+    <div class="branch-header">#8 集体感差</div>
+    <div class="items">
+      <div class="item border-p1">
+        <strong><span class="pri pri-p1">P1</span>国家人数过多，集体感差 <span class="tag tag-open">❌ 未解决</span></strong>
+        <span class="desc">建议：国家内部按活跃度/战力分组编队，设立小队长机制；国家频道增加内置语音/快捷指挥功能；国家任务与国家进度绑定，增强共同目标感。</span>
+        <span class="evidence">💬 玩家说："大唐是不是人最多的""大理就两三个在线的""根本抢不过"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <div class="branch-header">#9 结拜系统</div>
+    <div class="items">
+      <div class="item border-p1">
+        <strong><span class="pri pri-p1">P1</span>增加结拜，制造小圈子 <span class="tag tag-open">❌ 未解决</span></strong>
+        <span class="desc">建议：3-5人结拜系统——共享进度任务、独立聊天频道、结拜技能/加成、结拜标识。满足玩家找固定队友、建立小圈子的社交需求。</span>
+        <span class="evidence">💬 玩家说："我们提前联盟一起发育""3区有组队没""组队干什么？可以组队？""先加我好友"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <div class="branch-header">#12 抢资源</div>
+    <div class="items">
+      <div class="item border-p1">
+        <strong><span class="pri pri-p1">P1</span>战场增加抢资源，才能活起来 <span class="tag tag-open">❌ 未解决</span></strong>
+        <span class="desc">建议：战场地图中投放限时修炼资源点/灵石矿脉/丹药材料，玩家/国家争夺采集权。打架有看得见的收益，而非纯粹为了排名积分打。</span>
+        <span class="evidence">💬 玩家说："资源都被抢完了不叛怎么活""不抢资源直接干啊""氪佬不在你国家吊起来抽资源拿不到"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <div class="branch-header">#5 御兽刷新</div>
+    <div class="items">
+      <div class="item border-p1">
+        <strong><span class="pri pri-p1">P1</span>御兽每日 0 点刷 <span class="tag tag-open">❌ 未解决</span></strong>
+        <span class="desc">建议：所有每日刷新机制（御兽/商店/任务/活动）统一为 0 点，避免玩家混淆不同刷新时间点。增加刷新倒计时显示。</span>
+        <span class="evidence">💬 玩家直接要求："御兽能不能改成统一0点刷新"。同时多人问"什么时候刷新啊"答"0点"说明信息不透明</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <div class="branch-header">#13 联盟管理</div>
+    <div class="items">
+      <div class="item border-p1">
+        <strong><span class="pri pri-p1">P1</span>人太多没人管理，需联盟增强前期交互 <span class="tag tag-open">❌ 未解决</span></strong>
+        <span class="desc">建议：增加"联盟"组织——在国家之下的次级团体，由玩家自主建立和管理。联盟拥有独立领地、建设任务、联盟BOSS。解决"几百人一个国家没人管"的问题。</span>
+        <span class="evidence">💬 玩家说："管理呢""我们提前联盟一起发育""确实一区热闹人多才好玩"但国家内部却一盘散沙</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== P2 ===== -->
+<div class="section-title">🔵 P2 · 改善</div>
+<div class="branches">
+
+  <div class="branch">
+    <div class="branch-header">#1 首日操作</div>
+    <div class="items">
+      <div class="item border-p2">
+        <strong><span class="pri pri-p2">P2</span>首日点的太多，操作繁琐 <span class="tag tag-fixed">✅ 部分已修</span></strong>
+        <span class="desc">建议：基础操作（采集/传道/升级）默认支持十连/一键，非月卡玩家也应开放。减少一块一块采、一级一级点的机械操作。<br>5/29 已更新默认十次+月卡一键，但非月卡仍需手动十次，仍有优化空间。</span>
+        <span class="evidence">💬 玩家说："筑基丹材料难打人物升级按的次数太多""十年采集要月卡确实离谱很劝退""我一个元婴老祖只能一块一块采"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <div class="branch-header">#4 衙门布局</div>
+    <div class="items">
+      <div class="item border-p2">
+        <strong><span class="pri pri-p2">P2</span>衙门布局操作不顺畅 <span class="tag tag-open">💡 建议</span></strong>
+        <span class="desc">建议：重构衙门界面操作路径，高频功能前置，减少页面跳转层级。具体策略需结合实际 UI 走查。</span>
+        <span class="evidence">玩家未集中反馈此问题，推测为个人体验痛点</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <div class="branch-header">#10 官品兑换</div>
+    <div class="items">
+      <div class="item border-p2">
+        <strong><span class="pri pri-p2">P2</span>兑换增加官品对应道具 <span class="tag tag-open">💡 建议</span></strong>
+        <span class="desc">建议：不同官品/官阶解锁专属兑换商店——高阶官品可兑换稀有道具（特殊法宝/皮肤/限定时装），增加官阶追求动力和付费深度。</span>
+        <span class="evidence">玩家未主动提及此需求。纯商业化向建议</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <span class="legend-item"><span class="dot dg"></span> 已修复 — 更新已处理</span>
+  <span class="legend-item"><span class="dot do"></span> 进行中 — 官方有回应</span>
+  <span class="legend-item"><span class="dot dr"></span> 未解决 — 无回应或未改动</span>
+  <span class="legend-item" style="margin-left:12px;color:#bbb">│</span>
+  <span class="legend-item"><span style="color:#c62828">P0</span> 紧急</span>
+  <span class="legend-item"><span style="color:#e65100">P1</span> 重要</span>
+  <span class="legend-item"><span style="color:#1565c0">P2</span> 改善</span>
+</div>
+
+<div class="footer">数据来源：《修行那些年》官方交流群 · 全周期聊天记录</div>
+
+</body>
+</html>
