@@ -6,7 +6,7 @@
 <title>gh.lirare.xyz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
@@ -16,14 +16,13 @@
     --text: #1c1c1e;
     --dim: rgba(60,60,67,0.55);
     --faint: rgba(60,60,67,0.3);
-    --hairline: rgba(0,0,0,0.06);
-    --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
-    --shadow-hover: 0 8px 30px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+    --shadow: 0 1px 3px rgba(181,136,99,0.08), 0 1px 2px rgba(181,136,99,0.06);
+    --shadow-hover: 0 8px 30px rgba(181,136,99,0.08), 0 2px 8px rgba(181,136,99,0.05);
   }
 
   body {
     background: var(--bg);
-    font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+    font-family: 'Outfit', 'Noto Sans SC', -apple-system, sans-serif;
     color: var(--text);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
@@ -68,7 +67,7 @@
   }
   .header .eyebrow::before {
     content: ''; width: 24px; height: 2px; border-radius: 1px;
-    background: linear-gradient(90deg, #f59e0b, #8b5cf6);
+    background: #f59e0b;
   }
   .header h1 {
     font-size: clamp(2.8rem, 6vw, 4.8rem);
@@ -76,7 +75,7 @@
     color: #18181b;
   }
   .header h1 .grad {
-    background: linear-gradient(135deg, #f59e0b, #d946ef, #8b5cf6);
+    background: linear-gradient(135deg, #f59e0b, #d97706);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
@@ -88,8 +87,8 @@
   .accent-line { margin-top: 1.6rem; display: flex; gap: 6px; }
   .accent-line span { display: block; height: 2px; border-radius: 2px; }
   .accent-line .a1 { width: 56px; background: #f59e0b; }
-  .accent-line .a2 { width: 20px; background: #d946ef; }
-  .accent-line .a3 { width: 8px; background: #8b5cf6; }
+  .accent-line .a2 { width: 20px; background: #f59e0b; opacity: 0.6; }
+  .accent-line .a3 { width: 8px; background: #f59e0b; opacity: 0.3; }
 
   /* Cards — large format */
   .section-label {
@@ -102,12 +101,12 @@
     position: relative; display: block;
     padding: 28px 30px 22px;
     background: var(--card-bg);
-    border: 1px solid var(--hairline);
     border-radius: 16px;
     text-decoration: none; color: var(--text);
     box-shadow: var(--shadow);
     transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
+  .card:active { transform: scale(0.985); }
   .card::after {
     content: ''; position: absolute; inset: -1px; border-radius: 17px; z-index: -1;
     background: var(--card-glow); opacity: 0; transition: opacity 0.35s;
@@ -214,7 +213,7 @@
       </div>
     </a>
 
-    <a class="card" href="/chat-analysis/" style="--card-glow: linear-gradient(135deg, rgba(16,185,129,0.1), transparent 50%); --tag-bg: #d1fae5; --tag-fg: #059669;">
+    <a class="card" href="/chat-analysis/" style="--card-glow: linear-gradient(135deg, rgba(245,158,11,0.08), transparent 50%); --tag-bg: #fef3c7; --tag-fg: #b45309;">
       <div class="card-row">
         <div class="geo" style="background:#d1fae5;color:#059669;">&#9679;</div>
         <div class="card-body">
@@ -241,7 +240,7 @@
   <div class="section-label">优化方向</div>
   <div class="cards">
 
-    <a class="card" href="suggestions.html" style="--card-glow: linear-gradient(135deg, rgba(249,115,22,0.1), transparent 50%); --tag-bg: #fff7ed; --tag-fg: #ea580c;">
+    <a class="card" href="suggestions.html" style="--card-glow: linear-gradient(135deg, rgba(245,158,11,0.06), transparent 50%); --tag-bg: #fef3c7; --tag-fg: #b45309;">
       <div class="card-row">
         <div class="geo" style="background:#fff7ed;color:#ea580c;">&#9830;</div>
         <div class="card-body">
