@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>市场资讯观察周报 - 2026年第22周</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f7fa; color: #333; line-height: 1.6; }
+.container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 40px; border-radius: 16px; margin-bottom: 24px; }
+.header h1 { font-size: 28px; margin-bottom: 8px; }
+.header .date { opacity: 0.85; font-size: 14px; }
+.header .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 12px; margin-top: 8px; }
+.header .stats { margin-top: 12px; font-size: 13px; opacity: 0.9; }
+.header .stats span { display: inline-block; margin-right: 20px; }
+/* ===== 字号统一规范 ===== */
+.section p, .section li, .section td, .policy-box p, .policy-box li { font-size: 13px; }
+.section h2 { font-size: 18px; }
+.section h3 { font-size: 15px; }
+.policy-box h4 { font-size: 14px; }
+.summary-card { font-size: 13px; }
+/* ===== 原有样式 ===== */
+.section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.section h2 { font-size: 18px; color: #444; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #667eea; }
+.section h3 { font-size: 16px; color: #555; margin: 16px 0 8px; padding-left: 10px; border-left: 3px solid #667eea; }
+.summary-card { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 8px; padding: 16px 20px; margin: 14px 0; font-size: 13px; line-height: 1.7; color: #444; }
+.summary-card .hl { color: #e74c3c; font-weight: 700; }
+.summary-card br + strong { display: inline-block; margin-top: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { background: #f0f2f5; padding: 9px 8px; text-align: center; font-weight: 600; color: #555; border-bottom: 2px solid #dce0e8; white-space: nowrap; }
+td { padding: 8px; border-bottom: 1px solid #eee; text-align: center; vertical-align: middle; }
+tr:hover td { background: #f8f9ff; }
+.up { color: #e74c3c; font-weight: 600; }
+.new { color: #e67e22; font-weight: 600; }
+.stable { color: #95a5a6; }
+.down { color: #2ecc71; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; background: #e8f4fd; color: #2980b9; white-space: nowrap; }
+.tag-iap { background: #fef3e2; color: #e67e22; }
+.tag-iaa { background: #e8f8f5; color: #27ae60; }
+.chart-container { height: 300px; margin: 16px 0; }
+.chart-box { background: #fafbfc; border: 1px solid #eef0f4; border-radius: 10px; padding: 14px; text-align: center; }
+.chart-box > strong { display: block; font-size: 13px; color: #555; margin-bottom: 8px; }
+.chart-wrap { width: 100%; height: 220px; margin: 6px auto; position: relative; }
+.chart-wrap canvas { width: 100% !important; height: 100% !important; border-radius: 8px; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.card { border: 1px solid #eee; border-radius: 8px; padding: 14px; }
+.card .rank { font-size: 12px; color: #999; }
+.card .name { font-size: 15px; font-weight: 600; margin: 4px 0; }
+.card .company { font-size: 12px; color: #777; }
+.card .change { font-size: 12px; margin-top: 4px; }
+.policy-box { background: #f8f9ff; border-left: 4px solid #667eea; padding: 16px; border-radius: 0 8px 8px 0; margin: 8px 0; }
+.policy-box h4 { color: #667eea; margin-bottom: 6px; }
+.trend-list li { margin: 8px 0; padding-left: 16px; }
+.dual-col { display: flex; gap: 16px; }
+.dual-col > div { flex: 1; min-width: 0; width: 50%; }
+.table-scroll { max-height: 400px; overflow-y: auto; border: 1px solid #eef0f4; border-radius: 8px; margin-top: 10px; }
+.table-scroll thead th { position: sticky; top: 0; z-index: 1; }
+.grid-2 { display: flex; gap: 20px; flex-wrap: wrap; margin: 12px 0; }
+.grid-2 > * { min-width: 250px; flex: 1; }
+.cross-tag { display: inline-block; padding: 1px 5px; border-radius: 3px; font-size: 9px; background: #e8f8f5; color: #27ae60; margin-left: 3px; }
+.policy-box table th, .policy-box table td { text-align: center; }
+.bg-highlight { background: #f0f4ff !important; }
+.bg-gold { background: #fffef5 !important; }
+.footnote { color: #999; font-size: 12px; margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd; text-align: center; }
+.modal { display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+.modal-content { position: absolute; left: 5%; right: 5%; top: 5%; bottom: 5%; background: #fff; max-width: 1200px; margin: 0 auto; border-radius: 16px; display: flex; flex-direction: column; box-shadow: 0 24px 48px -12px rgba(0,0,0,0.25); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 22px; border-bottom: 1px solid #eef0f4; border-radius: 16px 16px 0 0; flex-shrink: 0; }
+.modal-header h2 { font-size: 16px; font-weight: 600; color: #444; }
+.close-modal { font-size: 24px; cursor: pointer; color: #999; line-height: 1; padding: 4px; }
+.close-modal:hover { color: #333; }
+.modal-body { padding: 14px 18px; overflow-y: auto; flex: 1; min-height: 0; }
+.modal-body table { font-size: 11px; }
+.modal-body th, .modal-body td { padding: 5px 6px; white-space: nowrap; text-align: center; }
+.tab-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+.open-modal-btn { background: linear-gradient(135deg, #667eea, #764ba2); border: none; padding: 8px 24px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #fff; cursor: pointer; transition: all 0.2s; }
+.open-modal-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+@media (max-width: 768px) { .dual-col { flex-direction: column; } .dual-col > div { width: 100%; } .header { padding: 24px; } .container { padding: 12px; } .modal-content { left: 0; right: 0; top: 0; bottom: 0; border-radius: 0; } }
+footer { text-align: center; padding: 20px; color: #999; font-size: 12px; }</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1><i class="fas fa-chart-line"></i> 市场资讯观察周报</h1>
+  <div class="date">2026年5月29日 第22周 | 数据来源：引力引擎 | 品类划分统一标准</div>
+  <div class="badge">微小畅销榜 Top100 | 抖小畅销榜 Top100 | 双平台同步监测 | 字节直客会议</div>
+  <div class="stats">
+    <span><i class="far fa-list-alt"></i> 微信 100 款</span>
+    <span><i class="far fa-list-alt"></i> 抖音 100 款</span>
+    <span><i class="fas fa-exchange-alt"></i> 跨平台 46 款</span>
+    <span><i class="fas fa-tags"></i> 17 品类</span>
+    <span><i class="fas fa-bullhorn"></i> 字节直客会议</span>
+  </div>
+</div>
+
+<!-- 核心摘要 -->
+<div class="section">
+<h2><i class="fas fa-star" style="color:#667eea;"></i> 本周核心摘要</h2>
+<div class="summary-card">
+  <strong>【市场格局】</strong>微信小游戏MAU突破<span class="hl">5亿</span>、开发者超<span class="hl">50万</span>，双平台畅销榜Top100中<span class="hl">46款</span>游戏跨平台上榜，<span class="hl">跨平台发行已成行业标配</span>。<br>
+  <strong>【头部表现】</strong><span class="hl">三国：冰河时代</span>同时登顶微信/抖音畅销榜，<span class="hl">SLG品类</span>小游戏LTV潜力获验证；微信<span class="hl">13款</span>/抖音<span class="hl">14款</span>模拟经营上榜，持续为最稳定品类。<br>
+  <strong>【模拟经营聚焦】</strong>本周模拟经营品类表现活跃，亮点如下：<br>
+  &nbsp;&nbsp;① <span class="hl">飙升游戏</span>：微信端<span class="hl">我的休闲时光↑27</span>（放置经营+装修，休闲生活题材）、<span class="hl">造化仙府↑26</span>（修仙模拟经营，修仙题材差异化突围）、<span class="hl">梦幻经理人↑15</span>（足球经理体育题材）；抖音端<span class="hl">时光杂货店↑22</span>（90年代怀旧题材，情感共鸣驱动）、<span class="hl">空格之境↑21</span>（二合+江南纺织经营）、<span class="hl">宫廷风云</span>新进榜（宫廷换装经营题材）<br>
+  &nbsp;&nbsp;② <span class="hl">"二合+"融合玩法</span>持续主导：我的花园世界（二合+花店）、肥鹅美食街（二合+美食）、空格之境（二合+纺织）、织梦森林（二合+森林）、肥鹅健身房（二合+健身房）等多款上榜，"二合+模拟经营"占比超<span class="hl">40%</span>，<span class="hl">低门槛+长留存</span>成为品类核心竞争力<br>
+  &nbsp;&nbsp;③ <span class="hl">题材多元化</span>：修仙（造化仙府/最强祖师）、怀旧（时光杂货店）、体育（梦幻经理人）、宫廷（宫廷风云）、都市（杜拉拉升职记/此生无白）等差异化题材表现突出，<span class="hl">题材创新+情感共鸣</span>是进榜核心驱动力，尤其怀旧/修仙/宫廷等细分赛道<span class="hl">仍有蓝海机会</span><br>
+  <strong>【本周重大事件】</strong>微信小游戏开发者大会（5.27）发布IAP首发新游最高<span class="hl">5000万</span>流水不分成+<span class="hl">2000万</span>激励金+PC高性能模式+IAA最高<span class="hl">90%分成</span>，<span class="hl">政策力度历史最大</span>；5/28-29媒体密集报道，<span class="hl">AI智能体+动态反外挂+安全升级</span>三大技术方向落地，平台明确"<span class="hl">从连接到长青</span>"战略转向；5月26日<span class="hl">158款</span>游戏版号获批（腾讯/网易/三七互娱大作在列），累计<span class="hl">779个</span>同比增长<span class="hl">19.66%</span>。<br>
+  <strong>【字节微小流量趋势】</strong>5月字节微小大盘日耗从<span class="hl">2400-2500万/日</span><span class="hl">大幅下跌</span>，主因①红包版素材严审拒量（日耗从<span class="hl">300万跌至十几万</span>）②头部产品（永远的蔚蓝星球等）缩量③<span class="hl">618电商流量挤压</span>（5月18日起互娱流量向闭环倾斜）；预算结构从微小:抖小5:5切换至<span class="hl">1:2~1:3</span>，行业预算<span class="hl">加速向抖小迁移</span>。<br>
+  <strong>【微小新游首发打法】</strong>字节方面明确微小新游政策红利：首<span class="hl">1000万</span>流水免分成+<span class="hl">40%广告金</span>，冲5000万流水最高<span class="hl">2500万广告金</span>+安卓<span class="hl">5%分成</span>激励；头部厂商大量储备<span class="hl">马甲包冲新游身份</span>套政策红利，有版号/马甲包储备<span class="hl">建议尽快上线</span>；<span class="hl">主成分全量推进</span>（5.27起10%渗透，暑期前全量开放），素材多元性优先原则。<br>
+  <strong>【AI明星素材推荐】</strong>字节直客重点推荐<span class="hl">AI明星素材</span>：低成本（<span class="hl">3-10万/人</span>，5条起购，授权3-6个月）、高点击率、<span class="hl">可无限二创</span>，性价比最高；李诞10万起，新增魔尊重楼、马可、张子健等；漫剧素材<span class="hl">15-20万/部</span>，平台提供<span class="hl">40-50%流量扶持</span>，适合新品破圈。<br>
+  <strong>【投放执行重点】</strong>建议评估马甲包冲新游政策可行性；筛选低价AI明星试点+自制素材提升效果；坚持周末集中放量；6月初完成新品测试确定微享/抖享策略；申请<span class="hl">模型纠偏</span>改善人群跑偏、<span class="hl">非抖版位排除包</span>优化出价系数。<br>
+  <strong>【核心关注】</strong>PC端成为第二增长曲线（独占用户<span class="hl">40%</span>/ARPU超移动<span class="hl">130%</span>）；抖音历史任务金激活5月发放，多项激励持续至6.30；苹果税降至<span class="hl">15%~25%</span>+微小iOS支付跑通；AI务实落地元年（AIM+增<span class="hl">390%</span>/直玩转化率提<span class="hl">3倍</span>）；AI漫剧入局争夺注意力，小游戏核心护城河仍是<span class="hl">社交关系链</span>。<h2><i class="fas fa-trophy" style="color:#667eea;"></i> 一、双平台畅销榜 Top20 对比</h2>
+<div class="dual-col">
+<div>
+<h3>微信小游戏 Top20</h3>
+<div class="table-scroll">
+<table>
+<thead><tr><th>#</th><th>游戏</th><th>品类</th><th>变化</th></tr></thead>
+<tbody>
+<tr class="bg-gold"><td>1</td><td>三国：冰河时代<span class="cross-tag">双</span></td><td><span class="tag-iap">SLG/策略</span></td><td><span class="up">霸榜2天</span></td></tr>
+<tr class="bg-gold"><td>2</td><td>QQ经典农场</td><td><span class="tag">模拟经营</span></td><td><span class="stable">- 稳定</span></td></tr>
+<tr class="bg-gold"><td>3</td><td>永远的蔚蓝星球<span class="cross-tag">双</span></td><td><span class="tag">塔防</span></td><td><span class="stable">- 稳定</span></td></tr>
+<tr><td>4</td><td>疯狂水世界<span class="cross-tag">双</span></td><td><span class="tag-iap">SLG/策略</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>5</td><td>向僵尸开炮<span class="cross-tag">双</span></td><td><span class="tag">塔防</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>6</td><td>占城大师<span class="cross-tag">双</span></td><td><span class="tag">塔防</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>7</td><td>无尽冬日<span class="cross-tag">双</span></td><td><span class="tag-iap">SLG/策略</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>8</td><td>我的花园世界<span class="cross-tag">双</span></td><td><span class="tag">模拟经营</span></td><td><span class="up">↑3</span></td></tr>
+<tr><td>9</td><td>灵画师<span class="cross-tag">双</span></td><td><span class="tag-iap">ARPG</span></td><td><span class="stable">- 稳定</span></td></tr>
+<tr><td>10</td><td>西游降妖记</td><td><span class="tag-iap">ARPG</span></td><td><span class="up">↑2</span></td></tr>
+<tr><td>11</td><td>道友来挖宝</td><td><span class="tag-iap">放置RPG</span></td><td><span class="up">↑3</span></td></tr>
+<tr><td>12</td><td>保卫向日葵<span class="cross-tag">双</span></td><td><span class="tag">塔防</span></td><td><span class="up">↑7</span></td></tr>
+<tr><td>13</td><td>跃动小子<span class="cross-tag">双</span></td><td><span class="tag-iap">放置RPG</span></td><td><span class="up">↑3</span></td></tr>
+<tr><td>14</td><td>奔奔王国<span class="cross-tag">双</span></td><td><span class="tag">塔防</span></td><td><span class="stable">- 稳定</span></td></tr>
+<tr><td>15</td><td>神器传说<span class="cross-tag">双</span></td><td><span class="tag-iap">放置RPG</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>16</td><td>腾讯欢乐斗地主</td><td><span class="tag-iap">棋牌</span></td><td><span class="up">↑3</span></td></tr>
+<tr><td>17</td><td>城主别慌张</td><td><span class="tag-iap">ARPG</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>18</td><td>向往的生活<span class="cross-tag">双</span></td><td><span class="tag">模拟经营</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>19</td><td>掌上谈兵</td><td><span class="tag-iap">卡牌</span></td><td><span class="up">↑4</span></td></tr>
+<tr><td>20</td><td>浪漫餐厅<span class="cross-tag">双</span></td><td><span class="tag">模拟经营</span></td><td><span class="stable">- 稳定</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h3>抖音小游戏 Top20</h3>
+<div class="table-scroll">
+<table>
+<thead><tr><th>#</th><th>游戏</th><th>品类</th><th>变化</th></tr></thead>
+<tbody>
+<tr class="bg-gold"><td>1</td><td>三国：冰河时代<span class="cross-tag">双</span></td><td><span class="tag-iap">SLG/策略</span></td><td><span class="up">霸榜3天</span></td></tr>
+<tr class="bg-gold"><td>2</td><td>灵画师<span class="cross-tag">双</span></td><td><span class="tag-iap">ARPG</span></td><td><span class="up">↑1</span></td></tr>
+<tr class="bg-gold"><td>3</td><td>我的花园世界<span class="cross-tag">双</span></td><td><span class="tag">模拟经营</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>4</td><td>向僵尸开炮<span class="cross-tag">双</span></td><td><span class="tag">塔防</span></td><td><span class="up">↑5</span></td></tr>
+<tr><td>5</td><td>无尽冬日<span class="cross-tag">双</span></td><td><span class="tag-iap">SLG/策略</span></td><td><span class="up">↑2</span></td></tr>
+<tr><td>6</td><td>疯狂水世界<span class="cross-tag">双</span></td><td><span class="tag-iap">SLG/策略</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>7</td><td>浪漫餐厅<span class="cross-tag">双</span></td><td><span class="tag">模拟经营</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>8</td><td>占城大师<span class="cross-tag">双</span></td><td><span class="tag">塔防</span></td><td><span class="up">↑4</span></td></tr>
+<tr><td>9</td><td>梦幻消除战<span class="cross-tag">双</span></td><td><span class="tag">消除</span></td><td><span class="up">↑7</span></td></tr>
+<tr><td>10</td><td>超能下蛋鸭<span class="cross-tag">双</span></td><td><span class="tag-iap">放置RPG</span></td><td><span class="up">↑2</span></td></tr>
+<tr><td>11</td><td>四季合合<span class="cross-tag">双</span></td><td><span class="tag">合成消除</span></td><td><span class="up">↑7</span></td></tr>
+<tr><td>12</td><td>时尚百货城<span class="cross-tag">双</span></td><td><span class="tag">模拟经营</span></td><td><span class="up">↑1</span></td></tr>
+<tr><td>13</td><td>传奇之业</td><td><span class="tag-iap">ARPG</span></td><td><span class="up">↑4</span></td></tr>
+<tr><td>14</td><td>跃动小子<span class="cross-tag">双</span></td><td><span class="tag-iap">放置RPG</span></td><td><span class="up">↑2</span></td></tr>
+<tr><td>15</td><td>保卫向日葵<span class="cross-tag">双</span></td><td><span class="tag">塔防</span></td><td><span class="up">↑5</span></td></tr>
+<tr><td>16</td><td>永远的蔚蓝星球<span class="cross-tag">双</span></td><td><span class="tag">塔防</span></td><td><span class="up">↑5</span></td></tr>
+<tr><td>17</td><td>杜拉拉升职记</td><td><span class="tag">模拟经营</span></td><td><span class="up">↑4</span></td></tr>
+<tr><td>18</td><td>奔奔王国<span class="cross-tag">双</span></td><td><span class="tag">塔防</span></td><td><span class="up">↑12</span></td></tr>
+<tr><td>19</td><td>生存33天<span class="cross-tag">双</span></td><td><span class="tag-iap">SLG/策略</span></td><td><span class="stable">- 稳定</span></td></tr>
+<tr><td>20</td><td>向往的生活<span class="cross-tag">双</span></td><td><span class="tag">模拟经营</span></td><td><span class="stable">- 稳定</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="summary-card">
+  <strong>头部格局发现：</strong>三国：冰河时代霸榜双平台；微信Top20中模拟经营5席、塔防4席；抖音Top20中6款周变化≥5位，竞争更活跃。<br>
+  双平台共同头部：<span class="hl">三国：冰河时代</span>、<span class="hl">我的花园世界</span>、<span class="hl">向僵尸开炮</span>、<span class="hl">无尽冬日</span>、<span class="hl">疯狂水世界</span> 均位列双榜Top10。
+</div>
+</div>
+
+<!-- 二、模拟经营品类深度分析 -->
+<div class="section">
+<h2><i class="fas fa-seedling" style="color:#667eea;"></i> 二、模拟经营品类 · 双平台深度对比</h2>
+<h3>双平台模拟经营上榜概况</h3>
+<table>
+<thead><tr><th>平台</th><th>上榜数</th><th>Top10内</th><th>Top20内</th><th>头部代表</th></tr></thead>
+<tbody>
+<tr class="bg-highlight"><td><strong>微信小游戏</strong></td><td>13款</td><td>2款</td><td>4款</td><td>QQ经典农场、疯狂水世界、我的花园世界、向往的生活</td></tr>
+<tr class="bg-highlight"><td><strong>抖音小游戏</strong></td><td>14款</td><td>2款</td><td>5款</td><td>我的花园世界、浪漫餐厅、时尚百货城、疯狂水世界</td></tr>
+</tbody>
+</table>
+
+<h3>模拟经营游戏双平台排名对比</h3>
+<div class="table-scroll">
+<table>
+<thead><tr><th>游戏名</th><th>厂商</th><th>融合玩法</th><th>题材</th><th>微信排名</th><th>抖音排名</th><th>双平台差异</th></tr></thead>
+<tbody>
+<tr><td>QQ经典农场</td><td>深圳市腾讯计算机系统</td><td>社交+偷菜</td><td>田园农场</td><td>#2</td><td>未上榜</td><td>仅微信</td></tr>
+<tr class="bg-highlight"><td>我的花园世界</td><td>厦门麟贝互娱科技有限</td><td>二合+模拟经营</td><td>花园种花</td><td>#8</td><td>#3</td><td>抖音领先5位</td></tr>
+<tr class="bg-highlight"><td>向往的生活</td><td>深圳市必凡娱乐科技有</td><td>二合+田园综艺IP</td><td>田园综艺</td><td>#18</td><td>#20</td><td>微信领先2位</td></tr>
+<tr class="bg-highlight"><td>浪漫餐厅</td><td>北京柠檬微趣科技股份</td><td>合成+剧情经营</td><td>餐厅改造</td><td>#20</td><td>#7</td><td>抖音领先13位</td></tr>
+<tr class="bg-highlight"><td>肥鹅美食街</td><td>北京豪腾创想科技有限</td><td>二合+模拟经营</td><td>美食街</td><td>#24</td><td>#46</td><td>微信领先22位</td></tr>
+<tr class="bg-highlight"><td>时尚百货城</td><td>深圳市爱的番茄科技有</td><td>模拟经营+连锁</td><td>商场经营</td><td>#34</td><td>#12</td><td>抖音领先22位</td></tr>
+<tr class="bg-highlight"><td>造化仙府</td><td>上海沛炫网络科技有限</td><td>修仙模拟经营</td><td>修仙</td><td>#44</td><td>#40</td><td>抖音领先4位</td></tr>
+<tr><td>肥鹅健身房</td><td>北京豪腾创想科技有限</td><td>二合+模拟经营</td><td>健身房</td><td>#53</td><td>未上榜</td><td>仅微信</td></tr>
+<tr class="bg-highlight"><td>空格之境</td><td>江西启游互动科技有限</td><td>二合+纺织经营</td><td>江南纺织</td><td>#70</td><td>#88</td><td>微信领先18位</td></tr>
+<tr><td>织梦森林</td><td>安徽雷虎网络科技有限</td><td>二合+模拟经营</td><td>森林种树</td><td>#73</td><td>未上榜</td><td>仅微信</td></tr>
+<tr><td>我的休闲时光</td><td>广州卓动信息科技有限</td><td>放置经营+装修</td><td>休闲生活</td><td>#76</td><td>未上榜</td><td>仅微信</td></tr>
+<tr><td>梦幻经理人</td><td>上海望伯纳乌科技有限</td><td>模拟经营+体育</td><td>足球经理</td><td>#79</td><td>未上榜</td><td>仅微信</td></tr>
+<tr><td>这城有良田</td><td>上海益玩网络科技有限</td><td>模拟经营+种田</td><td>古代种田</td><td>#81</td><td>未上榜</td><td>仅微信</td></tr>
+<tr><td>杜拉拉升职记</td><td>苏州沁游网络科技有限</td><td>模拟养成+剧情换装</td><td>都市职场</td><td>未上榜</td><td>#17</td><td>仅抖音</td></tr>
+<tr><td>时光杂货店</td><td>安徽雷虎网络科技有限</td><td>模拟经营+怀旧</td><td>90年代怀旧</td><td>未上榜</td><td>#67</td><td>仅抖音</td></tr>
+<tr><td>时光大爆炸</td><td>安徽盈趣网络科技有限</td><td>模拟经营+RPG</td><td>穿越经营</td><td>未上榜</td><td>#82</td><td>仅抖音</td></tr>
+<tr><td>此生无白</td><td>苏州沁游网络科技有限</td><td>都市经营+穿搭</td><td>现代都市</td><td>未上榜</td><td>#86</td><td>仅抖音</td></tr>
+<tr><td>最强祖师</td><td>霍尔果斯星嘉网络科技</td><td>模拟经营+修仙</td><td>修仙宗门</td><td>未上榜</td><td>#91</td><td>仅抖音</td></tr>
+<tr><td>大丰收</td><td>北京米兜科技有限公司</td><td>休闲模拟经营</td><td>农场丰收</td><td>未上榜</td><td>#95</td><td>仅抖音</td></tr>
+<tr><td>宫廷风云</td><td>苏州沁游网络科技有限</td><td>换装养成+经营</td><td>古风宫廷</td><td>未上榜</td><td>#100</td><td>仅抖音</td></tr>
+</tbody>
+</table>
+</div>
+<div class="summary-card">
+  <strong>结论：</strong>模拟经营是双平台 <span class="hl">最稳定品类</span>，用户生命周期长、付费模型健康。"二合+模拟经营"占比超40%。微信端社交裂变（QQ经典农场）驱动自然量；抖音端剧情/题材差异化（杜拉拉升职记、时光杂货店）吸量能力更强。
+</div>
+</div>
+
+<!-- 三、品类占比全景 -->
+<div class="section">
+<h2><i class="fas fa-chart-pie" style="color:#667eea;"></i> 三、畅销榜 Top100 品类分布全景</h2>
+<div class="grid-2">
+<div class="chart-box">
+  <strong>微信 Top100 品类分布</strong>
+  <div class="chart-wrap"><canvas id="wxCatPie"></canvas></div>
+</div>
+<div class="chart-box">
+  <strong>抖音 Top100 品类分布</strong>
+  <div class="chart-wrap"><canvas id="dyCatPie"></canvas></div>
+</div>
+</div>
+<div class="chart-box" style="margin-top:12px;">
+  <strong>双平台品类数量对比</strong>
+  <div class="chart-wrap" style="height:260px;"><canvas id="catCompare"></canvas></div>
+</div>
+<div class="summary-card">
+  <strong>品类结构结论：</strong><br>
+  微信端：模拟经营（<span class="hl">13款</span>）、塔防（<span class="hl">10款</span>）、ARPG（<span class="hl">15款</span>）、卡牌RPG（<span class="hl">10款</span>）为四大支柱<br>
+  抖音端：模拟经营（<span class="hl">14款</span>）、ARPG（<span class="hl">14款</span>）、塔防（<span class="hl">14款</span>）居前<br>
+  双平台模拟经营和塔防均为核心赛道，抖音端ARPG和放置RPG占比更高，反映内容营销对展示型品类的偏好。
+</div>
+<div class="tab-buttons">
+  <button class="open-modal-btn" data-modal="wx"><i class="fas fa-table"></i> 微信畅销榜 Top100</button>
+  <button class="open-modal-btn" data-modal="dy"><i class="fas fa-table"></i> 抖音畅销榜 Top100</button>
+</div>
+</div>
+
+<!-- 四、大幅上升 -->
+<div class="section">
+<h2><i class="fas fa-rocket" style="color:#667eea;"></i> 四、本周大幅上升游戏（≥15位）</h2>
+<div class="table-scroll">
+<table>
+<thead><tr><th>游戏</th><th>平台</th><th>品类</th><th>上升</th><th>公司</th><th>看点</th></tr></thead>
+<tbody>
+<tr class="bg-gold"><td>魔灵纪元</td><td>抖音</td><td><span class="tag-iap">放置RPG</span></td><td class="up">↑61</td><td style="font-size:11px;">郑州信跃网络科技有限公司</td><td style="font-size:11px;">放置回合制黑马，单周飙升61位，抖音内容营销爆发</td></tr>
+<tr class="bg-gold"><td>英雄没有闪</td><td>抖音</td><td><span class="tag-iap">ARPG</span></td><td class="up">↑34</td><td style="font-size:11px;">广州盈心网络科技有限公司</td><td style="font-size:11px;">2D卡通放置ARPG，抖音上升34位</td></tr>
+<tr><td>我的休闲时光</td><td>微信</td><td><span class="tag">模拟经营</span></td><td class="up">↑27</td><td style="font-size:11px;">广州卓动信息科技有限公司</td><td style="font-size:11px;">模拟经营+放置装修，微信上升27位</td></tr>
+<tr><td>造化仙府</td><td>微信</td><td><span class="tag">模拟经营</span></td><td class="up">↑26</td><td style="font-size:11px;">上海沛炫网络科技有限公司</td><td style="font-size:11px;">模拟经营题材</td></tr>
+<tr><td>守护神之觉醒网络游戏软件V1.0</td><td>抖音</td><td><span class="tag">其他</span></td><td class="up">↑26</td><td style="font-size:11px;">海南丰际网络科技有限公司</td><td style="font-size:11px;">其他题材</td></tr>
+<tr><td>三国杀</td><td>抖音</td><td><span class="tag-iap">卡牌</span></td><td class="up">↑24</td><td style="font-size:11px;">杭州游卡网络技术有限公司</td><td style="font-size:11px;">经典IP长线运营</td></tr>
+<tr><td>援军来了</td><td>抖音</td><td><span class="tag">塔防</span></td><td class="up">↑24</td><td style="font-size:11px;">上海炎魔网络科技有限公司</td><td style="font-size:11px;">Q版军事塔防</td></tr>
+<tr><td>源星战域</td><td>微信</td><td><span class="tag-iap">ARPG</span></td><td class="up">↑23</td><td style="font-size:11px;">海南青时信息技术有限公司</td><td style="font-size:11px;">科幻ARPG题材差异化</td></tr>
+<tr><td>一步两步</td><td>抖音</td><td><span class="tag-iap">放置RPG</span></td><td class="up">↑23</td><td style="font-size:11px;">厦门游力信息科技有限公司</td><td style="font-size:11px;">放置RPG融合肉鸽塔防</td></tr>
+<tr><td>鱼吃鱼</td><td>微信</td><td><span class="tag">益智</span></td><td class="up">↑22</td><td style="font-size:11px;">广州德道科技有限公司</td><td style="font-size:11px;">大鱼吃小鱼玩法翻新</td></tr>
+<tr><td>时光杂货店</td><td>抖音</td><td><span class="tag">模拟经营</span></td><td class="up">↑22</td><td style="font-size:11px;">安徽雷虎网络科技有限公司</td><td style="font-size:11px;">90年代模拟经营怀旧</td></tr>
+<tr><td>楚新钓</td><td>抖音</td><td><span class="tag-iap">放置RPG</span></td><td class="up">↑21</td><td style="font-size:11px;">海南易多量科技有限公司</td><td style="font-size:11px;">放置钓鱼模拟，抖音上升20位</td></tr>
+<tr><td>空格之境</td><td>抖音</td><td><span class="tag">模拟经营</span></td><td class="up">↑21</td><td style="font-size:11px;">江西启游互动科技有限公司</td><td style="font-size:11px;">转生商贾经营</td></tr>
+<tr><td>诡话连篇</td><td>抖音</td><td><span class="tag">益智</span></td><td class="up">↑21</td><td style="font-size:11px;">深圳市会友互联网络科技有</td><td style="font-size:11px;">益智题材</td></tr>
+<tr><td>手机反恐特别行动</td><td>微信</td><td><span class="tag">射击</span></td><td class="up">↑18</td><td style="font-size:11px;">成都疾风劲趣科技有限公司</td><td style="font-size:11px;">射击题材</td></tr>
+<tr><td>三国杀</td><td>微信</td><td><span class="tag-iap">卡牌</span></td><td class="up">↑18</td><td style="font-size:11px;">杭州游卡网络技术有限公司</td><td style="font-size:11px;">经典IP长线运营</td></tr>
+<tr><td>梦幻西游网页版</td><td>抖音</td><td><span class="tag-iap">放置RPG</span></td><td class="up">↑18</td><td style="font-size:11px;">广州网易计算机系统有限公</td><td style="font-size:11px;">经典IP网页版</td></tr>
+<tr><td>遗弃之地</td><td>抖音</td><td><span class="tag">塔防</span></td><td class="up">↑18</td><td style="font-size:11px;">北京智诚互娱科技有限公司</td><td style="font-size:11px;">鬼怪题材横版策略塔防</td></tr>
+<tr><td>青云诀之伏魔</td><td>微信</td><td><span class="tag-iap">MMO</span></td><td class="up">↑17</td><td style="font-size:11px;">海南元游信息技术有限公司</td><td style="font-size:11px;">国风仙侠RPG</td></tr>
+<tr><td>三界无双</td><td>抖音</td><td><span class="tag-iap">ARPG</span></td><td class="up">↑17</td><td style="font-size:11px;">杭州悦昭网络科技有限公司</td><td style="font-size:11px;">ARPG题材</td></tr>
+<tr><td>王者之弈</td><td>微信</td><td><span class="tag-iap">竞技</span></td><td class="up">↑16</td><td style="font-size:11px;">海南椰路信息科技有限公司</td><td style="font-size:11px;">自走棋+卡牌融合</td></tr>
+<tr><td>指尖无双</td><td>微信</td><td><span class="tag-iap">卡牌RPG</span></td><td class="up">↑16</td><td style="font-size:11px;">福州蓝琥珀网络科技有限公</td><td style="font-size:11px;">卡牌策略新秀</td></tr>
+<tr><td>咻咻勇者</td><td>抖音</td><td><span class="tag-iap">ARPG</span></td><td class="up">↑16</td><td style="font-size:11px;">深圳市紫晓互动科技有限公</td><td style="font-size:11px;">ARPG题材</td></tr>
+<tr><td>元梦之星</td><td>微信</td><td><span class="tag">动作</span></td><td class="up">↑15</td><td style="font-size:11px;">深圳市腾讯计算机系统有限</td><td style="font-size:11px;">动作题材</td></tr>
+<tr><td>梦幻经理人</td><td>微信</td><td><span class="tag">模拟经营</span></td><td class="up">↑15</td><td style="font-size:11px;">上海望伯纳乌科技有限公司</td><td style="font-size:11px;">模拟经营题材</td></tr>
+<tr><td>无限轮回</td><td>抖音</td><td><span class="tag-iap">ARPG</span></td><td class="up">↑15</td><td style="font-size:11px;">海南易多量科技有限公司</td><td style="font-size:11px;">ARPG题材</td></tr>
+</tbody>
+</table>
+</div>
+<div class="summary-card">
+  <strong>结论：</strong>剧情驱动、融合创新玩法（<span class="hl">背包合成+肉鸽</span>、<span class="hl">放置卡牌+题材跨界</span>）是本周飙升核心动力。抖音平台对新内容敏感度高，中小团队可通过创意融合快速起量。
+</div>
+</div>
+
+<!-- 五、平台政策与市场动态 -->
+<div class="section">
+<h2><i class="fas fa-newspaper" style="color:#667eea;"></i> 五、平台政策与市场动态（2026年第22周）</h2>
+
+<div class="policy-box">
+<h4><i class="fas fa-apple-alt" style="color:#667eea;"></i> 1. 苹果开发者游戏模块政策</h4>
+<p><strong>本周状态：</strong>2025年底苹果与腾讯达成iOS支付协议，微信小游戏已跑通流程。</p>
+<p><strong>① 佣金率调整（2026年3月15日起生效）</strong>
+<br>• 标准App内购买/付费App佣金：<strong>30% → 25%</strong>
+<br>• 小型厂商游戏合作伙伴计划：<strong>15%</strong>，适合总收益在 100 万美元以内的现有开发者，以及新加入 App Store 的开发者</p>
+<br>• 首年后自动续费订阅：<strong>15% → 12%</strong></p>
+<p><strong>② iOS支付重大进展 — ⭐ 本周关注</strong>
+<br>• 2025年底苹果与腾讯达成协议，苹果从用户购买金额中抽取 <strong>15%分成</strong>
+<br>• 微信团队在5.27开发者大会上确认"流程已跑通"，开发者正陆续完成对接
+<br>• 相比此前小游戏在iOS端无法正常走通内购的困境，<strong>15%分成比例显著利好</strong>开发者</p>
+<p><strong>政策原文：</strong><a href="https://developer.apple.com/cn/app-store/small-business-program/" target="_blank" rel="noopener" style="color:#667eea;">苹果开发者小企业计划 →</a></p>
+	<p><strong>后续关注重点：</strong></p>
+<ol style="margin:6px 0 0 16px;font-size:13px;">
+  <li>iOS支付流程全面跑通后，微信小游戏iOS端内购收入增量预期</li>
+  <li>苹果是否将15%游戏优惠向更多开发者开放</li>
+  <li>欧盟《数字市场法案》后续执行是否影响中国区政策走向</li>
+</ol>
+</div>
+
+<div class="policy-box">
+<h4><i class="fas fa-music" style="color:#667eea;"></i> 2. 抖音小游戏平台政策更新</h4>
+<p><strong>本周状态：</strong>5月历史任务金激活计划已启动，多项激励活动持续至6月30日。</p>
+<p><strong>① 历史任务金激活计划（5月执行—⭐ 新增）</strong>
+<br>• 激活条件：2026年4月单款游戏发行人与一口价场景分成前总收入≥<strong>1万元</strong>
+<br>• 激活内容：截至2026年2月28日已到期但未使用的<strong>历史任务金可重新激活</strong>
+<br>• 发放时间：5月内一次性发放至星图账户，有效期<strong>180天</strong>
+<br>• 通知方式：5月7日站内信下发，已陆续到账</p>
+<p><strong>② 版本提审新规（2026年4月20日起生效）</strong>
+<br>• 提审通过后将<strong>自动上线至所有已接入抖音小游戏的合作App</strong>，QA回归多端
+<br>• 任一宿主端未通过则需重新修改提审（已通过端需版本号大于当前）
+<br>• 使用网络功能需配置<strong>安全域名白名单</strong>（https:// + wss://）</p>
+<p><strong>③ Q1 IAP激励政策（持续至Q2）</strong>
+<br>• 最高 <strong>40%现金消耗赠款</strong>，单款封顶 <strong>400万元</strong>
+<br>• 新游同发门槛简化，日均消耗增量≥1万元即可享受
+<br>• 重点品类（模拟经营、塔防、RPG）额外<strong>20%返点</strong></p>
+<p><strong>④ 任务金限时激励（持续至2026年6月30日）</strong>
+<br>• 发行人及一口价场景：广告收入<strong>20%</strong>任务金
+<br>• 投广场景IAA：广告收入<strong>5%</strong>任务金
+<br>• 投广场景IAP：安卓内购消费总额<strong>4%</strong>任务金
+<br>• 自然场景IAP：内购消费总额<strong>10%</strong>任务金
+<br>• 门槛：上一半月结算周期内收入≥1万元</p>
+<p><strong>⑤ 生态扶持三项政策（2026年4月）</strong>
+<br>• T+1提现能力：提现周期提升93%
+<br>• 内容任务激励金：通过内容经营获取自然流量
+<br>• 同发新游扶持通道：测试调优+增长补贴+内容共建</p>
+<strong>政策原文：</strong><a href="https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/guide/business-guide/revenue/sharingclause/game-settlement-guide" target="_blank" rel="noopener" style="color:#667eea;">抖音开放平台开发者文档 →</a>
+	<p><strong>后续关注重点：</strong>多项激励活动6月30日截止，Q3政策调整方向；PC端小游戏入驻政策是否放宽。</p>
+</div>
+
+<div class="policy-box">
+<h4><i class="fab fa-weixin" style="color:#667eea;"></i> 3. 微信小游戏平台政策更新 — ⭐ 本周重点</h4>
+<p><strong>本周状态：2026年5月27日微信小游戏开发者大会（杭州）发布史上最大力度政策更新，5/28-29媒体密集报道深度解读。</strong></p>
+
+<p><strong>📊 平台核心数据</strong>
+<br>• MAU突破 <strong>5亿</strong>，开发者超 <strong>50万</strong>（80%为30人以下团队），DAU超百万游戏超 <strong>80款</strong>
+<br>• 季度流水超千万游戏超 <strong>300款</strong>，2026年1-5月变现收入同比增长 <strong>20%</strong>
+<br>• 用户画像：男性53%/女性47%，一二线城市45%，24-40岁占50%，日均使用时长超60分钟</p>
+
+<p><strong>💰 ① IAP新游激励升级 — ⭐ 历史力度最大</strong>
+<br>• <strong>首发新游</strong>最高5000万元流水<strong>全额不分成</strong> + 最高2000万元激励金
+<br>• 非首发新游：首100万流水不分成，单款最高40万元激励金
+<br>• 长线运营游戏：30天内每200万安卓现金投放消耗 → 5%广告金激励</p>
+
+<p><strong>💰 ② IAA广告变现激励 — 最高90%分成</strong>
+<br>• 方案一（轻中度激励）：现金50% + 广告金40%（30天）→ <strong>总90%</strong>
+<br>• 方案二（长线精品激励）：现金50% + 广告金35%（90天）→ <strong>总85%</strong>
+<br>• <strong>新增回流政策</strong>：流失超45天用户的召回激励与新用户等同，回流用户首日LTV提升超20%</p>
+
+<p><strong>💻 ③ PC端战略升级</strong>
+<br>• PC小游戏额外 <strong>10%专属广告金</strong>返还
+<br>• 2026年推出<strong>"PC高性能模式"</strong>（大屏适配、键鼠操作）
+<br>• PC独占用户占 <strong>40%</strong>，时长和ARPU分别比移动端增长 <strong>100% + 130%</strong></p>
+
+<p><strong>🔄 ④ 老游激励优化</strong>
+<br>• IAP老游广告金获取门槛从"消2赠1"降至<strong>"消1赠1"</strong></p>
+
+<p><strong>📱 ⑤ iOS支付重大突破</strong>
+<br>• 苹果与腾讯达成协议：苹果从用户购买金额中抽取 <strong>15%分成</strong>
+<br>• 微信团队确认"流程已跑通"，开发者正陆续完成对接</p>
+
+<p><strong>🤖 ⑥ AI赋能落地 — 核心战略方向</strong>
+<br>• 腾讯游戏云AI智能体：创意→可玩原型从<strong>数周压缩至数小时</strong>
+<br>• AI覆盖：美术风格、关卡设计、素材生成、自动化运营全链路
+<br>• 投放端：AIM+智能投放2026年Q2消耗同比<strong>增长390%</strong>，直玩形态点击转化率<strong>提升3倍</strong>
+<br>• 平台定位：AI是<strong>"效率基础设施"</strong>而非颠覆者，爆款仍需人工打磨</p>
+
+<p><strong>🛡️ ⑦ 安全体系全面升级（5/28发布）</strong>
+<br>• <strong>动态反外挂</strong>：从静态加固进化为主动防御，零接入成本，覆盖游戏全生命周期
+<br>• <strong>代码加固3.0</strong>：全面支持Unity（WASM）加固，性能几乎无损，已服务超1万款游戏
+<br>• <strong>一站式维权平台</strong>：AI动态监测+全链路打击，一键授权全程托管
+<br>• 实测：某游戏重打包外挂版本从3000+降趋近于0；侵权下架率48小时内达95%</p>
+
+<p><strong>🎯 ⑧ 战略转向："从连接到长青"</strong>
+<br>• 明确月活5亿接近国内游戏人口天花板，不再执着规模增长
+<br>• 2026年主题<strong>"生态繁荣"</strong> — 做深留存、做长时长、做强场景渗透
+<br>• 重点方向：经典玩法+IP、女性用户（"她力量"）、玩法创新融合（肉鸽+自走棋等）</p>
+
+<p><strong>政策原文：</strong><a href="https://developers.weixin.qq.com/minigame/introduction/commercialization/" target="_blank" rel="noopener" style="color:#667eea;">微信激励政策 →</a> | <a href="https://mp.weixin.qq.com/s/vWqsKGkFXNN4sywdVBsSNA" target="_blank" rel="noopener" style="color:#667eea;">政策解读→</a></p>
+<p><strong>后续关注：</strong>5000万不分成政策具体申请流程与资格细则；AI智能体能力开放范围；安全体系后续升级节奏。</p>
+</div><div class="policy-box">
+<h4><i class="fas fa-mobile-alt" style="color:#667eea;"></i> 4. 华为/小米/OPPO/vivo/TapTap等手游平台政策</h4>
+<p><strong>本周状态：无重大分成政策更新，以下为行业共性动态：</strong></p>
+<p><strong>① ITGSA金标联盟 — 公平运行内存机制（2026年5月发布）</strong>
+<br>• 联盟成员：vivo、小米、OPPO、荣耀等（华为同为金标联盟成员）
+<br>• 统一内存管理规范，解决安卓应用内存占用过高导致的卡顿/发热/后台被杀问题
+<br>• 建立<strong>主动释放机制</strong>，内存紧张时系统通知应用释放资源
+<br>• <span style="color:#e74c3c;font-weight:600;">适配截止：2026年6月30日</span>，需各品牌开放平台获取适配文档</p>
+<p><strong>② TapTap</strong>：维持0分成策略不变，2026年聚焦社区内容生态和游戏评测体系完善。</p>
+<p><strong>后续关注重点：</strong></p>
+<ol style="margin:6px 0 0 16px;font-size:13px;">
+  <li>各硬件厂商2026年H2联运分成政策是否调整</li>
+  <li>金标联盟内存机制对游戏性能表现的实际影响</li>
+  <li>华为鸿蒙生态小游戏/快应用接入进展</li>
+</ol>
+</div>
+
+<div class="policy-box">
+<h4><i class="fas fa-certificate" style="color:#667eea;"></i> 5. 本周版号更新（5月26日）</h4>
+<p><strong>共计158款游戏获批</strong>（国产网络游戏154款 + 进口网络游戏4款），2026年累计发放版号 <strong>779个</strong>（同比增长19.66%）。</p>
+
+<h4 style="font-size:14px;margin:10px 0 6px;">品类分布</h4>
+<table>
+<thead><tr><th>类型</th><th>数量</th><th>占比</th></tr></thead>
+<tbody>
+<tr><td>移动游戏</td><td>79款</td><td>51.3%</td></tr>
+<tr><td>移动-休闲益智</td><td>56款</td><td>36.4%</td></tr>
+<tr><td>移动+客户端</td><td>15款</td><td>9.7%</td></tr>
+<tr><td>客户端</td><td>2款</td><td>1.3%</td></tr>
+<tr><td>移动+网页等多端</td><td>2款</td><td>1.3%</td></tr>
+</tbody>
+</table>
+
+<h4 style="font-size:14px;margin:12px 0 6px;">重点厂商与产品</h4>
+<table>
+<thead><tr><th>厂商</th><th>游戏</th><th>品类/题材</th></tr></thead>
+<tbody>
+<tr><td><strong>腾讯</strong></td><td>《追逐卡蕾多》</td><td>3D二次元机车RPG</td></tr>
+<tr><td><strong>网易</strong></td><td>《诡影藏锋》</td><td>中式志怪搜打撤</td></tr>
+<tr><td><strong>三七互娱</strong></td><td>《斗破苍穹：觉醒》</td><td>玄幻开放世界MMO</td></tr>
+<tr><td><strong>莉莉丝</strong></td><td>《小冰冰斗蛐蛐》</td><td>休闲竞技</td></tr>
+<tr><td><strong>朝夕光年</strong></td><td>《托托比亚》</td><td>冒险题材</td></tr>
+<tr><td><strong>上海游卡</strong></td><td>《三国杀·烽烟策》</td><td>卡牌（三端）</td></tr>
+<tr><td><strong>友谊时光</strong></td><td>《超人气足球》</td><td>体育模拟经营</td></tr>
+<tr><td><strong>电魂网络</strong></td><td>《星愿之冠》</td><td>角色扮演</td></tr>
+</tbody>
+</table>
+
+<p><strong>模拟经营品类重点关注：</strong></p>
+<p>本月过审游戏中，模拟经营类约 <strong>17款</strong>，以轻量化休闲经营为主：</p>
+<ul style="margin:4px 0 0 16px;font-size:13px;">
+  <li><strong>《犹格索托斯的庭院》</strong>（移动+客户端）— ⭐ 最受关注，克苏鲁题材模拟经营叙事，骨钉工作室开发，Steam特别好评</li>
+  <li><strong>《桃源小镇》</strong>（移动）— 小镇模拟经营</li>
+  <li><strong>《开间花店》《花房四季》《花间小筑》</strong>（移动-休闲益智）— 花卉园艺经营品类</li>
+  <li><strong>《花香农场》《大鹅超市》《杂货梦工厂》《老板的日常》</strong>（移动/休闲益智）— 农场/商超/工坊经营</li>
+  <li><strong>《梦想时光》</strong>（移动-休闲益智）— 生活模拟经营</li>
+</ul>
+<p style="font-size:12px;color:#888;margin-top:6px;"><a href="https://www.gamersky.com/news/202605/2146177.shtml" target="_blank" rel="noopener" style="color:#667eea;">5月最新版号信息 →</a></p>
+</div>
+
+<div class="policy-box">
+<h4><i class="fas fa-chart-bar" style="color:#667eea;"></i> 6. 本周市场行业动态</h4>
+
+<p><strong>① 微信小游戏开发者大会（5月27日·杭州）— 核心战略转向</strong>
+<br>• <strong>主题"从连接到长青"</strong>：MAU突破5亿接近天花板，不再执着规模增长，转向生态繁荣
+<br>• 李卿（产品总监）AI三判断：AI增强生产能力/短期体现于成本端/AI无法替代人类创意
+<br>• 明确三大方向：经典玩法+IP、女性用户（"她力量"）、玩法创新融合（肉鸽+自走棋等）
+<br>• 商业化规模连续8年增长，2026年1-5月变现收入同比增长 <strong>20%</strong></p>
+
+<p><strong>② AI在小游戏领域的务实落地</strong>
+<br>• <strong>研发端</strong>：腾讯游戏云AI智能体将原型开发从数周压缩至数小时，AI关卡分析/热点工具/难度评分大量实测中
+<br>• <strong>投放端</strong>：AIM+智能投放Q2消耗同比增长<strong>390%</strong>，妙思AIGC素材大幅降本增效，自然语言投放Agent降低门槛
+<br>• <strong>用户端</strong>：直玩形态（广告即游戏）点击转化率<strong>提升3倍</strong>，注册成本<strong>降低80%</strong>
+<br>• 开发者反馈：《一箭又一箭》关卡量产/难度评分已大量交给AI；《向往的生活》AI嵌入立项/调研/策划全环节
+<br>• AI漫剧Q1在播量约18万部（较1月增200%+），与小游戏争夺"低成本娱乐时间"</p>
+
+<p><strong>③ 安全风控全面升级（5/28微信公开课）</strong>
+<br>• 微信公开课讲师彭馨勇发布 <strong>三大安全升级</strong>：动态反外挂（零接入成本）+ 代码加固3.0（Unity WASM）+ 一站式维权平台
+<br>• 实测效果：重打包外挂从3000+趋近于0，侵权内容48小时内下架率超95%
+<br>• 用户风控系统上线：高/中/低/轻微四级风险分级，高风险直接拦截，中风险柔性干预</p>
+
+<p><strong>④ 头部厂商加速布局生活模拟赛道</strong>
+<br>• 腾讯《莉莉的迷你世界》、米哈游《星布谷地》预计2026年上线
+<br>• 行业正从"数值驱动ARPG疲劳"转向<strong>"治愈系"低压力生活模拟</strong>
+<br>• 品类定位：抢占玩家 <strong>"第二款游戏"</strong> 位置，低压力日常陪伴型体验</p>
+
+<p><strong>⑤ 行业大咖持续流向小游戏赛道</strong>
+<br>• 原《射雕》制作人（600人团队/投入近10亿项目关停后）低调创业<strong>竖屏小游戏</strong>
+<br>• 反映中重度游戏大咖向小游戏赛道流动的持续趋势</p>
+
+<p><strong>⑥ 小游戏获客报告：买量已成主入口</strong>
+<br>• 67%新用户来自<strong>付费买量</strong>（两年前约40%），自然增长红利消退
+<br>• 热力引擎×Insightrackr联合报告：IAP占比升至<strong>68%</strong>，小游戏从"IAA轻量"转向"IAP中重度"</p>
+<p style="font-size:12px;color:#888;margin-top:6px;"><a href="https://mp.weixin.qq.com/s/9Mc9Kzb2Zukri_24TvdRCg" target="_blank" rel="noopener" style="color:#667eea;">微小5月开发者大会核心数据一览 →</a></p>
+</div>
+
+</div><!-- 六、趋势观察 -->
+<div class="section">
+<h2><i class="fas fa-eye" style="color:#667eea;"></i> 六、本周趋势观察</h2>
+<ol class="trend-list">
+<li><strong>SLG品类双平台霸榜</strong> — 三国：冰河时代同时登顶微信/抖音畅销榜，SLG在小游戏渠道的LTV潜力已被验证，PC高性能模式将进一步放大SLG优势。</li>
+<li><strong>塔防品类供给旺盛</strong> — 向僵尸开炮、占城大师、保卫向日葵等多款同时上榜，塔防+融合玩法成主流方向，Unity WASM加固全面支持利好Unity开发的塔防产品。</li>
+<li><strong>模拟经营长线最稳健</strong> — 微信13款/抖音14款上榜，用户生命周期远超其他品类，IAA最高90%分成新政利好模拟经营团队。</li>
+<li><strong>跨平台发行成标配</strong> — 46款游戏同时登上双平台畅销榜，微信开发者大会明确5000万不分成要求"独占首发"，跨平台与独占策略需权衡。</li>
+<li><strong>抖音端内容营销效应显著</strong> — 魔灵纪元(↑61)、英雄没有闪(↑34)等依赖达人内容带量，与微信端获量逻辑差异明显。</li>
+<li><strong>本周政策红利集中释放</strong> — 微信开发者大会发布5000万流水不分成+2000万激励金+PC高性能模式+IAA最高90%分成+安全体系升级，叠加抖音Q1历史最高激励、苹果税降至12%，2026年是入局小游戏的最佳窗口期。</li>
+<li><strong>PC端成为第二增长曲线</strong> — 微信PC小游戏独占用户40%，ARPU超移动端130%，PC高性能模式将吸引更多中重度游戏开发者，"PC+移动"双端策略成标配。</li>
+<li><strong>AI务实落地元年</strong> — 腾讯定位AI为"效率基础设施"，AIM+智能投放Q2消耗同比增390%，直玩形态转化率提升3倍；AI漫剧入局争夺注意力，小游戏核心护城河仍是社交关系链。</li>
+<li><strong>版号供给持续高位</strong> — 5月158款过审，累计779个同比增长19.66%，腾讯/网易/三七互娱均有大作获批，模拟经营品类约17款供给充足。</li>
+</ol>
+</div>
+
+<!-- 七、字节微小直客会议要点 -->
+<div class="section">
+<h2><i class="fas fa-bullhorn" style="color:#667eea;"></i> 七、字节微小直客拜访 · 会议要点（5月27日）</h2>
+
+<h3>1. 字节微小/抖小大盘数据</h3>
+<table>
+<thead><tr><th>平台</th><th>日常规模</th><th>IAA</th><th>IAP</th><th>预算趋势</th></tr></thead>
+<tbody>
+<tr><td><strong>微小</strong></td><td>2400-2500万/日</td><td>≈150万</td><td>≈2250万</td><td>近期大幅下跌</td></tr>
+<tr><td><strong>抖小</strong></td><td>≈3400万/日</td><td>600-700万</td><td>≈2800万</td><td>预算占比持续提升</td></tr>
+</tbody>
+</table>
+<p style="font-size:13px;margin:8px 0;">预算结构：微小:抖小 从 <strong>5:5 → 1:2~1:3</strong>，行业预算向抖小倾斜。字节微小直播大盘≈40万/日（精品APP/传奇为主）。</p>
+
+<div class="summary-card">
+<strong>微小大盘下跌核心原因：</strong><br>
+① 红包版包素材严审拒量，日耗从300万跌至十几万<br>
+② 头部产品（永远的蔚蓝星球、纸上谈兵）大幅缩量<br>
+③ <strong>618电商流量挤压</strong>，互娱流量向闭环（抖向）倾斜（5月18日开始）
+</div>
+
+<h3>2. 平台重点政策与红利</h3>
+<div class="policy-box">
+<h4>微小新游政策（核心红利）</h4>
+<p><strong>首1000万流水：</strong>免分成 + 40%广告金<br>
+<strong>冲5000万流水：</strong>最高2500万广告金 + 分成激励 + 安卓5%分成激励</p>
+<p>适用：IAP老游马甲包/套版号冲新游身份；IAA不参与。<br>
+建议：有版号/马甲包储备尽快上线，政策截止时间不确定。</p>
+<p style="font-size:12px;color:#888;"><a href="https://game.weixin.qq.com/cgi-bin/h5/static/minigame/faq/list.html?category_id=5&id=403" target="_blank" style="color:#667eea;">政策详情 →</a></p>
+</div>
+
+<div class="policy-box">
+<h4>暑期政策（Q3） &amp; 主成分全量</h4>
+<p><strong>抖小暑期：</strong>重点发力直播，仅闭环产品可享政策激励。<br>
+<strong>主成分全量：</strong>5月27日起从10%渗透，暑期前全量开放。维度：商品（马甲包）+ 素材（双主线/试玩/AI/新广）。出价一致时素材多元性优先。</p>
+</div>
+
+<h3>3. 素材方向与建议</h3>
+<table>
+<thead><tr><th>素材类型</th><th>适配场景</th><th>效果评价</th></tr></thead>
+<tbody>
+<tr><td><strong>双主线</strong></td><td>主力持续投放</td><td>卡牌/放置迭代快，PSLG较慢</td></tr>
+<tr><td><strong>星广</strong></td><td>首发/大节点爆发</td><td>平推期效果差，不建议使用</td></tr>
+<tr><td><strong>试玩</strong></td><td>仅小游戏适配</td><td>量级有限</td></tr>
+</tbody>
+</table>
+
+<div class="summary-card" style="border-left-color:#e74c3c;">
+<strong>⭐ AI明星素材（重点推荐）</strong><br>
+<strong>优势：</strong>低成本、高点击率、可无限二创，性价比最高<br>
+<strong>价格：</strong>3-10万/人，5条起购，授权3-6个月；李诞10万起，新增魔尊重楼、马可、张子健等<br>
+<strong>合作方式：</strong>字节撮合MCN，授权后星图上传；建议我方自制素材（机构模板化）<br>
+<strong>真人明星素材：</strong>十几万-几十万/条，仅做广告素材，不官宣代言
+</div>
+
+<div class="summary-card">
+<strong>漫剧素材：</strong>成本15-20万/部，可对接陈志芳制作；平台可提供40%-50%流量扶持，适合新品破圈。
+</div>
+
+<h3>4. 行业竞品动态</h3>
+<div class="summary-card">
+<strong>强势新品：</strong>占城大师（5月21日上线），微小日耗近60万，3日ROI 140，跑量极强<br>
+<strong>竞品收缩：</strong>无尽冬日、奔奔王国在微小量级大幅下滑，日均仅几万；莉莉丝产品分散，单款日均约10万<br>
+<strong>微小新游行业打法：</strong>头部厂商大量储备马甲包冲新游政策；部分用AI洗脚本规避搬运检测
+</div>
+
+<h3>5. 后续行动项</h3>
+<ul style="font-size:13px;line-height:1.8;padding-left:20px;">
+  <li><strong>字节侧已完成：</strong>提供AI明星清单、微小新游首发政策文档、真人明星素材清单</li>
+  <li><strong>模型纠偏：</strong>直客配合申请模型纠偏，改善人群跑偏（生效1-3天，可能影响跑量）</li>
+  <li><strong>后续跟进：</strong>抖小双主线方向同步、竞品数据（商务端跟进）</li>
+  <li><strong>我方执行重点：</strong>
+    <ul>
+      <li>评估马甲包/新品冲新游政策可行性</li>
+      <li>筛选低价AI明星试点，自制素材提升效果</li>
+      <li>坚持周末集中放量，配合新素材与基建优化</li>
+      <li>6月初完成新品测试，确定微享/抖享投放策略</li>
+      <li>申请非抖版位排除包，优化出价与系数</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<footer>
+  <i class="far fa-copyright"></i> 市场资讯观察周报 · 数据来源：引力引擎 · 品类统一划分<br>
+  报告生成时间：2026-05-29
+</footer>
+
+</div>
+
+<!-- Modal -->
+<div id="rankModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle">畅销榜 Top100</h2><span class="close-modal">&times;</span></div><div class="modal-body" id="modalBody"></div></div></div>
+
+<script>
+(function(){
+  var modal = document.getElementById('rankModal');
+  var body = document.getElementById('modalBody');
+  var title = document.getElementById('modalTitle');
+  document.querySelectorAll('.open-modal-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var p = this.getAttribute('data-modal');
+      if (p === 'wx') {
+        title.innerHTML = '微信小游戏畅销榜 Top100';
+        body.innerHTML = '<table><thead><tr><th>#</th><th>游戏</th><th>品类</th><th>公司</th><th>变化</th></tr></thead><tbody><tr><td>1</td><td>三国：冰河时代</td><td>SLG/策略</td><td style="font-size:10px;">欢游互动（北京）科技有限公司</td><td>霸榜2天</td></tr><tr><td>2</td><td>QQ经典农场</td><td>模拟经营</td><td style="font-size:10px;">深圳市腾讯计算机系统有限公司</td><td>- 稳定</td></tr><tr><td>3</td><td>永远的蔚蓝星球</td><td>塔防</td><td style="font-size:10px;">广州颂悦信息技术有限公司</td><td>- 稳定</td></tr><tr><td>4</td><td>疯狂水世界</td><td>SLG/策略</td><td style="font-size:10px;">益世界网络科技有限公司</td><td>1</td></tr><tr><td>5</td><td>向僵尸开炮</td><td>塔防</td><td style="font-size:10px;">海南盛昌网络科技有限公司</td><td>1</td></tr><tr><td>6</td><td>占城大师</td><td>塔防</td><td style="font-size:10px;">武汉芯丰信息科技有限公司</td><td>1</td></tr><tr><td>7</td><td>无尽冬日</td><td>SLG/策略</td><td style="font-size:10px;">点点互动（北京）科技有限公司</td><td>1</td></tr><tr><td>8</td><td>我的花园世界</td><td>模拟经营</td><td style="font-size:10px;">厦门麟贝互娱科技有限公司</td><td>3</td></tr><tr><td>9</td><td>灵画师</td><td>ARPG</td><td style="font-size:10px;">广州光游网络科技有限公司</td><td>- 稳定</td></tr><tr><td>10</td><td>西游降妖记</td><td>ARPG</td><td style="font-size:10px;">--</td><td>2</td></tr><tr><td>11</td><td>道友来挖宝</td><td>放置RPG</td><td style="font-size:10px;">深圳雷霆信息技术有限公司</td><td>3</td></tr><tr><td>12</td><td>保卫向日葵</td><td>塔防</td><td style="font-size:10px;">深圳市一起梦游科技有限公司</td><td>7</td></tr><tr><td>13</td><td>跃动小子</td><td>放置RPG</td><td style="font-size:10px;">波克科技集团有限公司</td><td>3</td></tr><tr><td>14</td><td>奔奔王国</td><td>塔防</td><td style="font-size:10px;">福州点点松云网络有限公司</td><td>- 稳定</td></tr><tr><td>15</td><td>神器传说</td><td>放置RPG</td><td style="font-size:10px;">深圳全民互动科技有限公司</td><td>1</td></tr><tr><td>16</td><td>腾讯欢乐斗地主</td><td>棋牌</td><td style="font-size:10px;">深圳市腾讯计算机系统有限公司</td><td>3</td></tr><tr><td>17</td><td>城主别慌张</td><td>ARPG</td><td style="font-size:10px;">广州冠游信息科技有限公司</td><td>1</td></tr><tr><td>18</td><td>向往的生活</td><td>模拟经营</td><td style="font-size:10px;">深圳市必凡娱乐科技有限公司</td><td>1</td></tr><tr><td>19</td><td>掌上谈兵</td><td>卡牌</td><td style="font-size:10px;">郑州林凡网络科技有限公司</td><td>4</td></tr><tr><td>20</td><td>浪漫餐厅</td><td>模拟经营</td><td style="font-size:10px;">北京柠檬微趣科技股份有限公司</td><td>- 稳定</td></tr><tr><td>21</td><td>寻道大千</td><td>卡牌RPG</td><td style="font-size:10px;">三七互娱网络科技集团股份有限</td><td>3</td></tr><tr><td>22</td><td>冒险岛：枫之新篇</td><td>ARPG</td><td style="font-size:10px;">广东星辉天拓互动娱乐有限公司</td><td>- 稳定</td></tr><tr><td>23</td><td>梦幻消除战</td><td>消除</td><td style="font-size:10px;">广州喜势网络科技有限公司</td><td>2</td></tr><tr><td>24</td><td>肥鹅美食街</td><td>模拟经营</td><td style="font-size:10px;">北京豪腾创想科技有限公司</td><td>2</td></tr><tr><td>25</td><td>原始征途</td><td>MMO</td><td style="font-size:10px;">巨人网络集团股份有限公司</td><td>3</td></tr><tr><td>26</td><td>生存33天</td><td>SLG/策略</td><td style="font-size:10px;">广州三七网络科技有限公司</td><td>1</td></tr><tr><td>27</td><td>青云诀之伏魔</td><td>MMO</td><td style="font-size:10px;">海南元游信息技术有限公司</td><td>17</td></tr><tr><td>28</td><td>次神：光之觉醒</td><td>卡牌RPG</td><td style="font-size:10px;">在线途游（北京）科技有限公司</td><td>7</td></tr><tr><td>29</td><td>开心消消乐</td><td>消除</td><td style="font-size:10px;">乐元素科技北京股份有限公司</td><td>1</td></tr><tr><td>30</td><td>雷霆战机：集结</td><td>射击</td><td style="font-size:10px;">北京爱乐游文化发展有限公司</td><td>1</td></tr><tr><td>31</td><td>雀神广东麻将</td><td>棋牌</td><td style="font-size:10px;">上海锋兮网络科技有限公司</td><td>1</td></tr><tr><td>32</td><td>武侠大明星</td><td>割草RPG</td><td style="font-size:10px;">海南盛昌网络科技有限公司</td><td>1</td></tr><tr><td>33</td><td>斗破苍穹</td><td>卡牌RPG</td><td style="font-size:10px;">上海繁树网络科技有限公司</td><td>6</td></tr><tr><td>34</td><td>时尚百货城</td><td>模拟经营</td><td style="font-size:10px;">深圳市爱的番茄科技有限公司</td><td>3</td></tr><tr><td>35</td><td>三国：天命再临</td><td>SLG/策略</td><td style="font-size:10px;">--</td><td>1</td></tr><tr><td>36</td><td>大话西游归来</td><td>MMO</td><td style="font-size:10px;">上海以尚网络技术有限公司</td><td>10</td></tr><tr><td>37</td><td>机智逃脱</td><td>益智</td><td style="font-size:10px;">深圳市安立讯科技有限公司</td><td>3</td></tr><tr><td>38</td><td>百炼英雄</td><td>ARPG</td><td style="font-size:10px;">深圳市九九互动科技有限公司</td><td>2</td></tr><tr><td>39</td><td>迷雾大陆</td><td>ARPG</td><td style="font-size:10px;">北京豪腾创想科技有限公司</td><td>- 稳定</td></tr><tr><td>40</td><td>口袋奇兵</td><td>SLG/策略</td><td style="font-size:10px;">北京江娱互动科技有限公司</td><td>3</td></tr><tr><td>41</td><td>无限轮回</td><td>ARPG</td><td style="font-size:10px;">海南易多量科技有限公司</td><td>6</td></tr><tr><td>42</td><td>佣兵小镇</td><td>放置RPG</td><td style="font-size:10px;">成都天象互动文化传播有限公司</td><td>4</td></tr><tr><td>43</td><td>时空猎人·觉醒</td><td>动作</td><td style="font-size:10px;">江西贪玩信息技术有限公司</td><td>7</td></tr><tr><td>44</td><td>造化仙府</td><td>模拟经营</td><td style="font-size:10px;">上海沛炫网络科技有限公司</td><td>26</td></tr><tr><td>45</td><td>超能下蛋鸭</td><td>放置RPG</td><td style="font-size:10px;">世熠网络科技（上海）有限公司</td><td>- 稳定</td></tr><tr><td>46</td><td>咻咻勇者</td><td>ARPG</td><td style="font-size:10px;">深圳市紫晓互动科技有限公司</td><td>5</td></tr><tr><td>47</td><td>剑侠世界：起源</td><td>ARPG</td><td style="font-size:10px;">成都西山居世游科技有限公司</td><td>5</td></tr><tr><td>48</td><td>四季合合</td><td>合成消除</td><td style="font-size:10px;">青岛蓝飞互娱科技股份有限公司</td><td>6</td></tr><tr><td>49</td><td>天龙八部2：飞龙战天</td><td>MMO</td><td style="font-size:10px;">江西贪玩信息技术有限公司</td><td>5</td></tr><tr><td>50</td><td>逆转回合</td><td>卡牌RPG</td><td style="font-size:10px;">厦门游力信息科技有限公司</td><td>11</td></tr><tr><td>51</td><td>欢乐战三国</td><td>卡牌RPG</td><td style="font-size:10px;">深圳市奥创互娱科技有限公司</td><td>3</td></tr><tr><td>52</td><td>微乐四川麻将</td><td>棋牌</td><td style="font-size:10px;">家乡互动厦门网络科技有限公司</td><td>7</td></tr><tr><td>53</td><td>肥鹅健身房</td><td>模拟经营</td><td style="font-size:10px;">北京豪腾创想科技有限公司</td><td>3</td></tr><tr><td>54</td><td>王者征途</td><td>MMO</td><td style="font-size:10px;">上海巨人统平网络科技有限公司</td><td>1</td></tr><tr><td>55</td><td>王者之弈</td><td>竞技</td><td style="font-size:10px;">海南椰路信息科技有限公司</td><td>16</td></tr><tr><td>56</td><td>天龙八部荣耀版</td><td>MMO</td><td style="font-size:10px;">成都初心互动科技有限公司</td><td>6</td></tr><tr><td>57</td><td>指尖无双</td><td>卡牌RPG</td><td style="font-size:10px;">福州蓝琥珀网络科技有限公司</td><td>16</td></tr><tr><td>58</td><td>元梦之星</td><td>动作</td><td style="font-size:10px;">深圳市腾讯计算机系统有限公司</td><td>15</td></tr><tr><td>59</td><td>梦幻西游网页版</td><td>放置RPG</td><td style="font-size:10px;">上海以尚网络技术有限公司</td><td>4</td></tr><tr><td>60</td><td>最强斗王</td><td>卡牌RPG</td><td style="font-size:10px;">广西天牛信息技术有限公司</td><td>7</td></tr><tr><td>61</td><td>手机反恐特别行动</td><td>射击</td><td style="font-size:10px;">成都疾风劲趣科技有限公司</td><td>18</td></tr><tr><td>62</td><td>我的防线</td><td>塔防</td><td style="font-size:10px;">杭州烈酷科技有限公司</td><td>4</td></tr><tr><td>63</td><td>小兵打天下</td><td>塔防</td><td style="font-size:10px;">杭州淞羽网络科技有限公司</td><td>6</td></tr><tr><td>64</td><td>源星战域</td><td>ARPG</td><td style="font-size:10px;">海南青时信息技术有限公司</td><td>23</td></tr><tr><td>65</td><td>出征吧！勇士</td><td>塔防</td><td style="font-size:10px;">广州奥贝游网络科技有限公司</td><td>3</td></tr><tr><td>66</td><td>咸鱼之王</td><td>卡牌RPG</td><td style="font-size:10px;">北京豪腾嘉科科技有限公司</td><td>3</td></tr><tr><td>67</td><td>英雄没有闪</td><td>ARPG</td><td style="font-size:10px;">广州盈心网络科技有限公司</td><td>12</td></tr><tr><td>68</td><td>指尖王国</td><td>竞技</td><td style="font-size:10px;">深圳市掌娱趣科技有限公司</td><td>新进榜</td></tr><tr><td>69</td><td>欢乐麻将</td><td>棋牌</td><td style="font-size:10px;">深圳市腾讯计算机系统有限公司</td><td>4</td></tr><tr><td>70</td><td>空格之境</td><td>模拟经营</td><td style="font-size:10px;">江西启游互动科技有限公司</td><td>7</td></tr><tr><td>71</td><td>勇者联盟</td><td>ARPG</td><td style="font-size:10px;">广州爱游网络科技有限公司</td><td>14</td></tr><tr><td>72</td><td>遗弃之地</td><td>塔防</td><td style="font-size:10px;">北京豪腾创想科技有限公司</td><td>12</td></tr><tr><td>73</td><td>织梦森林</td><td>模拟经营</td><td style="font-size:10px;">安徽雷虎网络科技有限公司</td><td>3</td></tr><tr><td>74</td><td>六六英雄</td><td>益智</td><td style="font-size:10px;">北京紫辰乐游科技有限公司</td><td>10</td></tr><tr><td>75</td><td>奇遇西行</td><td>卡牌RPG</td><td style="font-size:10px;">广州焜耀网络科技有限公司</td><td>3</td></tr><tr><td>76</td><td>我的休闲时光</td><td>模拟经营</td><td style="font-size:10px;">广州卓动信息科技有限公司</td><td>27</td></tr><tr><td>77</td><td>三国杀</td><td>卡牌</td><td style="font-size:10px;">杭州游卡网络技术有限公司</td><td>18</td></tr><tr><td>78</td><td>微乐捉鸡麻将</td><td>棋牌</td><td style="font-size:10px;">家乡互动厦门网络科技有限公司</td><td>4</td></tr><tr><td>79</td><td>梦幻经理人</td><td>模拟经营</td><td style="font-size:10px;">上海望伯纳乌科技有限公司</td><td>15</td></tr><tr><td>80</td><td>天天斗地主真人版</td><td>棋牌</td><td style="font-size:10px;">深圳市禅游科技股份有限公司</td><td>5</td></tr><tr><td>81</td><td>这城有良田</td><td>模拟经营</td><td style="font-size:10px;">上海益玩网络科技有限公司</td><td>3</td></tr><tr><td>82</td><td>三国：谋定天下</td><td>SLG/策略</td><td style="font-size:10px;">浙江华娱网络科技有限公司</td><td>2</td></tr><tr><td>83</td><td>绝世仙王</td><td>MMO</td><td style="font-size:10px;">上海风派网络科技有限公司</td><td>1</td></tr><tr><td>84</td><td>一路狂飙</td><td>塔防</td><td style="font-size:10px;">世熠网络科技（上海）有限公司</td><td>- 稳定</td></tr><tr><td>85</td><td>微乐斗地主</td><td>棋牌</td><td style="font-size:10px;">家乡互动厦门网络科技有限公司</td><td>7</td></tr><tr><td>86</td><td>羊了个羊：星球</td><td>消除</td><td style="font-size:10px;">北京简游科技有限公司</td><td>4</td></tr><tr><td>87</td><td>月之村</td><td>益智</td><td style="font-size:10px;">北京简游互娱科技有限公司</td><td>6</td></tr><tr><td>88</td><td>鱼吃鱼</td><td>益智</td><td style="font-size:10px;">广州德道科技有限公司</td><td>22</td></tr><tr><td>89</td><td>热血江湖传</td><td>ARPG</td><td style="font-size:10px;">江西贪玩信息技术有限公司</td><td>10</td></tr><tr><td>90</td><td>爪爪大乱斗</td><td>益智</td><td style="font-size:10px;">安徽盈趣网络科技有限公司</td><td>1</td></tr><tr><td>91</td><td>新弹弹堂</td><td>卡牌RPG</td><td style="font-size:10px;">深圳第七大道科技有限公司</td><td>4</td></tr><tr><td>92</td><td>楚新钓</td><td>放置RPG</td><td style="font-size:10px;">海南易多量科技有限公司</td><td>9</td></tr><tr><td>93</td><td>主宰世界</td><td>SLG/策略</td><td style="font-size:10px;">广州四三九九信息科技有限公司</td><td>7</td></tr><tr><td>94</td><td>财神十三张</td><td>棋牌</td><td style="font-size:10px;">厦门游成互动网络科技有限公司</td><td>2</td></tr><tr><td>95</td><td>街机恐龙</td><td>动作</td><td style="font-size:10px;">湖南草花互动科技有限股份公司</td><td>新进榜</td></tr><tr><td>96</td><td>一步两步</td><td>放置RPG</td><td style="font-size:10px;">厦门光环信息科技有限公司</td><td>2</td></tr><tr><td>97</td><td>重生：我觉醒无限异能</td><td>ARPG</td><td style="font-size:10px;">--</td><td>新进榜</td></tr><tr><td>98</td><td>掼蛋</td><td>棋牌</td><td style="font-size:10px;">杭州边锋网络技术有限公司</td><td>7</td></tr><tr><td>99</td><td>女神国度</td><td>ARPG</td><td style="font-size:10px;">成都星邦互娱网络科技集团有限</td><td>新进榜</td></tr><tr><td>100</td><td>多乐够级</td><td>棋牌</td><td style="font-size:10px;">北京蓝色创想网络科技有限责任</td><td>新进榜</td></tr></tbody></table>';
+      } else {
+        title.innerHTML = '抖音小游戏畅销榜 Top100';
+        body.innerHTML = '<table><thead><tr><th>#</th><th>游戏</th><th>品类</th><th>公司</th><th>变化</th></tr></thead><tbody><tr><td>1</td><td>三国：冰河时代</td><td>SLG/策略</td><td style="font-size:10px;">欢游互动（北京）科技有限公司</td><td>霸榜3天</td></tr><tr><td>2</td><td>灵画师</td><td>ARPG</td><td style="font-size:10px;">广州光游网络科技有限公司</td><td>1</td></tr><tr><td>3</td><td>我的花园世界</td><td>模拟经营</td><td style="font-size:10px;">海南途趣科技有限公司</td><td>1</td></tr><tr><td>4</td><td>向僵尸开炮</td><td>塔防</td><td style="font-size:10px;">海南盛昌网络科技有限公司</td><td>5</td></tr><tr><td>5</td><td>无尽冬日</td><td>SLG/策略</td><td style="font-size:10px;">上海青笛科技有限公司</td><td>2</td></tr><tr><td>6</td><td>疯狂水世界</td><td>SLG/策略</td><td style="font-size:10px;">益世界网络科技有限公司</td><td>1</td></tr><tr><td>7</td><td>浪漫餐厅</td><td>模拟经营</td><td style="font-size:10px;">北京柠檬曲奇科技有限公司</td><td>1</td></tr><tr><td>8</td><td>占城大师</td><td>塔防</td><td style="font-size:10px;">武汉多趣信息技术有限公司</td><td>4</td></tr><tr><td>9</td><td>梦幻消除战</td><td>消除</td><td style="font-size:10px;">广州喜势网络科技有限公司</td><td>7</td></tr><tr><td>10</td><td>超能下蛋鸭</td><td>放置RPG</td><td style="font-size:10px;">世熠网络科技（上海）有限公司</td><td>2</td></tr><tr><td>11</td><td>四季合合</td><td>合成消除</td><td style="font-size:10px;">青岛蓝飞互娱科技股份有限公司</td><td>7</td></tr><tr><td>12</td><td>时尚百货城</td><td>模拟经营</td><td style="font-size:10px;">深圳市爱的番茄科技有限公司</td><td>1</td></tr><tr><td>13</td><td>传奇之业</td><td>ARPG</td><td style="font-size:10px;">杭州悦昭网络科技有限公司</td><td>4</td></tr><tr><td>14</td><td>跃动小子</td><td>放置RPG</td><td style="font-size:10px;">柏项网络科技（上海）有限公司</td><td>2</td></tr><tr><td>15</td><td>保卫向日葵</td><td>塔防</td><td style="font-size:10px;">深圳市一起梦游科技有限公司</td><td>5</td></tr><tr><td>16</td><td>永远的蔚蓝星球</td><td>塔防</td><td style="font-size:10px;">广州颂悦信息技术有限公司</td><td>5</td></tr><tr><td>17</td><td>杜拉拉升职记</td><td>模拟经营</td><td style="font-size:10px;">苏州沁游网络科技有限公司</td><td>4</td></tr><tr><td>18</td><td>奔奔王国</td><td>塔防</td><td style="font-size:10px;">福州点点松禾科技有限公司</td><td>12</td></tr><tr><td>19</td><td>生存33天</td><td>SLG/策略</td><td style="font-size:10px;">广州龙畅网络科技有限公司</td><td>- 稳定</td></tr><tr><td>20</td><td>向往的生活</td><td>模拟经营</td><td style="font-size:10px;">深圳市必凡娱乐科技有限公司</td><td>- 稳定</td></tr><tr><td>21</td><td>次神光之觉醒</td><td>卡牌RPG</td><td style="font-size:10px;">北京雪境科技有限公司</td><td>6</td></tr><tr><td>22</td><td>神器传说</td><td>放置RPG</td><td style="font-size:10px;">深圳市拾光筑梦文化传媒有限公</td><td>2</td></tr><tr><td>23</td><td>狱国争霸</td><td>SLG/策略</td><td style="font-size:10px;">北京智诚互娱科技有限公司</td><td>9</td></tr><tr><td>24</td><td>手机反恐特别行动</td><td>射击</td><td style="font-size:10px;">成都疾风劲趣科技有限公司</td><td>2</td></tr><tr><td>25</td><td>最强斗王</td><td>卡牌RPG</td><td style="font-size:10px;">广西天牛信息技术有限公司</td><td>1</td></tr><tr><td>26</td><td>指尖幻影</td><td>放置RPG</td><td style="font-size:10px;">海南异界科技有限公司</td><td>3</td></tr><tr><td>27</td><td>妖怪金手指</td><td>塔防</td><td style="font-size:10px;">霍尔果斯天翔信息技术有限公司</td><td>1</td></tr><tr><td>28</td><td>三国大冒险</td><td>卡牌RPG</td><td style="font-size:10px;">广州天纵信息技术有限公司</td><td>3</td></tr><tr><td>29</td><td>武侠大明星</td><td>割草RPG</td><td style="font-size:10px;">海南临游科技有限公司</td><td>13</td></tr><tr><td>30</td><td>抓大鹅</td><td>消除</td><td style="font-size:10px;">青岛蓝飞互娱科技股份有限公司</td><td>1</td></tr><tr><td>31</td><td>爆裂守卫</td><td>塔防</td><td style="font-size:10px;">邯郸太空船信息科技有限公司</td><td>4</td></tr><tr><td>32</td><td>王者之弈</td><td>竞技</td><td style="font-size:10px;">海南椰路信息科技有限公司</td><td>- 稳定</td></tr><tr><td>33</td><td>不服来通关</td><td>益智</td><td style="font-size:10px;">长沙游品科技有限公司</td><td>2</td></tr><tr><td>34</td><td>奇遇西行</td><td>卡牌RPG</td><td style="font-size:10px;">广州焜耀网络科技有限公司</td><td>11</td></tr><tr><td>35</td><td>烈焰觉醒</td><td>ARPG</td><td style="font-size:10px;">杭州悦妙网络科技有限公司</td><td>1</td></tr><tr><td>36</td><td>羊了个羊：星球</td><td>消除</td><td style="font-size:10px;">北京简游科技有限公司天津分公</td><td>3</td></tr><tr><td>37</td><td>魔灵纪元</td><td>放置RPG</td><td style="font-size:10px;">郑州信跃网络科技有限公司</td><td>61</td></tr><tr><td>38</td><td>佣兵小镇</td><td>放置RPG</td><td style="font-size:10px;">成都爱奇艺影视文化有限公司</td><td>2</td></tr><tr><td>39</td><td>我的防线</td><td>塔防</td><td style="font-size:10px;">杭州烈酷科技有限公司</td><td>1</td></tr><tr><td>40</td><td>造化仙府</td><td>模拟经营</td><td style="font-size:10px;">上海沛炫网络科技有限公司</td><td>7</td></tr><tr><td>41</td><td>斗破苍穹</td><td>卡牌RPG</td><td style="font-size:10px;">上海繁树网络科技有限公司</td><td>6</td></tr><tr><td>42</td><td>战龙之怒</td><td>其他</td><td style="font-size:10px;">杭州悦玩互娱网络科技有限公司</td><td>6</td></tr><tr><td>43</td><td>佛系消消消</td><td>消除</td><td style="font-size:10px;">厦门行上网络科技有限公司</td><td>3</td></tr><tr><td>44</td><td>掼蛋</td><td>棋牌</td><td style="font-size:10px;">杭州边锋网络技术有限公司</td><td>- 稳定</td></tr><tr><td>45</td><td>梦幻西游网页版</td><td>放置RPG</td><td style="font-size:10px;">广州网易计算机系统有限公司</td><td>18</td></tr><tr><td>46</td><td>肥鹅美食街</td><td>模拟经营</td><td style="font-size:10px;">北京豪腾创想科技有限公司</td><td>5</td></tr><tr><td>47</td><td>英雄大对决</td><td>塔防</td><td style="font-size:10px;">重庆煌秀信息技术有限公司</td><td>4</td></tr><tr><td>48</td><td>多乐升级</td><td>棋牌</td><td style="font-size:10px;">北京蓝色创想网络科技有限责任</td><td>2</td></tr><tr><td>49</td><td>勇者突围</td><td>动作</td><td style="font-size:10px;">广州轻游信息科技有限公司</td><td>2</td></tr><tr><td>50</td><td>救救我鸭</td><td>益智</td><td style="font-size:10px;">北京起跃文化有限公司</td><td>3</td></tr><tr><td>51</td><td>一路狂飙</td><td>塔防</td><td style="font-size:10px;">世熠网络科技（上海）有限公司</td><td>新进榜</td></tr><tr><td>52</td><td>英雄没有闪</td><td>ARPG</td><td style="font-size:10px;">广州盈心网络科技有限公司</td><td>34</td></tr><tr><td>53</td><td>遗弃之地</td><td>塔防</td><td style="font-size:10px;">北京智诚互娱科技有限公司</td><td>18</td></tr><tr><td>54</td><td>元气蛋蛋王</td><td>放置RPG</td><td style="font-size:10px;">深圳澎云科技有限公司</td><td>8</td></tr><tr><td>55</td><td>炽烈战歌</td><td>ARPG</td><td style="font-size:10px;">杭州悦妙网络科技有限公司</td><td>- 稳定</td></tr><tr><td>56</td><td>百重守护</td><td>卡牌RPG</td><td style="font-size:10px;">上海德益昶信息科技有限公司</td><td>4</td></tr><tr><td>57</td><td>逆袭的旅程</td><td>ARPG</td><td style="font-size:10px;">杭州卡日曲网络科技有限公司</td><td>14</td></tr><tr><td>58</td><td>小小屠龙</td><td>ARPG</td><td style="font-size:10px;">绍兴玩味科技有限公司</td><td>7</td></tr><tr><td>59</td><td>百炼英雄</td><td>ARPG</td><td style="font-size:10px;">深圳市九九互动科技有限公司</td><td>7</td></tr><tr><td>60</td><td>一步两步</td><td>放置RPG</td><td style="font-size:10px;">厦门游力信息科技有限公司</td><td>23</td></tr><tr><td>61</td><td>青云诀之伏魔</td><td>MMO</td><td style="font-size:10px;">海南青时信息技术有限公司</td><td>12</td></tr><tr><td>62</td><td>天天台球</td><td>棋牌</td><td style="font-size:10px;">北京喜云网络科技有限公司</td><td>2</td></tr><tr><td>63</td><td>超凡三国</td><td>卡牌RPG</td><td style="font-size:10px;">深圳百里光芒网络科技有限公司</td><td>7</td></tr><tr><td>64</td><td>三国杀</td><td>卡牌</td><td style="font-size:10px;">杭州游卡网络技术有限公司</td><td>24</td></tr><tr><td>65</td><td>找个球</td><td>益智</td><td style="font-size:10px;">长沙指米网络科技有限公司</td><td>1</td></tr><tr><td>66</td><td>无厘头大挑战</td><td>益智</td><td style="font-size:10px;">广州双百信息科技有限公司</td><td>6</td></tr><tr><td>67</td><td>时光杂货店</td><td>模拟经营</td><td style="font-size:10px;">安徽雷虎网络科技有限公司</td><td>22</td></tr><tr><td>68</td><td>找个啥</td><td>益智</td><td style="font-size:10px;">长沙指米网络科技有限公司</td><td>2</td></tr><tr><td>69</td><td>这活贼解压</td><td>益智</td><td style="font-size:10px;">福州新象互动网络科技有限公司</td><td>7</td></tr><tr><td>70</td><td>兵器王者</td><td>动作</td><td style="font-size:10px;">青岛蓝飞互娱科技股份有限公司</td><td>3</td></tr><tr><td>71</td><td>欢乐战三国</td><td>卡牌RPG</td><td style="font-size:10px;">海南哎呦互娱网络科技有限公司</td><td>13</td></tr><tr><td>72</td><td>无限轮回</td><td>ARPG</td><td style="font-size:10px;">海南易多量科技有限公司</td><td>15</td></tr><tr><td>73</td><td>斗神域</td><td>ARPG</td><td style="font-size:10px;">杭州悦昭网络科技有限公司</td><td>7</td></tr><tr><td>74</td><td>在玩亿关就睡</td><td>益智</td><td style="font-size:10px;">深圳海草科技有限公司</td><td>- 稳定</td></tr><tr><td>75</td><td>楚新钓</td><td>放置RPG</td><td style="font-size:10px;">海南易多量科技有限公司</td><td>21</td></tr><tr><td>76</td><td>援军来了</td><td>塔防</td><td style="font-size:10px;">上海炎魔网络科技有限公司</td><td>24</td></tr><tr><td>77</td><td>咻咻勇者</td><td>ARPG</td><td style="font-size:10px;">深圳市紫晓互动科技有限公司</td><td>16</td></tr><tr><td>78</td><td>灵决苍穹</td><td>ARPG</td><td style="font-size:10px;">杭州悦玩互娱网络科技有限公司</td><td>新进榜</td></tr><tr><td>79</td><td>极限萌怪</td><td>卡牌RPG</td><td style="font-size:10px;">霍尔果斯天翔信息技术有限公司</td><td>9</td></tr><tr><td>80</td><td>这关不简单</td><td>益智</td><td style="font-size:10px;">北京起跃文化有限公司</td><td>2</td></tr><tr><td>81</td><td>全境守卫</td><td>塔防</td><td style="font-size:10px;">重庆汇量云科技有限公司</td><td>4</td></tr><tr><td>82</td><td>时光大爆炸</td><td>模拟经营</td><td style="font-size:10px;">安徽盈趣网络科技有限公司</td><td>1</td></tr><tr><td>83</td><td>王者征途</td><td>MMO</td><td style="font-size:10px;">上海巨人统平网络科技有限公司</td><td>新进榜</td></tr><tr><td>84</td><td>通关来解压</td><td>益智</td><td style="font-size:10px;">武汉智地卓越信息科技有限公司</td><td>7</td></tr><tr><td>85</td><td>守护神之觉醒网络游戏软件V1.0</td><td>其他</td><td style="font-size:10px;">海南丰际网络科技有限公司</td><td>26</td></tr><tr><td>86</td><td>此生无白</td><td>模拟经营</td><td style="font-size:10px;">苏州沁游网络科技有限公司天枢</td><td>8</td></tr><tr><td>87</td><td>剑侠传奇</td><td>ARPG</td><td style="font-size:10px;">深圳市小黑龙网络科技有限公司</td><td>新进榜</td></tr><tr><td>88</td><td>空格之境</td><td>模拟经营</td><td style="font-size:10px;">江西启游互动科技有限公司</td><td>21</td></tr><tr><td>89</td><td>超级消消</td><td>消除</td><td style="font-size:10px;">广州联曼信息科技有限公司</td><td>8</td></tr><tr><td>90</td><td>乐蜀三国</td><td>卡牌RPG</td><td style="font-size:10px;">杭州上兔网络科技有限公司</td><td>9</td></tr><tr><td>91</td><td>最强祖师</td><td>模拟经营</td><td style="font-size:10px;">霍尔果斯星嘉网络科技有限公司</td><td>2</td></tr><tr><td>92</td><td>象棋达人</td><td>棋牌</td><td style="font-size:10px;">深圳市一锋科技有限公司</td><td>- 稳定</td></tr><tr><td>93</td><td>消的有点菜</td><td>消除</td><td style="font-size:10px;">长沙指极星科技有限公司</td><td>9</td></tr><tr><td>94</td><td>三界无双</td><td>ARPG</td><td style="font-size:10px;">杭州悦昭网络科技有限公司</td><td>17</td></tr><tr><td>95</td><td>大丰收</td><td>模拟经营</td><td style="font-size:10px;">北京米兜科技有限公司</td><td>1</td></tr><tr><td>96</td><td>诡话连篇</td><td>益智</td><td style="font-size:10px;">深圳市会友互联网络科技有限公</td><td>21</td></tr><tr><td>97</td><td>咻咻大冒险</td><td>放置RPG</td><td style="font-size:10px;">江西菲凯信息技术有限公司</td><td>新进榜</td></tr><tr><td>98</td><td>天龙八部荣耀版</td><td>MMO</td><td style="font-size:10px;">成都初心互动科技有限公司</td><td>新进榜</td></tr><tr><td>99</td><td>躺平发育</td><td>塔防</td><td style="font-size:10px;">北京蜜獾工坊科技有限公司</td><td>新进榜</td></tr><tr><td>100</td><td>宫廷风云</td><td>模拟经营</td><td style="font-size:10px;">苏州沁游网络科技有限公司</td><td>新进榜</td></tr></tbody></table>';
+      }
+      modal.style.display = 'block';
+    });
+  });
+  document.querySelector('.close-modal').addEventListener('click', function(){ modal.style.display = 'none'; });
+  window.addEventListener('click', function(e){ if (e.target === modal) modal.style.display = 'none'; });
+})();
+
+(function(){
+  function loadChart(cb) {
+    if (typeof Chart !== 'undefined') { cb(true); return; }
+    var s = document.createElement('script');
+    s.src = 'https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.0/chart.umd.min.js';
+    s.onload = function(){ cb(typeof Chart !== 'undefined'); };
+    s.onerror = function(){ cb(false); };
+    document.head.appendChild(s);
+  }
+  loadChart(function(ok) {
+    if (!ok) return;
+    var colors = ['#667eea','#764ba2','#e74c3c','#e67e22','#27ae60','#2980b9','#8e44ad','#f39c12','#1abc9c','#2ecc71','#e91e63','#00bcd4','#ff5722','#607d8b','#9b59b6','#34495e'];
+    var sortedCats = ["模拟经营","塔防","卡牌RPG","ARPG","SLG/策略","放置RPG","MMO","消除","棋牌","益智","合成消除","动作","射击","竞技","卡牌","割草RPG","其他"];
+    var wxData = [13,10,10,15,8,8,7,3,10,5,1,3,2,2,2,1,0];
+    var dyData = [14,14,10,14,5,11,3,6,4,10,1,2,1,1,1,1,2];
+
+    new Chart(document.getElementById('wxCatPie'), {
+      type: 'pie',
+      data: { labels: sortedCats, datasets: [{ data: wxData, backgroundColor: colors }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { font: { size: 10 } } } } }
+    });
+    new Chart(document.getElementById('dyCatPie'), {
+      type: 'pie',
+      data: { labels: sortedCats, datasets: [{ data: dyData, backgroundColor: colors }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { font: { size: 10 } } } } }
+    });
+    new Chart(document.getElementById('catCompare'), {
+      type: 'bar',
+      data: {
+        labels: sortedCats,
+        datasets: [
+          { label: '微信', data: wxData, backgroundColor: 'rgba(102,126,234,0.7)', borderRadius: 4 },
+          { label: '抖音', data: dyData, backgroundColor: 'rgba(118,75,162,0.7)', borderRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'top' } },
+        scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { stepSize: 2 } } }
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

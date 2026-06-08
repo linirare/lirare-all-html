@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Workbench</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav-shell" aria-label="主导航">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span>Agent Workbench</span>
+      </div>
+      <div class="status-strip">
+        <span id="clock" class="clock">--:--</span>
+        <span class="online-pill"><span class="dot"></span><span id="onlineCount">4 在线</span></span>
+        <button id="themeToggle" class="icon-button" type="button" aria-label="切换暗色模式" title="切换暗色模式">
+          <span class="sun">☀</span>
+          <span class="moon">●</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero-panel" aria-labelledby="heroTitle">
+      <div>
+        <p class="eyebrow">Multi-Agent Console</p>
+        <h1 id="heroTitle">多Agent工作台</h1>
+        <p class="hero-copy">统一管理 Hermes、Codex、OpenClaw 与 ClaudeCode 的会话、状态和记忆库概览。</p>
+      </div>
+      <div class="hero-meta">
+        <span>Local-first chat</span>
+        <span>Obsidian memory</span>
+      </div>
+    </section>
+
+    <section class="workspace-grid">
+      <div class="panel agents-panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Agents</p>
+            <h2>仪表盘</h2>
+          </div>
+          <span class="tiny-note">点击卡片开始聊天</span>
+        </div>
+        <div id="agentGrid" class="agent-grid"></div>
+      </div>
+
+      <section class="panel chat-panel" aria-labelledby="chatTitle">
+        <div class="chat-header">
+          <div class="active-agent">
+            <img id="activeAvatar" src="assets/hermes.png" alt="Hermes 头像">
+            <div>
+              <p class="eyebrow">Chat</p>
+              <h2 id="chatTitle">Hermes</h2>
+            </div>
+          </div>
+          <button id="clearChat" class="pill-button secondary" type="button">清空</button>
+        </div>
+        <div id="messages" class="messages" aria-live="polite"></div>
+        <form id="chatForm" class="composer">
+          <input id="messageInput" type="text" autocomplete="off" placeholder="发送消息..." aria-label="聊天消息">
+          <button class="pill-button" type="submit">发送</button>
+        </form>
+      </section>
+    </section>
+
+    <section class="memory-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Obsidian</p>
+          <h2>记忆库概览</h2>
+        </div>
+          <div class="meta-strip">
+            <span id="backendBadge" class="backend-badge">检查后端...</span>
+          </div>
+          <label class="search">
+            <span>搜索</span>
+            <input id="noteSearch" type="search" placeholder="查找笔记或链接">
+          </label>
+      </div>
+
+      <div class="metrics-grid">
+        <article class="metric-card">
+          <span>笔记</span>
+          <strong>248</strong>
+          <small>本周 +18</small>
+        </article>
+        <article class="metric-card">
+          <span>链接</span>
+          <strong>1,426</strong>
+          <small>双向链接 82%</small>
+        </article>
+        <article class="metric-card">
+          <span>图谱节点</span>
+          <strong>64</strong>
+          <small>核心主题 12</small>
+        </article>
+      </div>
+
+      <div class="memory-grid">
+        <div class="panel chart-panel">
+          <canvas id="memoryChart" width="720" height="300" aria-label="记忆库柱状图"></canvas>
+        </div>
+        <div class="panel notes-panel">
+          <ul id="noteList" class="note-list"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

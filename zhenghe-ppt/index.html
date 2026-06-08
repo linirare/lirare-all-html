@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="corporate-clean">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>郑和下西洋 · 微信小游戏项目提案</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" id="theme-link" href="assets/themes/corporate-clean.css">
+<link rel="stylesheet" href="assets/animations/animations.css">
+<style>
+/* === Mobile responsive overrides === */
+@media (max-width: 768px) {
+  .slide { padding: 24px 20px !important; }
+  .g2, .g3, .g4 { grid-template-columns: 1fr !important; gap: 10px !important; }
+  .deck-header { top: 12px !important; left: 16px !important; right: 16px !important; font-size: 11px !important; }
+  .deck-footer { bottom: 12px !important; left: 16px !important; right: 16px !important; font-size: 11px !important; }
+  .h1, h1.title { font-size: 32px !important; line-height: 1.2 !important; }
+  .h2, h2 { font-size: 24px !important; }
+  .h3, h3 { font-size: 18px !important; }
+  .h4, h4 { font-size: 16px !important; }
+  .lede { font-size: 16px !important; }
+  .kicker { font-size: 13px !important; }
+  .card { padding: 14px !important; }
+  .pill { font-size: 11px !important; padding: 3px 10px !important; }
+  .dim, .dim2 { font-size: 13px !important; }
+  .mt-l { margin-top: 16px !important; }
+  .mt-m { margin-top: 12px !important; }
+  .grid { gap: 10px !important; }
+  .row { gap: 8px !important; }
+}
+@media (max-width: 480px) {
+  .slide { padding: 20px 14px !important; }
+  .h1, h1.title { font-size: 26px !important; }
+  .h2, h2 { font-size: 20px !important; }
+  .lede { font-size: 14px !important; }
+}
+</style>
+</head>
+<body data-themes="corporate-clean,minimal-white,editorial-serif,news-broadcast" data-theme-base="assets/themes/">
+
+<div class="deck">
+
+  <!-- ======= 1. Cover ======= -->
+  <section class="slide center tc" data-title="Cover">
+    <div class="deck-header"><span class="eyebrow">Project Proposal · 2026-05-21</span><span class="eyebrow">微信小游戏</span></div>
+    <div style="max-width:1000px">
+      <div class="divider-accent" style="margin:0 auto 20px"></div>
+      <p class="kicker" style="font-size:18px;letter-spacing:.15em">航海 Roguelike · 节点决策 · 收集养成</p>
+      <h1 class="h1 anim-rise-in" data-anim="rise-in" style="font-size:72px;line-height:1.2">郑和<br><span style="color:var(--accent-2)">下西洋</span></h1>
+      <p class="lede" style="margin:20px auto 0;max-width:700px">每次出海都是一局全新冒险 · 选旗舰带船员 · 出航决策 · 活着回来</p>
+      <div class="row wrap mt-l" style="gap:8px;justify-content:center">
+        <span class="pill pill-accent">航海肉鸽</span>
+        <span class="pill">节点地图</span>
+        <span class="pill">策略决策</span>
+        <span class="pill">收集养成</span>
+        <span class="pill">社交裂变</span>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">内部资料 · 请勿外传</span><span class="slide-number" data-current="1" data-total="14"></span></div>
+    <div style="position:absolute;bottom:48px;left:50%;transform:translateX(-50%);font-size:13px;color:var(--text-3);letter-spacing:1px">← 左右滑动 / 键盘方向键翻页 →</div>
+  </section>
+
+  <!-- ======= 2. 项目概述 ======= -->
+  <section class="slide" data-title="项目概述">
+    <div class="deck-header"><span class="eyebrow">01</span><span class="eyebrow">OVERVIEW</span></div>
+    <p class="kicker" style="margin-bottom:4px">PROJECT OVERVIEW</p>
+    <h2 class="h2" style="font-size:40px">国风航海 · 微信小游戏</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div class="card"><h4>📱 平台</h4><p class="dim">微信小游戏 · 竖版 · 即开即玩</p></div>
+      <div class="card"><h4>🎯 目标用户</h4><p class="dim">25-45岁 · 历史/经营类泛用户</p></div>
+      <div class="card"><h4>🎮 游戏类型</h4><p class="dim">航海Roguelike · 节点决策 · 单局制</p></div>
+      <div class="card"><h4>⏱️ 单局时长</h4><p class="dim">15-20分钟 · 碎片化一局 · 随时暂停</p></div>
+      <div class="card"><h4>💰 变现模式</h4><p class="dim">IAP（月卡/抽卡/礼包）+ 激励视频广告</p></div>
+      <div class="card"><h4>🏗️ 开发周期</h4><p class="dim">6个月 · 团队15人 · 预算300-500万</p></div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">核心参数一览</span><span class="slide-number" data-current="2" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 3. 世界观 ======= -->
+  <section class="slide" data-title="世界观">
+    <div class="deck-header"><span class="eyebrow">02</span><span class="eyebrow">WORLD</span></div>
+    <p class="kicker" style="margin-bottom:4px">WORLD SETTING</p>
+    <h2 class="h2" style="font-size:40px">大明永乐 · 七下西洋</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <p class="lede" style="font-size:18px">
+          永乐三年（1405），明成祖朱棣命郑和率庞大船队出使西洋。玩家扮演新任提督，继承郑和使命，率领宝船队探索未知海域。
+        </p>
+        <div class="row wrap" style="gap:8px;margin-top:16px">
+          <span class="pill pill-accent">七章主线</span>
+          <span class="pill">30+支线岛屿</span>
+          <span class="pill">12历史港口</span>
+        </div>
+      </div>
+      <div>
+        <div class="card card-accent" style="margin-bottom:10px">
+          <h4 style="font-size:16px">🗺️ 第一章：初下西洋</h4>
+          <p class="dim">南海→东南亚（占城→爪哇→苏门答腊）</p>
+        </div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">🌊 第二章：南洋风云</h4>
+          <p class="dim">爪哇→苏门答腊→锡兰</p>
+        </div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">🛤️ 第三章：印度洋篇</h4>
+          <p class="dim">锡兰→古里→忽鲁谟斯</p>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">🌍 第四~七章</h4>
+          <p class="dim">阿拉伯半岛→非洲东岸→红海→IF线·新大陆</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">世界观 · 七章主线对应七下西洋</span><span class="slide-number" data-current="3" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 4. 核心玩法 ======= -->
+  <section class="slide" data-title="核心玩法">
+    <div class="deck-header"><span class="eyebrow">03</span><span class="eyebrow">GAMEPLAY</span></div>
+    <p class="kicker" style="margin-bottom:4px">CORE GAMEPLAY</p>
+    <h2 class="h2" style="font-size:40px">航海Roguelike · 每局都不同</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="row wrap" style="gap:12px;justify-content:center;margin-bottom:24px">
+      <div class="card" style="background:var(--accent);color:#fff;text-align:center;padding:12px 20px;border:none"><b>⚓ 选旗舰选船员</b></div>
+      <span style="font-size:24px;color:var(--accent-2)">→</span>
+      <div class="card" style="background:var(--accent-2);color:#fff;text-align:center;padding:12px 20px;border:none"><b>🗺️ 选航线（节点地图）</b></div>
+      <span style="font-size:24px;color:var(--accent-2)">→</span>
+      <div class="card" style="background:var(--text-2);color:#fff;text-align:center;padding:12px 20px;border:none"><b>🎲 节点事件·决策</b></div>
+      <span style="font-size:24px;color:var(--accent-2)">→</span>
+      <div class="card" style="background:var(--text-3);color:#fff;text-align:center;padding:12px 20px;border:none"><b>🏆 到达/沉没</b></div>
+    </div>
+
+    <div class="grid g3" style="gap:16px">
+      <div class="card">
+        <div class="kicker" style="margin-bottom:6px">🗺️ 节点地图</div>
+        <p class="dim" style="font-size:15px">类似杀戮尖塔的路线选择，每条路线节点组合不同：战斗/贸易/探索/补给/奇遇</p>
+      </div>
+      <div class="card">
+        <div class="kicker" style="margin-bottom:6px">🎲 事件决策</div>
+        <p class="dim" style="font-size:15px">二选一抉择，战斗排阵/贸易砍价/探索冒险——每次选择影响后续航程</p>
+      </div>
+      <div class="card">
+        <div class="kicker" style="margin-bottom:6px">📈 局外成长</div>
+        <p class="dim" style="font-size:15px">解锁新旗舰、招募新船员、升级港口——每局都比上一局更强</p>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">一次性出海 · 不可重复 · 策略抉择</span><span class="slide-number" data-current="4" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 5. 航海流程 ======= -->
+  <section class="slide" data-title="航海流程">
+    <div class="deck-header"><span class="eyebrow">04</span><span class="eyebrow">FLOW</span></div>
+    <p class="kicker" style="margin-bottom:4px">VOYAGE FLOW</p>
+    <h2 class="h2" style="font-size:40px">一局航海 · 步步为营</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:12px;border-left:4px solid var(--accent-2)">
+          <h4 style="font-size:16px">⚓ 第一步：出港准备</h4>
+          <p class="dim" style="font-size:15px">选1艘旗舰（决定基础能力）+ 选3名船员（提供技能和属性加成）→ 一键出航</p>
+        </div>
+        <div class="card" style="margin-bottom:12px;border-left:4px solid var(--accent-2)">
+          <h4 style="font-size:16px">🗺️ 第二步：选择航线</h4>
+          <p class="dim" style="font-size:15px">多条分支路线，战斗多还是贸易多？高风险高回报还是稳健前进？</p>
+        </div>
+        <div class="card" style="margin-bottom:12px;border-left:4px solid var(--accent-2)">
+          <h4 style="font-size:16px">🎲 第三步：节点事件</h4>
+          <p class="dim" style="font-size:15px">进入节点→二选一决策→获得奖励/承受代价。结果受旗舰和船员技能影响</p>
+        </div>
+        <div class="card" style="border-left:4px solid var(--accent-2)">
+          <h4 style="font-size:16px">🏆 第四步：结算</h4>
+          <p class="dim" style="font-size:15px">到达终点→结算收益。沉没→带走部分收益（salvage机制不白给）</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="background:var(--grad-soft);text-align:center;padding:24px;margin-bottom:16px">
+          <p style="font-size:28px;font-weight:700;color:var(--accent);margin:0">一局15-20分钟</p>
+          <p class="dim" style="font-size:15px;margin-top:8px">碎片化打一局 · 通勤/午休刚刚好</p>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">🔥 核心设计原则</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>每一局不可重复，鼓励尝试不同路线</li>
+            <li>决策有 meaningful trade-off，没有最优解</li>
+            <li>沉没也是一种体验，有salvage不白给</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">一局流程 · 决策驱动</span><span class="slide-number" data-current="5" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 6. 节点事件 ======= -->
+  <section class="slide" data-title="节点事件">
+    <div class="deck-header"><span class="eyebrow">05</span><span class="eyebrow">EVENTS</span></div>
+    <p class="kicker" style="margin-bottom:4px">EVENT NODES</p>
+    <h2 class="h2" style="font-size:40px">六类节点 · 每步都是抉择</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g3" style="gap:16px">
+      <div class="card" style="border-top:3px solid var(--accent-2)">
+        <h4 style="font-size:16px">⚔️ 战斗节点</h4>
+        <p class="dim" style="font-size:14px">遭遇海盗/海怪/敌国舰队。自动对战，战前排兵布阵（前后排），船员自动释放技能</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--good)">
+        <h4 style="font-size:16px">💰 贸易节点</h4>
+        <p class="dim" style="font-size:14px">到达港口城市。低买高卖赚差价，可投资港口解锁折扣。商船旗舰有额外加成</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--warn)">
+        <h4 style="font-size:16px">🔍 探索节点</h4>
+        <p class="dim" style="font-size:14px">发现神秘岛屿/沉船/遗迹。高风险高回报——可能获得稀有宝物或遭遇陷阱</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent-3)">
+        <h4 style="font-size:16px">⛵ 补给节点</h4>
+        <p class="dim" style="font-size:14px">安全港口/渔村。恢复耐久、补充物资。稳健玩家的优先选择</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--bad)">
+        <h4 style="font-size:16px">🎲 奇遇节点</h4>
+        <p class="dim" style="font-size:14px">海市蜃楼、鲸群引路、海上仙山。结果不可预测，有独特稀有奖励</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent)">
+        <h4 style="font-size:16px">🏆 宝藏节点</h4>
+        <p class="dim" style="font-size:14px">Boss战/大发现。高难度挑战，成功后获得大量收益+专属奖励</p>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">六类节点 · 每次选择影响结局</span><span class="slide-number" data-current="6" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 7. 旗舰与船员 ======= -->
+  <section class="slide" data-title="旗舰与船员">
+    <div class="deck-header"><span class="eyebrow">06</span><span class="eyebrow">SHIP & CREW</span></div>
+    <p class="kicker" style="margin-bottom:4px">FLAGSHIP & CREW</p>
+    <h2 class="h2" style="font-size:40px">选旗舰带船员 · 决定航程风格</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <h4 style="font-size:16px">🏯 旗舰系统（出海必选1艘）</h4>
+          <div class="row wrap" style="gap:8px;margin-top:8px">
+            <div class="card" style="flex:1;text-align:center;padding:12px;background:var(--grad-soft)">
+              <span style="font-size:24px">🏯</span>
+              <p style="font-size:14px;font-weight:700;margin:4px 0 0">宝船</p>
+              <p class="dim2" style="font-size:12px">均衡型</p>
+            </div>
+            <div class="card" style="flex:1;text-align:center;padding:12px;background:var(--grad-soft)">
+              <span style="font-size:24px">⚔️</span>
+              <p style="font-size:14px;font-weight:700;margin:4px 0 0">战船</p>
+              <p class="dim2" style="font-size:12px">战斗加成</p>
+            </div>
+            <div class="card" style="flex:1;text-align:center;padding:12px;background:var(--grad-soft)">
+              <span style="font-size:24px">📦</span>
+              <p style="font-size:14px;font-weight:700;margin:4px 0 0">商船</p>
+              <p class="dim2" style="font-size:12px">贸易加成</p>
+            </div>
+          </div>
+          <p class="dim" style="font-size:13px;margin-top:8px">旗舰可升级（图纸+银锭）、改造（换炮/帆/船舱模块）</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <h4 style="font-size:16px">👥 船员系统（出海选3名）</h4>
+          <p class="dim" style="font-size:14px">历史人物 N/R/SR/SSR四阶，每位有1主动技能+2被动</p>
+          <div class="row wrap" style="gap:6px;margin-top:8px">
+            <span class="pill pill-accent">👑 郑和·SSR</span>
+            <span class="pill pill-accent">⚔️ 王景弘·SSR</span>
+            <span class="pill">🤝 侯显·SR</span>
+            <span class="pill">📖 费信·R</span>
+          </div>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">🔄 船员养成</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>升级（银锭）→ 升星（同名卡）→ 装备（特产）</li>
+            <li>每位船员有专属剧情故事</li>
+            <li>获取方式：抽卡/航行事件/港口招募/活动</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">1旗舰 + 3船员 = 你的航程阵容</span><span class="slide-number" data-current="7" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 8. 核心循环 ======= -->
+  <section class="slide" data-title="核心循环">
+    <div class="deck-header"><span class="eyebrow">07</span><span class="eyebrow">LOOP</span></div>
+    <p class="kicker" style="margin-bottom:4px">CORE LOOP</p>
+    <h2 class="h2" style="font-size:40px">Roguelike + 局外养成 = 持续驱动力</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="background:var(--grad-soft);text-align:center;padding:16px;margin-bottom:16px">
+          <p style="font-size:16px;font-weight:700;color:var(--accent);margin:0">
+            🏠 港口 → ⚓ 出航 → 🗺️ 节点决策 → 🏆 结算 → 📈 成长
+          </p>
+        </div>
+        <div class="card" style="margin-bottom:12px">
+          <h4 style="font-size:16px">🎯 单次体验（15-20分钟）</h4>
+          <p class="dim" style="font-size:15px">选旗舰船员→选路线→闯6-10个节点→到达/沉没→结算。一局一局停不下来</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <h4 style="font-size:16px">📅 长期驱动力</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>解锁新旗舰+新船员，每次想试试新组合</li>
+            <li>解锁新章节新航线，想看更远的海</li>
+            <li>港口投资，永久收益越投越强</li>
+            <li>图鉴收集，全人物全船只全宝物</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">一局Roguelike + 长期收集养成</span><span class="slide-number" data-current="8" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 9. 核心卖点 ======= -->
+  <section class="slide" data-title="核心卖点">
+    <div class="deck-header"><span class="eyebrow">08</span><span class="eyebrow">SELLING</span></div>
+    <p class="kicker" style="margin-bottom:4px">SELLING POINTS</p>
+    <h2 class="h2" style="font-size:40px">为什么这个项目能成</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div class="card" style="border-left:4px solid var(--accent-2)">
+        <div class="kicker" style="margin-bottom:4px">🧭 题材蓝海</div>
+        <p class="dim" style="font-size:15px">微信小游戏+航海题材=独一份。国风航海 vs 西式航海，差异化明显</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--accent-2)">
+        <div class="kicker" style="margin-bottom:4px">🎮 玩法创新</div>
+        <p class="dim" style="font-size:15px">航海Roguelike+节点决策+收集养成，微信小游戏赛道没有同品类</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--accent-2)">
+        <div class="kicker" style="margin-bottom:4px">📲 生态契合</div>
+        <p class="dim" style="font-size:15px">社交裂变×航海题材（分享航线战绩/船队配置），碎片化一局即开即停</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--accent-2)">
+        <div class="kicker" style="margin-bottom:4px">🏛️ 文化IP</div>
+        <p class="dim" style="font-size:15px">国家级文化IP，国民认知度。可联动博物馆/非遗文创，有教育属性加成</p>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">蓝海 · 创新 · 契合 · 文化</span><span class="slide-number" data-current="9" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 10. 核心爽点 ======= -->
+  <section class="slide" data-title="核心爽点">
+    <div class="deck-header"><span class="eyebrow">09</span><span class="eyebrow">SATISFACTION</span></div>
+    <p class="kicker" style="margin-bottom:4px">SATISFACTION POINTS</p>
+    <h2 class="h2" style="font-size:40px">玩家为什么停不下来</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <h4 style="font-size:16px">🔥 策略爽点</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>每一步路线选择都影响结局，打出完美航线（每局）</li>
+            <li>决策反转——看似亏的选择引出大收益</li>
+            <li>船员技能巧妙配合打出Combo效果</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">⛵ 航行爽点</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>每次出海都是全新地图和事件组合</li>
+            <li>丝血到达港口的惊险感</li>
+            <li>解锁新章节看到全新海域的新鲜感</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <h4 style="font-size:16px">🏆 成就爽点</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>打通高难度航线的成就感</li>
+            <li>稀有阵容被好友羡慕</li>
+            <li>排行榜——最短时间/最高收益</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">📖 收集爽点</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>图鉴点亮——全人物全船只全宝物</li>
+            <li>每位船员的专属故事解锁</li>
+            <li>集齐阵容解锁隐藏成就</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">四类爽点交替触发 · 每天都有期待</span><span class="slide-number" data-current="10" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 11. 商业化 ======= -->
+  <section class="slide" data-title="商业化">
+    <div class="deck-header"><span class="eyebrow">10</span><span class="eyebrow">MONETIZATION</span></div>
+    <p class="kicker" style="margin-bottom:4px">MONETIZATION</p>
+    <h2 class="h2" style="font-size:40px">付费 + 广告 + 社交裂变</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin:6px 0">
+          <span style="width:50px;font-size:14px;font-weight:600;color:var(--text-2);text-align:right">月卡</span>
+          <div style="flex:1;height:24px;border-radius:12px;background:var(--surface-2);overflow:hidden">
+            <div style="width:30%;height:100%;background:var(--accent-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff">30%</div>
+          </div>
+          <span style="width:60px;font-size:15px;font-weight:700;color:var(--accent-2);font-family:monospace">30元</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin:6px 0">
+          <span style="width:50px;font-size:14px;font-weight:600;color:var(--text-2);text-align:right">战令</span>
+          <div style="flex:1;height:24px;border-radius:12px;background:var(--surface-2);overflow:hidden">
+            <div style="width:20%;height:100%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff">20%</div>
+          </div>
+          <span style="width:60px;font-size:15px;font-weight:700;color:var(--accent-2);font-family:monospace">68元</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin:6px 0">
+          <span style="width:50px;font-size:14px;font-weight:600;color:var(--text-2);text-align:right">抽卡</span>
+          <div style="flex:1;height:24px;border-radius:12px;background:var(--surface-2);overflow:hidden">
+            <div style="width:25%;height:100%;background:var(--good);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff">25%</div>
+          </div>
+          <span style="width:60px;font-size:15px;font-weight:700;color:var(--accent-2);font-family:monospace">6元/抽</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin:6px 0">
+          <span style="width:50px;font-size:14px;font-weight:600;color:var(--text-2);text-align:right">礼包</span>
+          <div style="flex:1;height:24px;border-radius:12px;background:var(--surface-2);overflow:hidden">
+            <div style="width:15%;height:100%;background:var(--warn);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff">15%</div>
+          </div>
+          <span style="width:60px;font-size:15px;font-weight:700;color:var(--accent-2);font-family:monospace">1-128</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin:6px 0">
+          <span style="width:50px;font-size:14px;font-weight:600;color:var(--text-2);text-align:right">广告</span>
+          <div style="flex:1;height:24px;border-radius:12px;background:var(--surface-2);overflow:hidden">
+            <div style="width:10%;height:100%;background:var(--accent-3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff">10%</div>
+          </div>
+          <span style="width:60px;font-size:15px;font-weight:700;color:var(--accent-2);font-family:monospace">激励</span>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <h4 style="font-size:16px">📺 激励视频点位</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>航行收益×2（3次/天）</li>
+            <li>招募加速（5次/天）</li>
+            <li>航海加速-50%（3次/天）</li>
+            <li>免费抽卡（1次/天）</li>
+            <li>事件重选（2次/次）</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">📤 社交裂变</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>分享到群→银锭/抽卡券</li>
+            <li>好友助力→缩短航行时间</li>
+            <li>邀请回归→限定头像框</li>
+            <li>互赠船票→好友互动</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">IAP占80% · 激励视频占10% · 社交裂变驱动自然量</span><span class="slide-number" data-current="11" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 12. 美术风格 ======= -->
+  <section class="slide" data-title="美术风格">
+    <div class="deck-header"><span class="eyebrow">11</span><span class="eyebrow">ART</span></div>
+    <p class="kicker" style="margin-bottom:4px">ART STYLE</p>
+    <h2 class="h2" style="font-size:40px">国风Q版 · 明快彩墨</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <h4 style="font-size:16px">🎨 视觉定位</h4>
+          <p class="dim" style="font-size:15px">微信小游戏原则：不要写实、不要暗黑、要有识别度</p>
+          <p class="dim" style="font-size:13px;margin-top:4px">参考：江南百景图（国风）· 旅行青蛙（治愈）· 合成大西瓜（明快）</p>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">🎨 色彩体系</h4>
+          <div class="row wrap" style="gap:8px;margin-top:8px">
+            <span class="pill" style="background:#C0392B;color:#fff;border:none">朱砂红</span>
+            <span class="pill" style="background:#D4A017;color:#fff;border:none">琥珀金</span>
+            <span class="pill" style="background:#FAF3E0;color:#333">宣纸白</span>
+            <span class="pill" style="background:#4A7C59;color:#fff;border:none">青绿</span>
+            <span class="pill" style="background:#2E6B9E;color:#fff;border:none">宝蓝</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <h4 style="font-size:16px">👤 角色设计</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>Q版 2.5头身，微信用户接受度高</li>
+            <li>明制汉服考究但适度可爱化</li>
+            <li>品质区分：N无特效/SR微光/SSR金光</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">📱 UI设计</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>竖版单手操作，核心按钮在下半屏</li>
+            <li>古风卷轴+宣纸纹理</li>
+            <li>印章/玉佩/画卷等中国传统元素</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">明亮温暖 · 微信用户接受度高</span><span class="slide-number" data-current="12" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 13. 开发路线 ======= -->
+  <section class="slide" data-title="开发路线">
+    <div class="deck-header"><span class="eyebrow">12</span><span class="eyebrow">ROADMAP</span></div>
+    <p class="kicker" style="margin-bottom:4px">ROADMAP</p>
+    <h2 class="h2" style="font-size:40px">6个月 · 15人 · 300-500万</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div style="display:flex;gap:12px;margin-top:16px;position:relative">
+      <div style="flex:1;text-align:center;padding-top:30px;position:relative">
+        <div style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:var(--accent-2);border:3px solid #fff"></div>
+        <h4 style="font-size:17px;font-weight:700;color:var(--accent-2);margin:0">🎬 M1-M2</h4>
+        <p style="font-size:14px;color:var(--text-3);margin:4px 0 0">原型Demo</p>
+        <p style="font-size:12px;color:var(--text-3)">合成棋盘+一条航线+基础事件</p>
+      </div>
+      <div style="flex:1;text-align:center;padding-top:30px;position:relative">
+        <div style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:var(--accent);border:3px solid #fff"></div>
+        <h4 style="font-size:17px;font-weight:700;color:var(--accent);margin:0">🔧 M2-M4</h4>
+        <p style="font-size:14px;color:var(--text-3);margin:4px 0 0">Alpha</p>
+        <p style="font-size:12px;color:var(--text-3)">3章主线+卡牌+商业化接入</p>
+      </div>
+      <div style="flex:1;text-align:center;padding-top:30px;position:relative">
+        <div style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:var(--good);border:3px solid #fff"></div>
+        <h4 style="font-size:17px;font-weight:700;color:var(--good);margin:0">🚀 M4-M5</h4>
+        <p style="font-size:14px;color:var(--text-3);margin:4px 0 0">Beta</p>
+        <p style="font-size:12px;color:var(--text-3)">全系统+微信+广告SDK</p>
+      </div>
+      <div style="flex:1;text-align:center;padding-top:30px;position:relative">
+        <div style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:var(--warn);border:3px solid #fff"></div>
+        <h4 style="font-size:17px;font-weight:700;color:var(--warn);margin:0">📱 M5-M6</h4>
+        <p style="font-size:14px;color:var(--text-3);margin:4px 0 0">上线</p>
+        <p style="font-size:12px;color:var(--text-3)">渠道测试→正式发布</p>
+      </div>
+    </div>
+
+    <div class="grid g3" style="gap:16px;margin-top:24px">
+      <div style="text-align:center;padding:16px;border:1px solid var(--border);border-radius:6px">
+        <p style="font-size:40px;font-weight:900;color:var(--accent);margin:0">15人</p>
+        <p style="font-size:14px;color:var(--text-3);margin:6px 0 0">团队配置</p>
+        <p style="font-size:12px;color:var(--text-3);margin:4px 0 0">策2+客户端4+服务端2+美术4+测试1+运营1+PM1</p>
+      </div>
+      <div style="text-align:center;padding:16px;border:1px solid var(--border);border-radius:6px">
+        <p style="font-size:40px;font-weight:900;color:var(--accent);margin:0">300-500万</p>
+        <p style="font-size:14px;color:var(--text-3);margin:6px 0 0">研发预算</p>
+        <p style="font-size:12px;color:var(--text-3);margin:4px 0 0">含美术外包预留50-80万</p>
+      </div>
+      <div style="text-align:center;padding:16px;border:1px solid var(--border);border-radius:6px">
+        <p style="font-size:40px;font-weight:900;color:var(--accent);margin:0">100-200万</p>
+        <p style="font-size:14px;color:var(--text-3);margin:6px 0 0">首月UA预算</p>
+        <p style="font-size:12px;color:var(--text-3);margin:4px 0 0">微信小游戏买量+达人合作</p>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">开发节奏 · M1原型→M6上线</span><span class="slide-number" data-current="13" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 14. End ======= -->
+  <section class="slide center tc" data-title="结语">
+    <div class="deck-header"><span class="eyebrow">END</span><span class="eyebrow">感谢</span></div>
+    <div style="max-width:800px">
+      <div class="divider-accent" style="margin:0 auto 20px"></div>
+      <h1 class="h1" style="font-size:64px;line-height:1.2">让我们<br><span style="color:var(--accent-2)">扬帆起航</span></h1>
+      <div style="width:60px;height:4px;background:var(--accent-2);border-radius:2px;margin:20px auto"></div>
+      <p class="lede" style="font-size:20px;margin:16px 0 0">国风大航海 · 蓝海启程</p>
+      <div class="row wrap" style="gap:8px;justify-content:center;margin-top:32px">
+        <span class="pill pill-accent">航海Roguelike</span>
+        <span class="pill pill-accent">节点决策</span>
+        <span class="pill pill-accent">收集养成</span>
+        <span class="pill pill-accent">微信小游戏</span>
+      </div>
+      <p style="margin-top:40px;font-size:14px;color:var(--text-3)">项目书 v1.0 · 2026.05 · 内部资料</p>
+    </div>
+    <div class="deck-footer"><span class="dim2">谢谢</span><span class="slide-number" data-current="14" data-total="14"></span></div>
+  </section>
+
+</div>
+<script src="assets/runtime.js"></script>
+</body>
+</html>

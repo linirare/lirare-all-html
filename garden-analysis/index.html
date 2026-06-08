@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="corporate-clean">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>我的花园世界 · 详细拆解</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" id="theme-link" href="assets/themes/corporate-clean.css">
+<link rel="stylesheet" href="assets/animations/animations.css">
+<style>
+@media (max-width: 768px) {
+  .slide { padding: 24px 20px !important; }
+  .g2, .g3, .g4 { grid-template-columns: 1fr !important; gap: 10px !important; }
+  .deck-header { top: 12px !important; left: 16px !important; right: 16px !important; font-size: 11px !important; }
+  .deck-footer { bottom: 12px !important; left: 16px !important; right: 16px !important; font-size: 11px !important; }
+  .h1, h1.title { font-size: 32px !important; }
+  .h2, h2 { font-size: 24px !important; }
+  .lede { font-size: 16px !important; }
+  .kicker { font-size: 13px !important; }
+  .card { padding: 14px !important; }
+  .pill { font-size: 11px !important; padding: 3px 10px !important; }
+}
+@media (max-width: 480px) {
+  .slide { padding: 20px 14px !important; }
+  .h1, h1.title { font-size: 26px !important; }
+  .h2, h2 { font-size: 20px !important; }
+  .lede { font-size: 14px !important; }
+}
+</style>
+</head>
+<body data-themes="corporate-clean,minimal-white,editorial-serif" data-theme-base="assets/themes/">
+
+<div class="deck">
+
+  <!-- ======= 1. Cover ======= -->
+  <section class="slide center tc" data-title="Cover">
+    <div class="deck-header"><span class="eyebrow">Game Analysis · 2026-05-21</span><span class="eyebrow">模拟经营拆解</span></div>
+    <div style="max-width:1000px">
+      <div class="divider-accent" style="margin:0 auto 20px"></div>
+      <p class="kicker" style="font-size:18px;letter-spacing:.15em">古风花店模拟经营 · 新晋黑马</p>
+      <h1 class="h1 anim-rise-in" data-anim="rise-in" style="font-size:72px;line-height:1.2">我的<span style="color:var(--accent-2)">花园世界</span></h1>
+      <p class="lede" style="margin:20px auto 0;max-width:700px">种花培育 · 接单经营 · 插花艺术 · 线上种花线下收真花</p>
+      <div class="row wrap mt-l" style="gap:8px;justify-content:center">
+        <span class="pill pill-accent">模拟经营</span>
+        <span class="pill">种花养成</span>
+        <span class="pill">花店经营</span>
+        <span class="pill">插花创作</span>
+        <span class="pill">社交互动</span>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">开发商：厦门麟贝互娱 · 2025年8月上线</span><span class="slide-number" data-current="1" data-total="14"></span></div>
+    <div style="position:absolute;bottom:48px;left:50%;transform:translateX(-50%);font-size:13px;color:var(--text-3);letter-spacing:1px">← 左右滑动 / 键盘方向键翻页 →</div>
+  </section>
+
+  <!-- ======= 2. 游戏概况 ======= -->
+  <section class="slide" data-title="游戏概况">
+    <div class="deck-header"><span class="eyebrow">01</span><span class="eyebrow">OVERVIEW</span></div>
+    <p class="kicker" style="margin-bottom:4px">GAME OVERVIEW</p>
+    <h2 class="h2" style="font-size:40px">8个月流水破8000万美金</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:10px"><h4>📱 游戏名称</h4><p class="dim" style="font-size:15px">《我的花园世界》· My Garden World</p></div>
+        <div class="card" style="margin-bottom:10px"><h4>🏷️ 游戏类型</h4><p class="dim" style="font-size:15px">古风花店模拟经营 · 种花养成 · 社交互动</p></div>
+        <div class="card" style="margin-bottom:10px"><h4>👥 目标用户</h4><p class="dim" style="font-size:15px">20-40岁女性为主 · 治愈系/经营类爱好者 · 杨紫粉丝</p></div>
+        <div class="card"><h4>🏢 开发商</h4><p class="dim" style="font-size:15px">厦门麟贝互娱科技有限公司 · 2025年8月上线</p></div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">💰 收入数据</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>SensorTower：上线8个月流水破8000万美金</li>
+            <li>2025年游戏市场黑马</li>
+            <li>由明星杨紫代言 + 院线广告大推</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">🎯 核心公式</h4>
+          <p class="dim" style="font-size:15px">种花（播种→浇水→收获）→ 完成订单/插花售卖 → 赚金币 → 解锁新花种/土地 → 装扮花坊</p>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">📊 对标品类</h4>
+          <p class="dim" style="font-size:15px">类似QQ农场+X花店经营的融合体。并非三消+装修类，而是纯模拟经营+种花养成</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">纯模拟经营 · 非三消 · 种花→接单→经营</span><span class="slide-number" data-current="2" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 3. 核心循环 ======= -->
+  <section class="slide" data-title="核心循环">
+    <div class="deck-header"><span class="eyebrow">02</span><span class="eyebrow">CORE LOOP</span></div>
+    <p class="kicker" style="margin-bottom:4px">CORE GAMEPLAY LOOP</p>
+    <h2 class="h2" style="font-size:40px">种花→接单→装扮 经营闭环</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="row wrap" style="gap:10px;justify-content:center;margin-bottom:20px">
+      <div class="card" style="background:var(--accent);color:#fff;text-align:center;padding:10px 18px;border:none"><b>🌱 播种浇水</b></div>
+      <span style="font-size:20px;color:var(--accent-2)">→</span>
+      <div class="card" style="background:var(--accent-2);color:#fff;text-align:center;padding:10px 18px;border:none"><b>🌸 培育收获</b></div>
+      <span style="font-size:20px;color:var(--accent-2)">→</span>
+      <div class="card" style="background:var(--text-2);color:#fff;text-align:center;padding:10px 18px;border:none"><b>📦 接单/插花售卖</b></div>
+      <span style="font-size:20px;color:var(--accent-2)">→</span>
+      <div class="card" style="background:var(--text-3);color:#fff;text-align:center;padding:10px 18px;border:none"><b>💰 赚金币扩规模</b></div>
+    </div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="border-left:4px solid var(--good);margin-bottom:10px">
+          <h4 style="font-size:16px">🌱 种植（核心动作）</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>获取种子（商店/任务/活动/好友赠送）</li>
+            <li>开垦土地 → 播种 → 浇水（手动拖拽水壶）</li>
+            <li>等待成长 → 收获花朵</li>
+            <li>不同花卉生长周期不同（分钟~小时级）</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left:4px solid var(--warn);margin-bottom:10px">
+          <h4 style="font-size:16px">📦 经营（收益转化）</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li><b>订单系统</b>：NPC发布花束订单→交付→赚金币</li>
+            <li><b>插花系统</b>：不同花卉搭配成插花作品→上架售卖</li>
+            <li><b>花坊升级</b>：赚金币→扩建花坊→解锁更多功能</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="border-left:4px solid var(--accent-2);margin-bottom:10px">
+          <h4 style="font-size:16px">🎨 装扮（反馈+社交）</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>主题装饰：中式庭院/欧式花园/田园风</li>
+            <li>随心布置花坊、庭院、喷泉等</li>
+            <li>装扮好可展示给好友 → 社交货币</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left:4px solid var(--accent)">
+          <h4 style="font-size:16px">🔄 长期循环</h4>
+          <p class="dim" style="font-size:14px">种花→接单→赚钱→解锁新花种/新土地/新装饰→种更高级的花→满足更高阶订单→解锁更高阶段的花坊</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">与QQ农场同源 · 但多了花店经营+插花副线</span><span class="slide-number" data-current="3" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 4. 种植系统拆解 ======= -->
+  <section class="slide" data-title="种植系统">
+    <div class="deck-header"><span class="eyebrow">03</span><span class="eyebrow">FARMING</span></div>
+    <p class="kicker" style="margin-bottom:4px">FARMING SYSTEM</p>
+    <h2 class="h2" style="font-size:40px">种花系统 · 类似QQ农场但更深</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">🌾 花卉种类</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>100+种花卉：玫瑰/郁金香/百合/绣球/康乃馨等</li>
+            <li>分：普通花种、珍稀花种、限定花种（活动获取）</li>
+            <li>不同品种：生长周期不同、售价不同、插花配方不同</li>
+            <li>种子获取：商店购买/任务奖励/活动/好友赠送</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">⏱️ 生长周期设计</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>短期花（5-15分钟）：基础花种，新手过渡</li>
+            <li>中期花（30-60分钟）：主力经济花种</li>
+            <li>长期花（2-8小时）：高收益花种</li>
+            <li>稀有花（12-24小时）：限时/活动花种</li>
+            <li>设计目的：覆盖不同登录频次的玩家</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">💧 种植操作</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li><b>开垦土地</b>：消耗金币解锁新地块</li>
+            <li><b>播种</b>：从种子包选择→种植到地块</li>
+            <li><b>浇水</b>：拖拽水壶到土地上，可一次性浇多块</li>
+            <li><b>收获</b>：成熟后点击收取</li>
+            <li><b>进阶</b>：施肥（加速生长）、除虫（防减产）</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">📈 土地扩张节奏</h4>
+          <p class="dim" style="font-size:14px">初始6块地，随等级逐步解锁。每开一块地消耗递增金币/钻石。土地上限约30-50块。扩张驱动：可以同时种更多花→产出更多→赚更快</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">100+花卉 · 四级生长周期 · 地块扩张驱动</span><span class="slide-number" data-current="4" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 5. 订单系统 ======= -->
+  <section class="slide" data-title="订单经营">
+    <div class="deck-header"><span class="eyebrow">04</span><span class="eyebrow">ORDERS</span></div>
+    <p class="kicker" style="margin-bottom:4px">ORDER & SHOP SYSTEM</p>
+    <h2 class="h2" style="font-size:40px">接单经营 · 金币产出的发动机</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="border-left:4px solid var(--accent-2);margin-bottom:10px">
+          <h4 style="font-size:16px">📋 订单系统</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>NPC定时发布花束订单</li>
+            <li>订单要求：指定花种+数量+品质</li>
+            <li>完成订单获得金币+经验+随机奖励</li>
+            <li>VIP订单（高难度）→ 更高收益</li>
+            <li>限时订单 → 紧迫感驱动</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">💐 插花系统</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>将不同花卉组合成插花作品</li>
+            <li>插花配方：不同搭配→不同作品</li>
+            <li>上架到花坊 → 等待客人购买</li>
+            <li>插花有品质评分 → 影响售价</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="border-left:4px solid var(--good);margin-bottom:10px">
+          <h4 style="font-size:16px">🏪 花坊经营</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li><b>花坊等级</b>：决定可接订单的等级</li>
+            <li><b>花坊装饰</b>：吸引更多/更高级客人</li>
+            <li><b>雇佣助手</b>：自动完成部分操作</li>
+            <li><b>花坊扩建</b>：更多展示位+生产位</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">⚙️ 经营节奏设计</h4>
+          <p class="dim" style="font-size:14px">种花（供给端）和订单（需求端）的平衡：种了卖不掉=浪费,订单完不成=损失收益。引导玩家规划种植品种和数量,产生"策略感"</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">订单+插花双线产出 · 供需平衡策略</span><span class="slide-number" data-current="5" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 6. 社交系统 ======= -->
+  <section class="slide" data-title="社交系统">
+    <div class="deck-header"><span class="eyebrow">05</span><span class="eyebrow">SOCIAL</span></div>
+    <p class="kicker" style="margin-bottom:4px">SOCIAL FEATURES</p>
+    <h2 class="h2" style="font-size:40px">社交互动 · 好友花园互访</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">👫 好友系统</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li><b>好友花园互访</b>：参观好友布置的花坊/花园</li>
+            <li><b>赠送种子</b>：每日可赠送/索要3次</li>
+            <li><b>互助浇水</b>：帮好友浇水双方都获得奖励</li>
+            <li><b>留言板</b>：在好友花园留下互动信息</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">🏆 排行榜</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>花坊等级排行</li>
+            <li>收入排行</li>
+            <li>花艺成就排行</li>
+            <li>好友之间排名对比</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="border-left:4px solid var(--accent-2);margin-bottom:10px">
+          <h4 style="font-size:16px">🌍 公共社区</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li><b>花园图鉴</b>：展示收集进度，可分享</li>
+            <li><b>插花作品展</b>：优秀作品可被推荐</li>
+            <li><b>主题活动</b>：节日主题花园比赛</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">🎯 社交设计目的</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>展示欲：花坊装扮→展示给好友→社会认同</li>
+            <li>比较心：好友排行榜→投入更多</li>
+            <li>互助依赖：互赠种子→互相绑定→降低流失</li>
+            <li>UGC内容：优秀设计→截图分享→自然获客</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">QQ农场式社交 · 互访+赠送+排行榜</span><span class="slide-number" data-current="6" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 7. 商业化 ======= -->
+  <section class="slide" data-title="商业化">
+    <div class="deck-header"><span class="eyebrow">06</span><span class="eyebrow">MONETIZATION</span></div>
+    <p class="kicker" style="margin-bottom:4px">MONETIZATION MODEL</p>
+    <h2 class="h2" style="font-size:40px">三层付费 + 创新实物变现</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:10px;border-left:4px solid var(--accent-3)">
+          <h4 style="font-size:16px">📺 广告变现</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>浇水加速 → 看广告缩短生长时间</li>
+            <li>订单刷新 → 看广告重置订单列表</li>
+            <li>额外奖励 → 每日广告宝箱</li>
+            <li>免费种子 → 看广告领稀有种子</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-bottom:10px;border-left:4px solid var(--warn)">
+          <h4 style="font-size:16px">💎 内购系统</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>钻石（充值币）：购买种子/加速/装饰等</li>
+            <li>月卡：每日领取钻石+加速特权</li>
+            <li>礼包：新手礼包/节日礼包/等级礼包</li>
+            <li>限定装饰：氪金专属花园主题</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:10px;border-left:4px solid var(--bad)">
+          <h4 style="font-size:16px">🌹 创新变现：实物花束</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>核心营销语："线上种花，线下收真花"</li>
+            <li>游戏内达成条件→兑换真实花束→快递到家</li>
+            <li>高额充值可得"真花礼盒"</li>
+            <li><b>⚠️ 争议</b>：大量用户投诉收到花束与宣传不符 / 未收到 / 客服不处理</li>
+            <li>被多个媒体曝光虚假宣传问题</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">💰 付费触发时机</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>开地缺金币 → 推送金币礼包</li>
+            <li>种花等太久 → 推送加速道具</li>
+            <li>限时活动 → FOMO驱动消费</li>
+            <li>差一点完成订单 → 推送所需花卉包</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">广告+内购+实物三线 · 实物变现存争议</span><span class="slide-number" data-current="7" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 8. 营销策略 ======= -->
+  <section class="slide" data-title="营销策略">
+    <div class="deck-header"><span class="eyebrow">07</span><span class="eyebrow">MARKETING</span></div>
+    <p class="kicker" style="margin-bottom:4px">GO-TO-MARKET STRATEGY</p>
+    <h2 class="h2" style="font-size:40px">明星代言+实物钩子+饱和投放</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">⭐ 明星营销</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>代言人：杨紫（国民度+女性粉丝群体契合）</li>
+            <li>代言画面：杨紫手持鲜花，传递"治愈"感</li>
+            <li>院线电影贴片广告（2026春节档）</li>
+            <li>抖音/B站/小红书种草投放</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">🌹 实物钩子</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>"种花收真花"=极强的差异化卖点</li>
+            <li>社交传播力强——收到花拍照发小红书</li>
+            <li>相比纯游戏赠送礼物，实物成本可控</li>
+            <li>但履约是最大挑战</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">📈 投放策略</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>字节系（抖音/头条）为主投渠道</li>
+            <li>素材方向：种花治愈过程/花坊装扮展示/收到真花惊喜</li>
+            <li>女性向精准定向：25-40岁+兴趣标签+花艺</li>
+            <li>CPA预估：10-20元/下载</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">🏆 成为黑马的原因</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>品类选择精准：治愈经营+女性向=大市场</li>
+            <li>实物钩子制造传播爆点</li>
+            <li>明星代言拉升品牌信任</li>
+            <li>买量素材抓住情感诉求（治愈/放松）</li>
+            <li>上线时机好（暑期档+春节档连续引爆）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">IP代言+实物钩子+情感投放=出圈公式</span><span class="slide-number" data-current="8" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 9. 用户心理 ======= -->
+  <section class="slide" data-title="用户心理">
+    <div class="deck-header"><span class="eyebrow">08</span><span class="eyebrow">PSYCHOLOGY</span></div>
+    <p class="kicker" style="margin-bottom:4px">PLAYER PSYCHOLOGY</p>
+    <h2 class="h2" style="font-size:40px">治愈系游戏的心理学机制</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">🧠 种花的心理机制</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li><b>预期的快乐</b>：播种后期待绽放的过程 > 收获本身的快乐</li>
+            <li><b>责任感</b>：每天回来浇水照看 = 养成习惯</li>
+            <li><b>治愈感</b>：绿色植物+花朵 = 天然的减压元素</li>
+            <li><b>进度可视化</b>：从种子到花开的完整生命历程</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">📦 经营的成就感</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li><b>从小到大的成长</b>：从几块地到大型花坊</li>
+            <li><b>策略规划</b>：种什么花、接什么单、怎么布局</li>
+            <li><b>经济系统正反馈</b>：投入→产出→扩张→更多投入</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">🎨 装扮的展示欲</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li><b>主权感</b>："我的花园我做主"→投入情感</li>
+            <li><b>社交展示</b>：好友参观→获得点赞→继续投入</li>
+            <li><b>稀缺性</b>：限定装饰→收集欲望</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">🔗 沉没成本锁住用户</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>每天浇水照顾→形成习惯依赖</li>
+            <li>花坊装扮投入→不可逆→舍不得走</li>
+            <li>收集的花种/图鉴→想集齐</li>
+            <li>好友互助关系→社交绑定</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">治愈+养成+展示+归属 = 女性向核心驱动力</span><span class="slide-number" data-current="9" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 10. 运营活动 ======= -->
+  <section class="slide" data-title="运营活动">
+    <div class="deck-header"><span class="eyebrow">09</span><span class="eyebrow">OPERATIONS</span></div>
+    <p class="kicker" style="margin-bottom:4px">OPERATION EVENTS</p>
+    <h2 class="h2" style="font-size:40px">节日+赛季+限定 三线运营</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g3" style="gap:14px">
+      <div class="card" style="text-align:center">
+        <p style="font-size:28px;margin:0">🌸</p>
+        <h4 style="font-size:16px;margin-top:6px">节日活动</h4>
+        <p class="dim" style="font-size:13px">情人节限定玫瑰<br>春节年花特卖<br>七夕花语活动<br>母亲节康乃馨</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <p style="font-size:28px;margin:0">🏆</p>
+        <h4 style="font-size:16px;margin-top:6px">赛季挑战</h4>
+        <p class="dim" style="font-size:13px">月度花艺大赛<br>种植达人排行<br>插花作品评选<br>限定勋章奖励</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <p style="font-size:28px;margin:0">🌺</p>
+        <h4 style="font-size:16px;margin-top:6px">限定花种</h4>
+        <p class="dim" style="font-size:13px">蓝色妖姬限时种<br>发光蘑菇秘境<br>七彩玫瑰合成<br>稀有品种抽奖</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <p style="font-size:28px;margin:0">🎁</p>
+        <h4 style="font-size:16px;margin-top:6px">社交活动</h4>
+        <p class="dim" style="font-size:13px">情侣花园共建<br>好友互赠礼盒<br>花园主题评选<br>邀请回归奖励</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <p style="font-size:28px;margin:0">🎨</p>
+        <h4 style="font-size:16px;margin-top:6px">主题装扮</h4>
+        <p class="dim" style="font-size:13px">每月新主题上线<br>限定装饰礼包<br>花坊外观更换<br>背景音乐切换</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <p style="font-size:28px;margin:0">⏰</p>
+        <h4 style="font-size:16px;margin-top:6px">限时促销</h4>
+        <p class="dim" style="font-size:13px">充值双倍返利<br>限时种子礼包<br">花坊扩建折扣<br>实物花束兑换</p>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">活动维持新鲜感 · 限定驱动付费</span><span class="slide-number" data-current="10" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 11. 竞品分析 ======= -->
+  <section class="slide" data-title="竞品分析">
+    <div class="deck-header"><span class="eyebrow">10</span><span class="eyebrow">COMPETITION</span></div>
+    <p class="kicker" style="margin-bottom:4px">COMPETITIVE LANDSCAPE</p>
+    <h2 class="h2" style="font-size:40px">模拟经营+种花赛道的玩家</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:10px;">
+          <h4 style="font-size:16px">🌾 品类同源：QQ农场</h4>
+          <p class="dim" style="font-size:14px">2009年现象级社交游戏，核心玩法种菜→收菜→偷菜。我的花园世界可以理解为"QQ农场的现代升级版"——种花代替种菜、花店代替仓库、更多装扮和经营深度</p>
+        </div>
+        <div class="card" style="margin-bottom:10px;">
+          <h4 style="font-size:16px">🌻 直接竞品：花店经营类</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>《 flower shop 》系列（海外）</li>
+            <li>各类"花店模拟器"小游戏</li>
+            <li>樱花校园模拟器（部分玩法重叠）</li>
+            <li>但这些产品品质和投入远不如本作</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:10px;">
+          <h4 style="font-size:16px">📊 差异化优势</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>明星代言带来的品牌信任感</li>
+            <li>实物花束的差异化钩子</li>
+            <li>高品质美术（1.59G大包体=高品质信号）</li>
+            <li>社会话题性（真花争议反而带来讨论度）</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px">⚠️ 潜在风险</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>品类壁垒低，易被复制</li>
+            <li>实物履约成本高，争议影响口碑</li>
+            <li>内容消耗快，需持续更新</li>
+            <li>买量依赖重，CPI持续上涨</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">QQ农场的现代升级版 · 实物变现是双刃剑</span><span class="slide-number" data-current="11" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 12. 争议事件 ======= -->
+  <section class="slide" data-title="争议事件">
+    <div class="deck-header"><span class="eyebrow">11</span><span class="eyebrow">CONTROVERSY</span></div>
+    <p class="kicker" style="margin-bottom:4px">CONTROVERSY & RISKS</p>
+    <h2 class="h2" style="font-size:40px">"真花"承诺引发的信任危机</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div>
+        <div class="card" style="border-left:4px solid var(--bad);margin-bottom:10px">
+          <h4 style="font-size:16px">⚠️ 事件概述</h4>
+          <p class="dim" style="font-size:14px">2026年4月，多家媒体（西西新闻等）曝光《我的花园世界》"线上种花线下收真花"涉嫌虚假宣传。消费者反映充值后未收到花束/收到的花束与宣传不符。客服回应迟缓，投诉难以解决</p>
+        </div>
+        <div class="card" style="border-left:4px solid var(--warn);margin-bottom:10px">
+          <h4 style="font-size:16px">📋 问题点</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>充值门槛与宣传不符</li>
+            <li>花束质量差（枯萎/品种不对）</li>
+            <li>物流缓慢/根本不发货</li>
+            <li>客服联系不上/推诿</li>
+            <li>黑猫投诉平台大量集体投诉</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:10px">
+          <h4 style="font-size:16px">📊 影响分析</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>短期：话题曝光带来下载量↑</li>
+            <li>中期：负面口碑影响付费转化↓</li>
+            <li>长期：信任被透支→用户流失</li>
+            <li>监管风险：可能被市监局约谈/处罚</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left:4px solid var(--good)">
+          <h4 style="font-size:16px">🎯 给我们的教训</h4>
+          <ul style="font-size:15px;color:var(--text-3);line-height:1.8;padding-left:20px;margin:8px 0 0">
+            <li>实物挂钩很有效，但履约是生死线</li>
+            <li>营销承诺必须≤实际交付能力</li>
+            <li>客服体系需要提前建设好</li>
+            <li>口碑=长期生命线，不能透支</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">营销是把双刃剑 · 口碑是长期生命线</span><span class="slide-number" data-current="12" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 13. 核心启示 ======= -->
+  <section class="slide" data-title="核心启示">
+    <div class="deck-header"><span class="eyebrow">12</span><span class="eyebrow">TAKEAWAYS</span></div>
+    <p class="kicker" style="margin-bottom:4px">KEY TAKEAWAYS</p>
+    <h2 class="h2" style="font-size:40px">给我的花园世界的启示</h2>
+    <div class="divider-accent" style="margin:12px 0 20px"></div>
+
+    <div class="grid g2" style="gap:16px">
+      <div class="card" style="margin-bottom:10px">
+        <h4 style="font-size:16px">1️⃣ 品类选择 > 玩法创新</h4>
+        <p class="dim" style="font-size:14px">种花经营不是新玩法，但它选择了"治愈感+女性向"这个巨大且被验证的市场。有时候不需要发明新玩法，把成熟玩法做到极致+对的用户群+对的营销就够了</p>
+      </div>
+      <div class="card" style="margin-bottom:10px">
+        <h4 style="font-size:16px">2️⃣ 实物钩子 = 双刃剑</h4>
+        <p class="dim" style="font-size:14px">"线上种花线下收花"是天才级的营销创意，产生了极强的传播力和下载转换。但如果没有稳定的供应链和客服体系支撑，信任崩塌后反噬更严重</p>
+      </div>
+      <div class="card" style="margin-bottom:10px">
+        <h4 style="font-size:16px">3️⃣ 明星代言是放大器不是发动机</h4>
+        <p class="dim" style="font-size:14px">杨紫代言拉高了品牌格调，但如果产品本身的核心体验留不住人，代言只是加速了用户的流逝。产品力+营销力必须同时在线</p>
+      </div>
+      <div class="card" style="margin-bottom:10px">
+        <h4 style="font-size:16px">4️⃣ 模拟经营的"每日回访"是最强留存</h4>
+        <p class="dim" style="font-size:14px">种花有生长周期 → 每天要回来浇水收获 → 形成习惯。比三消类的"想玩才玩"更稳定。这种"不得不回来"的机制是模拟经营品类的先天优势</p>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--grad-soft);text-align:center;padding:16px">
+      <p style="font-size:18px;font-weight:700;color:var(--accent);margin:0">种花是表 · 经营是里 · 社交是魂 · 营销是剑</p>
+    </div>
+
+    <div class="deck-footer"><span class="dim2">拆解是为了理解 · 理解是为了创造</span><span class="slide-number" data-current="13" data-total="14"></span></div>
+  </section>
+
+  <!-- ======= 14. End ======= -->
+  <section class="slide center tc" data-title="结语">
+    <div class="deck-header"><span class="eyebrow">END</span><span class="eyebrow">感谢阅读</span></div>
+    <div style="max-width:800px">
+      <div class="divider-accent" style="margin:0 auto 20px"></div>
+      <h1 class="h1" style="font-size:64px;line-height:1.2">拆解完毕</h1>
+      <div style="width:60px;height:4px;background:var(--accent-2);border-radius:2px;margin:20px auto"></div>
+      <p class="lede" style="font-size:20px;margin:16px 0 0">种花经营 · 治愈系 · 女性向黑马</p>
+      <div class="row wrap" style="gap:8px;justify-content:center;margin-top:32px">
+        <span class="pill pill-accent">模拟经营</span>
+        <span class="pill pill-accent">种花养成</span>
+        <span class="pill pill-accent">花店经营</span>
+        <span class="pill pill-accent">社交互动</span>
+      </div>
+      <p style="margin-top:40px;font-size:14px;color:var(--text-3)">我的花园世界 · 详细拆解 · 2026.05</p>
+    </div>
+    <div class="deck-footer"><span class="dim2">谢谢</span><span class="slide-number" data-current="14" data-total="14"></span></div>
+  </section>
+
+</div>
+<script src="assets/runtime.js"></script>
+</body>
+</html>

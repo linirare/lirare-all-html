@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>游戏市场双周观察报告</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== Reset & Base ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f4f8f2;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", system-ui, sans-serif;
+            color: #1e2e24;
+            padding: 24px 16px;
+            line-height: 1.6;
+        }
+        .report-wrapper {
+            max-width: 1200px; margin: 0 auto; background: #ffffff;
+            border-radius: 28px; box-shadow: 0 8px 32px -12px rgba(0,0,0,0.06);
+            padding: 28px 28px 40px; position: relative;
+        }
+
+        /* ===== Header ===== */
+        .header { padding-bottom: 20px; margin-bottom: 28px; position: relative; }
+        .header::after {
+            content: ''; position: absolute; bottom: 0; left: -28px; right: -28px;
+            height: 1px; background: linear-gradient(90deg, transparent, #d0e2c4, transparent);
+        }
+        .header h1 {
+            font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #2a6b3c, #4f9a64, #7ab88a);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .meta {
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+            gap: 8px; margin-top: 10px; font-size: 0.78rem; color: #5f7863;
+        }
+        .badge {
+            background: #ebf4e5; padding: 4px 14px; border-radius: 24px;
+            font-weight: 600; font-size: 0.72rem; color: #367a48; white-space: nowrap;
+        }
+
+        /* ===== Section ===== */
+        .section { margin-bottom: 32px; }
+        .section-title {
+            font-size: 1.3rem; font-weight: 650; margin: 28px 0 16px 0;
+            padding-left: 14px; border-left: 4px solid #4f9a64;
+            display: flex; align-items: center; gap: 10px; color: #265634;
+            letter-spacing: 0.02em;
+        }
+        .section-title .num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 24px; height: 24px; border-radius: 6px;
+            background: #4f9a64; color: #fff; font-size: 0.75rem; font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ===== Card ===== */
+        .card {
+            background: #ffffff; border-radius: 20px; border: 1px solid #e8eee4;
+            padding: 20px 22px; margin-bottom: 20px;
+            transition: box-shadow 0.2s;
+        }
+        .card:hover { box-shadow: 0 4px 16px -8px rgba(0,0,0,0.04); }
+        h3 {
+            font-size: 1.05rem; font-weight: 600; margin-bottom: 14px;
+            color: #265634; padding-left: 12px; border-left: 3px solid #8fc27e;
+            line-height: 1.4;
+        }
+        .card h3:first-child { margin-top: 0; }
+
+        /* ===== Insight Card (结论) ===== */
+        .insight-card {
+            background: #f6fbf3; border-left: 4px solid #4c9f70;
+            border-radius: 14px; padding: 14px 20px; margin: 14px 0;
+            font-size: 0.82rem; line-height: 1.6; color: #244f30;
+            position: relative;
+        }
+        .insight-card strong { color: #1d4226; }
+        .insight-card .hl { color: #c0392b; font-weight: 700; }
+        .insight-card .section-label { font-weight: 700; color: #1a3a22; }
+        .insight-card .icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 20px; height: 20px; border-radius: 50%;
+            background: #4c9f70; color: #fff; font-size: 0.65rem; margin-right: 6px; flex-shrink: 0;
+        }
+
+        /* ===== Tables ===== */
+        .table-wrap { overflow-x: auto; margin: 12px 0; -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+        th {
+            background: #f6faf4; font-weight: 600; color: #265634;
+            padding: 9px 10px; border-bottom: 2px solid #d6e6cb;
+            text-align: center; white-space: nowrap;
+        }
+        td {
+            padding: 8px 10px; border-bottom: 1px solid #ecf3e7;
+            text-align: center; vertical-align: middle;
+        }
+        table tbody tr:hover td { background: #f6fcf3; }
+        .trend-up { color: #2b7640; font-weight: 700; }
+        .rank-up { color: #2b7640; font-weight: 700; }
+        .rank-down { color: #b0473a; font-weight: 700; }
+        .rank-new { color: #c0762a; font-weight: 700; }
+        .bg-highlight { background-color: #fafae8; }
+        .table-scroll {
+            max-height: 380px; overflow-y: auto; border: 1px solid #e6eee2;
+            border-radius: 14px; margin-top: 10px;
+        }
+        .table-scroll table { margin: 0; }
+        .table-scroll thead th { position: sticky; top: 0; z-index: 1; }
+        .text-left { text-align: left; }
+
+        /* ===== Grid ===== */
+        .grid-2 { display: flex; gap: 20px; flex-wrap: wrap; margin: 16px 0; }
+        .grid-2 > * { min-width: 220px; flex: 1; }
+        .flex-between { display: flex; justify-content: space-between; align-items: stretch; flex-wrap: wrap; gap: 16px; }
+
+        /* ===== Chart Box ===== */
+        .chart-box {
+            background: #fcfdfa; border-radius: 18px; padding: 16px;
+            border: 1px solid #e8eee4; text-align: center;
+        }
+        .chart-box > strong {
+            display: block; font-size: 0.82rem; color: #265634;
+            margin-bottom: 8px; font-weight: 600;
+        }
+        .chart-box p { font-size: 0.72rem; color: #5f7863; margin-top: 6px; }
+        .chart-wrap { width: 100%; height: 200px; margin: 6px auto; position: relative; }
+        .chart-wrap canvas { width: 100% !important; height: 100% !important; background: #ffffff; border-radius: 10px; }
+
+        /* ===== Footnotes ===== */
+        .footnote { color: #6f8268; font-size: 0.68rem; margin-top: 10px; padding-top: 8px; border-top: 1px dashed #d4e2ca; text-align: left; line-height: 1.5; }
+
+        /* ===== Modal ===== */
+        .modal { display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+        .modal-content { position: absolute; left: 2.5%; right: 2.5%; top: 5%; bottom: 5%; background: #fff; max-width: 1200px; margin: 0 auto; border-radius: 24px; display: flex; flex-direction: column; min-height: 0; box-shadow: 0 24px 48px -12px rgba(0,0,0,0.2); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 22px; border-bottom: 1px solid #eef3ea; background: #f8fcf6; border-radius: 24px 24px 0 0; flex-shrink: 0; }
+        .modal-header h2 { font-size: 1.1rem; font-weight: 600; color: #265634; }
+        .close-modal { font-size: 1.5rem; cursor: pointer; color: #8faa82; line-height: 1; padding: 4px; transition: color 0.15s; }
+        .close-modal:hover { color: #2b7640; }
+        .modal-body { padding: 14px 18px; overflow-y: auto; overflow-x: auto; flex: 1; min-height: 0; -webkit-overflow-scrolling: touch; }
+        .modal-body table { font-size: 0.68rem; min-width: 380px; }
+        .modal-body th, .modal-body td { padding: 6px 6px; white-space: nowrap; }
+        .modal-body .col-vendor { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .modal-footnote { text-align: center; margin-top: 12px; font-size: 0.65rem; color: #7a8f74; padding-top: 10px; border-top: 1px solid #eef3ea; }
+
+        /* ===== Buttons ===== */
+        .tab-buttons-inline { display: flex; gap: 12px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
+        .open-modal-btn {
+            background: linear-gradient(135deg, #e0f0da, #cde4c2); border: none;
+            padding: 8px 24px; border-radius: 30px; font-size: 0.82rem; font-weight: 600;
+            color: #1f6032; cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(79,154,100,0.1);
+        }
+        .open-modal-btn:hover { background: linear-gradient(135deg, #cde4c2, #b8d8aa); box-shadow: 0 4px 12px rgba(79,154,100,0.2); transform: translateY(-1px); }
+        .open-modal-btn:active { transform: translateY(0); }
+
+        /* ===== Error ===== */
+        .chart-error { display: none; background: #fef6f2; border: 1px solid #f0cdbc; border-radius: 12px; padding: 36px 20px; text-align: center; color: #b35a38; font-size: 0.82rem; }
+        .chart-error i { font-size: 1.6rem; display: block; margin-bottom: 8px; }
+
+        /* ===== Responsive (平板/桌面) ===== */
+        @media (max-width: 780px) {
+            body { padding: 16px 10px; }
+            .report-wrapper { padding: 18px 14px 32px; border-radius: 20px; }
+            .header h1 { font-size: 1.3rem; }
+            .section-title { font-size: 1.1rem; padding-left: 10px; }
+            .card { padding: 14px 14px; border-radius: 16px; }
+            h3 { font-size: 0.95rem; margin-bottom: 10px; }
+            th, td { padding: 6px 5px; font-size: 0.65rem; }
+            .insight-card { padding: 10px 14px; font-size: 0.78rem; }
+            .chart-box { padding: 12px; border-radius: 14px; }
+            .chart-wrap { height: 180px; }
+            .modal-header h2 { font-size: 1rem; }
+            .modal-body { padding: 10px 12px; }
+            .modal-body table { font-size: 0.62rem; min-width: 320px; }
+        }
+
+        /* ===== Responsive (手机) ===== */
+        @media (max-width: 600px) {
+            .grid-2 { gap: 14px; }
+            .flex-between > * { min-width: 100%; }
+            .modal-content { left: 0; right: 0; top: 0; bottom: 0; border-radius: 0; }
+            .modal-header { border-radius: 0; padding: 10px 14px; }
+            .modal-body { padding: 8px 10px; }
+            .modal-body table { font-size: 0.6rem; min-width: 280px; }
+            .modal-body th, .modal-body td { padding: 4px 3px; }
+            .modal-body .col-vendor { display: none; }
+            .badge { font-size: 0.65rem; padding: 3px 10px; }
+            .chart-wrap { height: 160px; }
+            .section-title .num { width: 20px; height: 20px; font-size: 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="report-wrapper">
+    <div class="header">
+        <h1><i class="fas fa-chart-line" style="color: #569e6b;"></i> 小游戏市场双周观察报告</h1>
+        <div class="meta">
+            <span><i class="far fa-calendar-alt"></i> 数据周期：5月18日-5月22日</span>
+            <span class="badge"><i class="fas fa-chart-pie"></i> 微小&抖小畅销榜Top100 · 融合玩法成主线</span>
+        </div>
+        <div class="insight-card">
+            <i class="fas fa-chart-simple"></i> <strong>本周核心摘要</strong><br>
+            ✅ <span class="section-label">买量消耗：</span>《永远的蔚蓝星球》微小端日均消耗 <span class="hl">790万</span>，抖小 <span class="hl">200万</span>，合计 <span class="hl">990万/天</span>，断层领先；微小&抖小消耗top品类：<span class="hl">塔防</span>、SLG、RPG、模拟经营<br>
+            ✅ <span class="section-label">模拟经营品类双平台稳定发力：</span>畅销榜top100产品中微信15款/抖音13款上榜，"二合+"占比超 <span class="hl">40%</span>；《我的花园世界》维持双平台畅销榜top5（微信No5，抖小No2），双平台日耗＜100万/天，<span class="hl">社交裂变</span>驱动自然流量，是当前小游戏赛道 <span class="hl">买量效率最高标杆</span><br>
+            ✅ <span class="section-label">双平台榜首情况：</span>微信《永远的蔚蓝星球》<span class="hl">持续霸榜</span>；抖音《<span class="hl">无尽冬日</span>》登顶，SLG+模拟经营融合爆发<br>
+            ✅ <span class="section-label">本周重点飙升游戏关注：</span>微小暂无，抖小重点关注：<span class="hl">《杜拉拉升职记》</span>抖音飙升 <span class="hl">20位</span>，<span class="hl">《逆袭的旅程》</span>上升 <span class="hl">11位</span>，剧情驱动、融合创新玩法及题材差异化是本周飙升核心动力。抖音平台对新内容敏感度高，中小团队可通过 <span class="hl">创意融合</span> 快速起量。
+        </div>
+    </div>
+
+    <!-- 一、消耗透视 -->
+    <div class="section">
+        <div class="section-title"><i class="fas fa-chart-line"></i> <span class="num">一</span> 微小&抖小本周投放消耗透视</div>
+        <div class="card">
+            <h3><i class="fas fa-chart-simple"></i> 永远的蔚蓝星球 · 日均消耗（万元）</h3>
+            <div class="grid-2">
+                <div style="flex:1">
+                    <table style="min-width:220px">
+                        <thead><tr><th>渠道</th><th>日均消耗（万元）</th></tr></thead>
+                        <tbody>
+                            <tr><td style="font-weight:500;">抖小</td><td class="trend-up">200</td></tr>
+                            <tr><td style="font-weight:500;">微小-广点通</td><td class="trend-up">450</td></tr>
+                            <tr><td style="font-weight:500;">微小-头条</td><td class="trend-up">340</td></tr>
+                            <tr style="background:#f1f9ec;"><td style="font-weight:700;">微小合计</td><td style="font-weight:700;">790</td></tr>
+                            <tr style="background:#fef7e0;"><td style="font-weight:700;">全渠道合计</td><td style="font-weight:700;">990</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="chart-box" id="chart-blueStar-wrap">
+                    <strong>📊 多渠道消耗对比（万元/天）</strong>
+                    <div class="chart-wrap"><canvas id="blueStarConsumeStackChart"></canvas></div>
+                    <div class="footnote" style="border:none; margin-top:6px;">微小柱内：广点通(450) + 头条(340) = 790万</div>
+                </div>
+            </div>
+            <div class="insight-card"><i class="fas fa-chart-line"></i> <strong>结论</strong><br>《永远的蔚蓝星球》全渠道日均消耗 <span class="hl">近千万</span>，微小端广点通占比 <span class="hl">57%</span>，头条 <span class="hl">43%</span>，抖音侧贡献 <span class="hl">200万/天</span>。塔防+竞技玩法买量效率极高，成为当前 <span class="hl">消耗标杆</span>。</div>
+        </div>
+
+        <div class="card">
+            <div class="grid-2">
+                <div class="chart-box" id="chart-top5-wrap">
+                    <strong>📊 微小-广点通 · 日消耗Top5（万元）</strong>
+                    <div class="chart-wrap"><canvas id="top5ConsumeChart"></canvas></div>
+                </div>
+                <div class="chart-box" id="chart-douyin-pie-wrap">
+                    <strong>🥧 抖音本周消耗数据（部分）</strong>
+                    <div class="chart-wrap"><canvas id="douyinConsumePie"></canvas></div>
+                    <div class="footnote" style="border:none;">注：《我的花园世界》消耗30-60万，取中值45万</div>
+                </div>
+            </div>
+            <div class="flex-between" style="margin-top:16px">
+                <div style="flex:1.2; min-width:260px">
+                    <h3 style="margin-top:0;">🏆 微小-广点通 · 日消耗Top15</h3>
+                    <div class="table-scroll">
+                        <table style="min-width:360px">
+                            <thead><tr><th>排名</th><th>游戏</th><th>日消耗(万元)</th><th>品类</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>永远的蔚蓝星球</td><td class="trend-up">450</td><td>塔防</td></tr>
+                                <tr><td>2</td><td>向僵尸开炮</td><td class="trend-up">270</td><td>塔防</td></tr>
+                                <tr><td>3</td><td>三国冰河时代</td><td class="trend-up">200</td><td>SLG</td></tr>
+                                <tr><td>4</td><td>寻道大千</td><td class="trend-up">160</td><td>RPG</td></tr>
+                                <tr><td>5</td><td>无尽冬日</td><td class="trend-up">140</td><td>SLG</td></tr>
+                                <tr><td>6</td><td>烈焰觉醒</td><td>140</td><td>RPG</td></tr>
+                                <tr><td>7</td><td>向往的生活</td><td>120</td><td>模拟经营</td></tr>
+                                <tr><td>8</td><td>疯狂水世界</td><td>120</td><td>SLG</td></tr>
+                                <tr><td>9</td><td>奔奔王国</td><td>110</td><td>塔防</td></tr>
+                                <tr><td>10</td><td>保卫向日葵</td><td>110</td><td>塔防</td></tr>
+                                <tr><td>11</td><td>梦幻消除战</td><td>80</td><td>休闲</td></tr>
+                                <tr><td>12</td><td>肥鹅美食街</td><td>80</td><td>模拟经营</td></tr>
+                                <tr><td>13</td><td>城主别慌张</td><td>80</td><td>RPG</td></tr>
+                                <tr><td>14</td><td>时尚百货城小游戏</td><td>80</td><td>模拟经营</td></tr>
+                                <tr><td>15</td><td>浪漫餐厅</td><td>60</td><td>模拟经营</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="chart-box" id="chart-category-pie-wrap" style="flex:0.8">
+                    <strong>🥧 消耗Top15游戏 · 品类消耗占比</strong>
+                    <div class="chart-wrap"><canvas id="categoryConsumePie"></canvas></div>
+                    <div class="footnote" style="border:none">总消耗2200万元</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 二、模拟经营品类 -->
+    <div class="section">
+        <div class="section-title"><i class="fas fa-seedling"></i> <span class="num">二</span> 模拟经营品类 · 二合融合持续领跑</div>
+        <div class="card">
+            <h3>2.1 双平台模拟经营上榜概况</h3>
+            <table>
+                <thead><tr><th>平台</th><th>上榜数</th><th>Top10内数量</th><th>二合+模拟经营数</th><th>占比</th><th>头部代表</th></tr></thead>
+                <tbody>
+                    <tr class="bg-highlight"><td><strong>微信小游戏</strong></td><td>15款</td><td class="trend-up">2款</td><td class="trend-up">8款</td><td class="trend-up">53%</td><td>我的花园世界、浪漫餐厅、四季合合、空格之境</td></tr>
+                    <tr class="bg-highlight"><td><strong>抖音小游戏</strong></td><td>13款</td><td class="trend-up">2款</td><td class="trend-up">6款</td><td>46%</td><td>我的花园世界、浪漫餐厅、四季合合、杜拉拉升职记</td></tr>
+                </tbody>
+            </table>
+            <div class="grid-2">
+                <div class="chart-box" id="chart-wechat-mgmt-wrap"><div class="chart-wrap"><canvas id="wechatMgmtChart"></canvas></div><p>微信模拟经营玩法构成</p></div>
+                <div class="chart-box" id="chart-douyin-mgmt-wrap"><div class="chart-wrap"><canvas id="douyinMgmtChart"></canvas></div><p>抖音模拟经营玩法构成</p></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>2.2 重点模拟经营游戏表现（双平台排名）</h3>
+            <div class="table-scroll">
+                <table style="min-width:880px">
+                    <thead><tr><th>游戏名</th><th>厂商（缩写）</th><th>核心玩法</th><th>微小榜单</th><th>抖小榜单</th><th>双平台差异/亮点</th></tr></thead>
+                    <tbody>
+                        <tr><td>QQ经典农场</td><td>腾讯</td><td>纯模拟经营+社交</td><td>2</td><td>-</td><td>微信霸榜级产品，社交偷菜黏性极强</td></tr>
+                        <tr class="bg-soft-yellow"><td>我的花园世界</td><td>麟贝互娱</td><td>二合+模拟经营</td><td>5</td><td>2</td><td>双平台头部，抖音排名更优，组队合种玩法吸量</td></tr>
+                        <tr><td>浪漫餐厅</td><td>柠檬微趣</td><td>合成+剧情经营</td><td>21</td><td>8</td><td>双端稳定，悬疑剧情驱动强留存</td></tr>
+                        <tr><td>向往的生活</td><td>必凡娱乐</td><td>二合+田园综艺IP</td><td>22</td><td>21</td><td>综艺IP深度还原，情感代入强</td></tr>
+                        <tr><td>时尚百货城</td><td>爱的番茄</td><td>模拟经营+连锁</td><td>31</td><td>14</td><td>抖音排名明显高于微信，多店副玩法吸金</td></tr>
+                        <tr><td>肥鹅美食街</td><td>豪腾创想</td><td>二合+模拟经营</td><td>40</td><td>64</td><td>微信表现优于抖音，合成美食故事线</td></tr>
+                        <tr><td>四季合合</td><td>蓝飞互娱</td><td>二合+四季主题</td><td>50</td><td>11</td><td>抖音表现远优于微信，时空穿梭题材吸睛</td></tr>
+                        <tr><td>织梦森林</td><td>雷虎网络</td><td>二合+模拟经营</td><td>58</td><td>未上榜</td><td>微信腰部，种花+送真花商业模型</td></tr>
+                        <tr><td>梦幻经理人</td><td>望伯纳乌</td><td>模拟经营+体育</td><td>64</td><td>未上榜</td><td>体育经营题材，双线成长系统</td></tr>
+                        <tr><td>肥鹅健身房</td><td>豪腾创想</td><td>模拟经营+二合</td><td>68</td><td>-</td><td>魔性合成装修健身房</td></tr>
+                        <tr><td>这城有良田</td><td>益玩网络</td><td>模拟经营+种田</td><td>80</td><td>未上榜</td><td>种田养城，后期SLG争霸</td></tr>
+                        <tr><td>空格之境</td><td>启游互动</td><td>二合+纺织/哲学</td><td>82</td><td>86</td><td>双平台腰部，哲学题材差异化突围</td></tr>
+                        <tr><td>我的休闲时光</td><td>卓动信息</td><td>放置经营+装修</td><td>91</td><td>未上榜</td><td>模块化装修，NPC互动</td></tr>
+                        <tr><td>深海花园</td><td>游园会</td><td>二合+海岛经营</td><td>100</td><td>未上榜</td><td>微信新进百强，种花送花模型探索</td></tr>
+                        <tr><td>逆袭的旅程</td><td>卡日曲</td><td>二合+庄园剧情</td><td>未上榜</td><td>86</td><td>抖音新进榜，上升11位，逆袭故事线吸量</td></tr>
+                        <tr><td>杜拉拉升职记</td><td>沁游网络</td><td>模拟养成+剧情换装</td><td>未上榜</td><td>12</td><td>抖音专属爆款，换装+商战融合，上升20位</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="insight-card"><i class="fas fa-chart-line"></i> <strong>结论</strong><br>二合+模拟经营占据双平台主流，微信占比 <span class="hl">53%</span>，抖音占比 <span class="hl">46%</span>。题材跨界（综艺/哲学/体育）和剧情化（逆袭/悬疑）成为长线留存核心。抖音对新题材接受度更高，<span class="hl">《杜拉拉升职记》</span><span class="hl">《逆袭的旅程》</span>凭借强故事线在抖音快速获量。</div>
+        </div>
+    </div>
+
+    <!-- 三、畅销榜Top10与飙升产品 -->
+    <div class="section">
+        <div class="section-title"><i class="fas fa-trophy"></i> <span class="num">三</span> 本周双平台畅销榜Top10与飙升产品分析</div>
+        <div class="card">
+            <div class="grid-2">
+                <div><h3>📱 微信小游戏Top10</h3><table><thead><tr><th>排名</th><th>游戏名</th><th>品类</th><th>核心玩法</th></tr></thead><tbody>
+                    <tr><td>1</td><td>永远的蔚蓝星球</td><td>塔防</td><td>塔防+竞技</td></tr>
+                    <tr><td>2</td><td>QQ经典农场</td><td>模拟经营</td><td>纯经营+社交</td></tr>
+                    <tr><td>3</td><td>三国：冰河时代</td><td>SLG</td><td>SLG+模拟经营</td></tr>
+                    <tr><td>4</td><td>向僵尸开炮</td><td>塔防</td><td>塔防+肉鸽</td></tr>
+                    <tr><td>5</td><td>我的花园世界</td><td>模拟经营</td><td>二合+经营</td></tr>
+                    <tr><td>6</td><td>无尽冬日</td><td>SLG</td><td>策略对战</td></tr>
+                    <tr><td>7</td><td>疯狂水世界</td><td>SLG</td><td>SLG+经营</td></tr>
+                    <tr><td>8</td><td>灵画师</td><td>RPG</td><td>开宝箱放置</td></tr>
+                    <tr><td>9</td><td>奔奔王国</td><td>塔防</td><td>塔防+经营</td></tr>
+                    <tr><td>10</td><td>掌上谈兵</td><td>卡牌</td><td>卡牌+策略</td></tr>
+                </tbody></table></div>
+                <div><h3>🎮 抖音小游戏Top10</h3><table><thead><tr><th>排名</th><th>游戏名</th><th>品类</th><th>核心玩法</th></tr></thead><tbody>
+                    <tr><td>1</td><td>无尽冬日</td><td>SLG</td><td>模拟经营+SLG</td></tr>
+                    <tr><td>2</td><td>我的花园世界</td><td>模拟经营</td><td>二合+经营</td></tr>
+                    <tr><td>3</td><td>灵画师</td><td>RPG</td><td>开宝箱放置</td></tr>
+                    <tr><td>4</td><td>向僵尸开炮</td><td>塔防</td><td>塔防+肉鸽</td></tr>
+                    <tr><td>5</td><td>占城大师</td><td>塔防</td><td>塔防+策略</td></tr>
+                    <tr><td>6</td><td>指尖幻影</td><td>塔防</td><td>背包合成+肉鸽</td></tr>
+                    <tr><td>7</td><td>疯狂水世界</td><td>SLG</td><td>SLG+经营</td></tr>
+                    <tr><td>8</td><td>浪漫餐厅</td><td>模拟经营</td><td>合成+剧情</td></tr>
+                    <tr><td>9</td><td>三国：冰河时代</td><td>SLG</td><td>SLG+经营</td></tr>
+                    <tr><td>10</td><td>传奇之业</td><td>RPG</td><td>传奇+挂机</td></tr>
+                </tbody></table></div>
+            </div>
+            <div class="insight-card"><i class="fas fa-chart-line"></i> <strong>头部格局核心发现</strong><br>• 微信头部固化：<span class="hl">《永远的蔚蓝星球》</span>连续霸榜 <span class="hl">5天</span>，塔防+竞技统治；前十名仅一款模拟经营，SLG/塔防占主导。<br>• 抖音榜首更迭：<span class="hl">《无尽冬日》</span>上升 <span class="hl">3位</span> 登顶，SLG+模拟经营融合爆发；塔防品类占据 <span class="hl">4席</span>。<br>• 双平台共同头部：<span class="hl">《我的花园世界》</span><span class="hl">《向僵尸开炮》</span><span class="hl">《三国：冰河时代》</span><span class="hl">《疯狂水世界》</span>均位列双榜Top10。</div>
+            
+            <div class="chart-box" style="margin-top:12px">
+                <strong>📈 本周重点飙升产品（抖音为主）</strong>
+                <table><thead><tr><th>游戏名</th><th>排名变化</th><th>当前排名</th><th>品类亮点</th></tr></thead>
+                <tbody>
+                    <tr class="bg-highlight"><td>指尖幻影</td><td class="trend-up">↑14</td><td>6</td><td>背包合成+肉鸽塔防</td></tr>
+                    <tr><td>杜拉拉升职记</td><td class="trend-up">↑20</td><td>12</td><td>模拟养成+剧情换装</td></tr>
+                    <tr><td>王者之弈</td><td class="trend-up">↑14</td><td>31</td><td>自走棋+卡牌</td></tr>
+                    <tr><td>百炼英雄</td><td class="trend-up">↑21</td><td>51</td><td>开放世界+放置RPG</td></tr>
+                    <tr><td>逆袭的旅程</td><td class="trend-up">↑11</td><td>86</td><td>二合+庄园剧情</td></tr>
+                    <tr><td>欢乐战国</td><td class="trend-up">↑30</td><td>61</td><td>放置卡牌+三国</td></tr>
+                </tbody></table>
+                <div class="insight-card" style="margin-top:12px"><i class="fas fa-chart-line"></i> <strong>结论</strong><br>剧情驱动、融合创新玩法（<span class="hl">背包合成+肉鸽</span>、<span class="hl">自走棋</span>）及题材差异化是本周飙升核心动力。抖音平台对新内容敏感度高，中小团队可通过 <span class="hl">创意融合</span> 快速起量。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 四、品类占比+榜单弹窗 -->
+    <div class="section">
+        <div class="section-title"><i class="fas fa-chart-pie"></i> <span class="num">四</span> 畅销榜Top100品类占比全景分析</div>
+        <div class="card">
+            <div class="grid-2">
+                <div class="chart-box" id="chart-wechat-cat-wrap"><strong>📱 微信Top100品类分布</strong><div class="chart-wrap"><canvas id="wechatCategoryPie"></canvas></div></div>
+                <div class="chart-box" id="chart-douyin-cat-wrap"><strong>🎮 抖音Top100品类分布</strong><div class="chart-wrap"><canvas id="douyinCategoryPie"></canvas></div></div>
+            </div>
+            <div class="insight-card"><i class="fas fa-chart-line"></i> <strong>品类结构结论</strong><br>• 微信端：RPG（<span class="hl">28%</span>）、卡牌（<span class="hl">16%</span>）、模拟经营（<span class="hl">15%</span>）、塔防（<span class="hl">14%</span>）为四大支柱，棋牌类（<span class="hl">11%</span>）依托社交生态。<br>• 抖音端：RPG（<span class="hl">28%</span>）居首，塔防（<span class="hl">16%</span>）、模拟经营（<span class="hl">15%</span>）、休闲（<span class="hl">12%</span>）紧随，棋牌占比极低。<br>• 双平台RPG和模拟经营均为核心，抖音塔防占比显著高于微信，休闲品类更活跃。</div>
+            <div class="tab-buttons-inline">
+                <button class="open-modal-btn" data-modal="wechat">微小畅销top100</button>
+                <button class="open-modal-btn" data-modal="douyin">抖小畅销top100</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 五、平台政策 -->
+    <div class="section">
+        <div class="section-title"><i class="fas fa-newspaper"></i> <span class="num">五</span> 平台政策动向 · 2026年5月最新资讯</div>
+        <div class="card">
+            <ul style="padding-left: 20px; line-height: 1.5;">
+                <li>✅ 微信小游戏：IAP激励计划及IAA广告金政策持续有效，本周无新增调整；微信广告团队将持续扶持优质小游戏，尤其鼓励混合变现模式。</li>
+                <li>✅ 抖音小游戏：Q2新游激励政策继续执行，平台近期升级了小游戏搜索入口，增加"热门玩法"标签，利好创新题材曝光。</li>
+            </ul>
+            <div class="footnote">以上信息截至2026年5月22日，均为本周公开渠道可查最新动态。</div>
+        </div>
+    </div>
+    <div class="footnote" style="text-align:center;">数据基于微小&抖小畅销榜Top100（截止2026.5.22）及投放监测 | 弹窗内含完整100名及排名变化</div>
+</div>
+
+<!-- 模态框 -->
+<div id="rankModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle">微小畅销榜 Top100</h2><span class="close-modal">&times;</span></div><div class="modal-body" id="modalBody"></div></div></div>
+
+<!-- Chart.js 使用 BootCDN（国内可访问）+ jsdelivr fallback -->
+<script>
+(function() {
+    // 动态加载 Chart.js，优先 BootCDN（国内快），失败则 jsdelivr
+    function loadChartJS(callback) {
+        var urls = [
+            'https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.0/chart.umd.min.js',
+            'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js'
+        ];
+        function tryLoad(idx) {
+            if (idx >= urls.length) { callback(false); return; }
+            var s = document.createElement('script');
+            s.src = urls[idx];
+            s.onload = function() { 
+                // 验证 Chart.js 是否真的加载成功
+                if (typeof Chart !== 'undefined') callback(true);
+                else tryLoad(idx + 1);
+            };
+            s.onerror = function() { tryLoad(idx + 1); };
+            document.head.appendChild(s);
+        }
+        tryLoad(0);
+    }
+
+    loadChartJS(function(success) {
+        if (!success) {
+            // CDN 全部失败——显示友好提示
+            document.querySelectorAll('.chart-wrap').forEach(function(w) {
+                w.innerHTML = '<div class="chart-error" style="display:block"><i class="fas fa-exclamation-triangle"></i>图表加载失败<br><span style="font-size:0.75rem;">请检查网络连接后刷新页面</span></div>';
+            });
+            return;
+        }
+
+        // ====== Chart.js 加载成功，初始化所有图表 ======
+        // 公共配置：不维护宽高比（由CSS .chart-wrap 控制）+ 响应式
+        var commonOpts = { responsive: true, maintainAspectRatio: false };
+
+        // 1. 堆叠柱状图（永远的蔚蓝星球消耗）
+        new Chart(document.getElementById('blueStarConsumeStackChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['抖小', '微小（合计）'],
+                datasets: [
+                    { label: '抖小', data: [200, 0], backgroundColor: '#e0a75e', borderRadius: 8, barPercentage: 0.6 },
+                    { label: '广点通', data: [0, 450], backgroundColor: '#6f9e7c', borderRadius: 8 },
+                    { label: '头条', data: [0, 340], backgroundColor: '#8fc27e', borderRadius: 8 }
+                ]
+            },
+            options: Object.assign({}, commonOpts, {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx) { return ctx.raw > 0 ? ctx.dataset.label + ': ' + ctx.raw + '万元' : null; },
+                            footer: function(items) { return items[0].dataIndex === 1 ? '合计: ' + (450 + 340) + '万元' : ''; }
+                        }
+                    },
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    x: { stacked: true, title: { display: true, text: '渠道' } },
+                    y: { stacked: true, beginAtZero: true, title: { display: true, text: '万元/天' } }
+                }
+            })
+        });
+
+        // 2. Top5柱状图
+        new Chart(document.getElementById('top5ConsumeChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['永远的蔚蓝星球', '向僵尸开炮', '三国冰河时代', '寻道大千', '无尽冬日'],
+                datasets: [{ label: '日消耗（万元）', data: [450, 270, 200, 160, 140], backgroundColor: '#6f9e7c', borderRadius: 8 }]
+            },
+            options: Object.assign({}, commonOpts, {
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: { callbacks: { label: function(ctx) { return ctx.raw + '万元'; } } }
+                },
+                scales: { y: { beginAtZero: true, title: { display: true, text: '万元/天' } } }
+            })
+        });
+
+        // 3. 抖音消耗饼图
+        new Chart(document.getElementById('douyinConsumePie').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['永远的蔚蓝星球 (200万)', '疯狂水世界 (150万)', '我的花园世界 (约45万)'],
+                datasets: [{ data: [200, 150, 45], backgroundColor: ['#6f9e7c', '#e2b87a', '#c4d6b2'], borderWidth: 0 }]
+            },
+            options: Object.assign({}, commonOpts, {
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { size: 10 } } },
+                    tooltip: { callbacks: { label: function(ctx) { return ctx.label + ': ' + ctx.raw + '万元'; } } }
+                }
+            })
+        });
+
+        // 4. 品类消耗占比饼图
+        new Chart(document.getElementById('categoryConsumePie').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['塔防 (42.7%)', 'SLG (20.9%)', 'RPG (17.3%)', '模拟经营 (15.5%)', '休闲 (3.6%)'],
+                datasets: [{ data: [940, 460, 380, 340, 80], backgroundColor: ['#568f66', '#e2b87a', '#82b185', '#c4d6b2', '#eebd7c'], borderWidth: 0 }]
+            },
+            options: Object.assign({}, commonOpts, {
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { size: 10 } } },
+                    tooltip: { callbacks: { label: function(ctx) { return ctx.label + ': ' + ctx.raw + '万元 (' + ((ctx.raw / 2200) * 100).toFixed(1) + '%)'; } } }
+                }
+            })
+        });
+
+        // 5. 微信模拟经营玩法构成
+        new Chart(document.getElementById('wechatMgmtChart'), {
+            type: 'doughnut',
+            data: { labels: ['二合+模拟经营 (8款)', '纯模拟经营/其他 (7款)'], datasets: [{ data: [8, 7], backgroundColor: ['#6aae7c', '#d1e0c5'] }] },
+            options: Object.assign({}, commonOpts, { plugins: { legend: { position: 'bottom' } } })
+        });
+
+        // 6. 抖音模拟经营玩法构成
+        new Chart(document.getElementById('douyinMgmtChart'), {
+            type: 'doughnut',
+            data: { labels: ['二合+模拟经营 (6款)', '纯模拟经营/其他 (7款)'], datasets: [{ data: [6, 7], backgroundColor: ['#e0a75e', '#ddebd2'] }] },
+            options: Object.assign({}, commonOpts, { plugins: { legend: { position: 'bottom' } } })
+        });
+
+        // 7. 微信品类分布
+        new Chart(document.getElementById('wechatCategoryPie'), {
+            type: 'pie',
+            data: {
+                labels: ['RPG 28%', '卡牌 16%', '模拟经营 15%', '塔防 14%', '棋牌 11%', '休闲 8%', 'SLG 7%', '其他 1%'],
+                datasets: [{ data: [28, 16, 15, 14, 11, 8, 7, 1], backgroundColor: ['#568f66', '#e2b87a', '#82b185', '#c4d6b2', '#eebd7c', '#9bbf91', '#cfdbc5', '#aaa'] }]
+            },
+            options: Object.assign({}, commonOpts, {
+                plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } }
+            })
+        });
+
+        // 8. 抖音品类分布
+        new Chart(document.getElementById('douyinCategoryPie'), {
+            type: 'pie',
+            data: {
+                labels: ['RPG 28%', '塔防 16%', '模拟经营 15%', '休闲 12%', '卡牌 13%', '解谜 5%', 'SLG 4%', '棋牌 2%', '其他 5%'],
+                datasets: [{ data: [28, 16, 15, 12, 13, 5, 4, 2, 5], backgroundColor: ['#689f6c', '#dcb570', '#94bd8b', '#cfb27c', '#eacb9a', '#bcd0b0', '#f2c94c', '#a0d6b4', '#ccc'] }]
+            },
+            options: Object.assign({}, commonOpts, {
+                plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } }
+            })
+        });
+    });
+})();
+</script>
+
+<script>
+// 榜单数据（完整100条，来自用户的Excel表）
+const wechatFullData = [
+    [1,'永远的蔚蓝星球','广州颂悦信息技术有限公司','塔防','塔防+竞技','霸榜5天'],
+    [2,'QQ经典农场','深圳市腾讯计算机系统有限公司','模拟经营','模拟经营','稳定'],
+    [3,'三国：冰河时代','欢游互动（北京）科技有限公司','SLG','SLG+模拟经营','稳定'],
+    [4,'向僵尸开炮','海南盛昌网络科技有限公司','塔防','塔防+肉鸽割草','稳定'],
+    [5,'我的花园世界','厦门麟贝互娱科技有限公司','模拟经营','二合+模拟经营','稳定'],
+    [6,'无尽冬日','点点互动（北京）科技有限公司','SLG','策略对战','稳定'],
+    [7,'疯狂水世界','益世界网络科技有限公司','SLG','SLG+模拟经营','稳定'],
+    [8,'灵画师','广州光游网络科技有限公司','RPG','开宝箱+放置RPG','稳定'],
+    [9,'奔奔王国','福州点点松云网络有限公司','塔防','塔防+模拟经营','稳定'],
+    [10,'掌上谈兵','郑州林凡网络科技有限公司','卡牌','卡牌+策略','稳定'],
+    [11,'道友来挖宝','深圳雷霆信息技术有限公司','RPG','放置+回合制RPG','稳定'],
+    [12,'神器传说','深圳全民互动科技有限公司','RPG','开宝箱+放置RPG','稳定'],
+    [13,'腾讯欢乐斗地主','深圳市腾讯计算机系统有限公司','棋牌','传统棋牌','稳定'],
+    [14,'城主别慌张','广州冠游信息科技有限公司','RPG','ARPG','稳定'],
+    [15,'跃动小子','波克科技集团有限公司','RPG','开宝箱+放置RPG','稳定'],
+    [16,'西游降妖记','（厂商未显示）','RPG','ARPG+西游','稳定'],
+    [17,'青云诀之伏魔','海南元游信息技术有限公司','RPG','MMO+放置挂机','稳定'],
+    [18,'保卫向日葵','深圳市一起梦游科技有限公司','塔防','背包合成+塔防','稳定'],
+    [19,'梦幻消除战','广州喜劳网络科技有限公司','休闲','三消+模拟经营','稳定'],
+    [20,'原始征途','巨人网络集团股份有限公司','RPG','MMO+国战','稳定'],
+    [21,'浪漫餐厅','北京柠檬微趣科技股份有限公司','模拟经营','合成+模拟经营+剧情','稳定'],
+    [22,'向往的生活','深圳市必凡娱乐科技有限公司','模拟经营','二合+模拟经营','稳定'],
+    [23,'生存33天','广州三七网络科技有限公司','SLG','生存+SLG','稳定'],
+    [24,'迷雾大陆','北京豪腾创想科技有限公司','RPG','暗黑like+刷宝','稳定'],
+    [25,'冒险岛：枫之新篇','广东星辉天拓互动娱乐有限公司','RPG','ARPG+放置','稳定'],
+    [26,'次神：光之觉醒','在线途游（北京）科技有限公司','卡牌','放置卡牌','稳定'],
+    [27,'烈焰觉醒','杭州繁柚网络科技有限公司','RPG','传奇+挂机爆装','稳定'],
+    [28,'寻道大干','三七互娱网络科技集团股份有限公司','卡牌','放置卡牌+修仙','稳定'],
+    [29,'占城大师','武汉芯丰信息科技有限公司','塔防','塔防+策略对抗','稳定'],
+    [30,'遗弃之地','北京豪腾创想科技有限公司','塔防','塔防+符咒策略','稳定'],
+    [31,'时尚百货城','深圳市爱的番茄科技有限公司','模拟经营','模拟经营+连锁','稳定'],
+    [32,'雷霆战机：集结','北京爱乐游文化发展有限公司','射击','射击+肉鸽割草','稳定'],
+    [33,'雀神广东麻将','上海锋兮网络科技有限公司','棋牌','传统棋牌','稳定'],
+    [34,'斗破苍穹','上海繁树网络科技有限公司','卡牌','放置卡牌','稳定'],
+    [35,'口袋奇兵','北京江娱互动科技有限公司','SLG','SLG+合成','稳定'],
+    [36,'大话西游归来','上海以尚网络技术有限公司','RPG','MMO+回合制','稳定'],
+    [37,'开心消消乐','乐元素科技（北京）股份有限公司','休闲','三消','稳定'],
+    [38,'王者征途','上海巨人统平网络科技有限公司','RPG','MMO+国战','稳定'],
+    [39,'武侠大明星','海南盛昌网络科技有限公司','塔防','肉鸽+塔防','稳定'],
+    [40,'肥鹅美食街','北京豪腾创想科技有限公司','模拟经营','二合+模拟经营','稳定'],
+    [41,'无限轮回','海南易多量科技有限公司','解谜','解谜+肉鸽轮回','稳定'],
+    [42,'机智逃脱','深圳市安立讯科技有限公司','解谜','解谜+密室逃脱','稳定'],
+    [43,'佣兵小镇','成都天象互动文化传播有限公司','卡牌','模拟经营+放置卡牌','稳定'],
+    [44,'超能下蛋鸭','世熠网络科技（上海）有限公司','RPG','弹射+半回合制RPG','联动'],
+    [45,'英雄没有闪','广州盈心网络科技有限公司','RPG','放置RPG','稳定'],
+    [46,'百炼英雄','深圳市九九互动科技有限公司','RPG','开放世界+放置RPG','稳定'],
+    [47,'逆转回合','厦门游力信息科技有限公司','卡牌','卡牌+回合策略','稳定'],
+    [48,'小兵打天下','杭州淞羽网络科技有限公司','塔防','塔防+放置','稳定'],
+    [49,'咻咻勇者','深圳市紫晓互动科技有限公司','RPG','搜打撤+摸金RPG','稳定'],
+    [50,'四季合合','青岛蓝飞互娱科技股份有限公司','模拟经营','二合+模拟经营','稳定'],
+    [51,'天龙八部2：飞龙战天','江西贪玩信息技术有限公司','RPG','MMO','稳定'],
+    [52,'最强斗王','广西天牛信息技术有限公司','卡牌','格斗+放置养成','稳定'],
+    [53,'造化仙府','上海沛炫网络科技有限公司','放置','模拟经营+放置养成','稳定'],
+    [54,'梦幻西游网页版','上海以尚网络技术有限公司','RPG','放置+回合制RPG','稳定'],
+    [55,'源星战域','海南青时信息技术有限公司','RPG','ARPG','稳定'],
+    [56,'微乐四川麻将','家乡互动（厦门）网络科技有限公司','棋牌','传统棋牌','稳定'],
+    [57,'时空猎人·觉醒','江西贪玩信息技术有限公司','竞技','横版动作+对战','稳定'],
+    [58,'织梦森林','安徽雷虎网络科技有限公司','模拟经营','二合+模拟经营','稳定'],
+    [59,'欢乐战三国','深圳市奥创互娱科技有限公司','卡牌','放置卡牌+三国','稳定'],
+    [60,'新弹单堂','深圳第七大道科技有限公司','竞技','弹射+竞技','稳定'],
+    [61,'爪爪大乱斗','安徽盈趣网络科技有限公司','休闲','益智+对战','稳定'],
+    [62,'王者之弈','海南椰路信息科技有限公司','卡牌','自走棋+卡牌','稳定'],
+    [63,'欢乐麻将','深圳市腾讯计算机系统有限公司','棋牌','传统棋牌','稳定'],
+    [64,'梦幻经理人','上海望伯纳乌科技有限公司','模拟经营','模拟经营+体育','稳定'],
+    [65,'我的防线','杭州烈酷科技有限公司','塔防','塔防+肉鸽','稳定'],
+    [66,'名将之弈','（厂商未显示）','卡牌','自走棋+三国','稳定'],
+    [67,'六六英雄','北京紫辰乐游科技有限公司','休闲','益智','稳定'],
+    [68,'肥鹅健身房','北京豪腾创想科技有限公司','模拟经营','模拟经营+合成','稳定'],
+    [69,'天龙八部荣耀版','成都初心互动科技有限公司','RPG','MMO','稳定'],
+    [70,'一步两步','厦门光环信息科技有限公司','休闲','模拟经营+肉鸽塔防','稳定'],
+    [71,'勇者联盟','广州爱游网络科技有限公司','RPG','ARPG','稳定'],
+    [72,'奇遇西行','广州煜耀网络科技有限公司','卡牌','放置卡牌+挂机','稳定'],
+    [73,'出征吧！勇士','广州奥贝游网络科技有限公司','塔防','塔防','稳定'],
+    [74,'一路狂飙','世熠网络科技（上海）有限公司','塔防','肉鸽+塔防','稳定'],
+    [75,'三国杀','杭州游卡网络技术有限公司','卡牌','卡牌+桌游','稳定'],
+    [76,'勇者突进','深圳影流互娱科技有限公司','卡牌','放置卡牌','稳定'],
+    [77,'微乐捉鸡麻将','家乡互动（厦门）网络科技有限公司','棋牌','传统棋牌','稳定'],
+    [78,'天天斗地主真人版','深圳市禅游科技股份有限公司','棋牌','传统棋牌','稳定'],
+    [79,'咸鱼之王','北京豪腾嘉科科技有限公司','卡牌','开宝箱+放置卡牌','稳定'],
+    [80,'这城有良田','上海益玩网络科技有限公司','模拟经营','模拟经营+种田','稳定'],
+    [81,'指尖幻影','海南异界科技有限公司','塔防','背包合成+肉鸽割草','稳定'],
+    [82,'空格之境','江西启游互动科技有限公司','模拟经营','模拟经营','稳定'],
+    [83,'女神国度','成都星邦互娱网络科技集团有限公司','RPG','ARPG','稳定'],
+    [84,'微乐斗地主','家乡互动（厦门）网络科技有限公司','棋牌','传统棋牌','稳定'],
+    [85,'遮天：帝路争锋','广州横竖雨乐网络科技有限公司','卡牌','放置卡牌','稳定'],
+    [86,'绝世仙王','上海风派网络科技有限公司','RPG','MMO','稳定'],
+    [87,'指尖无双','福州蓝琥珀网络科技有限公司','卡牌','卡牌','稳定'],
+    [88,'摸蛋','杭州边锋网络技术有限公司','棋牌','传统棋牌（掼蛋）','稳定'],
+    [89,'羊了个羊：星球','北京简游科技有限公司','休闲','三消+超难挑战','稳定'],
+    [90,'财神十三张','厦门游成互动网络科技有限公司','棋牌','传统棋牌','稳定'],
+    [91,'我的休闲时光','广州卓动信息科技有限公司','模拟经营','放置经营+装修','稳定'],
+    [92,'指尖王国','深圳市掌娱趣科技有限公司','竞技','策略对战','稳定'],
+    [93,'寻仙之旅','广州信跃网络技术有限公司','RPG','ARPG','稳定'],
+    [94,'多乐够级','北京蓝色创想网络科技有限责任公司','棋牌','传统棋牌','稳定'],
+    [95,'重生：我觉醒无限异能','（厂商未显示）','RPG','放置+异能','稳定'],
+    [96,'快来当领主','海南盛昌网络科技有限公司','塔防','塔防','稳定'],
+    [97,'微乐家乡麻将','家乡互动（厦门）网络科技有限公司','棋牌','传统棋牌','稳定'],
+    [98,'街机恐龙','湖南草花互动科技有限股份公司','竞技','横版动作+对战','稳定'],
+    [99,'富豪麻将','在线途游（北京）科技有限公司','棋牌','传统棋牌','稳定'],
+    [100,'深海花园','杭州游园会信息科技有限公司','模拟经营','二合+模拟经营','稳定']
+];
+const douyinFullData = [
+    [1,'无尽冬日','上海青笛科技有限公司','SLG','模拟经营+SLG','3'],
+    [2,'我的花园世界','海南途趣科技有限公司','模拟经营','二合+模拟经营','-'],
+    [3,'灵画师','广州光游网络科技有限公司','RPG','开宝箱+放置RPG','-'],
+    [4,'向僵尸开炮','海南盛昌网络科技有限公司','塔防','塔防+肉鸽割草','5'],
+    [5,'占城大师','武汉多趣信息技术有限公司','塔防','塔防+策略对抗','-'],
+    [6,'指尖幻影','海南异界科技有限公司','塔防','背包合成+肉鸽割草','14'],
+    [7,'疯狂水世界','益世界网络科技有限公司','SLG','SLG+模拟经营','稳定'],
+    [8,'浪漫餐厅','北京柠檬曲奇科技有限公司','模拟经营','合成+模拟经营+剧情','-'],
+    [9,'三国：冰河时代','欢游互动（北京）科技有限公司','SLG','SLG+模拟经营','-'],
+    [10,'传奇之业','杭州悦昭网络科技有限公司','RPG','传奇+挂机放置','-'],
+    [11,'四季合合','青岛蓝飞互娱科技股份有限公司','模拟经营','二合+模拟经营','-'],
+    [12,'杜拉拉升职记','苏州沁游网络科技有限公司','模拟经营','模拟养成+剧情','20'],
+    [13,'遗弃之地','北京智诚互娱科技有限公司','塔防','塔防+符咒策略','5'],
+    [14,'时尚百货城','深圳市爱的番茄科技有限公司','模拟经营','模拟经营+连锁','2'],
+    [15,'超能下蛋鸭','世熠网络科技（上海）有限公司','RPG','弹射+半回合制RPG','-'],
+    [16,'梦幻消除战','广州喜势网络科技有限公司','休闲','三消+模拟经营','8'],
+    [17,'神器传说','深圳市拾光筑梦文化传媒有限公司','RPG','开宝箱+放置RPG','4'],
+    [18,'跃动小子','柏项网络科技（上海）有限公司','RPG','开宝箱+放置RPG','-'],
+    [19,'狱国争霸','北京智诚互娱科技有限公司','SLG','SLG+地图策略','稳定'],
+    [20,'生存33天','广州龙畅网络科技有限公司','SLG','生存+SLG','5'],
+    [21,'向往的生活','深圳市必凡娱乐科技有限公司','模拟经营','二合+模拟经营','稳定'],
+    [22,'次神光之觉醒','北京雪境科技有限公司','卡牌','放置卡牌','1'],
+    [23,'永远的蔚蓝星球','广州颂悦信息技术有限公司','塔防','塔防+竞技','-'],
+    [24,'妖怪金手指','霍尔果斯天翔信息技术有限公司','塔防','塔防+放置挂机','稳定'],
+    [25,'三国大冒险','广州天纵信息技术有限公司','RPG','放置+闯关','稳定'],
+    [26,'奔奔王国','福州点点松禾科技有限公司','塔防','塔防+模拟经营','-'],
+    [27,'抓大鹅','青岛蓝飞互娱科技股份有限公司','休闲','三消+解压','-'],
+    [28,'不服来通关','长沙游品科技有限公司','解谜','脑洞解谜+闯关','-'],
+    [29,'保卫向日葵','深圳市一起梦游科技有限公司','塔防','背包合成+塔防','稳定'],
+    [30,'爆裂守卫','邯郸太空船信息科技有限公司','塔防','塔防+角色搭配','-'],
+    [31,'王者之弈','海南椰路信息科技有限公司','卡牌','自走棋+卡牌','14'],
+    [32,'元气蛋蛋王','深圳澎云科技有限公司','RPG','弹射+冒险','13'],
+    [33,'烈焰觉醒','杭州悦妙网络科技有限公司','RPG','传奇+挂机爆装','-'],
+    [34,'放开那妖怪','海南领域互娱科技有限公司','卡牌','放置卡牌+修仙','新进榜'],
+    [35,'佛系消消消','厦门行上网络科技有限公司','休闲','三消+闯关','-'],
+    [36,'佣兵小镇','成都爱奇艺影视文化有限公司','卡牌','模拟经营+放置卡牌','稳定'],
+    [37,'楚新钧','海南易多量科技有限公司','休闲','钓鱼+模拟经营','14'],
+    [38,'怪兽盟约','深圳游世界科技有限公司','RPG','放置+养成','14'],
+    [39,'我的防线','杭州烈酷科技有限公司','塔防','塔防+肉鸽','-'],
+    [40,'守护神之觉醒','海南丰际网络科技有限公司','塔防','塔防+策略','新进榜'],
+    [41,'造化仙府','上海沛炫网络科技有限公司','放置','模拟经营+放置养成','-'],
+    [42,'羊了个羊：星球','北京简游科技有限公司天津分公司','休闲','三消+超难挑战','11'],
+    [43,'损蛋','杭州边锋网络技术有限公司','棋牌','传统棋牌（掼蛋）','稳定'],
+    [44,'三国杀','杭州游卡网络技术有限公司','卡牌','卡牌+桌游','34'],
+    [45,'救救我鸭','北京起跃文化有限公司','解谜','脑洞解谜+逃脱','3'],
+    [46,'最强斗王','广西天牛信息技术有限公司','卡牌','格斗+放置养成','13'],
+    [47,'多乐升级','北京蓝色创想网络科技有限责任公司','棋牌','棋牌+升级玩法','3'],
+    [48,'勇者突围','广州轻游信息科技有限公司','RPG','闯关+刷宝RPG','11'],
+    [49,'手机反恐特别行动','成都疾风劲趣科技有限公司','射击','射击+肉鸽割草','-'],
+    [50,'剑侠传奇','深圳市小黑龙网络科技有限公司','RPG','放置+武侠RPG','1'],
+    [51,'百炼英雄','深圳市九九互动科技有限公司','RPG','开放世界+放置RPG','21'],
+    [52,'奇遇西行','广州煜耀网络科技有限公司','卡牌','放置卡牌+挂机','12'],
+    [53,'英雄大对决','重庆煌秀信息技术有限公司','塔防','塔防+布局对战','18'],
+    [54,'百重守护','上海德益昶信息科技有限公司','卡牌','卡牌+策略','7'],
+    [55,'梦幻西游网页版','广州网易计算机系统有限公司','RPG','放置+回合制RPG','9'],
+    [56,'武侠大明星','海南临游科技有限公司','塔防','肉鸽+塔防','-'],
+    [57,'炽烈战歌','杭州悦妙网络科技有限公司','RPG','传奇+挂机','稳定'],
+    [58,'找个球','长沙指米网络科技有限公司','休闲','益智','稳定'],
+    [59,'战龙之怒','杭州悦玩互娱网络科技有限公司','RPG','传奇+放置挂机','5'],
+    [60,'咻咻勇者','深圳市紫晓互动科技有限公司','RPG','搜打撤+摸金RPG','3'],
+    [61,'欢乐战国','海南哎呦互娱网络科技有限公司','卡牌','放置卡牌+三国','30'],
+    [62,'消的有点菜','长沙指极星科技有限公司','休闲','三消+闯关','-'],
+    [63,'英雄没有闪','广州盈心网络科技有限公司','RPG','放置RPG','18'],
+    [64,'肥鹅美食街','北京豪腾创想科技有限公司','模拟经营','二合+模拟经营','12'],
+    [65,'小小屠龙','绍兴玩味科技有限公司','RPG','传奇+放置','17'],
+    [66,'三界无双','杭州悦昭网络科技有限公司','RPG','传奇+放置','-'],
+    [67,'机智逃脱','深圳市安立讯科技有限公司','解谜','解谜+密室逃脱','稳定'],
+    [68,'找个啥','长沙指米网络科技有限公司','解谜','找茬+益智','-'],
+    [69,'王者征途','上海巨人统平网络科技有限公司','RPG','MMO+放置','21'],
+    [70,'青云诀之伏魔','海南青时信息技术有限公司','RPG','放置挂机+RPG','14'],
+    [71,'原始征途','上海巨人统平网络科技有限公司','RPG','MMO+国战','7'],
+    [72,'在玩亿关就睡','深圳海草科技有限公司','休闲','狼人杀+派对社交','6'],
+    [73,'无限轮回','海南易多量科技有限公司','解谜','解谜+肉鸽轮回','8'],
+    [74,'天天台球','北京喜云网络科技有限公司','体育','台球+PVP对战','稳定'],
+    [75,'魔灵纪元','郑州信跃网络科技有限公司','RPG','放置+回合制RPG','2'],
+    [76,'斗破苍穹','上海繁树网络科技有限公司','卡牌','放置卡牌','32'],
+    [77,'逆袭的旅程','杭州卡日曲网络科技有限公司','模拟经营','模拟养成+剧情','11'],
+    [78,'超凡三国','深圳百里光芒网络科技有限公司','SLG','SLG+谋略对战','10'],
+    [79,'这活贼解压','福州新象互动网络科技有限公司','休闲','解压+模拟操作','-'],
+    [80,'圣域守护','杭州悦轶网络科技有限公司','RPG','传奇+高爆放置','4'],
+    [81,'象棋达人','深圳市一锋科技有限公司','棋牌','象棋+对战','6'],
+    [82,'一步两步','厦门游力信息科技有限公司','塔防','模拟经营+肉鸽塔防','20'],
+    [83,'兵器王者','青岛蓝飞互娱科技股份有限公司','卡牌','放置+开箱','稳定'],
+    [84,'这关不简单','北京起跃文化有限公司','解谜','脑洞解谜+闯关','4'],
+    [85,'无厘头大挑战','广州双百信息科技有限公司','休闲','脑洞益智','新进榜'],
+    [86,'空格之境','江西启游互动科技有限公司','模拟经营','模拟经营+纺织','新进榜'],
+    [87,'龙骑争霸','绍兴玩味科技有限公司','RPG','传奇+放置','16'],
+    [88,'大丰收','北京米兜科技有限公司','模拟经营','模拟经营+种植','4'],
+    [89,'冲关达人','广州池骋网络科技有限公司','休闲','合成+闯关','新进榜'],
+    [90,'道友来挖宝','深圳雷霆信息技术有限公司','RPG','放置+回合制RPG','新进榜'],
+    [91,'超级消消','广州联曼信息科技有限公司','休闲','三消+闯关','7'],
+    [92,'时光杂货店','安徽雷虎网络科技有限公司','模拟经营','模拟经营+怀旧','新进榜'],
+    [93,'第七大道新郸肇堂','深圳第七大道科技有限公司','竞技','弹射+竞技','新进榜'],
+    [94,'消除大解压','长沙四五互娱网络科技有限公司','休闲','消除+解压','新进榜'],
+    [95,'难不倒你吧','一克科技（广州）有限公司','休闲','倒水排序+益智','5'],
+    [96,'援军来了','上海炎魔网络科技有限公司','塔防','Q版军事+塔防','稳定'],
+    [97,'动物历险记','上海圣欣扬网络科技有限公司','RPG','放置+修仙','8'],
+    [98,'乐蜀三国','杭州上兔网络科技有限公司','卡牌','放置卡牌+召唤','12'],
+    [99,'开局躲起来','成都望峰科技有限公司','解谜','恐怖解谜+躲藏','新进榜'],
+    [100,'灵决苍穹','杭州悦玩互娱网络科技有限公司','RPG','传奇+放置','新进榜']
+];
+
+// 弹窗交互
+const modal = document.getElementById('rankModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+const closeSpan = document.querySelector('.close-modal');
+
+function showRankModal(type) {
+    let title = '', data = [];
+    if(type === 'wechat') { title = '微小畅销榜 Top100'; data = wechatFullData; }
+    else { title = '抖小畅销榜 Top100'; data = douyinFullData; }
+    modalTitle.innerText = title;
+    let html = '<table style="width:100%"><thead><tr><th>排名</th><th>游戏名</th><th class="col-vendor">厂商</th><th>品类</th><th>核心玩法</th><th>排名变化</th></tr></thead><tbody>';
+    data.forEach(function(r) { html += '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td class="col-vendor">' + r[2] + '</td><td>' + r[3] + '</td><td>' + r[4] + '</td><td>' + r[5] + '</td></tr>'; });
+    html += '</tbody></table><div class="modal-footnote" style="margin-top:12px; text-align:center; font-size:0.7rem; color:#6f8268;">榜单数据截止2026年5月21日 | 完整100名</div>';
+    modalBody.innerHTML = html;
+    modal.style.display = 'block';
+}
+document.querySelectorAll('.open-modal-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { showRankModal(btn.getAttribute('data-modal')); });
+});
+closeSpan.onclick = function() { modal.style.display = 'none'; };
+window.onclick = function(e) { if(e.target == modal) modal.style.display = 'none'; };
+</script>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《遗弃之地》游戏品类与玩法说明</title>
+<style>
+  /* === Reset & Base === */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0d0a08;
+    color: #d4c9b8;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  /* === Background Texture === */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(80, 30, 20, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 50%, rgba(40, 20, 30, 0.12) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* === Ornamental Elements === */
+  .ornament {
+    text-align: center;
+    color: #8b3a2a;
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+    opacity: 0.5;
+    user-select: none;
+  }
+  .ornament-line {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .ornament-line::before,
+  .ornament-line::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #5a2e1e, transparent);
+  }
+  .ornament-line span { color: #8b3a2a; font-size: 0.8rem; letter-spacing: 0.3em; }
+
+  /* === Container === */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* === Header === */
+  header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    position: relative;
+  }
+  header::after {
+    content: '⛩';
+    display: block;
+    font-size: 2.5rem;
+    margin-top: 1rem;
+    opacity: 0.3;
+  }
+  .game-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #f0e2ce;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.15em;
+  }
+  .game-title .sub {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #8b6a5a;
+    letter-spacing: 0.3em;
+    margin-top: 0.3rem;
+  }
+  .game-tagline {
+    font-size: 0.95rem;
+    color: #a07a5a;
+    margin: 0.5rem 0 0;
+    letter-spacing: 0.1em;
+  }
+
+  /* === Tags === */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+  }
+  .tag {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border: 1px solid #5a2e1e;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: #c49a6a;
+    background: rgba(90, 46, 30, 0.15);
+  }
+
+  /* === Sections === */
+  section {
+    margin: 2.5rem 0;
+  }
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #d4a06a;
+    letter-spacing: 0.1em;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #2a1a12;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  h2 .icon { font-size: 1.2rem; }
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #c49a6a;
+    margin: 1.2rem 0 0.5rem;
+  }
+  p { margin-bottom: 0.8rem; color: #c4b8a8; }
+  p strong { color: #e0d0b8; }
+
+  /* === Table === */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  thead th {
+    background: #1a1210;
+    color: #d4a06a;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #3a2218;
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid #1e1410;
+    color: #b8a898;
+  }
+  tbody tr:hover td { background: rgba(90, 46, 30, 0.1); }
+
+  /* === Card Grid === */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .card {
+    background: linear-gradient(135deg, #12100e 0%, #1a1410 100%);
+    border: 1px solid #2a1a12;
+    border-radius: 8px;
+    padding: 1.2rem;
+  }
+  .card h4 {
+    font-size: 0.85rem;
+    color: #d4a06a;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+  .card p { font-size: 0.85rem; margin-bottom: 0; }
+
+  /* === Feature List === */
+  .feature-list {
+    list-style: none;
+    padding: 0;
+  }
+  .feature-list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    border-bottom: 1px solid #18100e;
+    color: #c4b8a8;
+    font-size: 0.92rem;
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #8b3a2a;
+  }
+
+  /* === Summary Box === */
+  .summary-box {
+    background: linear-gradient(135deg, #1a100e 0%, #120e0c 100%);
+    border-left: 3px solid #8b3a2a;
+    border-radius: 0 8px 8px 0;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .summary-box p { margin-bottom: 0.3rem; color: #d4c0a8; }
+  .summary-box strong { color: #e8d8c0; }
+
+  /* === Footer === */
+  footer {
+    text-align: center;
+    padding-top: 3rem;
+    border-top: 1px solid #1a1210;
+    margin-top: 3rem;
+  }
+  footer p {
+    font-size: 0.8rem;
+    color: #5a4a3a;
+  }
+  footer .meta {
+    font-size: 0.75rem;
+    color: #3a2a1a;
+    margin-top: 0.3rem;
+  }
+
+  /* === Responsive === */
+  @media (max-width: 600px) {
+    .container { padding: 1.2rem 1rem 3rem; }
+    .game-title { font-size: 1.6rem; }
+    .game-title .sub { font-size: 0.8rem; }
+    .grid-2 { grid-template-columns: 1fr; }
+    table { font-size: 0.82rem; }
+    thead th, tbody td { padding: 0.4rem 0.5rem; }
+    .tags { gap: 0.4rem; }
+    .tag { font-size: 0.72rem; padding: 0.2rem 0.7rem; }
+  }
+
+  /* === Scrollbar === */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #0d0a08; }
+  ::-webkit-scrollbar-thumb { background: #3a2218; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #5a2e1e; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ======== Header ======== -->
+  <header>
+    <h1 class="game-title">
+      《遗弃之地》
+      <span class="sub">ABANDONED LAND</span>
+    </h1>
+    <p class="game-tagline">中式民俗恐怖 · 横版策略塔防 · 放置养成</p>
+    <div class="ornament">✦ ✦ ✦</div>
+  </header>
+
+  <!-- ======== Tags ======== -->
+  <div class="tags">
+    <span class="tag">#横版塔防</span>
+    <span class="tag">#中式民俗</span>
+    <span class="tag">#微恐</span>
+    <span class="tag">#皮影画风</span>
+    <span class="tag">#放置养成</span>
+    <span class="tag">#随机构筑</span>
+    <span class="tag">#公会系统</span>
+    <span class="tag">#抖音买量</span>
+  </div>
+
+  <!-- ======== 核心品类 ======== -->
+  <section>
+    <h2><span class="icon">🎮</span> 核心品类</h2>
+    <div class="summary-box">
+      <p><strong>核心品类：</strong>横版策略塔防 + 放置养成（Idle）</p>
+      <p><strong>美术题材：</strong>中式民俗恐怖 · 黑白剪影 + 皮影戏风格</p>
+      <p><strong>目标平台：</strong>安卓手游（抖音小游戏渠道买量）</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>品类</strong></td>
+            <td>横版策略塔防（核心） + 放置类（Idle）</td>
+          </tr>
+          <tr>
+            <td><strong>题材</strong></td>
+            <td>中式民俗恐怖 / 微恐，黑白剪影 + 皮影戏美学</td>
+          </tr>
+          <tr>
+            <td><strong>战斗模式</strong></td>
+            <td>横版关卡制，局内随机获得符咒/法术，手牌管理释放</td>
+          </tr>
+          <tr>
+            <td><strong>养成系统</strong></td>
+            <td>鬼仆（宠物）、天书（技能体系）、天材地宝（装备）</td>
+          </tr>
+          <tr>
+            <td><strong>社交系统</strong></td>
+            <td>阴司（公会）、阴司拍卖行、鬼市交易</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ======== 玩法拆解 ======== -->
+  <section>
+    <h2><span class="icon">🗡️</span> 玩法拆解</h2>
+
+    <h3>局内战斗</h3>
+    <ul class="feature-list">
+      <li>每局<strong>随机获得</strong>不同品质的符咒/法术，类似卡牌构筑的随机性</li>
+      <li>合理管理<strong>手牌资源</strong>和元素能量，策略释放</li>
+      <li>携带的天书技能构成<strong>核心战斗策略</strong>，完善攻防体系</li>
+      <li>存在<strong>克制关系</strong>（如精英怪赶尸人抗火、水易伤）</li>
+      <li>防御塔设计借鉴传统辟邪物品：桃木剑、八卦镜等</li>
+    </ul>
+
+    <h3>局外养成</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>📖 天书系统</h4>
+        <p>技能搭配体系，新增的天书羁绊可盘活全局，是战力进阶核心</p>
+      </div>
+      <div class="card">
+        <h4>👻 鬼仆系统</h4>
+        <p>宠物养成，看「八字」（品质）和技能，可提供战斗辅助</p>
+      </div>
+      <div class="card">
+        <h4>🏛️ 阴司系统</h4>
+        <p>公会玩法，参与阴司拍卖行/鬼市购买天材地宝</p>
+      </div>
+      <div class="card">
+        <h4>💎 天材地宝</h4>
+        <p>二选一机制提升属性和特殊能力，鬼市货币(Cu)购买</p>
+      </div>
+    </div>
+
+    <h3>特色机制</h3>
+    <ul class="feature-list">
+      <li><strong>随机符咒构筑</strong>：局内获取随机法术，手牌管理为核心策略</li>
+      <li><strong>钟馗伏魔模式</strong>：每三天重置一轮的自定义挑战玩法</li>
+      <li><strong>多人塔防</strong>：后续计划推出多人合作塔防关卡</li>
+    </ul>
+  </section>
+
+  <!-- ======== 美术与特色 ======== -->
+  <section>
+    <h2><span class="icon">🎨</span> 美术与特色</h2>
+    <ul class="feature-list">
+      <li>采用<strong>黑白剪影 + 中式皮影</strong>作为核心视觉概念，表现中国传统民俗美学</li>
+      <li>主角和首领怪物皆为<strong>提线皮影</strong>，寓意「皆为傀儡」</li>
+      <li>防御塔基于<strong>传统辟邪物品</strong>设计：桃木剑、八卦镜等，各有独特攻击方式</li>
+      <li>整体氛围<strong>微恐不惊悚</strong>，以中式民俗传说为背景</li>
+    </ul>
+  </section>
+
+  <!-- ======== 市场表现 ======== -->
+  <section>
+    <h2><span class="icon">📈</span> 市场表现</h2>
+    <div class="summary-box">
+      <p>5月初市场周报提及——<strong>《遗弃之地》在抖音侧属于"更吃素材爆点和魔性题材"的类型</strong>，靠短视频创意内容营销驱动获量。</p>
+      <p style="margin-top:0.5rem;">定位为 RPG/塔防类的 <strong>买量型产品</strong>，非榜单头部常驻产品，属于创意素材驱动的中腰部冲量产品。</p>
+    </div>
+  </section>
+
+  <!-- ======== 一句话总结 ======== -->
+  <section>
+    <div class="ornament-line"><span>◆</span></div>
+    <div class="summary-box" style="border-left-color:#d4a06a;">
+      <p style="text-align:center; font-size:1rem;"><strong>中式皮影风格的横版策略塔防 + 放置养成手游</strong></p>
+      <p style="text-align:center;">局内随机符咒构筑天书 + 局外鬼仆养成为核心循环</p>
+      <p style="text-align:center; color:#8b6a5a; font-size:0.85rem;">抖音侧靠创意素材冲量，中腰部买量型产品</p>
+    </div>
+    <div class="ornament-line"><span>◆</span></div>
+  </section>
+
+  <!-- ======== Footer ======== -->
+  <footer>
+    <p>游戏品类与玩法说明 · 《遗弃之地》</p>
+    <p class="meta">数据来源：Tavily 搜索 · 九游 · 什么值得买 · 知乎 · Bilibili</p>
+    <p class="meta">生成时间：2026-05-22</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

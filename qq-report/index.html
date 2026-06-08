@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>📊 QQ修仙群聊 开服首日分析报告</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #f5f7fa; color: #1f2937; line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+}
+.container { max-width: 960px; margin: 0 auto; padding: 10px; }
+.header {
+    background: linear-gradient(135deg, #ffffff, #f0f4ff, #e8eefd);
+    border-radius: 16px; padding: 24px 16px; margin: 8px 0 14px;
+    text-align: center; border: 1px solid rgba(26,86,219,0.15);
+}
+.header h1 { font-size: 1.4em; color: #fff; }
+.header .subtitle { color: #6b7280; margin-top: 4px; font-size: 0.85em; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+.stat-card {
+    background: #ffffff;
+    border-radius: 12px; padding: 14px 6px; text-align: center;
+    border: 1px solid rgba(26,86,219,0.1);
+}
+.stat-icon { font-size: 1.3em; }
+.stat-number { font-size: 1.5em; font-weight: 700; color: #1f2937; margin-top: 2px; }
+.stat-label { font-size: 0.7em; color: #6b7280; margin-top: 2px; }
+.section {
+    background: #ffffff; border-radius: 14px; padding: 16px 14px; margin-bottom: 12px;
+    border: 1px solid rgba(26,86,219,0.08);
+}
+.section h2 { font-size: 1.1em; color: #1f2937; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(26,86,219,0.08); }
+.section h2 .badge {
+    display: inline-block; background: #dc2626; color: #fff; font-size: 0.6em;
+    padding: 2px 10px; border-radius: 20px; margin-left: 6px; vertical-align: middle;
+}
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.chart-box { background: #f8fafc; border-radius: 10px; padding: 10px; }
+/* Word Cloud */
+.word-cloud {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 8px;
+    padding: 10px 0; align-items: center;
+}
+.word-item {
+    display: inline-block; padding: 4px 10px; border-radius: 8px;
+    background: rgba(26,86,219,0.08);
+}
+/* Topic cards */
+.topic-card {
+    background: #f8fafc; border-radius: 10px; padding: 12px; margin-bottom: 8px;
+    border-left: 4px solid #E63946;
+}
+.topic-title { font-size: 0.95em; font-weight: 600; color: #1f2937; margin-bottom: 4px; }
+.topic-detail { color: #4b5563; font-size: 0.82em; line-height: 1.6; }
+.topic-tags { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+.topic-tag {
+    display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.7em;
+    background: rgba(220,38,38,0.08); color: #dc2626; border: 1px solid rgba(220,38,38,0.3);
+}
+.highlight-red { color: #dc2626; font-weight: 700; }
+.highlight-yellow { color: #F4A261; font-weight: 600; }
+.feedback-item {
+    padding: 8px 10px; border-bottom: 1px solid rgba(26,86,219,0.06);
+    display: flex; gap: 8px; align-items: flex-start;
+}
+.feedback-item:last-child { border-bottom: none; }
+.feedback-emoj { font-size: 0.95em; flex-shrink: 0; margin-top: 1px; }
+.feedback-text { font-size: 0.82em; color: #4b5563; }
+.feedback-text .issue { color: #dc2626; font-weight: 600; }
+.feedback-text .status { color: #2A9D8F; }
+.kw-section { margin-bottom: 12px; }
+.kw-section h3 { font-size: 0.85em; color: #1a56db; margin-bottom: 4px; }
+.kw-bar { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
+.kw-bar-name { width: 56px; font-size: 0.78em; color: #374151; text-align: right; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kw-bar-track { flex: 1; height: 16px; background: rgba(26,86,219,0.04); border-radius: 8px; overflow: hidden; }
+.kw-bar-fill { height: 100%; border-radius: 8px; min-width: 3px; }
+.kw-bar-count { width: 24px; font-size: 0.75em; color: #6b7280; flex-shrink: 0; text-align: right; }
+.tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.tip-item {
+    background: rgba(42,157,143,0.08); border-radius: 8px; padding: 10px;
+    border: 1px solid rgba(42,157,143,0.15);
+}
+.tip-label { font-size: 0.72em; color: #1a56db; font-weight: 600; }
+.tip-content { font-size: 0.78em; color: #4b5563; margin-top: 2px; }
+.insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.insight-box { background: #f8fafc; border-radius: 10px; padding: 12px; }
+.insight-box h3 { font-size: 0.85em; margin-bottom: 6px; }
+.insight-box ul { list-style: none; }
+.insight-box li { font-size: 0.78em; color: #4b5563; padding: 3px 0; line-height: 1.5; }
+.footer { text-align: center; padding: 16px; color: #445; font-size: 0.7em; }
+@media (max-width: 600px) {
+    .stats-grid { grid-template-columns: repeat(2,1fr); gap: 6px; }
+    .chart-grid { grid-template-columns: 1fr; gap: 8px; }
+    .tip-list { grid-template-columns: 1fr; }
+    .insights-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.15em; }
+    .section { padding: 12px 10px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+    <h1 style="color: #1a56db">📊 QQ修仙群聊 · 开服首日报告</h1>
+    <div class="subtitle">🎮 新游开服第一天 · 2026-05-28</div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon">💬</div><div class="stat-number">391</div><div class="stat-label">有效消息</div></div>
+    <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-number">32</div><div class="stat-label">发言人数</div></div>
+    <div class="stat-card"><div class="stat-icon">⏱</div><div class="stat-number" style="font-size:1em">18:00~21:38</div><div class="stat-label">监控时间</div></div>
+    <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-number">197</div><div class="stat-label">最高峰/时</div></div>
+</div>
+
+<!-- Charts -->
+<div class="chart-grid">
+    <div class="section">
+        <h2>📈 时段活跃曲线</h2>
+        <div class="chart-box"><div style="display:flex;align-items:flex-end;height:180px;padding:0 10px">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;height:180px;justify-content:flex-end">
+            <div style="font-size:11px;color:#1f2937;font-weight:600;margin-bottom:2px">197</div>
+            <div style="width:28px;height:100.0%;background:linear-gradient(180deg,#64B5F6,#1a6bb5);border-radius:6px 6px 2px 2px;min-height:4px;transition:height 0.5s"></div>
+            <div style="font-size:10px;color:#6b7280;margin-top:6px">18:00</div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;height:180px;justify-content:flex-end">
+            <div style="font-size:11px;color:#1f2937;font-weight:600;margin-bottom:2px">102</div>
+            <div style="width:28px;height:51.8%;background:linear-gradient(180deg,#64B5F6,#1a6bb5);border-radius:6px 6px 2px 2px;min-height:4px;transition:height 0.5s"></div>
+            <div style="font-size:10px;color:#6b7280;margin-top:6px">19:00</div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;height:180px;justify-content:flex-end">
+            <div style="font-size:11px;color:#1f2937;font-weight:600;margin-bottom:2px">73</div>
+            <div style="width:28px;height:37.1%;background:linear-gradient(180deg,#64B5F6,#1a6bb5);border-radius:6px 6px 2px 2px;min-height:4px;transition:height 0.5s"></div>
+            <div style="font-size:10px;color:#6b7280;margin-top:6px">20:00</div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;height:180px;justify-content:flex-end">
+            <div style="font-size:11px;color:#1f2937;font-weight:600;margin-bottom:2px">19</div>
+            <div style="width:28px;height:9.6%;background:linear-gradient(180deg,#64B5F6,#1a6bb5);border-radius:6px 6px 2px 2px;min-height:4px;transition:height 0.5s"></div>
+            <div style="font-size:10px;color:#6b7280;margin-top:6px">21:00</div>
+        </div></div></div>
+    </div>
+    <div class="section">
+        <h2>🔑 关键词分布</h2>
+        <div class="chart-box">
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center">
+        <div style="position:relative;width:140px;height:140px;flex-shrink:0">
+            <div style="width:140px;height:140px;border-radius:50%;background:conic-gradient(#E63946 0.0% 24.2%, #F4A261 24.2% 53.0%, #2A9D8F 53.0% 67.3%, #64B5F6 67.3% 76.9%, #E9C46A 76.9% 92.5%, #7B2D8E 92.5% 100.0%)"></div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:90px;height:90px;border-radius:50%;background:#ffffff;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                <span style="font-size:24px;font-weight:700;color:#1f2937">281</span>
+                <span style="font-size:9px;color:#6b7280">总提及</span>
+            </div>
+        </div>
+        <div style="flex:1;min-width:140px">
+        <div style="display:flex;align-items:center;gap:6px;margin:3px 0">
+            <div style="width:10px;height:10px;border-radius:2px;background:#E63946;flex-shrink:0"></div>
+            <span style="font-size:12px;color:#ccc;flex:1">传功/养成</span>
+            <span style="font-size:12px;color:#8899cc;font-weight:600">68</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:6px;margin:3px 0">
+            <div style="width:10px;height:10px;border-radius:2px;background:#F4A261;flex-shrink:0"></div>
+            <span style="font-size:12px;color:#ccc;flex:1">氪金/付费</span>
+            <span style="font-size:12px;color:#8899cc;font-weight:600">81</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:6px;margin:3px 0">
+            <div style="width:10px;height:10px;border-radius:2px;background:#2A9D8F;flex-shrink:0"></div>
+            <span style="font-size:12px;color:#ccc;flex:1">战斗/国战</span>
+            <span style="font-size:12px;color:#8899cc;font-weight:600">40</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:6px;margin:3px 0">
+            <div style="width:10px;height:10px;border-radius:2px;background:#64B5F6;flex-shrink:0"></div>
+            <span style="font-size:12px;color:#ccc;flex:1">角色/英雄</span>
+            <span style="font-size:12px;color:#8899cc;font-weight:600">27</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:6px;margin:3px 0">
+            <div style="width:10px;height:10px;border-radius:2px;background:#E9C46A;flex-shrink:0"></div>
+            <span style="font-size:12px;color:#ccc;flex:1">功能/系统</span>
+            <span style="font-size:12px;color:#8899cc;font-weight:600">44</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:6px;margin:3px 0">
+            <div style="width:10px;height:10px;border-radius:2px;background:#7B2D8E;flex-shrink:0"></div>
+            <span style="font-size:12px;color:#ccc;flex:1">玩家吐槽</span>
+            <span style="font-size:12px;color:#8899cc;font-weight:600">21</span>
+        </div></div>
+    </div></div>
+    </div>
+</div>
+
+<!-- Word Cloud -->
+<div class="section">
+    <h2>☁️ 词云 · 高频关键词</h2>
+    <div class="word-cloud">
+    <span class="word-item" style="font-size:2.0em;color:rgb(255,80,60)">充</span>
+    <span class="word-item" style="font-size:1.7em;color:rgb(241,99,84)">养</span>
+    <span class="word-item" style="font-size:1.6em;color:rgb(235,108,96)">传功</span>
+    <span class="word-item" style="font-size:1.4em;color:rgb(228,118,108)">打</span>
+    <span class="word-item" style="font-size:1.4em;color:rgb(226,121,112)">氪</span>
+    <span class="word-item" style="font-size:1.2em;color:rgb(219,131,124)">国战</span>
+    <span class="word-item" style="font-size:1.2em;color:rgb(219,131,124)">榜</span>
+    <span class="word-item" style="font-size:1.2em;color:rgb(217,134,128)">抽</span>
+    <span class="word-item" style="font-size:1.2em;color:rgb(217,134,128)">VIP</span>
+    <span class="word-item" style="font-size:1.1em;color:rgb(215,137,132)">张明怀</span>
+    <span class="word-item" style="font-size:1.1em;color:rgb(215,137,132)">活动</span>
+    <span class="word-item" style="font-size:1.1em;color:rgb(215,137,132)">贡献</span>
+    <span class="word-item" style="font-size:1.1em;color:rgb(213,140,136)">资质</span>
+    <span class="word-item" style="font-size:1.1em;color:rgb(213,140,136)">皮肤</span>
+    <span class="word-item" style="font-size:1.1em;color:rgb(213,140,136)">兑换</span>
+</div>
+</div>
+
+<!-- Topics -->
+<div class="section">
+    <h2>🔥 热门话题 <span class="badge">重点关注</span></h2>
+<div class="topic-card"><div class="topic-title">🔥 传功限制争议</div><div class="topic-detail">佩恩没pain（氪金~4000+）强烈要求无限传功，资源全给主角后发现高资质角色没资源养。群管已调整为创角24小时后可传功，但次数限制保留，玩家普遍认为1次太少，建议3次或付费可传。</div><div class="topic-tags"><span class="topic-tag">付费体验</span><span class="topic-tag">系统设计</span><span class="topic-tag">氪佬</span></div></div>
+<div class="topic-card"><div class="topic-title">💰 充值竞争与排行榜</div><div class="topic-detail">榜一约充5000+，榜二约2000+。佩恩想冲榜一但因养错角色战力不及。雍和0氪排名22靠前期优势。98元首充礼包被认可有开服优势。</div><div class="topic-tags"><span class="topic-tag">付费点</span><span class="topic-tag">排行榜</span><span class="topic-tag">数值</span></div></div>
+<div class="topic-card"><div class="topic-title">🎮 国战系统初体验</div><div class="topic-detail">20:04开放长春观BOSS活动（国战预热），1人控1个修士参战，死了可满血重进。大唐一国独大，另外两国玩家表示'麻了'。国战第一奖励仅2000玉被吐槽太少。</div><div class="topic-tags"><span class="topic-tag">国战</span><span class="topic-tag">平衡</span><span class="topic-tag">活动设计</span></div></div>
+<div class="topic-card"><div class="topic-title">⚙️ 肝度与自动化争议</div><div class="topic-detail">玩家多次强调'太肝了'要求降肝减负，自动战斗需月卡，10连采集也要月卡被吐槽离谱。群管回复宗门8级可解锁10连。陌云表示'在思考方案了'。</div><div class="topic-tags"><span class="topic-tag">肝度</span><span class="topic-tag">付费墙</span><span class="topic-tag">体验</span></div></div>
+<div class="topic-card"><div class="topic-title">🎲 概率/数值信任危机</div><div class="topic-detail">贰佰反馈20多次论道全出最低奖励88，质疑1%/99%分布。群管检查后回复'概率没问题'但玩家不信。修炼资质升级失败率高（连点4次全失败）。</div><div class="topic-tags"><span class="topic-tag">概率公示</span><span class="topic-tag">信任</span><span class="topic-tag">数值</span></div></div>
+</div>
+
+<!-- Active Users + Chart -->
+<div class="chart-grid">
+    <div class="section">
+        <h2>👤 最活跃成员</h2>
+        <div class="chart-box">
+        <div style="display:flex;align-items:center;gap:8px;margin:5px 0">
+            <span style="width:56px;font-size:11px;color:#ccc;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0">雍和</span>
+            <div style="flex:1;height:22px;background:rgba(26,86,219,0.04);border-radius:11px;overflow:hidden">
+                <div style="height:100%;width:100.0%;background:#FF6B35;border-radius:11px;transition:width 0.5s;min-width:4px"></div>
+            </div>
+            <span style="width:24px;font-size:11px;color:#64B5F6;font-weight:600;flex-shrink:0;text-align:right">80</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin:5px 0">
+            <span style="width:56px;font-size:11px;color:#ccc;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0">123</span>
+            <div style="flex:1;height:22px;background:rgba(26,86,219,0.04);border-radius:11px;overflow:hidden">
+                <div style="height:100%;width:50.0%;background:#004E89;border-radius:11px;transition:width 0.5s;min-width:4px"></div>
+            </div>
+            <span style="width:24px;font-size:11px;color:#64B5F6;font-weight:600;flex-shrink:0;text-align:right">40</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin:5px 0">
+            <span style="width:56px;font-size:11px;color:#ccc;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0">佩恩没pai</span>
+            <div style="flex:1;height:22px;background:rgba(26,86,219,0.04);border-radius:11px;overflow:hidden">
+                <div style="height:100%;width:48.8%;background:#E63946;border-radius:11px;transition:width 0.5s;min-width:4px"></div>
+            </div>
+            <span style="width:24px;font-size:11px;color:#64B5F6;font-weight:600;flex-shrink:0;text-align:right">39</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin:5px 0">
+            <span style="width:56px;font-size:11px;color:#ccc;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0">雾随雨落</span>
+            <div style="flex:1;height:22px;background:rgba(26,86,219,0.04);border-radius:11px;overflow:hidden">
+                <div style="height:100%;width:23.8%;background:#2A9D8F;border-radius:11px;transition:width 0.5s;min-width:4px"></div>
+            </div>
+            <span style="width:24px;font-size:11px;color:#64B5F6;font-weight:600;flex-shrink:0;text-align:right">19</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin:5px 0">
+            <span style="width:56px;font-size:11px;color:#ccc;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0">●。樹o、</span>
+            <div style="flex:1;height:22px;background:rgba(26,86,219,0.04);border-radius:11px;overflow:hidden">
+                <div style="height:100%;width:47.5%;background:#7B2D8E;border-radius:11px;transition:width 0.5s;min-width:4px"></div>
+            </div>
+            <span style="width:24px;font-size:11px;color:#64B5F6;font-weight:600;flex-shrink:0;text-align:right">38</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin:5px 0">
+            <span style="width:56px;font-size:11px;color:#ccc;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0">朗朗</span>
+            <div style="flex:1;height:22px;background:rgba(26,86,219,0.04);border-radius:11px;overflow:hidden">
+                <div style="height:100%;width:50.0%;background:#264653;border-radius:11px;transition:width 0.5s;min-width:4px"></div>
+            </div>
+            <span style="width:24px;font-size:11px;color:#64B5F6;font-weight:600;flex-shrink:0;text-align:right">40</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin:5px 0">
+            <span style="width:56px;font-size:11px;color:#ccc;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0">哟哟</span>
+            <div style="flex:1;height:22px;background:rgba(26,86,219,0.04);border-radius:11px;overflow:hidden">
+                <div style="height:100%;width:30.0%;background:#287271;border-radius:11px;transition:width 0.5s;min-width:4px"></div>
+            </div>
+            <span style="width:24px;font-size:11px;color:#64B5F6;font-weight:600;flex-shrink:0;text-align:right">24</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin:5px 0">
+            <span style="width:56px;font-size:11px;color:#ccc;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0">张某人</span>
+            <div style="flex:1;height:22px;background:rgba(26,86,219,0.04);border-radius:11px;overflow:hidden">
+                <div style="height:100%;width:25.0%;background:#E76F51;border-radius:11px;transition:width 0.5s;min-width:4px"></div>
+            </div>
+            <span style="width:24px;font-size:11px;color:#64B5F6;font-weight:600;flex-shrink:0;text-align:right">20</span>
+        </div></div>
+    </div>
+    <div class="section">
+        <h2>💡 成员角色</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"><div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 6px;text-align:center;border:1px solid rgba(26,86,219,0.05)"><div style="font-size:0.8em;font-weight:600;color:#FF6B35">雍和</div><div style="font-size:1.1em;font-weight:700;color:#1a56db;margin:2px 0">80</div><div style="font-size:0.62em;color:#8899cc">核心活跃/0氪排22</div></div>
+<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 6px;text-align:center;border:1px solid rgba(26,86,219,0.05)"><div style="font-size:0.8em;font-weight:600;color:#004E89">123</div><div style="font-size:1.1em;font-weight:700;color:#1a56db;margin:2px 0">40</div><div style="font-size:0.62em;color:#8899cc">活跃/氪6元</div></div>
+<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 6px;text-align:center;border:1px solid rgba(26,86,219,0.05)"><div style="font-size:0.8em;font-weight:600;color:#E63946">佩恩没pain</div><div style="font-size:1.1em;font-weight:700;color:#1a56db;margin:2px 0">39</div><div style="font-size:0.62em;color:#8899cc">氪金大R/冲榜</div></div>
+<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 6px;text-align:center;border:1px solid rgba(26,86,219,0.05)"><div style="font-size:0.8em;font-weight:600;color:#2A9D8F">雾随雨落</div><div style="font-size:1.1em;font-weight:700;color:#1a56db;margin:2px 0">19</div><div style="font-size:0.62em;color:#8899cc">0氪活跃反馈</div></div>
+<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 6px;text-align:center;border:1px solid rgba(26,86,219,0.05)"><div style="font-size:0.8em;font-weight:600;color:#7B2D8E">●。樹o、</div><div style="font-size:1.1em;font-weight:700;color:#1a56db;margin:2px 0">38</div><div style="font-size:0.62em;color:#8899cc">群管理员</div></div>
+<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 6px;text-align:center;border:1px solid rgba(26,86,219,0.05)"><div style="font-size:0.8em;font-weight:600;color:#264653">朗朗</div><div style="font-size:1.1em;font-weight:700;color:#1a56db;margin:2px 0">40</div><div style="font-size:0.62em;color:#8899cc">活跃/自称榜二</div></div>
+<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 6px;text-align:center;border:1px solid rgba(26,86,219,0.05)"><div style="font-size:0.8em;font-weight:600;color:#287271">哟哟</div><div style="font-size:1.1em;font-weight:700;color:#1a56db;margin:2px 0">24</div><div style="font-size:0.62em;color:#8899cc">活跃/攻略流</div></div>
+<div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 6px;text-align:center;border:1px solid rgba(26,86,219,0.05)"><div style="font-size:0.8em;font-weight:600;color:#E76F51">张某人</div><div style="font-size:1.1em;font-weight:700;color:#1a56db;margin:2px 0">20</div><div style="font-size:0.62em;color:#8899cc">反馈肝度</div></div>
+</div></div></div>
+
+<!-- Feedback -->
+<div class="section">
+    <h2>📝 玩家反馈 <span class="badge">产品建议</span></h2>
+    <div class="feedback-item"><div class="feedback-emoj">🔴</div><div class="feedback-text"><span class="issue">传功次数太少</span> — 1次/赛季太局限，建议3次或付费。<span class="status">✅ 群管已响应：创角24小时即可传功</span></div></div>
+    <div class="feedback-item"><div class="feedback-emoj">🔴</div><div class="feedback-text"><span class="issue">游戏太肝，缺乏自动化</span> — 自动战斗需月卡，10连采集需月卡，无扫荡。<span class="status">⏳ 陌云"在思考方案"</span></div></div>
+    <div class="feedback-item"><div class="feedback-emoj">🟡</div><div class="feedback-text"><span class="issue">论道奖励概率存疑</span> — 20多次全出最低值88，质疑1%/99%分布。<span class="status">⚠️ 群管称"概率没问题"但玩家不信</span></div></div>
+    <div class="feedback-item"><div class="feedback-emoj">🟡</div><div class="feedback-text"><span class="issue">国战平衡堪忧</span> — 大唐一国独大，未选大唐玩家反馈"麻了"</div></div>
+    <div class="feedback-item"><div class="feedback-emoj">🟡</div><div class="feedback-text"><span class="issue">无活动日历/基础攻略</span> — 功能入口难找，大量重复提问</div></div>
+    <div class="feedback-item"><div class="feedback-emoj">🟢</div><div class="feedback-text"><span class="issue">关卡动画加速3倍</span> — <span class="status">✅ 19:30已更新，好评</span></div></div>
+    <div class="feedback-item"><div class="feedback-emoj">🟢</div><div class="feedback-text"><span class="issue">传功开放时间缩短</span> — <span class="status">✅ 已改为创角24小时</span>（佩恩追加3000充值）</div></div>
+</div>
+
+<!-- Keywords -->
+<div class="section">
+    <h2>🔤 关键词频次明细</h2>
+<div class="kw-section"><h3>传功/养成（共68次）</h3>
+<div class="kw-bar"><div class="kw-bar-name">养</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:100%;background:#E63946"></div></div><div class="kw-bar-count">20</div></div>
+<div class="kw-bar"><div class="kw-bar-name">传功</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:85%;background:#E63946"></div></div><div class="kw-bar-count">17</div></div>
+<div class="kw-bar"><div class="kw-bar-name">资质</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:35%;background:#E63946"></div></div><div class="kw-bar-count">7</div></div>
+<div class="kw-bar"><div class="kw-bar-name">元婴</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:25%;background:#E63946"></div></div><div class="kw-bar-count">5</div></div>
+<div class="kw-bar"><div class="kw-bar-name">角色</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:25%;background:#E63946"></div></div><div class="kw-bar-count">5</div></div>
+<div class="kw-bar"><div class="kw-bar-name">金丹</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:15%;background:#E63946"></div></div><div class="kw-bar-count">3</div></div>
+<div class="kw-bar"><div class="kw-bar-name">境界</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:10%;background:#E63946"></div></div><div class="kw-bar-count">2</div></div>
+<div class="kw-bar"><div class="kw-bar-name">丹药</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:10%;background:#E63946"></div></div><div class="kw-bar-count">2</div></div>
+<div class="kw-bar"><div class="kw-bar-name">升级</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:10%;background:#E63946"></div></div><div class="kw-bar-count">2</div></div>
+<div class="kw-bar"><div class="kw-bar-name">筑基</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:10%;background:#E63946"></div></div><div class="kw-bar-count">2</div></div>
+<div class="kw-bar"><div class="kw-bar-name">修炼</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:10%;background:#E63946"></div></div><div class="kw-bar-count">2</div></div>
+<div class="kw-bar"><div class="kw-bar-name">突破</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:5%;background:#E63946"></div></div><div class="kw-bar-count">1</div></div>
+</div>
+<div class="kw-section"><h3>氪金/付费（共81次）</h3>
+<div class="kw-bar"><div class="kw-bar-name">充</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:100%;background:#F4A261"></div></div><div class="kw-bar-count">26</div></div>
+<div class="kw-bar"><div class="kw-bar-name">氪</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:50%;background:#F4A261"></div></div><div class="kw-bar-count">13</div></div>
+<div class="kw-bar"><div class="kw-bar-name">抽</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:35%;background:#F4A261"></div></div><div class="kw-bar-count">9</div></div>
+<div class="kw-bar"><div class="kw-bar-name">VIP</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:35%;background:#F4A261"></div></div><div class="kw-bar-count">9</div></div>
+<div class="kw-bar"><div class="kw-bar-name">皮肤</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:27%;background:#F4A261"></div></div><div class="kw-bar-count">7</div></div>
+<div class="kw-bar"><div class="kw-bar-name">兑换</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:27%;background:#F4A261"></div></div><div class="kw-bar-count">7</div></div>
+<div class="kw-bar"><div class="kw-bar-name">付费</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:15%;background:#F4A261"></div></div><div class="kw-bar-count">4</div></div>
+<div class="kw-bar"><div class="kw-bar-name">月卡</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:12%;background:#F4A261"></div></div><div class="kw-bar-count">3</div></div>
+<div class="kw-bar"><div class="kw-bar-name">礼包</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:8%;background:#F4A261"></div></div><div class="kw-bar-count">2</div></div>
+<div class="kw-bar"><div class="kw-bar-name">首充</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:4%;background:#F4A261"></div></div><div class="kw-bar-count">1</div></div>
+</div>
+<div class="kw-section"><h3>战斗/国战（共40次）</h3>
+<div class="kw-bar"><div class="kw-bar-name">打</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:100%;background:#2A9D8F"></div></div><div class="kw-bar-count">14</div></div>
+<div class="kw-bar"><div class="kw-bar-name">国战</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:71%;background:#2A9D8F"></div></div><div class="kw-bar-count">10</div></div>
+<div class="kw-bar"><div class="kw-bar-name">榜</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:71%;background:#2A9D8F"></div></div><div class="kw-bar-count">10</div></div>
+<div class="kw-bar"><div class="kw-bar-name">战力</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:14%;background:#2A9D8F"></div></div><div class="kw-bar-count">2</div></div>
+<div class="kw-bar"><div class="kw-bar-name">排名</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:14%;background:#2A9D8F"></div></div><div class="kw-bar-count">2</div></div>
+<div class="kw-bar"><div class="kw-bar-name">打架</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:7%;background:#2A9D8F"></div></div><div class="kw-bar-count">1</div></div>
+<div class="kw-bar"><div class="kw-bar-name">战斗</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:7%;background:#2A9D8F"></div></div><div class="kw-bar-count">1</div></div>
+</div>
+<div class="kw-section"><h3>角色/英雄（共27次）</h3>
+<div class="kw-bar"><div class="kw-bar-name">张明怀</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:100%;background:#64B5F6"></div></div><div class="kw-bar-count">8</div></div>
+<div class="kw-bar"><div class="kw-bar-name">修士</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:88%;background:#64B5F6"></div></div><div class="kw-bar-count">7</div></div>
+<div class="kw-bar"><div class="kw-bar-name">小天师</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:62%;background:#64B5F6"></div></div><div class="kw-bar-count">5</div></div>
+<div class="kw-bar"><div class="kw-bar-name">陆鸣礼</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:25%;background:#64B5F6"></div></div><div class="kw-bar-count">2</div></div>
+<div class="kw-bar"><div class="kw-bar-name">江剑臣</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:12%;background:#64B5F6"></div></div><div class="kw-bar-count">1</div></div>
+<div class="kw-bar"><div class="kw-bar-name">李子清</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:12%;background:#64B5F6"></div></div><div class="kw-bar-count">1</div></div>
+<div class="kw-bar"><div class="kw-bar-name">陈云河</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:12%;background:#64B5F6"></div></div><div class="kw-bar-count">1</div></div>
+<div class="kw-bar"><div class="kw-bar-name">王长生</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:12%;background:#64B5F6"></div></div><div class="kw-bar-count">1</div></div>
+<div class="kw-bar"><div class="kw-bar-name">主角</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:12%;background:#64B5F6"></div></div><div class="kw-bar-count">1</div></div>
+</div>
+<div class="kw-section"><h3>功能/系统（共44次）</h3>
+<div class="kw-bar"><div class="kw-bar-name">活动</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:100%;background:#E9C46A"></div></div><div class="kw-bar-count">8</div></div>
+<div class="kw-bar"><div class="kw-bar-name">贡献</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:100%;background:#E9C46A"></div></div><div class="kw-bar-count">8</div></div>
+<div class="kw-bar"><div class="kw-bar-name">暗号</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:75%;background:#E9C46A"></div></div><div class="kw-bar-count">6</div></div>
+<div class="kw-bar"><div class="kw-bar-name">论道</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:62%;background:#E9C46A"></div></div><div class="kw-bar-count">5</div></div>
+<div class="kw-bar"><div class="kw-bar-name">兑换码</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:62%;background:#E9C46A"></div></div><div class="kw-bar-count">5</div></div>
+<div class="kw-bar"><div class="kw-bar-name">采集</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:38%;background:#E9C46A"></div></div><div class="kw-bar-count">3</div></div>
+<div class="kw-bar"><div class="kw-bar-name">任务</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:38%;background:#E9C46A"></div></div><div class="kw-bar-count">3</div></div>
+<div class="kw-bar"><div class="kw-bar-name">主线</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:38%;background:#E9C46A"></div></div><div class="kw-bar-count">3</div></div>
+<div class="kw-bar"><div class="kw-bar-name">宗祠</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:12%;background:#E9C46A"></div></div><div class="kw-bar-count">1</div></div>
+<div class="kw-bar"><div class="kw-bar-name">校场</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:12%;background:#E9C46A"></div></div><div class="kw-bar-count">1</div></div>
+<div class="kw-bar"><div class="kw-bar-name">御兽</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:12%;background:#E9C46A"></div></div><div class="kw-bar-count">1</div></div>
+</div>
+<div class="kw-section"><h3>玩家吐槽（共21次）</h3>
+<div class="kw-bar"><div class="kw-bar-name">肝</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:100%;background:#7B2D8E"></div></div><div class="kw-bar-count">5</div></div>
+<div class="kw-bar"><div class="kw-bar-name">概率</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:80%;background:#7B2D8E"></div></div><div class="kw-bar-count">4</div></div>
+<div class="kw-bar"><div class="kw-bar-name">抠</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:60%;background:#7B2D8E"></div></div><div class="kw-bar-count">3</div></div>
+<div class="kw-bar"><div class="kw-bar-name">不行</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:60%;background:#7B2D8E"></div></div><div class="kw-bar-count">3</div></div>
+<div class="kw-bar"><div class="kw-bar-name">离谱</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:40%;background:#7B2D8E"></div></div><div class="kw-bar-count">2</div></div>
+<div class="kw-bar"><div class="kw-bar-name">劝退</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:20%;background:#7B2D8E"></div></div><div class="kw-bar-count">1</div></div>
+<div class="kw-bar"><div class="kw-bar-name">恶心</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:20%;background:#7B2D8E"></div></div><div class="kw-bar-count">1</div></div>
+<div class="kw-bar"><div class="kw-bar-name">难受</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:20%;background:#7B2D8E"></div></div><div class="kw-bar-count">1</div></div>
+<div class="kw-bar"><div class="kw-bar-name">麻了</div><div class="kw-bar-track"><div class="kw-bar-fill" style="width:20%;background:#7B2D8E"></div></div><div class="kw-bar-count">1</div></div>
+</div>
+</div>
+
+<!-- Tips -->
+<div class="section">
+    <h2>💡 游戏冷知识</h2>
+    <div class="tip-list">
+        <div class="tip-item"><div class="tip-label">🎫 兑换码</div><div class="tip-content">VIP666 / VIP777 / VIP888</div></div>
+        <div class="tip-item"><div class="tip-label">🔑 暗号口令</div><div class="tip-content">"阿爹笑，拍我腰，男儿立志在远方" → 换张明怀</div></div>
+        <div class="tip-item"><div class="tip-label">🎯 前期策略</div><div class="tip-content">集中养1个主力，优先带"全属性+"词条的修士</div></div>
+        <div class="tip-item"><div class="tip-label">⚡ 资质玄学</div><div class="tip-content">别连点，点一次退出来等会儿再点，否则容易连败</div></div>
+        <div class="tip-item"><div class="tip-label">🏠 10连采集</div><div class="tip-content">宗门8级也能解锁10连采集和传道，不用月卡</div></div>
+        <div class="tip-item"><div class="tip-label">⚔️ 国战规则</div><div class="tip-content">1人控1个修士参战，死了可满血重进</div></div>
+        <div class="tip-item"><div class="tip-label">🏆 传功位置</div><div class="tip-content">宗祠→NPC王长生，创角24小时后开启</div></div>
+        <div class="tip-item"><div class="tip-label">📖 解锁小天师</div><div class="tip-content">先看完剧情才能解锁抽皮肤活动</div></div>
+    </div>
+</div>
+
+<!-- Insights -->
+<div class="section">
+    <h2>📊 数据洞察</h2>
+    <div class="insights-grid">
+        <div class="insight-box" style="border:1px solid rgba(230,57,70,0.2)">
+            <h3 style="color:#E63946">🚨 主要风险项</h3>
+            <ul>
+                <li>🔴 氪金大R <span class="highlight-red">佩恩</span> 养错角色体验差 → 短期付费留存风险</li>
+                <li>🔴 <span class="highlight-red">肝度劝退</span> 开服首日即被吐槽 → 泛用户流失风险</li>
+                <li>🟡 <span class="highlight-yellow">概率信任危机</span> → 需公示具体概率防扩散</li>
+                <li>🟡 三国阵营 <span class="highlight-yellow">平衡隐患</span> → 大唐一家独大，两国加速流失</li>
+            </ul>
+        </div>
+        <div class="insight-box" style="border:1px solid rgba(42,157,143,0.2)">
+            <h3 style="color:#2A9D8F">✅ 可取之处</h3>
+            <ul>
+                <li>🟢 群管群内实时回应 → 玩家感知好（佩恩追加3000）</li>
+                <li>🟢 首日更新响应快（动画加速/传功时间）</li>
+                <li>🟢 BOSS战"死了可重进"降低挫败感</li>
+                <li>🟢 暗号兑换制造社交传播话题</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+</body>
+</html>

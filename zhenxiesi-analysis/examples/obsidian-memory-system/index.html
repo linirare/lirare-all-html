@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>虾哥 AI 工作记忆盘点</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/base.css">
+<link rel="stylesheet" href="../../assets/animations/animations.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="history-deck">
+<div class="deck">
+
+  <section class="slide cover" data-title="封面">
+    <div class="deck-header"><span>Obsidian Memory Review</span><span>2026-03 → 2026-05</span></div>
+    <div class="cover-grid">
+      <div>
+        <p class="kicker">D:\agent memory\agent memory</p>
+        <h1 class="title">虾哥 AI 工作记忆盘点</h1>
+        <p class="lede">从 Obsidian 里提炼：过去干了什么、沉淀了哪些经验、工具链怎么搭、哪些 skills 真正有用。</p>
+      </div>
+      <div class="signal-card">
+        <b>核心结论</b>
+        <p>这不是聊天备份，而是一套已经跑起来的「游戏行业研究 + 自动化 + 多 Agent 工具链」。</p>
+      </div>
+    </div>
+    <div class="deck-footer"><span>Hermes 整理 · 2026-05-25</span><span>1 / 13 · ← → 翻页 · F 全屏 · O 概览</span></div>
+  </section>
+
+  <section class="slide" data-title="总览">
+    <div class="deck-header"><span>01</span><span>Executive Summary</span></div>
+    <h2>你这段时间实际做成了什么</h2>
+    <div class="grid g4 mt-l">
+      <div class="metric"><strong>3个月</strong><span>从 OpenClaw 排坑到 Hermes + Codex + ClaudeCode 共享记忆</span></div>
+      <div class="metric"><strong>4类主线</strong><span>游戏研究、数据抓取、生图资产、Agent 基建</span></div>
+      <div class="metric"><strong>161个</strong><span>Hermes skills 已索引，P0/P1 常用项明确</span></div>
+      <div class="metric"><strong>多端交付</strong><span>HTML-PPT → GitHub Pages → 手机/电脑可看</span></div>
+    </div>
+    <div class="takeaway mt-l">一句话：你已经不是在「试 AI」，而是在搭一个游戏制作人自己的 AI 生产系统。</div>
+    <div class="deck-footer"><span>总览</span><span>2 / 13</span></div>
+  </section>
+
+  <section class="slide" data-title="时间线">
+    <div class="deck-header"><span>02</span><span>Timeline</span></div>
+    <h2>三个月主线：从能用，到能协作</h2>
+    <div class="timeline mt-l">
+      <div><b>3月</b><p>OpenClaw / KIKI 起步：agent-browser、DeepSeek API、企业微信、豆包深度思考、LibTV 生图、Gateway 重启排坑。</p></div>
+      <div><b>4月</b><p>进入自动化和数据验证：贴吧舆情、Chrome CDP、舆情日报、模型图片输入、小游戏数据可信度分层。</p></div>
+      <div><b>5月</b><p>Hermes 接管重活：OpenCLI、引力引擎 Top100、HTML-PPT、GitHub Pages、多 Agent Obsidian 共享记忆。</p></div>
+      <div><b>现在</b><p>形成 Hermes / OpenClaw / Codex / ClaudeCode 的分工：各写各的、互相可读、能力不混写。</p></div>
+    </div>
+    <div class="deck-footer"><span>历史脉络</span><span>3 / 13</span></div>
+  </section>
+
+  <section class="slide" data-title="业务产出">
+    <div class="deck-header"><span>03</span><span>Business Output</span></div>
+    <h2>业务侧产出：围绕游戏市场和内容决策</h2>
+    <div class="grid g3 mt-l">
+      <div class="card"><b>小游戏市场报告</b><p>完成小游戏周报、模拟经营赛道全景、极品芝麻官贴吧分析等 HTML-PPT，形成可分享报告流。</p></div>
+      <div class="card"><b>榜单 / 舆情数据</b><p>打通引力引擎榜单、贴吧内容、客服聊天舆情，重点服务选品、竞品、玩家反馈判断。</p></div>
+      <div class="card"><b>游戏创意探索</b><p>涉及镇邪司、骰子守城、郑和下西洋、末日幸存者、航海 Roguelike 等方向，偏好逐步转向单核玩法深挖。</p></div>
+    </div>
+    <div class="deck-footer"><span>干了什么：业务</span><span>4 / 13</span></div>
+  </section>
+
+  <section class="slide" data-title="技术产出">
+    <div class="deck-header"><span>04</span><span>Tech Output</span></div>
+    <h2>技术侧产出：把 AI 工具变成流水线</h2>
+    <div class="split mt-l">
+      <div class="panel"><h3>数据 / 抓取</h3><ul><li>OpenCLI v1.8.0 + Chrome 扩展</li><li>引力引擎登录态榜单 Top100</li><li>贴吧与网页抓取 fallback</li><li>Chrome CDP 舆情自动化下载</li></ul></div>
+      <div class="panel"><h3>交付 / 发布</h3><ul><li>html-ppt-skill</li><li>GitHub Pages：linirare/zhenxiesi-analysis</li><li>移动端响应式规范</li><li>报告截图与线上验证流程</li></ul></div>
+      <div class="panel"><h3>多 Agent / 生图</h3><ul><li>Hermes → Windows Codex → Imagen 2.0</li><li>OpenClaw → /codex → DALL-E</li><li>ClaudeCode 接入共享记忆</li><li>Obsidian 分区写入协议</li></ul></div>
+    </div>
+    <div class="deck-footer"><span>干了什么：技术</span><span>5 / 13</span></div>
+  </section>
+
+  <section class="slide" data-title="工具地图">
+    <div class="deck-header"><span>05</span><span>Tool Map</span></div>
+    <h2>工具地图：谁负责什么</h2>
+    <div class="toolmap mt-l">
+      <div><b>Hermes</b><p>主力执行：读写 Obsidian、做报告、部署 Pages、调度脚本、修 Gateway。</p></div>
+      <div><b>OpenClaw / KIKI</b><p>消息通道、企微/微信、历史自动化、舆情流程、早期工具沉淀。</p></div>
+      <div><b>Codex CLI</b><p>工程/生图后端：Windows Codex、imagegen/Imagen、项目内文件修改。</p></div>
+      <div><b>ClaudeCode</b><p>编程辅助与 Cocos 项目上下文，目前主要完成共享记忆接入。</p></div>
+      <div><b>Obsidian</b><p>事实中枢：收件箱、永久知识、用户档案、daily、weekly。</p></div>
+      <div><b>GitHub Pages</b><p>对外交付：HTML-PPT 长期可分享链接。</p></div>
+    </div>
+    <div class="deck-footer"><span>工具生态</span><span>6 / 13</span></div>
+  </section>
+
+  <section class="slide" data-title="常用 Skills">
+    <div class="deck-header"><span>06</span><span>Skills</span></div>
+    <h2>真正高频 / 高价值的 Skills</h2>
+    <div class="skill-grid mt-l">
+      <div class="skill p0"><span>P0</span><b>gravity-engine-rank-100</b><p>引力引擎 Top100 榜单，小游戏数据入口。</p></div>
+      <div class="skill p0"><span>P0</span><b>share-html-demo-mobile</b><p>HTML-PPT 手机分享与 GitHub Pages 发布规范。</p></div>
+      <div class="skill p0"><span>P0</span><b>obsidian</b><p>共享记忆读写、daily/weekly、归档。</p></div>
+      <div class="skill p1"><span>P1</span><b>tieba-scraper / OpenCLI</b><p>贴吧与网站数据抓取，反爬时切搜索索引或 CDP。</p></div>
+      <div class="skill p1"><span>P1</span><b>feedback-synthesis-xmind</b><p>玩家反馈归类，适合研发可改项重构。</p></div>
+      <div class="skill p1"><span>P1</span><b>codex-imagen-imagegen</b><p>Hermes 委托 Windows Codex 生图，当前可用资产生成通道。</p></div>
+      <div class="skill p2"><span>P2</span><b>claude-design / sketch</b><p>报告、原型、视觉 demo。</p></div>
+      <div class="skill p2"><span>P2</span><b>github / powerpoint</b><p>代码仓库、PPTX、发布链路。</p></div>
+    </div>
+    <div class="deck-footer"><span>Skills 筛选</span><span>7 / 13</span></div>
+  </section>
+
+  <section class="slide" data-title="方法论">
+    <div class="deck-header"><span>07</span><span>Learnings</span></div>
+    <h2>沉淀出的工作方法</h2>
+    <div class="grid g2 mt-l">
+      <div class="card strong"><b>市场数据：先校验时间线</b><p>上线时间、排名、官方可验证信息优先；2025 才上线的游戏不能用 2023-2024 数据。</p></div>
+      <div class="card strong"><b>搜索：多源交叉验证</b><p>百度 / Tavily / 引力引擎 / DataEye / AppMagic 等按场景组合，不把单一来源当真相。</p></div>
+      <div class="card strong"><b>自动化：前置条件也要自动化</b><p>舆情 cron 不能假设 Chrome 已启动；必须用计划任务先开远程调试 Chrome。</p></div>
+      <div class="card strong"><b>产出：报告必须能分享</b><p>HTML-PPT 不只是本地文件，要走 GitHub Pages，电脑和手机都能看。</p></div>
+    </div>
+    <div class="deck-footer"><span>经验 / 学习</span><span>8 / 13</span></div>
+  </section>
+
+  <section class="slide" data-title="踩坑">
+    <div class="deck-header"><span>08</span><span>Pitfalls</span></div>
+    <h2>踩过的坑：现在已经变成规则</h2>
+    <div class="pitfalls mt-l">
+      <div><b>Windows 命令行 JSON</b><p>中文和嵌套 JSON 容易被 PowerShell/CMD 转义搞坏，大参数改文件或 API 直调。</p></div>
+      <div><b>Gateway 重启</b><p>SIGUSR1 热重启不刷新 modelRegistry；图片模型、输入能力变更必须完全重启。</p></div>
+      <div><b>图片输入 / 生图</b><p>模型不支持 image input、MiniMax 额度超限、OSS URL 过期，都要快速切换通道。</p></div>
+      <div><b>网页抓取</b><p>Playwright / Cookie 容易触发验证；能用现有登录态 + CDP 就别硬撞反爬。</p></div>
+      <div><b>消息投递</b><p>子 Agent 继承 wecom delivery context 会重复发，跨渠道任务要明确 target。</p></div>
+      <div><b>HTML-PPT</b><p>自定义 CSS 不能覆盖 `.slide{position:absolute;inset:0}`，否则页面会堆叠溢出。</p></div>
+    </div>
+    <div class="deck-footer"><span>排坑资产</span><span>9 / 13</span></div>
+  </section>
+
+  <section class="slide" data-title="知识资产">
+    <div class="deck-header"><span>09</span><span>Knowledge Assets</span></div>
+    <h2>已经沉淀的知识资产</h2>
+    <div class="asset-list mt-l">
+      <div><span>工作流</span><b>html-ppt规范、搜索策略、舆情自动化流程、Karpathy四原则、KIKI月度汇总</b></div>
+      <div><span>技术</span><b>OpenCLI笔记、OpenClaw排坑手册、Hermes Gateway排坑</b></div>
+      <div><span>行业研究</span><b>小游戏市场分析方法论、手游行业舆情分析</b></div>
+      <div><span>收件箱</span><b>Codex Imagen 生图、GitHub 密钥扫描、Hermes / Codex / ClaudeCode 协议接入</b></div>
+      <div><span>周报</span><b>2026-W21 多智能体周报总览，已经能按周看全局进展</b></div>
+    </div>
+    <div class="deck-footer"><span>Obsidian 价值</span><span>10 / 13</span></div>
+  </section>
+
+  <section class="slide" data-title="当前短板">
+    <div class="deck-header"><span>10</span><span>Gaps</span></div>
+    <h2>当前短板：不是工具少，是需要治理</h2>
+    <div class="grid g3 mt-l">
+      <div class="card warn"><b>收件箱堆积</b><p>很多好经验还在 inbox，需要归档到永久知识，否则下次检索成本高。</p></div>
+      <div class="card warn"><b>多 Agent 边界易混</b><p>Hermes 调 Codex、OpenClaw 调 Codex，都要写清「谁调用谁」。</p></div>
+      <div class="card warn"><b>自动化依赖脆弱</b><p>Chrome 登录态、远程调试端口、Gateway、模型额度都可能成为单点故障。</p></div>
+    </div>
+    <div class="takeaway mt-l">接下来最有价值的不是再装 20 个工具，而是把已验证流程做成稳定 SOP。</div>
+    <div class="deck-footer"><span>问题判断</span><span>11 / 13</span></div>
+  </section>
+
+  <section class="slide" data-title="下一步">
+    <div class="deck-header"><span>11</span><span>Next Actions</span></div>
+    <h2>建议下一步：把经验变成可复用系统</h2>
+    <div class="roadmap mt-l">
+      <div><span>01</span><b>归档四个 SOP</b><p>Codex Imagen、生图桥接、GitHub 密钥扫描、引力引擎 Top100。</p></div>
+      <div><span>02</span><b>做工具路由表</b><p>什么任务用 Hermes / OpenClaw / Codex / ClaudeCode，避免瞎调度。</p></div>
+      <div><span>03</span><b>固定报告模板</b><p>周报、竞品、反馈、榜单各一套，减少每次重新设计。</p></div>
+      <div><span>04</span><b>建立健康检查</b><p>Chrome、Gateway、Pages、模型额度、Codex 桥接，任务前自动检查。</p></div>
+    </div>
+    <div class="deck-footer"><span>行动建议</span><span>12 / 13</span></div>
+  </section>
+
+  <section class="slide closing" data-title="结尾">
+    <div class="deck-header"><span>12</span><span>Principle</span></div>
+    <h2>真正的资产</h2>
+    <div class="bigline">不是某个模型，<br>而是你已经验证过的流程、边界、数据源和交付链路。</div>
+    <div class="chips center"><span>可复用</span><span>可验证</span><span>可分享</span><span>可追溯</span></div>
+    <div class="deck-footer"><span>End</span><span>13 / 13</span></div>
+  </section>
+
+</div>
+<script src="../../assets/runtime.js"></script>
+</body>
+</html>

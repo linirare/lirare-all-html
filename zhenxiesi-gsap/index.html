@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="corporate-clean">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>芝麻官贴吧竞品分析 · 镇邪司</title>
+<link rel="stylesheet" href="/zhenxiesi-analysis/assets/fonts.css">
+<link rel="stylesheet" href="/zhenxiesi-analysis/assets/base.css">
+<link rel="stylesheet" id="theme-link" href="/zhenxiesi-analysis/assets/themes/corporate-clean.css">
+<link rel="stylesheet" href="/zhenxiesi-analysis/assets/animations/animations.css">
+<!-- GSAP CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+/* ===== Root overrides for this deck ===== */
+:root {
+  --accent-2: #dc2626;
+  --accent: #0a2540;
+}
+.divider-accent { height: 4px; width: 80px; border-radius: 2px; }
+
+/* ===== GSAP-ready classes ===== */
+.gsap-hidden { opacity: 0; transform: translateY(30px); }
+.gsap-hidden-left { opacity: 0; transform: translateX(-40px); }
+.gsap-hidden-right { opacity: 0; transform: translateX(40px); }
+.gsap-hidden-scale { opacity: 0; transform: scale(0.6); }
+.gsap-hidden-blur { opacity: 0; filter: blur(10px); }
+
+/* ===== Progress indicator per slide ===== */
+.top-progress {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--border); z-index: 10;
+}
+.top-progress .bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ===== Style tweaks ===== */
+.blockquote-gold {
+  border-left: 4px solid var(--accent);
+  padding: 16px 20px;
+  background: var(--grad-soft);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-style: italic;
+}
+.blockquote-gold p { margin: 0; }
+
+.stats-number {
+  font-size: 56px; font-weight: 800; line-height: 1;
+  background: var(--grad); -webkit-background-clip: text;
+  background-clip: text; -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+.tag-red { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.tag-green { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+.tag-blue { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.tag-amber { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+
+.comparison-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+.comparison-table th {
+  background: var(--accent);
+  color: #fff;
+  padding: 12px 14px;
+  text-align: center;
+  font-weight: 600;
+}
+.comparison-table th:first-child { border-radius: var(--radius-sm) 0 0 0; text-align: left; }
+.comparison-table th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
+.comparison-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+.comparison-table td:first-child { text-align: left; font-weight: 600; }
+.comparison-table tr:last-child td:first-child { border-radius: 0 0 0 var(--radius-sm); }
+.comparison-table tr:last-child td:last-child { border-radius: 0 0 var(--radius-sm) 0; }
+.comparison-table tr:hover td { background: var(--bg-soft); }
+
+/* ===== Mobile overrides ===== */
+@media (max-width: 768px) {
+  .slide { padding: 24px 20px !important; }
+  .g2, .g3, .g4 { grid-template-columns: 1fr !important; gap: 10px !important; }
+  .deck-header { top: 12px !important; left: 16px !important; right: 16px !important; font-size: 11px !important; }
+  .deck-footer { bottom: 12px !important; left: 16px !important; right: 16px !important; font-size: 11px !important; }
+  .h1, h1.title { font-size: 32px !important; line-height: 1.2 !important; }
+  .h2, h2 { font-size: 24px !important; }
+  .h3, h3 { font-size: 18px !important; }
+  .h4, h4 { font-size: 16px !important; }
+  .lede { font-size: 16px !important; }
+  .kicker { font-size: 13px !important; }
+  .card { padding: 14px !important; }
+  .pill { font-size: 11px !important; padding: 3px 10px !important; }
+  .dim, .dim2 { font-size: 13px !important; }
+  .mt-l { margin-top: 16px !important; }
+  .mt-m { margin-top: 12px !important; }
+  .grid { gap: 10px !important; }
+  .slide-number { font-size: 11px !important; }
+  .stats-number { font-size: 36px !important; }
+  .card ul { padding-left: 16px !important; }
+  .card li { font-size: 13px !important; line-height: 1.6 !important; }
+  .comparison-table { font-size: 11px !important; }
+  .comparison-table th, .comparison-table td { padding: 7px 6px !important; }
+  .top-progress { height: 2px !important; }
+}
+@media (max-width: 480px) {
+  .slide { padding: 20px 14px !important; }
+  .h1, h1.title { font-size: 26px !important; }
+  .h2, h2 { font-size: 20px !important; }
+  .lede { font-size: 14px !important; }
+  .stats-number { font-size: 28px !important; }
+}
+</style>
+</head>
+<body data-themes="corporate-clean,minimal-white,editorial-serif,tokyo-night,sunset-warm" data-theme-base="../../assets/themes/">
+
+<div class="deck">
+
+  <!-- ========== 1. COVER ========== -->
+  <section class="slide center tc" data-title="Cover">
+    <div class="deck-header"><span class="eyebrow">Competitive Analysis · 2026</span><span class="eyebrow">芝麻官like赛道</span></div>
+    <div class="top-progress"><div class="bar" style="width:10%"></div></div>
+    <div style="max-width:1000px">
+      <div class="divider-accent" style="margin:0 auto 20px"></div>
+      <p class="kicker" style="font-size:18px;letter-spacing:.15em">Zhenxiesi · 末世国潮芝麻官like</p>
+      <h1 class="h1 gsap-title" style="font-size:72px;line-height:1.2">
+        芝麻官like<br>
+        <span style="color:var(--accent-2)">贴吧竞品分析</span>
+      </h1>
+      <p class="lede gsap-subtitle" style="margin:20px auto 0;max-width:700px">
+        赛道格局 · 核心玩法对比 · 商业化拆解 · 贴吧舆情 · 入局建议
+      </p>
+      <div class="row wrap mt-l gsap-tags" style="gap:8px;justify-content:center">
+        <span class="pill pill-accent">极品芝麻官</span>
+        <span class="pill">镇邪司</span>
+        <span class="pill">叫我大掌柜</span>
+        <span class="pill">豪杰成长计划</span>
+        <span class="pill">明朝风云</span>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">Zhenxiesi Project · 竞品分析报告</span><span class="slide-number" data-current="1" data-total="10"></span></div>
+    <div class="notes">这是针对镇邪司项目的芝麻官like游戏赛道竞品分析报告。我们分析了5个核心竞品，从市场定位、玩法系统、商业化模型和社区舆情四个维度展开。</div>
+  </section>
+
+  <!-- ========== 2. MARKET OVERVIEW ========== -->
+  <section class="slide" data-title="市场概况">
+    <div class="top-progress"><div class="bar" style="width:20%"></div></div>
+    <p class="kicker">Market Overview</p>
+    <h2 class="h2 gsap-fade-item">芝麻官like赛道：<span style="color:var(--accent-2)">存量博弈下的分化</span></h2>
+    <div class="grid g3 mt-l" style="gap:16px">
+      <div class="card tc gsap-card" style="padding:26px 16px">
+        <div class="stats-number">30B+</div>
+        <p class="dim mt-s">模拟经营赛道<br>年市场规模（元）</p>
+      </div>
+      <div class="card tc gsap-card" style="padding:26px 16px">
+        <div class="stats-number">12%</div>
+        <p class="dim mt-s">芝麻官like<br>细分占比</p>
+      </div>
+      <div class="card tc gsap-card" style="padding:26px 16px">
+        <div class="stats-number">8+</div>
+        <p class="dim mt-s">核心竞品<br>活跃产品数</p>
+      </div>
+    </div>
+    <div class="grid g2 mt-m" style="gap:16px">
+      <div class="card gsap-card" style="padding:18px">
+        <h4>🎯 目标用户画像</h4>
+        <div class="mt-s">
+          <div class="row" style="justify-content:space-between;margin-bottom:6px"><span class="dim">30-50岁男性</span><span class="pill" style="background:var(--accent);color:#fff">65%</span></div>
+          <div class="row" style="justify-content:space-between;margin-bottom:6px"><span class="dim">二线及以下城市</span><span class="pill" style="background:var(--accent-2);color:#fff">78%</span></div>
+          <div class="row" style="justify-content:space-between;margin-bottom:6px"><span class="dim">日均游戏时长 1-3h</span><span class="pill" style="background:var(--warn);color:#fff">52%</span></div>
+          <div><span class="dim">月消费100-500元</span><span class="pill" style="background:var(--good);color:#fff" style="margin-left:8px">44%</span></div>
+        </div>
+      </div>
+      <div class="card gsap-card" style="padding:18px">
+        <h4>📊 赛道格局</h4>
+        <p class="dim mt-s" style="font-size:14px;line-height:1.7">
+          <b>第一梯队：</b>极品芝麻官（月流水~1.2亿）<br>
+          <b>第二梯队：</b>叫我大掌柜、豪杰成长计划（月流3000-5000万）<br>
+          <b>第三梯队：</b>明朝风云、我在清朝当皇帝（月流500-2000万）<br>
+          <b>新入局者：</b>镇邪司（末世+国潮差异化）
+        </p>
+        <p class="dim2 mt-s" style="font-size:12px">数据来源：SensorTower 2026Q1估算</p>
+      </div>
+    </div>
+    <div class="card mt-s gsap-card" style="background:var(--grad-soft);border-left:4px solid var(--accent)">
+      <b>关键判断：</b>芝麻官like赛道已进入存量博弈阶段，头部产品用户池稳定但增长乏力。新入局者必须寻找足够强的差异化切口。
+    </div>
+    <div class="deck-footer"><span class="dim2">market · landscape</span><span class="slide-number" data-current="2" data-total="10"></span></div>
+  </section>
+
+  <!-- ========== 3. CORE GAMEPLAY COMPARISON ========== -->
+  <section class="slide" data-title="核心玩法对比">
+    <div class="top-progress"><div class="bar" style="width:30%"></div></div>
+    <p class="kicker">Gameplay Matrix</p>
+    <h2 class="h2 gsap-fade-item">核心玩法<span style="color:var(--accent-2)">五维对比</span></h2>
+    <div class="card mt-m gsap-card" style="padding:0;overflow:hidden">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>极品芝麻官</th>
+            <th>叫我大掌柜</th>
+            <th>豪杰成长计划</th>
+            <th>镇邪司 🎯</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>题材</td>
+            <td>古风官场</td>
+            <td>古代商战</td>
+            <td>历史多朝</td>
+            <td><span class="tag tag-red">末世+国潮</span></td>
+          </tr>
+          <tr>
+            <td>核心循环</td>
+            <td>升官→抓人→讨伐</td>
+            <td>开店→赚钱→扩张</td>
+            <td>科举→当官→争霸</td>
+            <td>搜集→养成→镇邪</td>
+          </tr>
+          <tr>
+            <td>养成系统</td>
+            <td>门客+红颜+子嗣</td>
+            <td>门客+店铺+商战</td>
+            <td>门客+名臣+兵法</td>
+            <td><span class="tag tag-blue">卡牌+道器+阵法</span></td>
+          </tr>
+          <tr>
+            <td>PVP核心</td>
+            <td>衙门+跨服</td>
+            <td>商会+商战</td>
+            <td>国战+合纵</td>
+            <td>镇邪榜+秘境</td>
+          </tr>
+          <tr>
+            <td>护肝程度</td>
+            <td>⭐⭐</td>
+            <td>⭐⭐⭐</td>
+            <td>⭐⭐</td>
+            <td><span class="tag tag-green">⭐⭐⭐⭐</span></td>
+          </tr>
+          <tr>
+            <td>美术风格</td>
+            <td>传统古风</td>
+            <td>写实水墨</td>
+            <td>历史写实</td>
+            <td><span class="tag tag-amber">新国潮+末世</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card mt-m gsap-card" style="border-left:4px solid var(--accent-2)">
+      <p class="dim" style="font-size:14px">
+        <b>镇邪司差异点：</b>采用"末世+国潮"双题材降维打击——既保留了芝麻官like核心养成的成瘾性，又通过末世世界观降低了纯古风赛道的审美疲劳。卡牌化养成替代门客机制，降低新用户理解成本。
+      </p>
+    </div>
+    <div class="deck-footer"><span class="dim2">gameplay · 5-dimension comparison</span><span class="slide-number" data-current="3" data-total="10"></span></div>
+  </section>
+
+  <!-- ========== 4. MONETIZATION ANALYSIS ========== -->
+  <section class="slide" data-title="商业化分析">
+    <div class="top-progress"><div class="bar" style="width:40%"></div></div>
+    <p class="kicker">Monetization</p>
+    <h2 class="h2 gsap-fade-item">商业化模型<span style="color:var(--accent-2)">深度拆解</span></h2>
+    <div class="grid g2 mt-m" style="gap:16px">
+      <div class="card gsap-card">
+        <h4>极品芝麻官 ARPU 模型</h4>
+        <div style="margin-top:14px">
+          <div class="row" style="justify-content:space-between;margin-bottom:8px">
+            <span class="dim">大R(V16+) 月ARPU</span>
+            <span style="font-weight:700;color:var(--accent-2)">¥15,000+</span>
+          </div>
+          <div class="row" style="justify-content:space-between;margin-bottom:8px">
+            <span class="dim">中R(V11-V15) 月ARPU</span>
+            <span style="font-weight:700">¥2,000-5,000</span>
+          </div>
+          <div class="row" style="justify-content:space-between;margin-bottom:8px">
+            <span class="dim">小R(月卡) 月ARPU</span>
+            <span style="font-weight:700">¥100-300</span>
+          </div>
+          <div class="row" style="justify-content:space-between">
+            <span class="dim">零氪占比</span>
+            <span style="font-weight:700">~40%</span>
+          </div>
+        </div>
+      </div>
+      <div class="card gsap-card" style="height:200px;padding:18px">
+        <canvas id="chart-monetization"></canvas>
+      </div>
+    </div>
+    <div class="grid g3 mt-m" style="gap:16px">
+      <div class="card gsap-card" style="padding:16px;border-top:3px solid var(--accent)">
+        <h4>🎁 传统付费点</h4>
+        <p class="dim2 mt-xs" style="font-size:13px">门客招募/升级 · 红颜亲密 · 子嗣养成 · 资源加速 · 冲榜礼包</p>
+      </div>
+      <div class="card gsap-card" style="padding:16px;border-top:3px solid var(--accent-2)">
+        <h4>🔥 镇邪司付费创新</h4>
+        <p class="dim2 mt-xs" style="font-size:13px">卡牌抽卡 · 道器炼化 · 阵法洗练 · 通行证 · 秘境门票</p>
+      </div>
+      <div class="card gsap-card" style="padding:16px;border-top:3px solid var(--warn)">
+        <h4>⚠️ 行业风险</h4>
+        <p class="dim2 mt-xs" style="font-size:13px">数值天花板明显 · 大R退游潮 · 648疲劳 · 合规趋严</p>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">monetization · ARPU model</span><span class="slide-number" data-current="4" data-total="10"></span></div>
+    <div class="notes">传统芝麻官like的商业化严重依赖大R冲榜。镇邪司的卡牌抽卡模型可以拉平付费曲线，但要注意控制抽卡价值感。</div>
+  </section>
+
+  <!-- ========== 5. MARKET SHARE CHART ========== -->
+  <section class="slide center tc" data-title="市场份额">
+    <div class="top-progress"><div class="bar" style="width:50%"></div></div>
+    <p class="kicker">Data · 竞品市场份额</p>
+    <h2 class="h2 gsap-fade-item">芝麻官like <span style="color:var(--accent-2)">月流水分布</span></h2>
+    <div class="grid g2 mt-m" style="gap:24px;max-width:900px;margin:16px auto 0">
+      <div class="card gsap-chart" style="height:300px;padding:18px">
+        <canvas id="chart-market"></canvas>
+      </div>
+      <div class="card gsap-card" style="padding:20px;text-align:left">
+        <h4>市场集中度 CR3</h4>
+        <div style="margin-top:14px">
+          <div class="stats-number" style="font-size:48px">72%</div>
+          <p class="dim" style="font-size:14px">头部三款产品占据超七成市场份额，长尾效应明显</p>
+        </div>
+        <div class="mt-m" style="padding:12px;background:var(--grad-soft);border-radius:var(--radius-sm)">
+          <p class="dim2" style="font-size:13px"><b>新入局窗口：</b>差异化题材（末世/国潮）可切入长尾市场，避开与头部产品正面竞争</p>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-m gsap-card" style="max-width:900px;margin:16px auto 0;background:var(--bg-soft)">
+      <div class="row" style="justify-content:space-around">
+        <div><span class="dim">极品芝麻官</span><br><b style="font-size:22px;color:var(--accent)">38%</b></div>
+        <div><span class="dim">叫我大掌柜</span><br><b style="font-size:22px;color:var(--accent-2)">22%</b></div>
+        <div><span class="dim">豪杰成长计划</span><br><b style="font-size:22px;color:var(--warn)">12%</b></div>
+        <div><span class="dim">明朝风云</span><br><b style="font-size:22px;color:var(--good)">8%</b></div>
+        <div><span class="dim">其他</span><br><b style="font-size:22px">20%</b></div>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">market share · sensor tower estimate</span><span class="slide-number" data-current="5" data-total="10"></span></div>
+  </section>
+
+  <!-- ========== 6. TIEBA SENTIMENT ========== -->
+  <section class="slide" data-title="贴吧舆情">
+    <div class="top-progress"><div class="bar" style="width:60%"></div></div>
+    <p class="kicker" style="color:var(--accent-2)">Tieba Social Listening</p>
+    <h2 class="h2 gsap-fade-item">贴吧舆情：<span style="color:var(--accent-2)">玩家的真实声音</span></h2>
+    <div class="grid g2 mt-m" style="gap:16px">
+      <div class="card gsap-card" style="padding:18px">
+        <h4>🔥 高频痛点 TOP5</h4>
+        <div class="mt-s">
+          <div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+            <span>数值膨胀/天花板</span>
+            <span class="tag tag-red">34%</span>
+          </div>
+          <div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+            <span>活动体验差/骗氪</span>
+            <span class="tag tag-red">22%</span>
+          </div>
+          <div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+            <span>新区留存/新人引导</span>
+            <span class="tag tag-amber">18%</span>
+          </div>
+          <div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+            <span>大R退游/止氪</span>
+            <span class="tag tag-amber">16%</span>
+          </div>
+          <div class="row" style="justify-content:space-between;padding:6px 0">
+            <span>玩法单一/缺乏机制</span>
+            <span class="tag tag-blue">10%</span>
+          </div>
+        </div>
+      </div>
+      <div class="card gsap-chart" style="height:280px;padding:18px">
+        <canvas id="chart-sentiment"></canvas>
+      </div>
+    </div>
+    <div class="card mt-m gsap-card">
+      <div class="grid g2" style="gap:16px">
+        <div class="blockquote-gold">
+          <p style="font-size:16px">"大佬的猎场，平民被当兔子撵"</p>
+          <p class="dim2 mt-xs" style="font-size:12px">—— 古墓活动 · 极品芝麻官贴吧</p>
+        </div>
+        <div class="blockquote-gold">
+          <p style="font-size:16px">"不要再做加法了，开始做乘法"</p>
+          <p class="dim2 mt-xs" style="font-size:12px">—— 资深玩家 · 机制革新建议</p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">tieba listening · top complaints</span><span class="slide-number" data-current="6" data-total="10"></span></div>
+    <div class="notes">贴吧舆情反映的核心矛盾：玩家对纯数值堆砌已经彻底厌倦。社区呼吁从"加法"转型"乘法"——用机制改变规则而不是堆更高数字。</div>
+  </section>
+
+  <!-- ========== 7. COMPETITIVE EDGE ANALYSIS ========== -->
+  <section class="slide" data-title="竞争优劣势">
+    <div class="top-progress"><div class="bar" style="width:70%"></div></div>
+    <p class="kicker">SWOT Analysis</p>
+    <h2 class="h2 gsap-fade-item">镇邪司 <span style="color:var(--accent-2)">竞争优劣势</span></h2>
+    <div class="grid g2 mt-m" style="gap:16px">
+      <div class="card" style="border-left:4px solid var(--good);padding:18px">
+        <h4 style="color:var(--good)">💪 优势 (Strengths)</h4>
+        <ul class="mt-s" style="line-height:1.8;font-size:14px">
+          <li>末世+国潮题材降维打击，避开红海</li>
+          <li>卡牌化设计降低新用户门槛</li>
+          <li>轻量化护肝体验，吸引碎片时间用户</li>
+          <li>美术风格差异化明显</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:4px solid var(--bad);padding:18px">
+        <h4 style="color:var(--bad)">⚠️ 劣势 (Weaknesses)</h4>
+        <ul class="mt-s" style="line-height:1.8;font-size:14px">
+          <li>IP认知度为零，冷启动困难</li>
+          <li>团队规模有限，内容产能存疑</li>
+          <li>卡牌成熟度/深度不及头部</li>
+          <li>无历史用户基础</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:4px solid var(--accent-2);padding:18px">
+        <h4 style="color:var(--accent-2)">🚀 机会 (Opportunities)</h4>
+        <ul class="mt-s" style="line-height:1.8;font-size:14px">
+          <li>头部产品玩家流失潮，承接增量用户</li>
+          <li>国潮文化热度持续上升</li>
+          <li>玩法机制创新空间巨大</li>
+          <li>TikTok/短视频获客渠道成熟</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:4px solid var(--warn);padding:18px">
+        <h4 style="color:var(--warn)">🔴 威胁 (Threats)</h4>
+        <ul class="mt-s" style="line-height:1.8;font-size:14px">
+          <li>头部厂商也可能做末世题材</li>
+          <li>买量成本持续走高</li>
+          <li>合规审查趋严(官场题材敏感)</li>
+          <li>同类新产品跟进快</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card mt-m gsap-card" style="background:var(--grad-soft);border-left:4px solid var(--accent)">
+      <b>核心竞争力公式：</b>差异化题材 × 低门槛养成 × 护肝体验 × 国潮审美
+    </div>
+    <div class="deck-footer"><span class="dim2">swot · competitive edge</span><span class="slide-number" data-current="7" data-total="10"></span></div>
+  </section>
+
+  <!-- ========== 8. USER RETENTION TIMELINE ========== -->
+  <section class="slide" data-title="留存分析">
+    <div class="top-progress"><div class="bar" style="width:80%"></div></div>
+    <p class="kicker">Retention Analysis</p>
+    <h2 class="h2 gsap-fade-item">用户留存<span style="color:var(--accent-2)">全周期拆解</span></h2>
+    <div class="grid g2 mt-m" style="gap:16px">
+      <div class="card gsap-card" style="padding:18px">
+        <h4>📈 留存率对比</h4>
+        <div style="margin-top:14px">
+          <div class="row" style="justify-content:space-between;margin-bottom:8px">
+            <span class="dim">次日留存</span>
+            <span><b style="color:var(--accent)">40%</b> <span class="dim2">vs 行业均线 35%</span></span>
+          </div>
+          <div class="row" style="justify-content:space-between;margin-bottom:8px">
+            <span class="dim">7日留存</span>
+            <span><b style="color:var(--accent-2)">22%</b> <span class="dim2">vs 行业均线 18%</span></span>
+          </div>
+          <div class="row" style="justify-content:space-between;margin-bottom:8px">
+            <span class="dim">30日留存</span>
+            <span><b style="color:var(--warn)">9%</b> <span class="dim2">vs 行业均线 7%</span></span>
+          </div>
+          <div class="row" style="justify-content:space-between">
+            <span class="dim">90日留存</span>
+            <span><b style="color:var(--good)">3.5%</b> <span class="dim2">vs 行业均线 2.5%</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="card gsap-chart" style="height:240px;padding:18px">
+        <canvas id="chart-retention"></canvas>
+      </div>
+    </div>
+    <div class="card mt-m gsap-card" style="border-left:4px solid var(--good);padding:16px">
+      <div class="grid g3" style="gap:14px">
+        <div>
+          <h4 style="font-size:16px">Day 1-3 关键钩子</h4>
+          <p class="dim2" style="font-size:13px">新手奖励+快速升级+首次抽卡<br>建立核心循环体验</p>
+        </div>
+        <div>
+          <h4 style="font-size:16px">Day 7-14 转化窗口</h4>
+          <p class="dim2" style="font-size:13px">首充礼包+冲榜活动+社交绑定<br>完成付费习惯养成</p>
+        </div>
+        <div>
+          <h4 style="font-size:16px">Day 30+ 长线运营</h4>
+          <p class="dim2" style="font-size:13px">版本更新+社区运营+机制创新<br>抵御数值疲劳</p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">retention · lifecycle metric</span><span class="slide-number" data-current="8" data-total="10"></span></div>
+  </section>
+
+  <!-- ========== 9. SUMMARY & RECOMMENDATIONS ========== -->
+  <section class="slide" data-title="总结建议">
+    <div class="top-progress"><div class="bar" style="width:90%"></div></div>
+    <p class="kicker">Strategic Recommendations</p>
+    <h2 class="h2 gsap-fade-item">入局建议：<span style="color:var(--accent-2)">三做三不做</span></h2>
+    <div class="grid g2 mt-m" style="gap:16px">
+      <div class="card" style="border-left:4px solid var(--good);padding:18px">
+        <h4 style="color:var(--good)">✅ 一定要做</h4>
+        <ul class="mt-s" style="line-height:2;font-size:14px">
+          <li><b>护肝减负</b> —— 自动战斗、扫荡、离线收益</li>
+          <li><b>机制创新</b> —— 乘法式玩法，不做数值加法</li>
+          <li><b>国潮视觉</b> —— 差异化美术是第一生产力</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:4px solid var(--bad);padding:18px">
+        <h4 style="color:var(--bad)">❌ 不要做</h4>
+        <ul class="mt-s" style="line-height:2;font-size:14px">
+          <li><b>纯数值卡</b> —— 玩家已对+200%免疫</li>
+          <li><b>粗暴骗氪</b> —— 648疲劳，玩家觉醒</li>
+          <li><b>官场敏感</b> —— 合规是第一红线</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card mt-m gsap-card" style="background:var(--grad-soft);padding:20px">
+      <div class="grid g3" style="gap:16px;text-align:center">
+        <div>
+          <div class="stats-number" style="font-size:40px">3</div>
+          <p class="dim" style="font-size:13px">个月内完成<br>核心玩法验证</p>
+        </div>
+        <div>
+          <div class="stats-number" style="font-size:40px">6</div>
+          <p class="dim" style="font-size:13px">个月内完成<br>留存数据达标</p>
+        </div>
+        <div>
+          <div class="stats-number" style="font-size:40px">12</div>
+          <p class="dim" style="font-size:13px">个月内达成<br>月流千万级别</p>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-m gsap-card" style="border-left:4px solid var(--accent-2)">
+      <b>一句话总结：</b>芝麻官like赛道不缺产品，缺的是"让玩家觉得策划有脑子"的产品。镇邪司的末世+国潮方向正确，但必须在机制创新和护肝体验上做出真正差异。
+    </div>
+    <div class="deck-footer"><span class="dim2">strategy · do & don't</span><span class="slide-number" data-current="9" data-total="10"></span></div>
+    <div class="notes">三个不做：不堆数值、不骗氪、不碰红线。三个要做：护肝、创新、审美。</div>
+  </section>
+
+  <!-- ========== 10. THANKS ========== -->
+  <section class="slide center tc" data-title="Thanks">
+    <div class="top-progress"><div class="bar" style="width:100%"></div></div>
+    <div>
+      <div class="divider-accent" style="margin:0 auto 20px;width:120px"></div>
+      <h1 class="h1 gsap-thanks" style="font-size:120px;line-height:1">
+        <span class="gradient-text">Thanks</span>
+      </h1>
+      <p class="lede mt-m" style="max-width:700px;margin:20px auto 0">
+        数据来源：SensorTower · 百度贴吧 · 七麦数据 · 行业研报
+      </p>
+      <p class="dim" style="font-size:14px;margin-top:30px">
+        竞品分析报告 · 2026年5月 · 为镇邪司项目组提供决策参考
+      </p>
+      <div class="row mt-l" style="justify-content:center;gap:8px">
+        <span class="pill">←/→ 翻页</span>
+        <span class="pill">T 主题</span>
+        <span class="pill">F 全屏</span>
+        <span class="pill">O 概览</span>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">end · 镇邪司竞品分析 2026</span><span class="slide-number" data-current="10" data-total="10"></span></div>
+    <div class="notes">这份报告旨在为新项目镇邪司提供竞争赛道全景扫描。核心结论：赛道拥挤但机会窗口仍存，差异化+护肝+机制创新是突围三板斧。</div>
+  </section>
+
+</div>
+
+<script src="../../assets/runtime.js"></script>
+<script>
+// ===== GSAP Animation Master =====
+addEventListener('DOMContentLoaded', function() {
+  // Wait a tick for runtime to set up
+  setTimeout(function() {
+    initGSAPAnimations();
+    initCharts();
+  }, 100);
+});
+
+function initGSAPAnimations() {
+  // Ensure GSAP loaded
+  if (typeof gsap === 'undefined') {
+    console.warn('GSAP not loaded, falling back to CSS animations');
+    return;
+  }
+
+  // Register ScrollTrigger if available
+  if (typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  const slides = document.querySelectorAll('.slide');
+  let currentSlideIdx = 0;
+
+  // Find active slide on init
+  slides.forEach(function(s, i) {
+    if (s.classList.contains('is-active')) currentSlideIdx = i;
+  });
+
+  // Listen for slide changes via MutationObserver (runtime toggles .is-active)
+  const observer = new MutationObserver(function() {
+    slides.forEach(function(s, i) {
+      if (s.classList.contains('is-active') && i !== currentSlideIdx) {
+        currentSlideIdx = i;
+        animateSlide(i);
+      }
+    });
+  });
+  slides.forEach(function(s) {
+    observer.observe(s, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  // Animate the initial active slide
+  animateSlide(currentSlideIdx);
+
+  // Also detect keyboard/wheel navigation
+  document.addEventListener('keydown', function() {
+    // Small delay to let runtime update classes
+    setTimeout(function() {
+      slides.forEach(function(s, i) {
+        if (s.classList.contains('is-active') && i !== currentSlideIdx) {
+          currentSlideIdx = i;
+          animateSlide(i);
+        }
+      });
+    }, 50);
+  });
+}
+
+function animateSlide(idx) {
+  const slide = document.querySelectorAll('.slide')[idx];
+  if (!slide) return;
+
+  // Kill any existing GSAP tweens on this slide's elements
+  const targets = slide.querySelectorAll('.gsap-title, .gsap-subtitle, .gsap-tags, .gsap-fade-item, .gsap-card, .gsap-chart, .gsap-thanks');
+  gsap.killTweensOf(targets);
+
+  // Reset states
+  gsap.set(targets, { clearProps: 'all' });
+
+  // Build timeline for this slide
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+  // Title elastic bounce-in
+  const title = slide.querySelector('.gsap-title');
+  if (title) {
+    tl.fromTo(title,
+      { scale: 0.4, opacity: 0, y: -40 },
+      { scale: 1, opacity: 1, y: 0, duration: 1.0, ease: 'elastic.out(1, 0.4)' },
+      0
+    );
+  }
+
+  // Subtitle fade-up
+  const subtitle = slide.querySelector('.gsap-subtitle');
+  if (subtitle) {
+    tl.fromTo(subtitle,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7 },
+      0.3
+    );
+  }
+
+  // Tags stagger
+  const tags = slide.querySelector('.gsap-tags');
+  if (tags) {
+    tl.fromTo(tags.querySelectorAll('.pill'),
+      { y: 20, opacity: 0, scale: 0.9 },
+      { y: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.08, ease: 'back.out(1.5)' },
+      0.5
+    );
+  }
+
+  // .gsap-fade-item elements
+  const fadeItems = slide.querySelectorAll('.gsap-fade-item');
+  if (fadeItems.length) {
+    tl.fromTo(fadeItems,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' },
+      0.15
+    );
+  }
+
+  // .gsap-card elements — staggered card pop-in
+  const cards = slide.querySelectorAll('.gsap-card');
+  if (cards.length) {
+    tl.fromTo(cards,
+      { y: 40, opacity: 0, scale: 0.96 },
+      { y: 0, opacity: 1, scale: 1, duration: 0.55, stagger: 0.08, ease: 'back.out(1.4)' },
+      0.2
+    );
+  }
+
+  // .gsap-chart elements (chart canvases)
+  const charts = slide.querySelectorAll('.gsap-chart');
+  if (charts.length) {
+    tl.fromTo(charts,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, stagger: 0.1 },
+      0.3
+    );
+  }
+
+  // .gsap-thanks (end slide big text)
+  const thanks = slide.querySelector('.gsap-thanks');
+  if (thanks) {
+    tl.fromTo(thanks,
+      { scale: 0.3, opacity: 0, rotation: -15 },
+      { scale: 1, opacity: 1, rotation: 0, duration: 1.2, ease: 'elastic.out(1, 0.35)' },
+      0
+    );
+  }
+
+  // Animate the progress bar
+  const bar = slide.querySelector('.top-progress .bar');
+  if (bar) {
+    const targetWidth = bar.style.width || '0%';
+    gsap.fromTo(bar,
+      { width: '0%' },
+      { width: targetWidth, duration: 0.8, ease: 'power2.out' },
+      0
+    );
+  }
+}
+
+// ===== Chart.js Init =====
+function initCharts() {
+  const style = getComputedStyle(document.documentElement);
+  const accent = style.getPropertyValue('--accent').trim();
+  const accent2 = style.getPropertyValue('--accent-2').trim();
+  const good = style.getPropertyValue('--good').trim();
+  const warn = style.getPropertyValue('--warn').trim();
+  const bad = style.getPropertyValue('--bad').trim();
+  const text2 = style.getPropertyValue('--text-2').trim();
+  const text3 = style.getPropertyValue('--text-3').trim();
+  const border = style.getPropertyValue('--border').trim();
+
+  // Chart: Monetization (Doughnut)
+  const monetCanvas = document.getElementById('chart-monetization');
+  if (monetCanvas) {
+    new Chart(monetCanvas, {
+      type: 'doughnut',
+      data: {
+        labels: ['大R (5%)月均¥15K+', '中R (20%)月均¥3K', '小R (35%)月均¥150', '零氪 (40%)'],
+        datasets: [{
+          data: [5, 20, 35, 40],
+          backgroundColor: [accent, accent2, warn, text3],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: text2, font: { size: 10 }, padding: 8 } }
+        }
+      }
+    });
+  }
+
+  // Chart: Market Share (Polar Area)
+  const marketCanvas = document.getElementById('chart-market');
+  if (marketCanvas) {
+    new Chart(marketCanvas, {
+      type: 'polarArea',
+      data: {
+        labels: ['极品芝麻官', '叫我大掌柜', '豪杰成长计划', '明朝风云', '其他'],
+        datasets: [{
+          data: [38, 22, 12, 8, 20],
+          backgroundColor: [accent, accent2, warn, good, text3 + '60'],
+          borderWidth: 2,
+          borderColor: '#fff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: text2, font: { size: 11 }, padding: 10 } }
+        },
+        scales: {
+          r: {
+            grid: { color: border },
+            ticks: { display: false }
+          }
+        }
+      }
+    });
+  }
+
+  // Chart: Sentiment (Bar)
+  const sentCanvas = document.getElementById('chart-sentiment');
+  if (sentCanvas) {
+    new Chart(sentCanvas, {
+      type: 'bar',
+      data: {
+        labels: ['数值膨胀', '活动骗氪', '新区留存', '大R退游', '缺乏创新'],
+        datasets: [{
+          label: '吐槽占比 %',
+          data: [34, 22, 18, 16, 10],
+          backgroundColor: [bad, warn, accent2, good, accent],
+          borderRadius: 4,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: { grid: { color: border }, ticks: { color: text3, font: { size: 11 } } },
+          y: { grid: { display: false }, ticks: { color: text2, font: { size: 11 } } }
+        }
+      }
+    });
+  }
+
+  // Chart: Retention (Line)
+  const retCanvas = document.getElementById('chart-retention');
+  if (retCanvas) {
+    new Chart(retCanvas, {
+      type: 'line',
+      data: {
+        labels: ['D1', 'D3', 'D7', 'D14', 'D30', 'D60', 'D90'],
+        datasets: [
+          {
+            label: '行业均线',
+            data: [35, 25, 18, 12, 7, 4, 2.5],
+            borderColor: text3,
+            borderDash: [5, 5],
+            pointRadius: 2,
+            pointBackgroundColor: text3,
+            tension: 0.3,
+            fill: false
+          },
+          {
+            label: '目标水平',
+            data: [40, 30, 22, 15, 9, 5.5, 3.5],
+            borderColor: accent2,
+            backgroundColor: accent2 + '20',
+            pointRadius: 4,
+            pointBackgroundColor: accent2,
+            tension: 0.3,
+            fill: true
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top', labels: { color: text2, font: { size: 11 } } }
+        },
+        scales: {
+          x: { grid: { color: border }, ticks: { color: text3, font: { size: 10 } } },
+          y: { grid: { color: border }, ticks: { color: text3, font: { size: 10 }, callback: function(v) { return v + '%'; } } }
+        }
+      }
+    });
+  }
+}
+</script>
+</body></html>

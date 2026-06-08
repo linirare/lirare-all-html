@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>手势粒子互动</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;overflow:hidden;font-family:system-ui,-apple-system,sans-serif}
+canvas{display:block}
+#loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;z-index:100;color:#fff;font-size:15px;flex-direction:column;gap:14px;transition:opacity .5s}
+#loading.hide{opacity:0;pointer-events:none}
+#loading .sp{width:26px;height:26px;border:2px solid rgba(255,255,255,.1);border-top-color:#0ea5e9;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#info{position:fixed;bottom:22px;left:0;right:0;text-align:center;color:rgba(255,255,255,.3);font-size:12px;pointer-events:none;z-index:10;padding:0 16px}
+</style>
+</head>
+<body>
+<div id="loading"><div class="sp"></div><span>加载手势模型...</span></div>
+<div id="info">张开手掌 → 扩散 · 握拳 → 收缩 · 移动 → 旋转</div>
+
+<!-- Three.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- TensorFlow.js + Handpose (比 MediaPipe 更轻量,兼容更好) -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@2.8.6/dist/tf-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@2.8.6/dist/tf-converter.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@2.8.6/dist/tf-backend-webgl.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose@0.1.0/dist/handpose.min.js"></script>
+
+<script>
+// ====== Three.js Scene ======
+const S=new THREE.Scene(); S.background=new THREE.Color(0x050510);
+const C=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,100); C.position.z=8;
+const R=new THREE.WebGLRenderer({antialias:true});
+R.setSize(innerWidth,innerHeight); R.setPixelRatio(Math.min(devicePixelRatio,2));
+R.toneMapping=THREE.ACESFilmicToneMapping;
+document.body.prepend(R.domElement);
+
+// ====== Particles ======
+const N=6000;
+const G=new THREE.BufferGeometry();
+const P=new Float32Array(N*3),CL=new Float32Array(N*3),BP=new Float32Array(N*3);
+const PAL=[[.2,.6,1],[.4,.8,1],[1,.3,.6],[.8,.2,.8],[.1,.9,.6],[1,.7,.1]];
+for(let i=0;i<N;i++){
+  const th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1),r=4*Math.cbrt(Math.random());
+  const x=r*Math.sin(ph)*Math.cos(th),y=r*Math.sin(ph)*Math.sin(th),z=r*Math.cos(ph);
+  P[i*3]=x;P[i*3+1]=y;P[i*3+2]=z;BP[i*3]=x;BP[i*3+1]=y;BP[i*3+2]=z;
+  const c=PAL[Math.floor(Math.random()*6)];
+  CL[i*3]=c[0];CL[i*3+1]=c[1];CL[i*3+2]=c[2];
+}
+G.setAttribute('position',new THREE.BufferAttribute(P,3));
+G.setAttribute('color',new THREE.BufferAttribute(CL,3));
+const M=new THREE.PointsMaterial({size:.15,vertexColors:!0,transparent:!0,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:!1,sizeAttenuation:!0});
+const PT=new THREE.Points(G,M); S.add(PT);
+
+// ====== Handpose ======
+let sx=0,sy=0,ts=0,cs=0,hsp=0,prx=0;
+let handReady=!1;
+
+async function initHandpose(){
+  try{
+    const video=document.createElement('video');
+    video.width=320;video.height=240;video.playsInline=!0;video.muted=!0;
+    video.style.position='fixed';video.style.top='-9999px';
+    video.srcObject=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:320,height:240}});
+    await video.play();
+    document.body.appendChild(video);
+
+    // Wait for TF backend
+    await tf.setBackend('webgl');
+    await tf.ready();
+
+    const model=await handpose.load();
+    handReady=!0;
+    document.getElementById('loading').classList.add('hide');
+
+    // Detect loop
+    async function detect(){
+      if(!handReady) return;
+      try{
+        const predictions=await model.estimateHands(video);
+        if(predictions.length>0){
+          const lm=predictions[0].landmarks;
+          // Use middle finger MCP (9) as center
+          const cx=lm[9][0],cy=lm[9][1];
+          prx=sx;
+          sx=(cx/320-.5)*2;
+          sy=-(cy/240-.5)*2;
+          hsp=sx-prx;
+
+          // Pinch: thumb tip (4) to index tip (8)
+          const dx=lm[4][0]-lm[8][0],dy=lm[4][1]-lm[8][1],dz=lm[4][2]-lm[8][2];
+          const d=Math.sqrt(dx*dx+dy*dy+dz*dz);
+          ts=Math.max(-1,Math.min(1,(40-d)/30));
+        }
+      }catch(e){}
+      requestAnimationFrame(detect);
+    }
+    detect();
+  }catch(e){
+    document.getElementById('loading').classList.add('hide');
+    document.getElementById('info').textContent='触摸控制 · 双指捏合缩放 · 移动旋转';
+    // Touch fallback
+    document.addEventListener('touchmove',ev=>{
+      const t=ev.touches[0];
+      sx=(t.clientX/innerWidth-.5)*2;sy=-(t.clientY/innerHeight-.5)*2;
+      if(ev.touches.length===2){
+        const dx=ev.touches[0].clientX-ev.touches[1].clientX,dy=ev.touches[0].clientY-ev.touches[1].clientY;
+        ts=Math.max(-1,Math.min(1,(Math.sqrt(dx*dx+dy*dy)-80)/150));
+      }
+    },{passive:!0});
+  }
+}
+initHandpose();
+
+// ====== Animation ======
+const clock=new THREE.Clock();
+function anim(){
+  requestAnimationFrame(anim);
+  const t=clock.getElapsedTime();
+  cs+=(ts-cs)*.05;
+  const spread=cs*2.5;
+
+  PT.rotation.y=t*.05+sx*.5+hsp*2;
+  PT.rotation.x=Math.sin(t*.03)*.1+sy*.3;
+
+  const p=G.attributes.position.array;
+  for(let i=0;i<N;i++){
+    const i3=i*3,bx=BP[i3],by=BP[i3+1],bz=BP[i3+2];
+    const d=Math.sqrt(bx*bx+by*by+bz*bz)||1;
+    const nd=d+sp*1.2,wv=Math.sin(t*.5+d*2)*.12;
+    p[i3]=bx/d*nd+wv*Math.sin(t+i);
+    p[i3+1]=by/d*nd+wv*Math.cos(t*.7+i*.5);
+    p[i3+2]=bz/d*nd;
+  }
+  G.attributes.position.needsUpdate=!0;
+  M.size=.12+Math.sin(t*.3)*.05+Math.abs(cs)*.05;
+  R.render(S,C);
+}
+anim();
+
+addEventListener('resize',()=>{C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix();R.setSize(innerWidth,innerHeight)});
+</script>
+</body>
+</html>

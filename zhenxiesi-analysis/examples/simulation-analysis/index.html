@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="corporate-clean">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>中国模拟经营赛道全景 · 4年存活游戏清单</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/base.css">
+<link rel="stylesheet" id="theme-link" href="../../assets/themes/corporate-clean.css">
+<link rel="stylesheet" href="../../assets/animations/animations.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+@media (max-width: 768px) {
+  .slide { padding: 24px 20px !important; }
+  .g2, .g3, .g4 { grid-template-columns: 1fr !important; gap: 10px !important; }
+  .deck-header { top: 12px !important; left: 16px !important; right: 16px !important; font-size: 11px !important; }
+  .deck-footer { bottom: 12px !important; left: 16px !important; right: 16px !important; font-size: 11px !important; }
+  .h1, h1.title { font-size: 30px !important; line-height: 1.2 !important; }
+  .h2, h2 { font-size: 22px !important; }
+  .h3, h3 { font-size: 17px !important; }
+  .h4, h4 { font-size: 15px !important; }
+  .lede { font-size: 15px !important; }
+  .kicker { font-size: 12px !important; }
+  .card { padding: 12px !important; }
+  .pill { font-size: 10px !important; padding: 2px 8px !important; }
+  .dim, .dim2 { font-size: 12px !important; }
+  .mt-l { margin-top: 14px !important; }
+  .mt-m { margin-top: 10px !important; }
+  .mt-s { margin-top: 6px !important; }
+  .mb-m { margin-bottom: 10px !important; }
+  .grid { gap: 8px !important; }
+  .slide-number { font-size: 10px !important; }
+  blockquote { font-size: 16px !important; }
+  code, pre { font-size: 10px !important; }
+  .card ul { padding-left: 14px !important; }
+  .card li { font-size: 12px !important; line-height: 1.5 !important; }
+  .row { gap: 6px !important; }
+  div[style*="font-size:48px"] { font-size: 28px !important; }
+  .card[style*="height:400px"] { height: 240px !important; padding: 10px !important; }
+  table { font-size: 11px !important; }
+  td, th { padding: 4px 6px !important; }
+}
+@media (max-width: 480px) {
+  .slide { padding: 18px 12px !important; }
+  .h1, h1.title { font-size: 24px !important; }
+  .h2, h2 { font-size: 18px !important; }
+  .lede { font-size: 13px !important; }
+  .deck-header { font-size: 10px !important; }
+  .deck-footer { font-size: 10px !important; }
+  div[style*="font-size:48px"] { font-size: 22px !important; }
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+td, th { padding: 6px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+th { font-weight: 600; color: var(--text-1); background: var(--surface-2); }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-app { background: #dbeafe; color: #1d4ed8; }
+.tag-wx { background: #dcfce7; color: #15803d; }
+.tag-pc { background: #fef3c7; color: #92400e; }
+.tag-hot { background: #fee2e2; color: #dc2626; }
+</style>
+</head>
+<body data-themes="corporate-clean,minimal-white,editorial-serif,tokyo-night,news-broadcast,neo-brutalism" data-theme-base="../../assets/themes/">
+
+<div class="deck">
+
+  <!-- 1. Cover -->
+  <section class="slide center tc" data-title="Cover">
+    <div class="deck-header"><span class="eyebrow">Market Insight · 2026-05-21</span><span class="eyebrow">模拟经营赛道全景</span></div>
+    <div style="max-width:1000px">
+      <div class="divider-accent" style="margin:0 auto 20px"></div>
+      <p class="kicker" style="font-size:18px;letter-spacing:.15em">手游 + 微信小游戏 + PC/主机</p>
+      <h1 class="h1 anim-rise-in" data-anim="rise-in" style="font-size:64px;line-height:1.15">中国<span style="color:var(--accent-2)">模拟经营</span>赛道<br>4 年存活游戏全景</h1>
+      <p class="lede" style="margin:20px auto 0;max-width:720px">近 4 年成功的模拟经营游戏清单 · 涵盖手游、微信小游戏、PC/主机三大平台</p>
+      <div class="row wrap mt-l" style="gap:8px;justify-content:center">
+        <span class="pill pill-accent">国风经营</span>
+        <span class="pill">合成+经营</span>
+        <span class="pill">微信小游戏</span>
+        <span class="pill">PC城建</span>
+        <span class="pill">店铺经营</span>
+        <span class="pill">生活模拟</span>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">数据来源：行业公开资料 + 引力引擎 + 多平台交叉验证</span><span class="slide-number" data-current="1" data-total="16"></span></div>
+    <div class="notes">今天分享的是近4年模拟经营赛道的全景分析，覆盖手游、微信小游戏和PC/主机三大平台。</div>
+  </section>
+
+  <!-- 2. Agenda -->
+  <section class="slide" data-title="Agenda">
+    <p class="kicker">Agenda</p>
+    <h2 class="h2">五个维度看赛道</h2>
+    <div class="grid g2 mt-l anim-stagger-list" data-anim-target style="gap:10px">
+      <div class="card card-accent" style="border-left:4px solid var(--accent-2)"><h4>① 国风App手游</h4><p class="dim">江南百景图、桃源深处有人家、这城有良田等长线产品</p></div>
+      <div class="card card-accent" style="border-left:4px solid var(--good)"><h4>② 微信小游戏</h4><p class="dim">动物餐厅、肥鹅健身房等长青产品 + 合成经营新趋势</p></div>
+      <div class="card card-accent" style="border-left:4px solid var(--warn)"><h4>③ 全球手游亮点</h4><p class="dim">MONOPOLY GO!、Whiteout Survival、合成装修三巨头</p></div>
+      <div class="card card-accent" style="border-left:4px solid var(--bad)"><h4>④ PC城建/店铺经营</h4><p class="dim">Manor Lords、超市/卡牌店模拟等近年爆款</p></div>
+      <div class="card card-accent" style="grid-column:1/-1;border-left:4px solid var(--accent)"><h4>⑤ 总结 + 优先拆解样本</h4><p class="dim">20个必拆案例 + 覆盖的成功模型</p></div>
+    </div>
+    <div class="deck-footer"><span class="dim2">outline · 5 sections</span><span class="slide-number" data-current="2" data-total="16"></span></div>
+    <div class="notes">今天的分析从中国手游开始，再到微信小游戏的独特生态，然后延伸到全球市场和PC端。</div>
+  </section>
+
+  <!-- 3. 国产App手游 — 国风题材 -->
+  <section class="slide" data-title="国风App手游">
+    <p class="kicker" style="color:var(--accent-2)">Section 1 · 国产App手游</p>
+    <h2 class="h2">国风/古风题材：<span style="color:var(--accent-2)">最稳的差异化壁垒</span></h2>
+    <div class="mt-m" style="overflow-x:auto">
+      <table>
+        <tr><th>游戏</th><th>开发商</th><th>上线</th><th>类型</th><th>现状</th></tr>
+        <tr><td><b>江南百景图</b></td><td>椰岛游戏</td><td>2020.7</td><td>古风城建</td><td>平稳运营，活动持续更新</td></tr>
+        <tr><td><b>桃源深处有人家</b></td><td>凉屋游戏</td><td>2023</td><td>国风田园</td><td>上线即爆，长线稳定</td></tr>
+        <tr><td><b>这城有良田</b></td><td>益世界</td><td>2023</td><td>古风城镇经营</td><td>买量榜前列</td></tr>
+        <tr><td><b>解忧小村落</b></td><td>—</td><td>2022</td><td>古风村落经营</td><td>稳定运营</td></tr>
+        <tr><td><b>长安小时光</b></td><td>—</td><td>2023</td><td>唐风经营</td><td>持续更新中</td></tr>
+      </table>
+    </div>
+    <div class="card mt-m" style="background:var(--bg-soft);border-left:4px solid var(--accent-2)">
+      <b>关键判断：</b>中国古风美术在App端仍是最稳的题材选择，但在小游戏端表现一般（小游戏用户更吃接地气题材）。
+    </div>
+    <div class="deck-footer"><span class="dim2">app · gufeng / national style</span><span class="slide-number" data-current="3" data-total="16"></span></div>
+    <div class="notes">国风题材是App端的护城河。江南百景图已经跑了6年还在更新，这在手游里非常难得。</div>
+  </section>
+
+  <!-- 4. IP/社交模拟 + 放置经营 -->
+  <section class="slide" data-title="IP社交+放置">
+    <p class="kicker" style="color:var(--accent-2)">Section 1 · 国产App手游</p>
+    <h2 class="h2">IP社交 + 放置经营混合</h2>
+    <div class="grid g2 mt-l" style="gap:14px">
+      <div class="card">
+        <h4>IP/社交模拟</h4>
+        <table style="font-size:12px">
+          <tr><th>游戏</th><th>开发商</th><th>上线</th></tr>
+          <tr><td>摩尔庄园手游</td><td>雷霆游戏</td><td>2021</td></tr>
+          <tr><td>奥比岛手游</td><td>雷霆游戏</td><td>2022</td></tr>
+          <tr><td>小森生活</td><td>盛趣游戏</td><td>2021</td></tr>
+          <tr><td>月光下的别墅</td><td>—</td><td>2022</td></tr>
+        </table>
+        <p class="dim2 mt-s" style="font-size:12px">情怀IP上线爆火后回落，仍在运营</p>
+      </div>
+      <div class="card">
+        <h4>放置/经营混合</h4>
+        <table style="font-size:12px">
+          <tr><th>游戏</th><th>开发商</th><th>上线</th></tr>
+          <tr><td>最强蜗牛</td><td>青瓷游戏</td><td>2020.6</td></tr>
+          <tr><td>不休的乌拉拉</td><td>心动网络</td><td>2019</td></tr>
+          <tr><td>金牌合伙人</td><td>—</td><td>2022</td></tr>
+        </table>
+        <p class="dim2 mt-s" style="font-size:12px">最强蜗牛峰值月流水2亿+，仍在前列</p>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">app · IP / idle hybrid</span><span class="slide-number" data-current="4" data-total="16"></span></div>
+    <div class="notes">IP社交类靠情怀拉新但长线难，放置经营混合类靠数值循环撑起长期运营。</div>
+  </section>
+
+  <!-- 5. 微信小游戏 — 第一梯队 -->
+  <section class="slide" data-title="微信小游戏T1">
+    <p class="kicker" style="color:var(--good)">Section 2 · 微信小游戏生态</p>
+    <h2 class="h2">第一梯队：<span style="color:var(--good)">跑了几年的长青产品</span></h2>
+    <div class="mt-m" style="overflow-x:auto">
+      <table>
+        <tr><th>游戏</th><th>开发商</th><th>上线</th><th>玩法</th><th>特点</th></tr>
+        <tr><td><b>动物餐厅</b></td><td>无厘头科技</td><td>2019</td><td>放置+餐饮</td><td>品类鼻祖，2026仍在更新v12</td></tr>
+        <tr><td><b>乌冬的旅店</b></td><td>腾讯系</td><td>2021</td><td>放置+旅馆</td><td>女性用户为主，长线留存好</td></tr>
+        <tr><td><b>肥鹅健身房</b></td><td>不咕工作室</td><td>2021</td><td>合成+健身房</td><td>"合成+经营"模式代表</td></tr>
+        <tr><td><b>海鲜大排档</b></td><td>—</td><td>2022</td><td>餐饮经营</td><td>本土大排档题材，社交裂变强</td></tr>
+        <tr><td><b>幸福路上的火锅店</b></td><td>—</td><td>2022</td><td>火锅店经营</td><td>题材接地气</td></tr>
+      </table>
+    </div>
+    <div class="card mt-m" style="background:var(--bg-soft);border-left:4px solid var(--good)">
+      <b>动物餐厅</b> 是微信小游戏模拟经营品类的鼻祖——2019年上线，至今仍在更新新信件/菜谱/纪念物，寿命已超7年。
+    </div>
+    <div class="deck-footer"><span class="dim2">wechat mini games · tier 1 veterans</span><span class="slide-number" data-current="5" data-total="16"></span></div>
+    <div class="notes">动物餐厅7年了还在更新，这是微信小游戏里最老牌的模拟经营产品，证明了小游戏也能做长线。</div>
+  </section>
+
+  <!-- 6. 微信小游戏 — 第二梯队 -->
+  <section class="slide" data-title="微信小游戏T2">
+    <p class="kicker" style="color:var(--good)">Section 2 · 微信小游戏生态</p>
+    <h2 class="h2">第二梯队：<span style="color:var(--warn)">2023-2024跑出的新品</span></h2>
+    <div class="grid g2 mt-l" style="gap:8px">
+      <div class="card" style="padding:10px"><b>四季合合</b> <span class="tag tag-wx">合成+花园</span><br><span class="dim2" style="font-size:12px">女性向，对标三消+装修的合成版</span></div>
+      <div class="card" style="padding:10px"><b>李国富的小日子</b> <span class="tag tag-wx">模拟人生+经营</span><br><span class="dim2" style="font-size:12px">普通人生活模拟，共鸣感强</span></div>
+      <div class="card" style="padding:10px"><b>改装大作战</b> <span class="tag tag-wx">合成+装修</span><br><span class="dim2" style="font-size:12px">合成产出装修材料，女性向</span></div>
+      <div class="card" style="padding:10px"><b>动物夜市</b> <span class="tag tag-wx">夜市经营</span><br><span class="dim2" style="font-size:12px">动物主题+夜市文化，社交裂变</span></div>
+      <div class="card" style="padding:10px"><b>房东模拟器</b> <span class="tag tag-wx">模拟收租</span><br><span class="dim2" style="font-size:12px">题材极接地气，情绪价值强</span></div>
+      <div class="card" style="padding:10px"><b>赶海王</b> <span class="tag tag-wx">赶海+经营</span><br><span class="dim2" style="font-size:12px">模拟赶海卖货，微信爆款逻辑</span></div>
+      <div class="card" style="padding:10px"><b>可乐餐厅</b> <span class="tag tag-wx">合成+餐厅</span><br><span class="dim2" style="font-size:12px">合成食材+经营餐厅</span></div>
+      <div class="card" style="padding:10px"><b>青蛙餐馆</b> <span class="tag tag-wx">餐厅+养成</span><br><span class="dim2" style="font-size:12px">青蛙主题，放置经营</span></div>
+    </div>
+    <div class="deck-footer"><span class="dim2">wechat mini games · tier 2 newcomers</span><span class="slide-number" data-current="6" data-total="16"></span></div>
+    <div class="notes">这批新品的特点是题材越来越接地气——收租、赶海、夜市，越土越赚钱。</div>
+  </section>
+
+  <!-- 7. 合成+经营 = 微信小游戏最大趋势 -->
+  <section class="slide" data-title="合成+经营">
+    <p class="kicker" style="color:var(--good)">Section 2 · 微信小游戏生态</p>
+    <h2 class="h2"><span style="color:var(--good)">合成+经营</span>：微信小游戏最大的品类创新</h2>
+    <div class="card tc mt-l" style="background:var(--grad-soft);padding:30px">
+      <p style="font-size:22px;font-weight:600">合成产出材料 → 材料完成装修/菜品 → 经营升级 → 解锁新合成内容</p>
+    </div>
+    <div class="grid g3 mt-l" style="gap:12px">
+      <div class="card tc">
+        <div style="font-size:32px;font-weight:900;color:var(--good)">60-70%+</div>
+        <p class="dim">女性用户占比</p>
+        <p class="dim2" style="font-size:12px">vs 三消 50-60%</p>
+      </div>
+      <div class="card tc">
+        <div style="font-size:32px;font-weight:900;color:var(--good)">50%+</div>
+        <p class="dim">新游采用合成</p>
+        <p class="dim2" style="font-size:12px">过去4年新增模拟经营小游戏中占比过半</p>
+      </div>
+      <div class="card tc">
+        <div style="font-size:32px;font-weight:900;color:var(--accent-2)">✓</div>
+        <p class="dim">合成比三消更解压</p>
+        <p class="dim2" style="font-size:12px">结果可控，卡关感弱</p>
+      </div>
+    </div>
+    <p class="mt-m dim">代表产品：<b>肥鹅健身房</b>、<b>四季合合</b>、<b>改装大作战</b>、<b>可乐餐厅</b>、<b>我的便利店</b></p>
+    <div class="deck-footer"><span class="dim2">wechat · craft+manage sub-genre</span><span class="slide-number" data-current="7" data-total="16"></span></div>
+    <div class="notes">合成正在取代三消作为经营游戏的动作层。微信小游戏用户比App用户更轻度，合成比三消更适合。</div>
+  </section>
+
+  <!-- 8. 全球手游亮点 -->
+  <section class="slide" data-title="全球手游">
+    <p class="kicker" style="color:var(--warn)">Section 3 · 全球手游</p>
+    <h2 class="h2">全球市场中的<span style="color:var(--warn)">高收入模拟经营</span></h2>
+    <div class="mt-m" style="overflow-x:auto">
+      <table>
+        <tr><th>游戏</th><th>方向</th><th>亮点</th></tr>
+        <tr><td><b>MONOPOLY GO!</b></td><td>棋盘+资产经营</td><td>2025年破60亿美元IAP</td></tr>
+        <tr><td><b>Whiteout Survival</b></td><td>冰雪城建+4X</td><td>多次全球收入榜前列<span class="tag tag-hot">HOT</span></td></tr>
+        <tr><td><b>Last War: Survival</b></td><td>基地经营+4X</td><td>2025多月全球收入第一</td></tr>
+        <tr><td><b>Township</b></td><td>城镇+农场+订单</td><td>老牌但2025仍高收入</td></tr>
+        <tr><td><b>Hay Day</b></td><td>农场经营</td><td>老牌长线，仍有联动活动</td></tr>
+        <tr><td><b>Gossip Harbor</b></td><td>合成+剧情+装修</td><td>合成品类头部</td></tr>
+        <tr><td><b>Travel Town</b></td><td>合成+小镇修复</td><td>2025仍有可观月流水</td></tr>
+        <tr><td><b>Merge Mansion</b></td><td>合成+庄园修复</td><td>累计收入超6亿美元</td></tr>
+        <tr><td><b>Gardenscapes</b></td><td>三消+花园装修</td><td>Playrix长线标杆</td></tr>
+      </table>
+    </div>
+    <div class="deck-footer"><span class="dim2">global mobile · top revenue</span><span class="slide-number" data-current="8" data-total="16"></span></div>
+    <div class="notes">全球市场方面，合成装修和SLG+经营融合是最大的两个方向。</div>
+  </section>
+
+  <!-- 9. 全球手游 续 -->
+  <section class="slide" data-title="全球手游2">
+    <p class="kicker" style="color:var(--warn)">Section 3 · 全球手游</p>
+    <h2 class="h2">更多在跑的模拟经营手游</h2>
+    <div class="grid g2 mt-l" style="gap:10px">
+      <div class="card" style="padding:10px">
+        <h4>🏝️ 岛屿/农场经营</h4>
+        <div class="dim2" style="font-size:12px;line-height:1.8">
+          Family Island · Klondike Adventures · Sunshine Island · FarmVille 3
+        </div>
+      </div>
+      <div class="card" style="padding:10px">
+        <h4>🏨 放置/Tycoon</h4>
+        <div class="dim2" style="font-size:12px;line-height:1.8">
+          My Perfect Hotel · Eatventure · Idle Miner Tycoon · Hotel Empire Tycoon · Office Cat
+        </div>
+      </div>
+      <div class="card" style="padding:10px">
+        <h4>🍕 餐饮经营</h4>
+        <div class="dim2" style="font-size:12px;line-height:1.8">
+          Good Pizza Great Pizza · Cooking Diary · Cooking Fever · Animal Restaurant
+        </div>
+      </div>
+      <div class="card" style="padding:10px">
+        <h4>🏘️ 合成经营</h4>
+        <div class="dim2" style="font-size:12px;line-height:1.8">
+          Seaside Escape · Love & Pies · Merge Mayor · Fable Town · Cats & Soup
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">global mobile · more titles</span><span class="slide-number" data-current="9" data-total="16"></span></div>
+    <div class="notes">这些产品覆盖了餐厅经营、放置Tycoon、合成装修等主流方向，很多已经跑了3-5年。</div>
+  </section>
+
+  <!-- 10. PC城建 -->
+  <section class="slide" data-title="PC城建">
+    <p class="kicker" style="color:var(--bad)">Section 4 · PC/主机</p>
+    <h2 class="h2">城市建造 / 殖民地 / 资源管理</h2>
+    <div class="grid g2 mt-l" style="gap:10px">
+      <div class="card" style="padding:10px">
+        <div class="row" style="justify-content:space-between"><b>Manor Lords</b><span class="tag tag-pc">2024爆款</span></div>
+        <p class="dim2" style="font-size:12px">中世纪城建，首日销量破百万</p>
+      </div>
+      <div class="card" style="padding:10px">
+        <div class="row" style="justify-content:space-between"><b>Against the Storm</b><span class="tag tag-pc">口碑强</span></div>
+        <p class="dim2" style="font-size:12px">Roguelite城建，销量破百万</p>
+      </div>
+      <div class="card" style="padding:10px">
+        <div class="row" style="justify-content:space-between"><b>RimWorld</b><span class="tag tag-hot">长青</span></div>
+        <p class="dim2" style="font-size:12px">2025年仍因资料片创新高</p>
+      </div>
+      <div class="card" style="padding:10px">
+        <div class="row" style="justify-content:space-between"><b>Dwarf Fortress</b><span class="tag tag-pc">Steam版</span></div>
+        <p class="dim2" style="font-size:12px">2022商业化成功，仍在更新</p>
+      </div>
+      <div class="card" style="padding:10px">
+        <div class="row" style="justify-content:space-between"><b>Factorio: Space Age</b><span class="tag tag-hot">标杆</span></div>
+        <p class="dim2" style="font-size:12px">2024大资料片，生产链设计标杆</p>
+      </div>
+      <div class="card" style="padding:10px">
+        <div class="row" style="justify-content:space-between"><b>Oxygen Not Included</b><span class="tag tag-pc">老牌</span></div>
+        <p class="dim2" style="font-size:12px">基地工程管理标杆</p>
+      </div>
+    </div>
+    <p class="dim2 mt-s" style="font-size:12px">还有 Frostpunk 2、Cities: Skylines II、Farthest Frontier、Timberborn 等30+款仍在运营</p>
+    <div class="deck-footer"><span class="dim2">PC/console · city builders</span><span class="slide-number" data-current="10" data-total="16"></span></div>
+    <div class="notes">PC端城建品类在近4年迎来了一次文艺复兴，Manor Lords首日百万销量证明了市场容量。</div>
+  </section>
+
+  <!-- 11. 店铺经营（PC新趋势） -->
+  <section class="slide" data-title="店铺经营">
+    <p class="kicker" style="color:var(--bad)">Section 4 · PC/主机</p>
+    <h2 class="h2">店铺/商业经营：<span style="color:var(--bad)">近年最热的新赛道</span></h2>
+    <div class="grid g3 mt-l" style="gap:12px">
+      <div class="card tc" style="padding:16px">
+        <div style="font-size:36px;margin-bottom:4px">🛒</div>
+        <h4>Supermarket Simulator</h4>
+        <p class="dim2" style="font-size:12px">2024零售模拟爆款</p>
+      </div>
+      <div class="card tc" style="padding:16px">
+        <div style="font-size:36px;margin-bottom:4px">🃏</div>
+        <h4>TCG Card Shop Simulator</h4>
+        <p class="dim2" style="font-size:12px">Steam峰值5万+，仍在活跃</p>
+      </div>
+      <div class="card tc" style="padding:16px">
+        <div style="font-size:36px;margin-bottom:4px">💼</div>
+        <h4>Big Ambitions</h4>
+        <p class="dim2" style="font-size:12px">首两周15万份</p>
+      </div>
+    </div>
+    <div class="mt-m" style="overflow-x:auto">
+      <table style="font-size:12px">
+        <tr><th>游戏</th><th>方向</th><th>上线</th></tr>
+        <tr><td>Supermarket Together</td><td>多人超市经营</td><td>2024</td></tr>
+        <tr><td>Gas Station Simulator</td><td>加油站经营</td><td>2021（DLC持续）</td></tr>
+        <tr><td>House Flipper 2</td><td>房屋翻新经营</td><td>2023</td></tr>
+        <tr><td>Potion Craft</td><td>炼金店经营</td><td>2022</td></tr>
+        <tr><td>Internet Cafe Simulator 2</td><td>网吧经营</td><td>2022</td></tr>
+      </table>
+    </div>
+    <div class="deck-footer"><span class="dim2">PC · shop/business sims boom</span><span class="slide-number" data-current="11" data-total="16"></span></div>
+    <div class="notes">店铺经营是PC端2024年最热的新方向，超市、卡牌店、加油站——越日常的题材反而越容易成功。</div>
+  </section>
+
+  <!-- 12. 生活/农场/小镇模拟 -->
+  <section class="slide" data-title="生活模拟">
+    <p class="kicker" style="color:var(--bad)">Section 4 · PC/主机</p>
+    <h2 class="h2">生活/农场/小镇模拟</h2>
+    <div class="grid g2 mt-l" style="gap:10px">
+      <div class="card" style="padding:10px">
+        <div class="row" style="justify-content:space-between"><b>Disney Dreamlight Valley</b><span class="tag tag-hot">$3亿+</span></div>
+        <p class="dim2" style="font-size:12px">2022 EA，累计收入超3亿美元</p>
+      </div>
+      <div class="card" style="padding:10px">
+        <div class="row" style="justify-content:space-between"><b>Palia</b><span class="tag tag-hot">1000万+</span></div>
+        <p class="dim2" style="font-size:12px">MMO生活模拟，2026宣布超千万玩家</p>
+      </div>
+      <div class="card" style="padding:10px">
+        <div><b>Coral Island</b></div>
+        <p class="dim2" style="font-size:12px">2023 1.0，仍有多人/内容更新</p>
+      </div>
+      <div class="card" style="padding:10px">
+        <div><b>Fields of Mistria</b></div>
+        <p class="dim2" style="font-size:12px">2024 EA，Steam口碑强</p>
+      </div>
+      <div class="card" style="padding:10px">
+        <div><b>Dave the Diver</b></div>
+        <p class="dim2" style="font-size:12px">2023爆款，餐厅+探索混合经营</p>
+      </div>
+      <div class="card" style="padding:10px">
+        <div><b>My Time at Sandrock</b></div>
+        <p class="dim2" style="font-size:12px">工坊生产链很强</p>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">PC · life/farm/town sims</span><span class="slide-number" data-current="12" data-total="16"></span></div>
+    <div class="notes">生活模拟赛道在PC端持续升温，Disney IP加持的Dreamlight Valley证明了IP+经营的价值。</div>
+  </section>
+
+  <!-- 13. 流水梯队 -->
+  <section class="slide center tc" data-title="Revenue Tiers">
+    <p class="kicker">Data</p>
+    <h2 class="h2">运营现状：流水梯队估算</h2>
+    <div class="card" style="height:400px;padding:20px;width:100%;max-width:900px;margin:0 auto">
+      <canvas id="chart-revenue"></canvas>
+    </div>
+    <div class="deck-footer"><span class="dim2">revenue tiers · estimated ranges</span><span class="slide-number" data-current="13" data-total="16"></span></div>
+    <div class="notes">头部App月流水5000万-2亿，但尾部50-300万也能养活一个10人小团队。</div>
+  </section>
+
+  <!-- 14. 关键趋势 -->
+  <section class="slide" data-title="Trends">
+    <p class="kicker">Summary</p>
+    <h2 class="h2">四大关键趋势</h2>
+    <div class="grid g2 mt-l" style="gap:14px">
+      <div class="card" style="border-top:4px solid var(--good)">
+        <h4>① 合成取代三消</h4>
+        <p class="dim mt-s" style="font-size:13px">合成正在取代三消作为经营游戏的"动作层"。微信小游戏用户比App用户更轻度，合成结果可控、卡关感弱。过去4年新增的模拟经营小游戏中，合成+经营占比超过一半。</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--warn)">
+        <h4>② 越土越赚钱</h4>
+        <p class="dim mt-s" style="font-size:13px">动物餐厅（动物）、乌冬旅店（治愈）、李国富（普通人）、房东模拟器（收租）——越是接地气、有情绪共鸣的题材，裂变越好。小游戏端尤其明显。</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--accent-2)">
+        <h4>③ 国风APP壁垒</h4>
+        <p class="dim mt-s" style="font-size:13px">江南百景图、桃源深处有人家、这城有良田——中国古风美术在App端仍是最稳的题材选择，但在小游戏端表现一般。</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--bad)">
+        <h4>④ 小游戏独立品类</h4>
+        <p class="dim mt-s" style="font-size:13px">微信小游戏已不再是"App降级版"，而是有自己的核心品类（合成+经营、开箱+经营）和成功方法论。240+款小游戏季度流水超千万。</p>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">4 key trends</span><span class="slide-number" data-current="14" data-total="16"></span></div>
+    <div class="notes">这四个趋势涵盖了品类创新、题材选择、平台差异和市场格局，是做模拟经营必须理解的方向。</div>
+  </section>
+
+  <!-- 15. 优先拆解样本 -->
+  <section class="slide" data-title="Top20">
+    <p class="kicker">Priority Samples</p>
+    <h2 class="h2">优先拆解的 <span style="color:var(--accent-2)">20 个样本</span></h2>
+    <div class="grid g2 mt-l" style="gap:6px">
+      <div class="card" style="padding:8px 12px;font-size:13px">
+        <span class="tag tag-hot" style="margin-right:4px">必拆</span> MONOPOLY GO!
+        <span class="dim2" style="font-size:11px;float:right">强LiveOps</span>
+      </div>
+      <div class="card" style="padding:8px 12px;font-size:13px">
+        <span class="tag tag-hot" style="margin-right:4px">必拆</span> Whiteout Survival
+        <span class="dim2" style="font-size:11px;float:right">买量+4X</span>
+      </div>
+      <div class="card" style="padding:8px 12px;font-size:13px">
+        <span class="tag tag-hot" style="margin-right:4px">必拆</span> Last War: Survival
+        <span class="dim2" style="font-size:11px;float:right">买量素材驱动</span>
+      </div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Township</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Gossip Harbor</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Travel Town</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Merge Mansion</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Manor Lords</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Against the Storm</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Dwarf Fortress</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">RimWorld</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Supermarket Simulator</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">TCG Card Shop Simulator</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Big Ambitions</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Disney Dreamlight Valley</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Palia</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Coral Island</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Fields of Mistria</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Two Point Campus</div>
+      <div class="card" style="padding:8px 12px;font-size:13px">Let's School</div>
+    </div>
+    <div class="card mt-s" style="background:var(--bg-soft);font-size:12px">
+      覆盖的成功模型：强LiveOps | 买量素材驱动 | 合成装修 | 城市建造 | 殖民地模拟 | 店铺经营 | IP生活模拟 | 独立游戏口碑长尾
+    </div>
+    <div class="deck-footer"><span class="dim2">top 20 priority samples for deep-dive</span><span class="slide-number" data-current="15" data-total="16"></span></div>
+    <div class="notes">如果要做深入研究，这20个产品覆盖了所有成功模型，建议优先拆解。</div>
+  </section>
+
+  <!-- 16. Thanks -->
+  <section class="slide center tc" data-title="Thanks">
+    <div>
+      <div class="divider-accent" style="margin:0 auto 20px"></div>
+      <h1 class="h1" style="font-size:100px;line-height:1"><span class="gradient-text">Thanks</span></h1>
+      <p class="lede mt-m" style="max-width:700px;margin:20px auto 0">数据来源：行业公开资料 · 引力引擎 · Sensor Tower · SteamDB</p>
+      <p class="dim" style="font-size:14px;margin-top:24px">文件来源：中国模拟经营手游_微信小游戏全景分析.txt + 模拟经营游戏清单_2026-05-21.txt</p>
+      <div class="row mt-l" style="justify-content:center;gap:8px">
+        <span class="pill">←/→ 翻页</span>
+        <span class="pill">T 主题</span>
+        <span class="pill">F 全屏</span>
+        <span class="pill">O 概览</span>
+        <span class="pill">S 演讲者模式</span>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">end · 2026-05-21</span><span class="slide-number" data-current="16" data-total="16"></span></div>
+    <div class="notes">谢谢。两个源文件均来自桌面，做了整合提炼。</div>
+  </section>
+
+</div>
+<script src="../../assets/runtime.js"></script>
+<script>
+addEventListener('DOMContentLoaded',()=>{
+  const css=getComputedStyle(document.documentElement);
+  const a1=css.getPropertyValue('--accent').trim();
+  const a2=css.getPropertyValue('--accent-2').trim();
+  const good=css.getPropertyValue('--good').trim();
+  const warn=css.getPropertyValue('--warn').trim();
+  const bad=css.getPropertyValue('--bad').trim();
+  const text2=css.getPropertyValue('--text-2').trim();
+  const border=css.getPropertyValue('--border').trim();
+
+  new Chart(document.getElementById('chart-revenue'),{
+    type:'bar',
+    data:{
+      labels:['头部App','腰部App','头部小游戏','腰部小游戏','尾部（仍盈利）'],
+      datasets:[{
+        label:'月流水估算（万元）',
+        data:[12500,3000,3000,650,175],
+        backgroundColor:[a2, a2, good, good, text2],
+        borderRadius:6
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            label: function(ctx) {
+              const v = ctx.raw;
+              if (v >= 10000) return '¥' + (v/10000).toFixed(1) + '亿/月';
+              return '¥' + v + '万/月';
+            }
+          }
+        }
+      },
+      scales:{
+        x:{ticks:{color:text2,font:{size:11}},grid:{color:border}},
+        y:{ticks:{color:text2,font:{size:11},callback:v=>v>=10000?(v/10000)+'亿':v+'万'},grid:{color:border}}
+      }
+    }
+  });
+});
+</script>
+</body></html>

@@ -136,21 +136,7 @@
   }
   .card:hover .arr { color: #52525b; transform: translateX(3px); }
 
-  /* Card accent colors */
-  .card:nth-child(1) { --card-glow: linear-gradient(135deg, rgba(245,158,11,0.1), transparent 50%); }
-  .card:nth-child(1) .geo { background: #fef3c7; color: #d97706; }
-  .card:nth-child(2) { --card-glow: linear-gradient(135deg, rgba(139,92,246,0.1), transparent 50%); }
-  .card:nth-child(2) .geo { background: #ede9fe; color: #7c3aed; }
-  .card:nth-child(3) { --card-glow: linear-gradient(135deg, rgba(236,72,153,0.1), transparent 50%); }
-  .card:nth-child(3) .geo { background: #fce7f3; color: #db2777; }
-  .card:nth-child(4) { --card-glow: linear-gradient(135deg, rgba(59,130,246,0.1), transparent 50%); }
-  .card:nth-child(4) .geo { background: #dbeafe; color: #2563eb; }
-  .card:nth-child(5) { --card-glow: linear-gradient(135deg, rgba(16,185,129,0.1), transparent 50%); }
-  .card:nth-child(5) .geo { background: #d1fae5; color: #059669; }
-  .card:nth-child(6) { --card-glow: linear-gradient(135deg, rgba(14,165,233,0.1), transparent 50%); }
-  .card:nth-child(6) .geo { background: #e0f2fe; color: #0284c7; }
-  .card:nth-child(7) { --card-glow: linear-gradient(135deg, rgba(249,115,22,0.1), transparent 50%); }
-  .card:nth-child(7) .geo { background: #fff7ed; color: #ea580c; }
+  /* Card accent colors — inline styles used instead, no nth-child needed */
 
   /* Divider */
   .divider { display: flex; align-items: center; gap: 12px; margin: 10px 0; }
@@ -195,11 +181,11 @@
     </div>
   </header>
 
-  <div class="section-label">分析报告</div>
+  <div class="section-label">数据分析报告</div>
   <div class="cards">
 
-    <a class="card" href="/chat-report/">
-      <div class="geo">&#9670;</div>
+    <a class="card" href="/chat-report/" style="--card-glow: linear-gradient(135deg, rgba(245,158,11,0.1), transparent 50%);">
+      <div class="geo" style="background:#fef3c7;color:#d97706;">&#9670;</div>
       <div class="info">
         <div class="title">修行那些年 · 聊天数据分析</div>
         <div class="desc">活跃度趋势、话题分布、关键词追踪与运营建议</div>
@@ -207,8 +193,8 @@
       <span class="arr">&#8594;</span>
     </a>
 
-    <a class="card" href="/analytics/">
-      <div class="geo">&#9650;</div>
+    <a class="card" href="/analytics/" style="--card-glow: linear-gradient(135deg, rgba(139,92,246,0.1), transparent 50%);">
+      <div class="geo" style="background:#ede9fe;color:#7c3aed;">&#9650;</div>
       <div class="info">
         <div class="title">修行那些年 · 深度分析</div>
         <div class="desc">多维度数据挖掘、用户行为画像、情感趋势变化</div>
@@ -216,8 +202,17 @@
       <span class="arr">&#8594;</span>
     </a>
 
-    <a class="card" href="/game-report/">
-      <div class="geo">&#9632;</div>
+    <a class="card" href="/quanzhouqi-report/" style="--card-glow: linear-gradient(135deg, rgba(236,72,153,0.1), transparent 50%);">
+      <div class="geo" style="background:#fce7f3;color:#db2777;">&#9670;</div>
+      <div class="info">
+        <div class="title">修行那些年 · 开服全周期报告</div>
+        <div class="desc">开服至今完整数据分析、关键事件回溯、长期趋势</div>
+      </div>
+      <span class="arr">&#8594;</span>
+    </a>
+
+    <a class="card" href="/game-report/" style="--card-glow: linear-gradient(135deg, rgba(59,130,246,0.1), transparent 50%);">
+      <div class="geo" style="background:#dbeafe;color:#2563eb;">&#9632;</div>
       <div class="info">
         <div class="title">游戏聊天报告 v1</div>
         <div class="desc">多游戏社群数据汇总与横向对比</div>
@@ -225,8 +220,8 @@
       <span class="arr">&#8594;</span>
     </a>
 
-    <a class="card" href="/game-report-v2/">
-      <div class="geo">&#9651;</div>
+    <a class="card" href="/game-report-v2/" style="--card-glow: linear-gradient(135deg, rgba(16,185,129,0.1), transparent 50%);">
+      <div class="geo" style="background:#d1fae5;color:#059669;">&#9671;</div>
       <div class="info">
         <div class="title">游戏聊天报告 v2</div>
         <div class="desc">新版多游戏分析、改进的可视化呈现</div>
@@ -234,8 +229,8 @@
       <span class="arr">&#8594;</span>
     </a>
 
-    <a class="card" href="/chat-analysis/">
-      <div class="geo">&#9671;</div>
+    <a class="card" href="/chat-analysis/" style="--card-glow: linear-gradient(135deg, rgba(14,165,233,0.1), transparent 50%);">
+      <div class="geo" style="background:#e0f2fe;color:#0284c7;">&#9679;</div>
       <div class="info">
         <div class="title">通用聊天分析</div>
         <div class="desc">跨游戏汇总、情感分析、高频话题提炼</div>
@@ -243,11 +238,29 @@
       <span class="arr">&#8594;</span>
     </a>
 
-    <a class="card" href="/txt-report/">
-      <div class="geo">&#9672;</div>
+    <a class="card" href="/txt-report/" style="--card-glow: linear-gradient(135deg, rgba(249,115,22,0.1), transparent 50%);">
+      <div class="geo" style="background:#fff7ed;color:#ea580c;">&#9670;</div>
       <div class="info">
         <div class="title">QQ 群聊纯文本报告</div>
         <div class="desc">原始消息文本存档、全文检索</div>
+      </div>
+      <span class="arr">&#8594;</span>
+    </a>
+
+    <a class="card" href="/qq-report/" style="--card-glow: linear-gradient(135deg, rgba(245,158,11,0.1), transparent 50%);">
+      <div class="geo" style="background:#fef3c7;color:#d97706;">&#9733;</div>
+      <div class="info">
+        <div class="title">QQ 聊天报告 · 战魂</div>
+        <div class="desc">战魂家族群聊活跃度、话题与情感分析</div>
+      </div>
+      <span class="arr">&#8594;</span>
+    </a>
+
+    <a class="card" href="/yongye-report/" style="--card-glow: linear-gradient(135deg, rgba(139,92,246,0.1), transparent 50%);">
+      <div class="geo" style="background:#ede9fe;color:#7c3aed;">&#9670;</div>
+      <div class="info">
+        <div class="title">永夜降魔 · 聊天分析</div>
+        <div class="desc">永夜降魔玩家社群数据报告、时间段与话题分布</div>
       </div>
       <span class="arr">&#8594;</span>
     </a>
@@ -258,13 +271,86 @@
     <span class="dia"></span><span class="rule"></span>
   </div>
 
+  <div class="section-label">行业资讯</div>
   <div class="cards">
 
-    <a class="card" href="suggestions.html">
-      <div class="geo">&#9830;</div>
+    <a class="card" href="/market-weekly/" style="--card-glow: linear-gradient(135deg, rgba(236,72,153,0.1), transparent 50%);">
+      <div class="geo" style="background:#fce7f3;color:#db2777;">&#9660;</div>
+      <div class="info">
+        <div class="title">市场资讯观察周报 W22</div>
+        <div class="desc">宏观动态、产业趋势、竞品情报与监管政策</div>
+      </div>
+      <span class="arr">&#8594;</span>
+    </a>
+
+    <a class="card" href="/minigame-weekly/" style="--card-glow: linear-gradient(135deg, rgba(59,130,246,0.1), transparent 50%);">
+      <div class="geo" style="background:#dbeafe;color:#2563eb;">&#9675;</div>
+      <div class="info">
+        <div class="title">游戏市场双周观察</div>
+        <div class="desc">小游戏行业动态、榜单变化与市场趋势分析</div>
+      </div>
+      <span class="arr">&#8594;</span>
+    </a>
+
+  </div>
+
+  <div class="divider">
+    <span class="dia"></span><span class="rule"></span>
+  </div>
+
+  <div class="section-label">提案与项目</div>
+  <div class="cards">
+
+    <a class="card" href="suggestions.html" style="--card-glow: linear-gradient(135deg, rgba(16,185,129,0.1), transparent 50%);">
+      <div class="geo" style="background:#d1fae5;color:#059669;">&#9670;</div>
       <div class="info">
         <div class="title">修行那些年 · 产品优化建议</div>
         <div class="desc">基于玩家社群反馈的 13 条 P0-P2 优化方向</div>
+      </div>
+      <span class="arr">&#8594;</span>
+    </a>
+
+    <a class="card" href="/zhenxiesi-analysis/examples/zhenxiesi-analysis/" style="--card-glow: linear-gradient(135deg, rgba(14,165,233,0.1), transparent 50%);">
+      <div class="geo" style="background:#e0f2fe;color:#0284c7;">&#9650;</div>
+      <div class="info">
+        <div class="title">镇邪司 · 展示框架</div>
+        <div class="desc">Shiro 演示框架、多主题动画与模板系统</div>
+      </div>
+      <span class="arr">&#8594;</span>
+    </a>
+
+    <a class="card" href="/zhenxiesi-gsap/" style="--card-glow: linear-gradient(135deg, rgba(249,115,22,0.1), transparent 50%);">
+      <div class="geo" style="background:#fff7ed;color:#ea580c;">&#9679;</div>
+      <div class="info">
+        <div class="title">芝麻官 · 贴吧竞品分析</div>
+        <div class="desc">极品芝麻官竞品分析报告（GSAP 动画）</div>
+      </div>
+      <span class="arr">&#8594;</span>
+    </a>
+
+    <a class="card" href="/garden-analysis/" style="--card-glow: linear-gradient(135deg, rgba(245,158,11,0.1), transparent 50%);">
+      <div class="geo" style="background:#fef3c7;color:#d97706;">&#9670;</div>
+      <div class="info">
+        <div class="title">我的花园世界 · 详细拆解</div>
+        <div class="desc">花园世界游戏玩法、数值与经济系统分析</div>
+      </div>
+      <span class="arr">&#8594;</span>
+    </a>
+
+    <a class="card" href="/yiqi-zhi-di-game-intro/" style="--card-glow: linear-gradient(135deg, rgba(139,92,246,0.1), transparent 50%);">
+      <div class="geo" style="background:#ede9fe;color:#7c3aed;">&#9632;</div>
+      <div class="info">
+        <div class="title">遗弃之地 · 游戏介绍</div>
+        <div class="desc">暗黑风放置挂机 RPG 品类与玩法说明</div>
+      </div>
+      <span class="arr">&#8594;</span>
+    </a>
+
+    <a class="card" href="/zhenghe-ppt/" style="--card-glow: linear-gradient(135deg, rgba(236,72,153,0.1), transparent 50%);">
+      <div class="geo" style="background:#fce7f3;color:#db2777;">&#9670;</div>
+      <div class="info">
+        <div class="title">郑和下西洋 · 项目提案</div>
+        <div class="desc">微信小游戏项目提案、策划方向与市场定位</div>
       </div>
       <span class="arr">&#8594;</span>
     </a>

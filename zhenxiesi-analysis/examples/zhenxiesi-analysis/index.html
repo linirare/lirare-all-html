@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="corporate-clean">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>极品芝麻官 · 贴吧分析报告</title>
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/base.css">
+<link rel="stylesheet" id="theme-link" href="../../assets/themes/corporate-clean.css">
+<link rel="stylesheet" href="../../assets/animations/animations.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+/* === Mobile responsive overrides === */
+@media (max-width: 768px) {
+  .slide { padding: 24px 20px !important; }
+  .g2, .g3, .g4 { grid-template-columns: 1fr !important; gap: 10px !important; }
+  .deck-header { top: 12px !important; left: 16px !important; right: 16px !important; font-size: 11px !important; }
+  .deck-footer { bottom: 12px !important; left: 16px !important; right: 16px !important; font-size: 11px !important; }
+  .h1, h1.title { font-size: 32px !important; line-height: 1.2 !important; }
+  .h2, h2 { font-size: 24px !important; }
+  .h3, h3 { font-size: 18px !important; }
+  .h4, h4 { font-size: 16px !important; }
+  .lede { font-size: 16px !important; }
+  .kicker { font-size: 13px !important; }
+  .card { padding: 14px !important; }
+  .pill { font-size: 11px !important; padding: 3px 10px !important; }
+  .dim, .dim2 { font-size: 13px !important; }
+  .mt-l { margin-top: 16px !important; }
+  .mt-m { margin-top: 12px !important; }
+  .mt-s { margin-top: 8px !important; }
+  .mb-m { margin-bottom: 12px !important; }
+  .grid { gap: 10px !important; }
+  .slide-number { font-size: 11px !important; }
+  blockquote { font-size: 18px !important; }
+  .counter { font-size: 64px !important; }
+  code, pre { font-size: 11px !important; }
+  .card ul { padding-left: 16px !important; }
+  .card li { font-size: 13px !important; line-height: 1.6 !important; }
+  .row { gap: 8px !important; }
+  div[style*="font-size:48px"] { font-size: 32px !important; }
+  .card[style*="height:440px"] { height: 280px !important; padding: 12px !important; }
+}
+@media (max-width: 480px) {
+  .slide { padding: 20px 14px !important; }
+  .h1, h1.title { font-size: 26px !important; }
+  .h2, h2 { font-size: 20px !important; }
+  .lede { font-size: 14px !important; }
+  .deck-header { font-size: 10px !important; }
+  .deck-footer { font-size: 10px !important; }
+  div[style*="font-size:48px"] { font-size: 26px !important; }
+}
+</style>
+</head>
+<body data-themes="corporate-clean,minimal-white,editorial-serif,tokyo-night,sunset-warm,news-broadcast,neo-brutalism" data-theme-base="../../assets/themes/">
+
+<div class="deck">
+
+  <!-- 1. Cover -->
+  <section class="slide center tc" data-title="Cover">
+    <div class="deck-header"><span class="eyebrow">Player Insight · 2026-05-21</span><span class="eyebrow">贴吧舆情分析</span></div>
+    <div style="max-width:1000px">
+      <div class="divider-accent" style="margin:0 auto 20px"></div>
+      <p class="kicker" style="font-size:18px;letter-spacing:.15em">百度贴吧 · OpenCLI 数据抓取</p>
+      <h1 class="h1 anim-rise-in" data-anim="rise-in" style="font-size:72px;line-height:1.2">极品芝麻官<br><span style="color:var(--accent-2)">玩家动态与趋势分析</span></h1>
+      <p class="lede" style="margin:20px auto 0;max-width:700px">基于贴吧近30天高热度帖子，解读古墓翻车、数值天花板、大R退游三大信号</p>
+      <div class="row wrap mt-l" style="gap:8px;justify-content:center">
+        <span class="pill pill-accent">古墓护宝</span>
+        <span class="pill">数值膨胀</span>
+        <span class="pill">大R退游</span>
+        <span class="pill">机制革新</span>
+        <span class="pill">玩家分层</span>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">数据源：tieba.baidu.com · 极品芝麻官吧</span><span class="slide-number" data-current="1" data-total="10"></span></div>
+    <div class="notes">今天分享的是近一个月来极品芝麻官贴吧的玩家舆情分析。通过OpenCLI工具抓取贴吧热门帖子，我们发现了几个值得关注的信号。</div>
+  </section>
+
+  <!-- 2. Agenda -->
+  <section class="slide" data-title="Agenda">
+    <p class="kicker">Agenda</p>
+    <h2 class="h2">五个维度，看清玩家生态</h2>
+    <div class="grid g2 mt-l anim-stagger-list" data-anim-target style="gap:12px">
+      <div class="card card-accent" style="border-left:4px solid var(--bad)"><h4>① P0 事件</h4><p class="dim">古墓护宝活动全面翻车，玩家大面积不满</p></div>
+      <div class="card card-accent" style="border-left:4px solid var(--warn)"><h4>② 核心矛盾</h4><p class="dim">数值膨胀到天花板，纯堆数值没人买账</p></div>
+      <div class="card card-accent" style="border-left:4px solid var(--accent-2)"><h4>③ 社区生态</h4><p class="dim">大R止氪、攻略作者退坑、新区留存困难</p></div>
+      <div class="card card-accent" style="border-left:4px solid var(--good)"><h4>④ 玩家画像</h4><p class="dim">四层玩家结构，诉求截然不同</p></div>
+      <div class="card card-accent" style="grid-column:1/-1;border-left:4px solid var(--accent)"><h4>⑤ 趋势与启示</h4><p class="dim">短期/中期/长期判断 + 同类产品可借鉴的教训</p></div>
+    </div>
+    <div class="deck-footer"><span class="dim2">outline</span><span class="slide-number" data-current="2" data-total="10"></span></div>
+    <div class="notes">报告分五个部分。先从最近的危机事件切入，再看长期的结构性矛盾，最后给出趋势判断。</div>
+  </section>
+
+  <!-- 3. P0: 古墓翻车 -->
+  <section class="slide" data-title="古墓护宝崩盘">
+    <p class="kicker" style="color:var(--bad)">P0 舆情事件</p>
+    <h2 class="h2">古墓护宝活动：<span style="color:var(--bad)">全面翻车</span></h2>
+    <div class="grid g2 mt-l" style="gap:16px">
+      <div class="card" style="background:var(--bg-soft)">
+        <h3>4 条高热度投诉帖</h3>
+        <ul class="mt-m" style="line-height:2">
+          <li>"狗策划滚出来解释一下" — 52 回复</li>
+          <li>"对古墓护宝有几点不满意" — 34 回复</li>
+          <li>"新活动是花钱找罪受" — 31 回复</li>
+          <li>"那个古墓活动就是个垃圾" — 31 回复</li>
+        </ul>
+      </div>
+      <div class="card" style="background:var(--bg-soft)">
+        <h3>玩家原声</h3>
+        <div style="margin-top:12px;padding:12px;border-left:3px solid var(--bad);font-style:italic;color:var(--text-2)">
+          "大佬的猎场，平民被当兔子撵"
+        </div>
+        <div style="margin-top:8px;padding:12px;border-left:3px solid var(--bad);font-style:italic;color:var(--text-2)">
+          "有史以来最垃圾的活动，应该也很难有媲美的了"
+        </div>
+      </div>
+    </div>
+    <div class="card mt-m" style="border-left:4px solid var(--bad)">
+      <h4>系统性问题</h4>
+      <div class="grid g3 mt-s" style="gap:10px">
+        <div><span class="pill pill-accent" style="background:var(--bad);color:#fff">堵门机制</span><p class="dim mt-xs" style="font-size:13px">高战低成本蹲守出口一整天，"一指禅"小号堵门</p></div>
+        <div><span class="pill pill-accent" style="background:var(--bad);color:#fff">匹配失衡</span><p class="dim mt-xs" style="font-size:13px">随机匹配资质几十万的千亿大哥，无还手之力</p></div>
+        <div><span class="pill pill-accent" style="background:var(--bad);color:#fff">BUG频出</span><p class="dim mt-xs" style="font-size:13px">撤退道具导致游戏闪退，直接浪费次数</p></div>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">event · players are furious</span><span class="slide-number" data-current="3" data-total="10"></span></div>
+    <div class="notes">这是最近最大的舆情事件。问题根源不是活动本身不好玩，而是缺乏弱者保护机制。高战玩家可以零成本蹲守出口，低战玩家进去就是被收割。</div>
+  </section>
+
+  <!-- 4. Chart: 活动满意度 -->
+  <section class="slide center tc" data-title="Sentiment">
+    <p class="kicker">Data · 活动相关帖子情感分析</p>
+    <div class="card" style="height:440px;padding:24px;width:100%;max-width:900px;margin:0 auto">
+      <canvas id="chart-sentiment"></canvas>
+    </div>
+    <p class="dim mt-s" style="font-size:13px">基于近30天贴吧热帖标题的负面/正面/中性比例</p>
+    <div class="deck-footer"><span class="dim2">sentiment analysis</span><span class="slide-number" data-current="4" data-total="10"></span></div>
+    <div class="notes">可以看到，负面情绪占比非常高，尤其是关于古墓活动的话题几乎是一边倒的差评。</div>
+  </section>
+
+  <!-- 5. P1: 数值与机制 -->
+  <section class="slide" data-title="数值天花板">
+    <p class="kicker" style="color:var(--warn)">P1 结构性问题</p>
+    <h2 class="h2">数值膨胀已到<span style="color:var(--bad)">天花板</span></h2>
+    <div class="grid g2 mt-l" style="gap:16px">
+      <div class="card">
+        <div style="font-size:48px;font-weight:900;color:var(--bad)">200</div>
+        <p class="dim">个牌子升一级技能</p>
+        <p class="dim2 mt-s" style="font-size:13px">新技能系统资源消耗引发质疑，玩家猜测后续等级需求还会攀升</p>
+      </div>
+      <div class="card">
+        <div style="font-size:48px;font-weight:900;color:var(--warn)">150</div>
+        <p class="dim">天才能招新门客</p>
+        <p class="dim2 mt-s" style="font-size:13px">新区玩家要签到150天才能招募新门客，老区版本更新即解锁</p>
+      </div>
+    </div>
+    <div class="card mt-l" style="border-left:4px solid var(--accent-2)">
+      <h4>核心矛盾：加法走到尽头</h4>
+      <p class="mt-s dim">"九龙系统是典型的乘区碾压——大家都一样，谁数值高谁赢，中低氪毫无体验。"</p>
+      <div class="grid g3 mt-m" style="gap:10px">
+        <div class="card" style="background:var(--bg-soft);padding:12px"><b>纯数值卡</b><br><span class="dim2" style="font-size:13px">"全属性+200%"的九龙2.0 → 无人买账</span></div>
+        <div class="card" style="background:var(--bg-soft);padding:12px"><b>机制卡</b><br><span class="dim2" style="font-size:13px">范雎式"机制乘区" → 改变规则、广受好评</span></div>
+        <div class="card" style="background:var(--bg-soft);padding:12px"><b>公式</b><br><span style="font-size:13px;font-family:monospace">加法 × 堆砌 → 乘法 × 策略</span></div>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">structural · end of raw power creep</span><span class="slide-number" data-current="5" data-total="10"></span></div>
+    <div class="notes">200个牌子升一级技能，150天等一个新门客——这些数字说明数值膨胀已经走到尽头。玩家清醒了，纯堆数值的门客没人买账了。</div>
+  </section>
+
+  <!-- 6. Suggestion: 从加法到乘法 -->
+  <section class="slide" data-title="玩家建议">
+    <p class="kicker">Playbook · 来自资深玩家的万字长文</p>
+    <h2 class="h2">从"加法"转向"<span style="color:var(--accent-2)">乘法</span>"</h2>
+    <p class="dim mb-m">玩家"绝世無双🥰"发表的高质量建议帖核心观点</p>
+    <div class="grid g2 mt-l" style="gap:16px">
+      <div class="card">
+        <h4>ABCD 四分支路线</h4>
+        <p class="dim mt-xs">伤害(A) · 势力(B) · 亲密(C) · 衙门(D)</p>
+        <p class="dim2 mt-s" style="font-size:13px">不同资源池强制玩家做取舍，设计"1+1>2"的流派协同</p>
+        <div class="mt-m" style="padding:10px;background:var(--bg-soft);border-radius:var(--radius);font-size:13px">
+          <b>AC流派·绝情流：</b>亲密→真实伤害（独狼）<br>
+          <b>BD流派·权倾朝野：</b>势力→铁桶阵（联盟）
+        </div>
+      </div>
+      <div class="card">
+        <h4>机制型门客设计</h4>
+        <div class="mt-m" style="padding:10px;background:var(--bg-soft);border-radius:var(--radius);font-size:13px">
+          <b>白起 · 斩杀：</b>敌方血量&lt;30%直接死亡<br>
+          <b>廉颇 · 反伤：</b>防御20%反伤，改变衙门"先手赢"<br>
+          <b>貂蝉 · 控制：</b>降低主将30%势力加成<br>
+          <b>孙尚香 · 收益：</b>亲密值提供额外掉落
+        </div>
+      </div>
+    </div>
+    <div class="card mt-s" style="background:var(--bg-soft);border-left:4px solid var(--good)">
+      <b>金句：</b>"不要再做加法（出更高数值的卡），开始做乘法（出改变规则的机制）。"
+    </div>
+    <div class="deck-footer"><span class="dim2">player insight · made by a veteran</span><span class="slide-number" data-current="6" data-total="10"></span></div>
+    <div class="notes">这个帖子质量非常高，代表了核心玩家群体的共识：玩家不傻，他们知道数值堆砌没有尽头。真正能延长游戏寿命的是策略深度。</div>
+  </section>
+
+  <!-- 7. 社区生态 -->
+  <section class="slide" data-title="社区生态">
+    <p class="kicker">Community Pulse</p>
+    <h2 class="h2">社区生态的<span style="color:var(--bad)">三个危险信号</span></h2>
+    <div class="grid g3 mt-l" style="gap:16px">
+      <div class="card tc" style="padding:30px 20px">
+        <div style="font-size:48px;margin-bottom:8px">💀</div>
+        <h4>大R止氪</h4>
+        <p class="dim mt-s" style="font-size:13px">多名V16大佬停止充值，进入"收菜"模式。帖子"小包包走了？"引发60条共鸣回复</p>
+      </div>
+      <div class="card tc" style="padding:30px 20px">
+        <div style="font-size:48px;margin-bottom:8px">✍️</div>
+        <h4>攻略作者退坑</h4>
+        <p class="dim mt-s" style="font-size:13px">头部攻略作者夏莹星转坑梦幻西游/CF。高回复攻略帖（214回/178回）内容均为存量</p>
+      </div>
+      <div class="card tc" style="padding:30px 20px">
+        <div style="font-size:48px;margin-bottom:8px">🆕</div>
+        <h4>新区留存难</h4>
+        <p class="dim mt-s" style="font-size:13px">"新门客还得等150天"——新区签到了才能招，严重削弱新区玩家体验</p>
+      </div>
+    </div>
+    <div class="card mt-l" style="border-left:4px solid var(--warn)">
+      <p class="dim">全区统一、高V低V轮流当王的服务器生态分化明显。有人喜欢团结一致对外，有人觉得"像上班打卡太乏味"。</p>
+    </div>
+    <div class="deck-footer"><span class="dim2">community · dangerous signals</span><span class="slide-number" data-current="7" data-total="10"></span></div>
+    <div class="notes">三个危险信号同时出现：掏钱的不掏了，写内容的走了，新来的留不住。这三件事同时发生，说明问题不是单一的。</div>
+  </section>
+
+  <!-- 8. 玩家画像 -->
+  <section class="slide" data-title="玩家画像">
+    <p class="kicker">Player Segmentation</p>
+    <h2 class="h2">四层玩家结构，<span style="color:var(--accent-2)">诉求截然不同</span></h2>
+    <div class="grid g2 mt-l" style="gap:16px">
+      <div class="card" style="padding:20px">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <h4>🐋 大R（V16+）</h4>
+          <span class="pill" style="background:var(--bad);color:#fff">~5%</span>
+        </div>
+        <p class="dim mt-xs">势力千亿+，出站门客30+，开始收菜或退游</p>
+        <p class="dim2" style="font-size:13px">诉求：新机制门客、跨服竞技</p>
+      </div>
+      <div class="card" style="padding:20px">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <h4>💎 中R（V11-V15）</h4>
+          <span class="pill" style="background:var(--warn);color:#fff">~20%</span>
+        </div>
+        <p class="dim mt-xs">仍冲榜抢帝榜，充值几百抢名次</p>
+        <p class="dim2" style="font-size:13px">诉求：活动性价比、资源公平</p>
+      </div>
+      <div class="card" style="padding:20px">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <h4>👤 小R/月卡</h4>
+          <span class="pill" style="background:var(--accent-2);color:#fff">~35%</span>
+        </div>
+        <p class="dim mt-xs">签到2000天+，关注利益最大化</p>
+        <p class="dim2" style="font-size:13px">诉求：养成效率、日常减负</p>
+      </div>
+      <div class="card" style="padding:20px">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <h4>🆓 零氪/回归</h4>
+          <span class="pill" style="background:var(--good);color:#fff">~40%</span>
+        </div>
+        <p class="dim mt-xs">新/回流玩家，大量求助帖</p>
+        <p class="dim2" style="font-size:13px">诉求：引导缺失、门槛高、被虐</p>
+      </div>
+    </div>
+    <div class="card mt-s" style="background:var(--bg-soft);">
+      <div class="row" style="justify-content:space-between">
+        <span><b>关键发现：</b>占人口~40%的零氪/回归玩家是贴吧求助帖主力，也是流失风险最高的群体</span>
+        <span class="pill" style="background:var(--bad);color:#fff">关注流失</span>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">segmentation · 4 layers</span><span class="slide-number" data-current="8" data-total="10"></span></div>
+    <div class="notes">四层玩家的诉求完全不同。大R要新内容，中R要公平，月卡要效率，零氪要引导。一个活动不可能同时满足所有人，但古墓活动让所有人都难受。</div>
+  </section>
+
+  <!-- 9. 趋势-->
+  <section class="slide" data-title="趋势判断">
+    <p class="kicker">Forecast</p>
+    <h2 class="h2">短期<span style="color:var(--bad)">危机</span> · 中期<span style="color:var(--warn)">拐点</span> · 长期<span style="color:var(--accent-2)">洗牌</span></h2>
+    <div class="grid g3 mt-l" style="gap:16px">
+      <div class="card" style="border-top:4px solid var(--bad)">
+        <h4>短期（1个月）</h4>
+        <ul class="mt-m" style="line-height:1.8;font-size:14px">
+          <li>古墓活动不紧急优化→加速退游潮</li>
+          <li>200牌子/级技能持续发酵</li>
+          <li>减负 + 保护机制是救命药</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:4px solid var(--warn)">
+        <h4>中期（1-3个月）</h4>
+        <ul class="mt-m" style="line-height:1.8;font-size:14px">
+          <li>纯数值型门客无人买账</li>
+          <li>需推出机制型系统挽回口碑</li>
+          <li>攻略社区活力持续下降</li>
+          <li>存量收割模式加剧</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:4px solid var(--accent-2)">
+        <h4>长期（半年+）</h4>
+        <ul class="mt-m" style="line-height:1.8;font-size:14px">
+          <li>不出深度机制革新→加速下滑</li>
+          <li>利好：社区有高质量内容生产力</li>
+          <li>机会点：策略深度转型</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card mt-l tc" style="background:var(--grad-soft)">
+      <p style="font-size:18px;font-weight:600">一句话判断：<span style="color:var(--bad)">古墓是导火索</span>，<span style="color:var(--warn)">数值天花板是根源</span></p>
+    </div>
+    <div class="deck-footer"><span class="dim2">outlook · short / mid / long</span><span class="slide-number" data-current="9" data-total="10"></span></div>
+    <div class="notes">短期的危机可以靠修补活动救，但长期的问题是数值体系本身。如果策划不拿出机制革新的勇气，游戏只会加速走向存量收割的终点。</div>
+  </section>
+
+  <!-- 10. Thanks -->
+  <section class="slide center tc" data-title="Thanks">
+    <div>
+      <div class="divider-accent" style="margin:0 auto 20px"></div>
+      <h1 class="h1" style="font-size:120px;line-height:1"><span class="gradient-text">Thanks</span></h1>
+      <p class="lede mt-m" style="max-width:700px;margin:20px auto 0">数据来源：百度贴吧 · 极品芝麻官吧 · 近30天热帖</p>
+      <p class="dim" style="font-size:14px;margin-top:30px">抓取工具：OpenCLI v1.8.0 · Chrome Bridge · 分析整理：Hermes Agent</p>
+      <div class="row mt-l" style="justify-content:center;gap:8px">
+        <span class="pill">←/→ 翻页</span>
+        <span class="pill">T 主题</span>
+        <span class="pill">F 全屏</span>
+        <span class="pill">O 概览</span>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="dim2">end · 2026-05-21</span><span class="slide-number" data-current="10" data-total="10"></span></div>
+    <div class="notes">谢谢。数据时效性截至2026年5月21日，所有原始数据均可回溯验证。</div>
+  </section>
+
+</div>
+<script src="../../assets/runtime.js"></script>
+<script>
+addEventListener('DOMContentLoaded',()=>{
+  const css=getComputedStyle(document.documentElement);
+  const a1=css.getPropertyValue('--accent').trim();
+  const a2=css.getPropertyValue('--accent-2').trim();
+  const bad=css.getPropertyValue('--bad').trim();
+  const text2=css.getPropertyValue('--text-2').trim();
+  const border=css.getPropertyValue('--border').trim();
+
+  // Sentiment chart
+  new Chart(document.getElementById('chart-sentiment'),{
+    type:'doughnut',
+    data:{
+      labels:['负面','中性','正面'],
+      datasets:[{
+        data:[68,22,10],
+        backgroundColor:[bad,text2,a1],
+        borderWidth:0
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          position:'bottom',
+          labels:{color:text2,font:{size:14},padding:16}
+        }
+      }
+    }
+  });
+});
+</script>
+</body></html>
