@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Beast Clash - Apple 新项目提案</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.5/dist/reveal.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+* { box-sizing: border-box; }
+body { font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif; background: #f5f5f7; }
+.reveal {
+  font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif;
+  color: #1d1d1f;
+}
+.reveal h1,.reveal h2,.reveal h3,.reveal h4 {
+  font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif;
+  text-transform: none; letter-spacing: 0; color: #1d1d1f;
+}
+.reveal h1 { font-weight: 900; font-size: 2.8em; }
+.reveal h2 { font-weight: 700; font-size: 1.8em; margin-bottom: 8px; }
+.reveal h3 { font-weight: 600; font-size: 1.1em; color: #06c; margin-bottom: 4px; }
+.reveal h4 { font-weight: 600; font-size: 0.95em; color: #333; }
+.reveal p { font-weight: 400; color: #333; }
+.reveal li { font-weight: 400; line-height: 1.8; color: #333; }
+.reveal .controls { color: #06c; }
+.reveal .progress { color: #06c; }
+.reveal .slide-number { color: #999 !important; font-size: 12px !important; }
+.reveal .slide-background { background: #fff; }
+
+.section-divider { background: linear-gradient(135deg, #f0f4ff 0%, #e8edf5 100%) !important; }
+.section-divider h2 { font-weight: 700; letter-spacing: 0.15em; color: #1a1a2e; }
+
+.cover-slide { background: linear-gradient(135deg, #f8f9fc 0%, #eef1f8 100%) !important; position: relative; }
+.cover-slide::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #06c, #5e5ce6);
+}
+.cover-slide .accent-line { width: 70px; height: 3px; background: #06c; margin: 18px auto; border-radius: 2px; }
+
+.card {
+  background: #f8f9fc; border: 1px solid #e0e4ea; border-radius: 10px; padding: 18px 22px; text-align: left;
+}
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.card-grid.col-3 { grid-template-columns: 1fr 1fr 1fr; }
+.card-grid.col-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+.stat-box { text-align: center; background: #f8f9fc; border: 1px solid #e0e4ea; border-radius: 10px; padding: 20px; }
+.stat-box .num { font-size: 1.6em; font-weight: 700; color: #06c; }
+.stat-box .label { font-size: 0.72em; color: #666; margin-top: 4px; }
+
+.tag {
+  display: inline-block; background: #f0f4ff; border: 1px solid #d0d7e0;
+  color: #06c; padding: 4px 14px; border-radius: 14px; font-size: 0.7em; font-weight: 500;
+}
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; text-align: left; }
+.two-col h4 { margin-bottom: 8px; color: #1d1d1f; }
+.two-col ul { list-style: none; padding: 0; margin: 0; }
+.two-col li { padding: 5px 0; font-size: 0.8em; position: relative; padding-left: 16px; color: #333; }
+.two-col li::before { content: '›'; position: absolute; left: 0; color: #06c; font-weight: 700; }
+
+.milestone { flex:1; background:#f8f9fc; border-radius:10px; padding:16px; text-align:left; border-top:3px solid #999; }
+.milestone.primary { background:#f0f4ff; border-top-color:#06c; }
+.milestone .phase { font-weight:600; font-size:0.82em; }
+.milestone .time { font-size:0.68em; color:#888; margin:4px 0; }
+.milestone .desc { font-size:0.72em; color:#555; margin:8px 0 0; }
+
+.ending-slide { background: linear-gradient(135deg, #f0f4ff 0%, #e8edf5 100%) !important; }
+.ending-slide .tagline { font-size: 1.6em; font-weight: 300; color: #1d1d1f; }
+
+.muted { color: #999 !important; }
+.accent { color: #06c; }
+.text-left { text-align: left; }
+
+@media (max-width: 768px) {
+  .card-grid,.card-grid.col-3,.card-grid.col-4,.two-col { grid-template-columns: 1fr; }
+  .reveal h1 { font-size: 2em; }
+  .reveal h2 { font-size: 1.4em; }
+}
+</style>
+</head>
+<body>
+
+<div class="reveal"><div class="slides">
+
+<!-- =================== P1 封面 =================== -->
+<section class="cover-slide">
+  <div>
+    <div style="font-size:0.55em; letter-spacing:0.15em; color:#999; margin-bottom:28px;">Apple 新项目提案 · 2026</div>
+    <h1 style="margin-bottom:4px; letter-spacing:0.05em;">Project Beast Clash</h1>
+    <p style="font-size:1.1em; color:#06c; margin-top:4px; font-weight:500;">萌兽争霸</p>
+    <div class="accent-line"></div>
+    <p style="font-size:1.1em; font-weight:400; margin-top:18px; color:#1d1d1f; letter-spacing:0.03em;">下一代全球化轻量即时战略手游</p>
+    <p style="font-size:0.75em; color:#888; margin-top:8px; font-weight:300;">The Next-Gen Global Lite-RTS Mobile Game</p>
+    <p style="font-size:0.65em; margin-top:28px; color:#aaa;">演讲人：XXXX ｜ XXXX Studio ｜ xxxx@xxxx.com</p>
+    <div style="display:inline-block; background:#f0f4ff; border:1px solid #d0d7e0; padding:6px 24px; border-radius:20px; font-size:0.7em; color:#666; margin-top:20px;">iOS / iPadOS / macOS</div>
+  </div>
+</section>
+
+<!-- =================== 一、公司介绍 =================== -->
+<section>
+  <h2>一、公司介绍</h2>
+  <div class="card" style="margin-bottom:10px;">
+    <p style="font-size:0.75em; color:#888; margin-bottom:2px;">成立时间</p>
+    <p style="font-size:0.95em; font-weight:500;">2014 年</p>
+  </div>
+  <div class="card" style="margin-bottom:10px;">
+    <p style="font-size:0.75em; color:#888; margin-bottom:2px;">产品理念</p>
+    <p style="font-size:0.95em; font-weight:500;">做好玩耐玩的游戏</p>
+  </div>
+  <div class="card" style="margin-bottom:10px;">
+    <p style="font-size:0.75em; color:#888; margin-bottom:2px;">运营理念</p>
+    <p style="font-size:0.95em; font-weight:500;">专注全球发行，长线运营</p>
+  </div>
+  <p style="font-size:0.75em; color:#888; margin-bottom:6px;">代表产品</p>
+  <div class="card-grid">
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">《极品芝麻官》</p>
+      <p style="font-size:0.7em; color:#888; margin:4px 0 0;">首款当官题材手游，全球流水破 <strong class="accent">135 亿</strong>，持续运营 <strong class="accent">9 年</strong></p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">《球球英雄》</p>
+      <p style="font-size:0.7em; color:#888; margin:4px 0 0;">创新 1V1 休闲塔防竞技，全球流水破 <strong class="accent">25 亿</strong>，持续运营 <strong class="accent">6 年</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 二、项目背景 =================== -->
+<section>
+  <h2>二、项目背景</h2>
+  <p style="font-size:0.75em; color:#888; margin-bottom:8px;">提案核心逻辑</p>
+  <div style="display:flex; flex-direction:column; gap:10px;">
+    <div class="card" style="border-left:3px solid #06c;">
+      <p style="font-size:0.82em; font-weight:600; margin:0 0 4px;">商业模型已获验证</p>
+      <p style="font-size:0.72em; color:#555; margin:0;">原型《蘑菇战争》证明了轻量 RTS 在移动端的极佳操作手感。抖小爆款《狱国争霸》（畅销榜前20）进一步验证了"兵种策略 + GVG 大社交 + 直播驱动"的高商业化天花板。</p>
+    </div>
+    <div class="card" style="border-left:3px solid #06c;">
+      <p style="font-size:0.82em; font-weight:600; margin:0 0 4px;">题材与视听精品化升级</p>
+      <p style="font-size:0.72em; color:#555; margin:0;">升级为"Q 版魔兽 / 拟人动物"全球普适性奇幻美学，契合 App Store 精品推荐标准。</p>
+    </div>
+    <div class="card" style="border-left:3px solid #06c;">
+      <p style="font-size:0.82em; font-weight:600; margin:0 0 4px;">技术与生态深度融合</p>
+      <p style="font-size:0.72em; color:#555; margin:0;">核心爽点（高密度同屏兵流）与 Apple 硬件技术（Metal、120Hz、跨设备联动）深度结合，争取全球推荐位。</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 三、市场机遇 =================== -->
+<section>
+  <h2>三、市场机遇</h2>
+  <p class="muted" style="font-size:0.75em;">Market Opportunity &amp; Pain Points</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px;">
+    <div class="card" style="border-top:3px solid #999;">
+      <p style="font-size:0.82em; font-weight:600; margin:0;">⚠️ 行业痛点</p>
+      <ul style="list-style:none; padding:0; margin:10px 0 0; font-size:0.75em; color:#555;">
+        <li style="padding:4px 0;">传统 RTS 手游门槛过高，操作繁琐，难以破圈</li>
+        <li style="padding:4px 0;">SLG 大地图反馈周期过慢，年轻玩家丧失耐心</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:3px solid #06c;">
+      <p style="font-size:0.82em; font-weight:600; margin:0;">🚀 破局风口</p>
+      <ul style="list-style:none; padding:0; margin:10px 0 0; font-size:0.75em; color:#555;">
+        <li style="padding:4px 0;">市场急需"高频博弈、即时反馈、低门槛高深度"的全新 RTS 体验</li>
+        <li style="padding:4px 0;">1-3 分钟单局，完美匹配移动端碎片化场景</li>
+      </ul>
+    </div>
+  </div>
+  <div class="stat-box" style="margin-top:14px;">
+    <p style="font-size:0.72em; color:#888; margin:0;">数据背书</p>
+    <p style="font-size:0.8em; color:#555; margin:6px 0 0;">同类原型产品在抖小畅销榜前 20 的优异商业表现，证明该玩法模型的吸金能力与受众基础已通过市场压力测试。</p>
+  </div>
+</section>
+
+<!-- =================== 四、核心玩法 =================== -->
+<section>
+  <h2>四、核心玩法</h2>
+  <p class="muted" style="font-size:0.75em;">Lite-RTS Reinvented</p>
+  <div class="two-col" style="margin-top:14px;">
+    <div>
+      <h4>经典机制传承</h4>
+      <ul>
+        <li>传承自经典轻量 RTS 原型《蘑菇战争》的"动态数字博弈"</li>
+        <li>划线派兵、建筑升级与人口争夺，0 门槛上手</li>
+        <li>1-3 分钟微型战场高频策略逆转</li>
+      </ul>
+      <div style="margin-top:16px;">
+        <h4>微观心流体验</h4>
+        <ul>
+          <li>围魏救赵 · 声东击西 · 空城计</li>
+          <li>视觉冲击力极强的"兵流洪水"</li>
+          <li>强烈的解压感与多巴胺反馈</li>
+        </ul>
+      </div>
+    </div>
+    <div style="background:#f8f9fc; border-radius:10px; border:1px solid #e0e4ea; padding:24px; text-align:center; display:flex; flex-direction:column; justify-content:center;">
+      <div style="font-size:2em; margin-bottom:8px;">🎮</div>
+      <p style="font-size:0.85em; font-weight:500;">划线派兵 → 建筑升级 → 人口争夺</p>
+      <p style="font-size:0.7em; color:#888;">动态数字博弈 · 0 门槛上手 · 极致的策略逆转</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 五、策略升维 =================== -->
+<section>
+  <h2>五、策略升维：Build 驱动</h2>
+  <p class="muted" style="font-size:0.75em;">Build-Driven Combat</p>
+  <p style="font-size:0.8em; margin-bottom:10px;">突破性创新：彻底打破传统白板小兵的单一局限，引入丰富的兵种构筑（Build）系统。</p>
+  <div class="card-grid col-4">
+    <div class="card" style="text-align:center; padding:14px;">
+      <p style="font-weight:600; font-size:0.78em; margin:0;">🛡️ 肉盾</p>
+      <p style="font-size:0.65em; color:#888; margin:4px 0 0;">吸收伤害<br>保护后排</p>
+    </div>
+    <div class="card" style="text-align:center; padding:14px;">
+      <p style="font-weight:600; font-size:0.78em; margin:0;">🏃 高机动</p>
+      <p style="font-size:0.65em; color:#888; margin:4px 0 0;">快速突进<br>偷家绕后</p>
+    </div>
+    <div class="card" style="text-align:center; padding:14px;">
+      <p style="font-weight:600; font-size:0.78em; margin:0;">🎯 远程</p>
+      <p style="font-size:0.65em; color:#888; margin:4px 0 0;">后排输出<br>定点清除</p>
+    </div>
+    <div class="card" style="text-align:center; padding:14px;">
+      <p style="font-weight:600; font-size:0.78em; margin:0;">💥 爆破/光环</p>
+      <p style="font-size:0.65em; color:#888; margin:4px 0 0;">范围伤害<br>团队增益</p>
+    </div>
+  </div>
+  <div style="margin-top:14px;">
+    <p style="font-size:0.75em; color:#888;">机制协同示例</p>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;">
+      <span class="tag">🧪 毒素流：前排染毒 → 后排引爆</span>
+      <span class="tag">❄️ 冰冻流：改变敌方兵流速度</span>
+      <span class="tag">⚡ 召唤流：人海战术碾压</span>
+    </div>
+    <p style="font-size:0.72em; color:#888; margin-top:10px;">战前卡组构筑 + 卡牌 RPG 抽卡深度结合，大幅延展长线营收天花板</p>
+  </div>
+</section>
+
+<!-- =================== 六、长线留存 =================== -->
+<section>
+  <h2>六、长线留存：GVG 社交生态</h2>
+  <p class="muted" style="font-size:0.75em;">GVG &amp; Social Ecosystem</p>
+  <div class="two-col" style="margin-top:14px;">
+    <div>
+      <h4>从小对战到大社交</h4>
+      <ul>
+        <li>突破传统 1v1 短生命周期弊端</li>
+        <li>多人乱斗 · 2v2 · 公会战</li>
+      </ul>
+      <div style="margin-top:16px;">
+        <h4>GVG 局部沙盘战</h4>
+        <ul>
+          <li>微观划线兵流 → 大型联盟战争中的局部战区对冲</li>
+          <li>大 R 扮演关键防线 / 提供强力兵种支援</li>
+          <li>散人玩家兵海战术协同，人人有参与感</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h4>预期生态指标</h4>
+      <div class="stat-box" style="margin-bottom:10px;">
+        <p style="font-size:0.72em;">打造高粘性玩家社区</p>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div class="stat-box"><div class="num">>>> 📈</div><div class="label">次留 / 七留 / 月留</div></div>
+        <div class="stat-box"><div class="num">💬</div><div class="label">公会社交粘性</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 七、美术与题材 =================== -->
+<section>
+  <h2>七、美术与题材升级</h2>
+  <p class="muted" style="font-size:0.75em;">Global Fantasy Aesthetics</p>
+  <div class="two-col" style="margin-top:14px;">
+    <div>
+      <h4>题材跃迁</h4>
+      <ul>
+        <li>放弃局限的本土化美术</li>
+        <li>Q 版魔兽风格 / 拟人化动物</li>
+        <li>北美迪士尼/皮克斯 + 亚洲二次元/奇幻 双重亲和力</li>
+      </ul>
+      <div style="margin-top:16px;">
+        <h4>高品质视听</h4>
+        <ul>
+          <li>3D 精英沙盘 · 细腻材质表现</li>
+          <li>夸张幽默的兵种死亡/技能特效</li>
+          <li>独立精品游戏格调（Indie Premium Vibe）</li>
+          <li>完美契合 App Store 编辑审美偏好</li>
+        </ul>
+      </div>
+    </div>
+    <div style="background:#f8f9fc; border-radius:10px; border:1px solid #e0e4ea; padding:30px; text-align:center; display:flex; flex-direction:column; justify-content:center; min-height:220px;">
+      <div style="font-size:2.5em; margin-bottom:8px;">🐾</div>
+      <p style="font-size:0.8em; color:#999;">概念视觉展示</p>
+      <p style="font-size:0.65em; color:#bbb;">Concept Art / Key Visual</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 八、传播基因 =================== -->
+<section>
+  <h2>八、天然的传播基因</h2>
+  <p class="muted" style="font-size:0.75em;">Live-Friendly &amp; Viral Marketing</p>
+  <div class="card-grid col-3" style="margin-top:14px;">
+    <div class="card" style="text-align:center; padding:20px;">
+      <p style="font-size:1.5em; margin:0;">🎬</p>
+      <p style="font-weight:600; font-size:0.85em; margin:8px 0 4px;">高观赏性</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">兵流对冲胜负直观，不玩游戏也能一秒看懂</p>
+    </div>
+    <div class="card" style="text-align:center; padding:20px;">
+      <p style="font-size:1.5em; margin:0;">🎯</p>
+      <p style="font-weight:600; font-size:0.85em; margin:8px 0 4px;">情绪放大器</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">"一波流偷家""绝地反杀"极适合短视频切片</p>
+    </div>
+    <div class="card" style="text-align:center; padding:20px;">
+      <p style="font-size:1.5em; margin:0;">📺</p>
+      <p style="font-weight:600; font-size:0.85em; margin:8px 0 4px;">原生直播设计</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">一键战报导出 · 弹幕互动预留 · 主播带队 GVG</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 九、技术融合 =================== -->
+<section>
+  <h2 style="font-size:1.6em;">九、技术融合：致敬 Apple 生态</h2>
+  <p class="muted" style="font-size:0.75em;">Tech Innovation: Embracing Apple Ecosystem</p>
+  <p style="font-size:0.75em; color:#06c; margin:6px 0 10px;">—— 向 Apple 商务提案的"杀手锏"页面 ——</p>
+  <div class="card-grid" style="margin-top:10px;">
+    <div class="card">
+      <p style="font-weight:600; font-size:0.82em; margin:0;">🎮 Metal 引擎极致渲染</p>
+      <p style="font-size:0.72em; color:#888; margin:4px 0 0;">优化数千个 3D 角色同屏对冲的物理碰撞与特效，确保 iPhone 满帧运行</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.82em; margin:0;">⚡ ProMotion 120Hz 高刷</p>
+      <p style="font-size:0.72em; color:#888; margin:4px 0 0;">为丝滑的划线派兵操作提供极致响应速度</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.82em; margin:0;">🔄 跨设备联动</p>
+      <p style="font-size:0.72em; color:#888; margin:4px 0 0;">完美适配 iPhone / iPad / Mac，iCloud 进度无缝同步</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.82em; margin:0;">📲 iOS 最新特性适配</p>
+      <p style="font-size:0.72em; color:#888; margin:4px 0 0;">灵动岛公会战提示 · Game Center 深度集成 · Widget 快捷开局</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 十、路线图 =================== -->
+<section>
+  <h2>十、研发路线图</h2>
+  <p class="muted" style="font-size:0.75em;">Roadmap &amp; Milestone</p>
+  <div style="display:flex; gap:14px; margin-top:16px;">
+    <div class="milestone primary">
+      <p class="phase">当前进度</p>
+      <p style="font-size:0.72em; color:#555; margin:8px 0 0;">核心玩法 Demo 已验证完毕，数值框架与多人同屏同步技术已攻克</p>
+    </div>
+  </div>
+  <div style="display:flex; gap:14px; margin-top:10px;">
+    <div class="milestone">
+      <p class="phase">📦 Q3 2026</p>
+      <p class="time">美术资产打样</p>
+      <p class="desc">完成首批 15 个核心兵种设计与 3D 美术资产打样</p>
+    </div>
+    <div class="milestone primary">
+      <p class="phase">🧪 Q4 2026</p>
+      <p class="time">TestFlight 删档测试</p>
+      <p class="desc">港澳台/东南亚区域首次 iOS TestFlight 测试</p>
+    </div>
+    <div class="milestone">
+      <p class="phase">🚀 Q1 2027</p>
+      <p class="time">全球首发</p>
+      <p class="desc">全球同步首发 Global Grand Launch</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px;">
+    <p style="font-size:0.75em; color:#888; margin:0 0 4px;">团队实力</p>
+    <p style="font-size:0.78em; color:#555; margin:0;">核心成员来自知名游戏厂商，拥有多款策略/模拟经营类畅销产品的成功研发经验。</p>
+  </div>
+</section>
+
+<!-- =================== 十一、结语 =================== -->
+<section>
+  <h2>十一、结语与合作期许</h2>
+  <p class="muted" style="font-size:0.75em;">Conclusion &amp; Partnership</p>
+  <div class="card" style="margin-top:16px; border-left:3px solid #06c;">
+    <p style="font-size:0.9em; font-weight:500; margin:0;">我们的愿景</p>
+    <p style="font-size:0.8em; color:#555; margin:8px 0 0;">携手 App Store，在移动端重新定义轻量 RTS 赛道，打造一款兼具商业价值与艺术美感的全球化现象级精品。</p>
+  </div>
+  <div style="margin-top:16px;">
+    <p style="font-size:0.75em; color:#888; margin-bottom:8px;">合作期许</p>
+    <div class="card" style="margin-bottom:8px; padding:12px 18px;">
+      <p style="font-size:0.78em; margin:0;">🔬 产品测试期（TestFlight）获得 Apple 编辑团队的专业调优反馈</p>
+    </div>
+    <div class="card" style="margin-bottom:8px; padding:12px 18px;">
+      <p style="font-size:0.78em; margin:0;">🌟 上线期获得 App Store 的 <strong class="accent">Global Feature</strong>（全球主打推荐、Today 故事包装）支持</p>
+    </div>
+    <div class="card" style="padding:12px 18px;">
+      <p style="font-size:0.78em; margin:0;">🍎 配合 Apple 新硬件发布，同步推出独家技术适配版本</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 结束页 =================== -->
+<section class="ending-slide">
+  <div>
+    <p style="font-size:0.55em; letter-spacing:0.15em; color:#999; margin-bottom:20px;">THANK YOU</p>
+    <p class="tagline">携手 App Store，重新定义轻量 RTS</p>
+    <div style="width:50px; height:2px; background:#06c; margin:24px auto; border-radius:2px;"></div>
+    <p style="font-size:0.8em; color:#888;">XXXX Studio</p>
+    <p style="font-size:0.7em; color:#aaa; margin-top:2px;">联系方式：xxxx@xxxx.com</p>
+  </div>
+</section>
+
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.5/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  controls: true, controlsTutorial: false, controlsLayout: 'bottom-right',
+  progress: true, slideNumber: 'c/t', hash: true, history: true,
+  transition: 'slide', width: 1200, height: 800, margin: 0.08,
+  center: true, touch: true, help: true,
+  hideInactiveCursor: true, hideCursorTime: 3000,
+  viewDistance: 3, mobileViewDistance: 2
+});
+</script>
+</body>
+</html>
