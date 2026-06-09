@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>狱国争霸 分析报告</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f6f8;
+    color: #1a1a2e;
+    padding: 40px 20px;
+  }
+  .slide {
+    max-width: 1100px;
+    margin: 0 auto 40px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    padding: 60px 64px;
+    page-break-after: always;
+  }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .slide { box-shadow: none; border-radius: 0; margin: 0; padding: 48px 56px; }
+  }
+
+  h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.5px; }
+  h2 { font-size: 24px; font-weight: 600; margin-bottom: 24px; color: #1a1a2e; }
+  h2 .tag { font-size: 13px; font-weight: 500; background: #eef2ff; color: #4f46e5; padding: 2px 10px; border-radius: 20px; margin-left: 10px; vertical-align: middle; }
+  h3 { font-size: 17px; font-weight: 600; margin-bottom: 12px; color: #374151; }
+  .subtitle { font-size: 16px; color: #6b7280; margin-top: 8px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+  .grid-6 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 12px; }
+
+  .card {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #f0f0f0;
+  }
+  .card-title { font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .card-value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .card-desc { font-size: 13px; color: #6b7280; margin-top: 4px; }
+
+  .tag-green { background: #d1fae5; color: #065f46; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+  .tag-yellow { background: #fef3c7; color: #92400e; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+  .tag-red { background: #fee2e2; color: #991b1b; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+  .tag-blue { background: #dbeafe; color: #1e40af; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+
+  .badge { display: inline-block; background: #eef2ff; color: #4f46e5; font-size: 12px; font-weight: 600; padding: 2px 10px; border-radius: 10px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; padding: 10px 12px; background: #f9fafb; color: #6b7280; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 2px solid #e5e7eb; }
+  td { padding: 12px; border-bottom: 1px solid #f0f0f0; }
+  tr:last-child td { border-bottom: none; }
+
+  .star { color: #f59e0b; letter-spacing: 1px; }
+  .dot-green { display: inline-block; width: 8px; height: 8px; background: #10b981; border-radius: 50%; margin-right: 4px; }
+  .dot-yellow { display: inline-block; width: 8px; height: 8px; background: #f59e0b; border-radius: 50%; margin-right: 4px; }
+  .dot-red { display: inline-block; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; margin-right: 4px; }
+
+  .recommend {
+    background: linear-gradient(135deg, #eef2ff 0%, #f0f9ff 100%);
+    border: 1px solid #c7d2fe;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 20px;
+  }
+  .recommend h3 { color: #4f46e5; margin-bottom: 8px; }
+  .recommend p { font-size: 14px; color: #374151; line-height: 1.6; }
+
+  .slide-header {
+    border-bottom: 2px solid #eef2ff;
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .slide-header .page-num { font-size: 13px; color: #9ca3af; font-weight: 500; }
+
+  ul, ol { font-size: 14px; line-height: 1.8; color: #374151; padding-left: 18px; }
+  li { margin-bottom: 4px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-24 { margin-top: 24px; }
+  .mt-32 { margin-top: 32px; }
+  .mb-16 { margin-bottom: 16px; }
+  .text-sm { font-size: 13px; }
+  .text-muted { color: #6b7280; }
+  .fw-600 { font-weight: 600; }
+  .flex { display: flex; }
+  .gap-8 { gap: 8px; }
+  .flex-wrap { flex-wrap: wrap; }
+
+  .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .option-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .option-card:hover { border-color: #c7d2fe; }
+  .option-card .label { font-size: 16px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .option-card .label .rec { font-size: 11px; font-weight: 600; color: #fff; background: #4f46e5; padding: 1px 8px; border-radius: 8px; margin-left: 6px; vertical-align: middle; }
+  .option-card .desc { font-size: 13px; color: #6b7280; line-height: 1.6; margin-bottom: 10px; }
+  .option-card .pros { font-size: 13px; color: #065f46; line-height: 1.7; }
+  .option-card .cons { font-size: 13px; color: #991b1b; line-height: 1.7; }
+
+  .footer { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 32px; padding-top: 16px; border-top: 1px solid #f0f0f0; }
+
+  @media (max-width: 720px) {
+    .slide { padding: 28px 20px; }
+    .grid-2, .grid-3, .grid-4, .grid-6, .option-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 封面 -->
+<div class="slide">
+  <div style="min-height: 400px; display: flex; flex-direction: column; justify-content: center;">
+    <div style="font-size: 14px; color: #4f46e5; font-weight: 600; margin-bottom: 16px; letter-spacing: 1px;">游戏分析报告 · 2026.06</div>
+    <h1 style="font-size: 44px; margin-bottom: 12px;">狱国争霸</h1>
+    <div style="font-size: 20px; color: #6b7280; font-weight: 400; margin-bottom: 32px;">买量素材方向 · 世界观换皮方案 · 微信小游戏适配评估</div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <span class="badge">微信小游戏</span>
+      <span class="badge">策略战棋</span>
+      <span class="badge">拉线出兵</span>
+      <span class="badge">Q版卡通3D</span>
+    </div>
+    <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #f0f0f0; font-size: 13px; color: #9ca3af;">
+      <span>玩法类型：拉线出兵 + 城池攻防 + 实时PvP</span>
+      <span style="margin: 0 12px;">·</span>
+      <span>抖音小游戏畅销榜 TOP9（2026.05）</span>
+    </div>
+  </div>
+</div>
+
+<!-- P1 游戏定位 -->
+<div class="slide">
+  <div class="slide-header"><h2>游戏本体精准定位</h2><span class="page-num">01</span></div>
+  <div class="grid-2" style="margin-bottom: 28px;">
+    <div class="card">
+      <div class="card-title">玩法核心</div>
+      <div class="card-value">拉线出兵 + 城池攻防</div>
+      <div class="card-desc">手指画线派兵占领城池，兵种克制决定胜负</div>
+    </div>
+    <div class="card">
+      <div class="card-title">品类定位</div>
+      <div class="card-value">轻量策略战棋 / 休闲RTS</div>
+      <div class="card-desc">操作门槛低、视觉爽感强、适合小游戏平台</div>
+    </div>
+    <div class="card">
+      <div class="card-title">美术风格</div>
+      <div class="card-value">Q版卡通3D · 淡彩水墨</div>
+      <div class="card-desc">角色萌系比例，场景偏淡雅古风</div>
+    </div>
+    <div class="card">
+      <div class="card-title">市场表现</div>
+      <div class="card-value">抖音小游戏畅销榜 TOP9</div>
+      <div class="card-desc">2026年5月冲入前十，五一档期爆发</div>
+    </div>
+  </div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">平台</div>
+      <div class="card-value">微信小游戏 + 抖音小游戏</div>
+      <div class="card-desc">双端运营，微信侧社交裂变，抖音侧信息流买量</div>
+    </div>
+    <div class="card">
+      <div class="card-title">变现</div>
+      <div class="card-value">混合变现</div>
+      <div class="card-desc">广告（激励视频）+ 内购（月卡/礼包），畅销榜验证</div>
+    </div>
+    <div class="card">
+      <div class="card-title">世界观</div>
+      <div class="card-value">架空"狱国"冥界</div>
+      <div class="card-desc">三国武将套冥界角色皮，视觉有差异化但认知成本高</div>
+    </div>
+  </div>
+</div>
+
+<!-- P2 买量素材方向 -->
+<div class="slide">
+  <div class="slide-header"><h2>买量素材方向</h2><span class="page-num">02</span></div>
+  <p class="subtitle mb-16">核心素材公式：拉线操作视觉秀 + 兵种克制展示 + 翻盘爽点</p>
+
+  <table style="margin-top: 16px;">
+    <thead>
+      <tr><th style="width:18%">素材类型</th><th style="width:37%">内容形式</th><th style="width:25%">吸量原理</th><th style="width:20%">优先级</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="fw-600">拉线操作秀</td>
+        <td>手指画线→士兵列队出征→攻城推进，一镜到底</td>
+        <td>操作本身带解压感，用户一看就懂</td>
+        <td><span class="tag-green">必备基础款</span></td>
+      </tr>
+      <tr>
+        <td class="fw-600">翻盘/偷家类</td>
+        <td>残血1v3、残兵偷主城，配合惊讶表情</td>
+        <td>"我上我也行"错觉，降低心理门槛</td>
+        <td><span class="tag-green">高转化</span></td>
+      </tr>
+      <tr>
+        <td class="fw-600">兵种克制科普</td>
+        <td>"大象 vs 步兵，谁会赢？" 策略对决</td>
+        <td>勾起研究欲，提高停留时长</td>
+        <td><span class="tag-blue">深度用户</span></td>
+      </tr>
+      <tr>
+        <td class="fw-600">狱国悬念类</td>
+        <td>"为什么是狱国？三国武将为什么在冥界？"</td>
+        <td>利用世界观差异化吸引点击</td>
+        <td><span class="tag-yellow">差异化钩子</span></td>
+      </tr>
+      <tr>
+        <td class="fw-600">副玩法引流</td>
+        <td>数字选择门 / 走钢丝，套上Q版角色</td>
+        <td>行业通用吸量杠杆，降低获客成本</td>
+        <td><span class="tag-yellow">可选扩量</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="grid-2 mt-24">
+    <div class="card">
+      <h3 style="margin-bottom: 10px;">抖音素材策略</h3>
+      <ul>
+        <li>节奏快，前3秒定生死</li>
+        <li>强反转/翻盘局，配热门BGM</li>
+        <li>充分利用"狱国"视觉差异化抓眼球</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom: 10px;">微信素材策略</h3>
+      <ul>
+        <li>用户偏年长（30-50岁），节奏可稍慢</li>
+        <li>兵种搭配攻略 + 联盟战报类内容</li>
+        <li>社交裂变：分享领奖励、邀请助力</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- P3 世界观换皮总览 -->
+<div class="slide">
+  <div class="slide-header"><h2>换皮方案总览</h2><span class="page-num">03</span></div>
+  <p class="subtitle mb-16">核心原则：玩法（拉线出兵+城防）和数值体系不变，只换美术资源和世界观包装</p>
+
+  <div class="grid-2" style="margin-bottom: 24px;">
+    <div class="option-card" style="border-left: 4px solid #4f46e5;">
+      <div class="label">A. 优化狱国<span class="rec">最快</span></div>
+      <div class="desc">保留狱国世界观，优化美术品质 + 改名，最小改动验证市场</div>
+      <div class="pros">✅ 开发量最小 · 保留差异化 · 已跑通商业模式</div>
+      <div class="cons">❌ 天花板有限 · "狱"字负面联想</div>
+    </div>
+    <div class="option-card" style="border-left: 4px solid #10b981;">
+      <div class="label">B. 末日废土<span class="rec">稳健</span></div>
+      <div class="desc">末世幸存者基地，拉线派兵搜刮打丧尸，最大验证赛道</div>
+      <div class="pros">✅ 买量效率最高 · 《无尽冬日》类已验证 · 审核友好</div>
+      <div class="cons">❌ 竞争激烈 · 需差异化微创新</div>
+    </div>
+    <div class="option-card" style="border-left: 4px solid #10b981;">
+      <div class="label">C. 动物王国<span class="rec">扩圈</span></div>
+      <div class="desc">萌宠部落战争，玩法反差萌，用户盘最大</div>
+      <div class="pros">✅ 零审核风险 · 男女通吃 · 可出海 · 生命周期长</div>
+      <div class="cons">❌ 付费深度存疑 · 核心男性付费用户可能不买账</div>
+    </div>
+    <div class="option-card" style="border-left: 4px solid #f59e0b;">
+      <div class="label">D. 正经三国</div>
+      <div class="desc">纯正Q版三国，去掉冥界设定，对标《放开那三国》画风</div>
+      <div class="pros">✅ 认知成本为零 · 换皮难度低 · 用户池最大</div>
+      <div class="cons">❌ 极卷 · "狱国"必须改名 · 失去差异化</div>
+    </div>
+    <div class="option-card" style="border-left: 4px solid #f59e0b;">
+      <div class="label">E. 西游神话</div>
+      <div class="desc">天庭vs地府vs妖怪，孙悟空哪吒神话大乱斗</div>
+      <div class="pros">✅ 国民级IP · 兵种替换自然 · 策划空间大</div>
+      <div class="cons">❌ 游戏品类红海 · 美术需高投入才有差异化</div>
+    </div>
+    <div class="option-card" style="border-left: 4px solid #ef4444;">
+      <div class="label">F. 武侠江湖</div>
+      <div class="desc">各门派争武林盟主，弟子下山=派兵</div>
+      <div class="pros">✅ 30-45岁核心用户情怀牌 · 审核极低风险</div>
+      <div class="cons">❌ 微信小游戏品类验证不足 · 女性吸引力弱</div>
+    </div>
+  </div>
+</div>
+
+<!-- P4 方案对比矩阵 -->
+<div class="slide">
+  <div class="slide-header"><h2>方案对比矩阵</h2><span class="page-num">04</span></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>方案</th>
+        <th>买量效率</th>
+        <th>开发量</th>
+        <th>审核风险</th>
+        <th>付费潜力</th>
+        <th>差异化</th>
+        <th>总评</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="fw-600">A. 优化狱国</td>
+        <td><span class="star">★★★</span>☆☆</td>
+        <td><span class="tag-green">小</span></td>
+        <td><span class="dot-green"></span>低</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="star">★★★★★</span></td>
+        <td>投入产出比最高</td>
+      </tr>
+      <tr>
+        <td class="fw-600">B. 末日废土</td>
+        <td><span class="star">★★★★★</span></td>
+        <td><span class="tag-yellow">中</span></td>
+        <td><span class="dot-green"></span>低</td>
+        <td><span class="star">★★★★★</span></td>
+        <td><span class="star">★★</span>☆☆☆</td>
+        <td>最稳健</td>
+      </tr>
+      <tr>
+        <td class="fw-600">C. 动物王国</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="tag-red">大</span></td>
+        <td><span class="dot-green"></span>极低</td>
+        <td><span class="star">★★★</span>☆☆</td>
+        <td><span class="star">★★★★★</span></td>
+        <td>扩圈首选</td>
+      </tr>
+      <tr>
+        <td class="fw-600">D. 正经三国</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="tag-green">小</span></td>
+        <td><span class="dot-green"></span>极低</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="star">★</span>☆☆☆☆</td>
+        <td>红海竞争</td>
+      </tr>
+      <tr>
+        <td class="fw-600">E. 西游神话</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="tag-yellow">中</span></td>
+        <td><span class="dot-green"></span>极低</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="star">★★</span>☆☆☆</td>
+        <td>IP强但卷</td>
+      </tr>
+      <tr>
+        <td class="fw-600">F. 武侠江湖</td>
+        <td><span class="star">★★★</span>☆☆</td>
+        <td><span class="tag-red">大</span></td>
+        <td><span class="dot-green"></span>低</td>
+        <td><span class="star">★★★</span>☆☆</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td>情怀但未验证</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="display: flex; gap: 12px; margin-top: 10px; font-size: 12px; color: #6b7280;">
+    <span><span class="dot-green"></span> = 风险可控</span>
+    <span><span class="dot-yellow"></span> = 需关注</span>
+    <span><span class="dot-red"></span> = 高风险</span>
+  </div>
+</div>
+
+<!-- P5 重点方案详析 -->
+<div class="slide">
+  <div class="slide-header"><h2>重点方案详析：A / B / C</h2><span class="page-num">05</span></div>
+
+  <!-- A -->
+  <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #4f46e5;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <span style="font-size: 18px; font-weight: 700;">方案 A · 优化狱国</span>
+      <span class="badge">投入产出比最高</span>
+      <span class="tag-green">开发量最小</span>
+    </div>
+    <p class="text-sm text-muted" style="margin-bottom: 12px;">保留现有世界观，优化美术品质 + 改名，最低成本快速验证</p>
+    <div class="grid-2">
+      <div>
+        <div class="fw-600 text-sm" style="color:#065f46;">优势</div>
+        <ul style="font-size:13px;">
+          <li>开发量最小，不改核心资产，只优化+改名</li>
+          <li>市场已验证（抖音畅销TOP9），商业模式跑通</li>
+          <li>"狱国"冥界世界观在买量端有差异化辨识度</li>
+          <li>可直接AB测试，数据驱动决策</li>
+        </ul>
+      </div>
+      <div>
+        <div class="fw-600 text-sm" style="color:#991b1b;">劣势</div>
+        <ul style="font-size:13px;">
+          <li>"狱"字易被误解为"监狱"，转化率有折损</li>
+          <li>暗黑系Q版在国内非主流审美</li>
+          <li>天花板待验证（题材偏小众）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- B -->
+  <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #10b981;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <span style="font-size: 18px; font-weight: 700;">方案 B · 末日废土</span>
+      <span class="badge">最稳健</span>
+      <span class="tag-green">买量效率最高</span>
+    </div>
+    <p class="text-sm text-muted" style="margin-bottom: 12px;">末世基地生存，拉线派兵搜刮打丧尸，套用已验证品类</p>
+    <div class="grid-2">
+      <div>
+        <div class="fw-600 text-sm" style="color:#065f46;">优势</div>
+        <ul style="font-size:13px;">
+          <li>SLG/策略类最大赛道——《无尽冬日》《生存33天》已验证</li>
+          <li>买量素材模板成熟，转化率行业基准清晰</li>
+          <li>拉线出兵天然契合"派幸存者搜物资打丧尸"</li>
+          <li>微信小游戏审核友好</li>
+        </ul>
+      </div>
+      <div>
+        <div class="fw-600 text-sm" style="color:#991b1b;">劣势</div>
+        <ul style="font-size:13px;">
+          <li>竞品极多，需做差异化微创新（如搞怪丧尸风格）</li>
+          <li>男性用户转化好，但女性吸引力弱于动物/三国</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- C -->
+  <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; border-left: 4px solid #10b981;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <span style="font-size: 18px; font-weight: 700;">方案 C · 动物王国</span>
+      <span class="badge">扩圈首选</span>
+      <span class="tag-blue">全年龄向</span>
+    </div>
+    <p class="text-sm text-muted" style="margin-bottom: 12px;">萌宠部落战争，动物+兵种天然契合，全年龄通吃</p>
+    <div class="grid-2">
+      <div>
+        <div class="fw-600 text-sm" style="color:#065f46;">优势</div>
+        <ul style="font-size:13px;">
+          <li>审核零风险——动物=最安全的题材</li>
+          <li>用户盘极广：男女老少通吃</li>
+          <li>微信小游戏对动物题材极友好（《动物餐厅》验证）</li>
+          <li>生命周期长、可出海</li>
+        </ul>
+      </div>
+      <div>
+        <div class="fw-600 text-sm" style="color:#991b1b;">劣势</div>
+        <ul style="font-size:13px;">
+          <li>核心付费群体（30-45岁男性）转化阻力大</li>
+          <li>战争/征服情绪被萌化削弱</li>
+          <li>付费深度待验证</li>
+          <li>美术开发量大</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P6 核心建议 -->
+<div class="slide">
+  <div class="slide-header"><h2>行动建议</h2><span class="page-num">06</span></div>
+
+  <div style="margin-bottom: 32px;">
+    <h3 style="margin-bottom: 16px;">第一优先 · 改名（最快见效，零成本）</h3>
+    <div class="grid-2">
+      <div>
+        <p class="text-sm text-muted" style="margin-bottom: 8px;">"狱国争霸"的问题：</p>
+        <ul>
+          <li>"狱"字第一反应是"监狱"→负面联想</li>
+          <li>"狱国"二字读起来拗口，不易传播</li>
+          <li>名称与Q版卡通画风不搭</li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-sm text-muted" style="margin-bottom: 8px;">改名方向建议：</p>
+        <ul>
+          <li>去掉"狱"字，保留"国争霸"：《乱世争霸》《诸侯争霸》</li>
+          <li>突出拉线操作：《点兵点将》《一指定江山》</li>
+          <li>直击爽点：《出兵就完事了》《这城我要了》</li>
+          <li>三国通用型：《挂帅出征》《铁骑争锋》</li>
+          <li>Q版搞怪型：《打不过就叫人》《我的部队有点多》</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 32px;">
+    <h3 style="margin-bottom: 16px;">建议执行路径</h3>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 200px; background: #f9fafb; border-radius: 12px; padding: 20px; text-align: center;">
+        <div style="font-size: 28px; font-weight: 700; color: #4f46e5; margin-bottom: 4px;">1</div>
+        <div class="fw-600" style="font-size: 14px;">改名 + 微调美术</div>
+        <div class="text-sm text-muted">1-2周，零开发</div>
+      </div>
+      <div style="flex: 1; min-width: 200px; background: #f9fafb; border-radius: 12px; padding: 20px; text-align: center;">
+        <div style="font-size: 28px; font-weight: 700; color: #4f46e5; margin-bottom: 4px;">2</div>
+        <div class="fw-600" style="font-size: 14px;">原版+末日版AB测试</div>
+        <div class="text-sm text-muted">3-4周美术换皮</div>
+      </div>
+      <div style="flex: 1; min-width: 200px; background: #f9fafb; border-radius: 12px; padding: 20px; text-align: center;">
+        <div style="font-size: 28px; font-weight: 700; color: #4f46e5; margin-bottom: 4px;">3</div>
+        <div class="fw-600" style="font-size: 14px;">数据驱动决定终稿</div>
+        <div class="text-sm text-muted">跑7-14天，看留存/LTV</div>
+      </div>
+      <div style="flex: 1; min-width: 200px; background: #f9fafb; border-radius: 12px; padding: 20px; text-align: center;">
+        <div style="font-size: 28px; font-weight: 700; color: #4f46e5; margin-bottom: 4px;">4</div>
+        <div class="fw-600" style="font-size: 14px;">动物王国（长期）</div>
+        <div class="text-sm text-muted">观察到品类风向后再投入</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recommend">
+    <h3>一句话建议</h3>
+    <p><strong>短期：改名+微调狱国</strong>（1-2周，零开发成本看数据反弹）<br>
+    <strong>中期：做一套末日皮平行测试</strong>（3-4周，买量效率最高赛道）<br>
+    <strong>长期：动物王国作为第二增长曲线</strong>（全年龄覆盖+出海潜力）</p>
+  </div>
+</div>
+
+<!-- P7 改名建议 -->
+<div class="slide">
+  <div class="slide-header"><h2>改名方案 · 候选列表</h2><span class="page-num">07</span></div>
+  <p class="subtitle mb-16">去掉"狱"字的负面影响，同时保留争霸/策略的指向性</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="margin-bottom: 10px;">实力派 · 直接了当</h3>
+      <ul>
+        <li><strong>《乱世争霸》</strong>—— 三国通用大词，认知成本最低</li>
+        <li><strong>《诸侯争霸》</strong>—— 有策略深度感，适合SLG用户</li>
+        <li><strong>《王城争霸》</strong>—— 突出城战核心玩法</li>
+        <li><strong>《挂帅出征》</strong>—— 有军事感，切合策略调性</li>
+        <li><strong>《铁骑争锋》</strong>—— 画面感强，适合买量素材</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom: 10px;">玩法派 · 突出拉线操作</h3>
+      <ul>
+        <li><strong>《点兵点将》</strong>—— 朗朗上口，突出手指操作</li>
+        <li><strong>《一指定江山》</strong>—— 突出拉线=控制战局</li>
+        <li><strong>《出兵就完事了》</strong>—— 网感强，抖音传播友好</li>
+        <li><strong>《这城我要了》</strong>—— 霸气体现在一句话里</li>
+        <li><strong>《指尖攻城》</strong>—— 直接说明操作方式</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom: 10px;">搞怪派 · 适合Q版画风</h3>
+      <ul>
+        <li><strong>《打不过就叫人》</strong>—— 突出兵海策略</li>
+        <li><strong>《我的部队有点多》</strong>—— 凡尔赛风格</li>
+        <li><strong>《别打了都给你》</strong>—— 你追我赶的氛围</li>
+        <li><strong>《大军压境》</strong>—— 有气势，又不失Q感</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom: 10px;">世界观派 · 如不改题材</h3>
+      <ul>
+        <li><strong>《冥界争霸》</strong>—— 保留冥界感但去掉"狱"</li>
+        <li><strong>《幽冥争霸》</strong>—— 更有国风神秘感</li>
+        <li><strong>《灵域争霸》</strong>—— 更普适的玄幻词汇</li>
+        <li><strong>《将魂出征》</strong>—— 突出武将英魂概念</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top: 24px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px 20px;">
+    <p style="font-size: 14px; color: #166534;"><strong>改名小贴士：</strong> 改名前先在抖音/微信小游戏搜一下候选名，看有没有重名的爆款；建议准备3-5个名字做买量素材AB测试，7天看点击率再决定。</p>
+  </div>
+</div>
+
+<div class="footer">
+  本报告基于公开数据整理 · 2026年6月
+</div>
+
+</body>
+</html>
