@@ -9,7 +9,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
 * { box-sizing: border-box; }
 body { font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif; background: #f5f5f7; }
-
 .reveal {
   font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif;
   color: #1d1d1f;
@@ -18,9 +17,9 @@ body { font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif; backg
   font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif;
   text-transform: none; letter-spacing: 0; color: #1d1d1f;
 }
-.reveal h1 { font-weight: 900; font-size: 3em; }
-.reveal h2 { font-weight: 700; font-size: 1.9em; margin-bottom: 10px; }
-.reveal h3 { font-weight: 600; font-size: 1.15em; }
+.reveal h1 { font-weight: 900; font-size: 2.8em; }
+.reveal h2 { font-weight: 700; font-size: 1.8em; margin-bottom: 10px; }
+.reveal h3 { font-weight: 600; font-size: 1.1em; }
 .reveal h4 { font-weight: 600; font-size: 0.95em; color: #333; }
 .reveal p { font-weight: 400; color: #333; }
 .reveal li { font-weight: 400; line-height: 1.8; color: #333; }
@@ -29,55 +28,41 @@ body { font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif; backg
 .reveal .slide-number { color: #999 !important; font-size: 12px !important; }
 .reveal .slide-background { background: #fff; }
 
-.section-divider {
-  background: linear-gradient(135deg, #f0f4ff 0%, #e8edf5 100%) !important;
-}
+.section-divider { background: linear-gradient(135deg, #f0f4ff 0%, #e8edf5 100%) !important; }
 .section-divider h2 { font-weight: 700; letter-spacing: 0.15em; color: #1a1a2e; }
 .section-divider .section-num {
   display: inline-block; font-size: 0.5em; font-weight: 500; letter-spacing: 0.15em;
   border: 1px solid #06c; color: #06c; padding: 4px 20px; border-radius: 20px; margin-bottom: 16px;
 }
 
-.cover-slide {
-  background: linear-gradient(135deg, #f8f9fc 0%, #eef1f8 100%) !important;
-  position: relative;
-}
+.cover-slide { background: linear-gradient(135deg, #f8f9fc 0%, #eef1f8 100%) !important; position: relative; }
 .cover-slide::after {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
   background: linear-gradient(90deg, #06c, #5e5ce6);
 }
 .cover-slide .accent-line { width: 70px; height: 3px; background: #06c; margin: 18px auto; border-radius: 2px; }
 
-.keyword-tags { margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.keyword-tag {
+.card {
+  background: #f8f9fc; border: 1px solid #e0e4ea; border-radius: 10px; padding: 18px 22px; text-align: left;
+}
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+.card-grid.col-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.stat-number { font-size: 1.5em; font-weight: 700; color: #06c; }
+.stat-label { font-size: 0.7em; color: #666; margin-top: 2px; }
+
+.tag {
   display: inline-block; background: #f0f4ff; border: 1px solid #d0d7e0;
-  color: #06c; padding: 5px 16px; border-radius: 16px; font-size: 0.75em; font-weight: 500;
+  color: #06c; padding: 4px 14px; border-radius: 14px; font-size: 0.7em; font-weight: 500;
 }
 
-.features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
-.feature-card {
-  background: #f8f9fc; border: 1px solid #e8ecf0; border-radius: 10px;
-  padding: 18px 22px; text-align: left;
-}
-.feature-card .icon { font-size: 1.6em; margin-bottom: 6px; }
-.feature-card h4 { margin: 0 0 4px; font-weight: 600; font-size: 0.95em; color: #1d1d1f; }
-.feature-card p { margin: 0; font-size: 0.75em; color: #666; line-height: 1.5; }
+.table-compare { width: 100%; border-collapse: collapse; font-size: 0.7em; margin-top: 12px; }
+.table-compare th,.table-compare td { padding: 10px 12px; border-bottom: 1px solid #e8ecf0; text-align: left; }
+.table-compare th { background: #f0f4ff; color: #1d1d1f; font-weight: 600; }
 
-.tech-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-.tech-item {
-  background: #f8f9fc; border: 1px solid #e8ecf0; border-radius: 8px;
-  padding: 14px; text-align: center; font-size: 0.75em;
-}
-.tech-item .tech-icon { font-size: 1.4em; margin-bottom: 4px; }
-.tech-item .name { font-weight: 600; color: #1d1d1f; }
-
-.timeline {
-  position: relative; max-width: 650px; margin: 0 auto; padding-left: 28px;
-}
-.timeline::before {
-  content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: #06c;
-}
-.timeline-item { position: relative; margin-bottom: 20px; text-align: left; }
+.timeline { position: relative; max-width: 620px; margin: 0 auto; padding-left: 28px; }
+.timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: #06c; }
+.timeline-item { position: relative; margin-bottom: 18px; text-align: left; }
 .timeline-item::before {
   content: ''; position: absolute; left: -22px; top: 6px; width: 10px; height: 10px;
   border-radius: 50%; background: #06c; border: 2px solid #fff;
@@ -85,58 +70,21 @@ body { font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif; backg
 .timeline-item .phase { font-weight: 600; color: #06c; font-size: 0.85em; }
 .timeline-item .detail { font-size: 0.8em; color: #555; margin-top: 3px; }
 
-.comparison-table { width: 100%; border-collapse: collapse; font-size: 0.7em; margin-top: 14px; }
-.comparison-table th,.comparison-table td {
-  padding: 10px 12px; border-bottom: 1px solid #e8ecf0; text-align: left;
-}
-.comparison-table th { background: #f0f4ff; color: #1d1d1f; font-weight: 600; }
-.comparison-table .highlight-row td { background: #f0f7ff; color: #06c; font-weight: 500; }
-
-.data-badges { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 18px; }
-.data-badge {
-  background: #f8f9fc; border: 1px solid #e0e4ea; border-radius: 10px; padding: 14px 22px; min-width: 110px;
-}
-.data-badge .number { font-size: 1.5em; font-weight: 700; color: #06c; }
-.data-badge .label { font-size: 0.7em; color: #666; margin-top: 2px; }
-
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; text-align: left; }
 .two-col h4 { margin-bottom: 8px; color: #1d1d1f; }
 .two-col ul { list-style: none; padding: 0; margin: 0; }
 .two-col li { padding: 5px 0; font-size: 0.8em; position: relative; padding-left: 16px; color: #333; }
 .two-col li::before { content: '›'; position: absolute; left: 0; color: #06c; font-weight: 700; }
 
-.stats-row { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
-.stat-item { text-align: center; }
-.stat-item .num { font-size: 1.7em; font-weight: 700; color: #06c; }
-.stat-item .desc { font-size: 0.7em; color: #666; margin-top: 3px; }
-
 .ending-slide { background: linear-gradient(135deg, #f0f4ff 0%, #e8edf5 100%) !important; }
 .ending-slide .tagline { font-size: 1.8em; font-weight: 300; color: #1d1d1f; font-style: italic; }
 
 .muted { color: #999 !important; }
 .accent { color: #06c; }
-.fw-700 { font-weight: 700; }
 .text-left { text-align: left; }
 
-.progress-item {
-  display: flex; align-items: center; gap: 12px; background: #f8f9fc;
-  padding: 10px 16px; border-radius: 8px; margin-bottom: 8px; font-size: 0.8em;
-}
-.progress-item .name { flex: 1; font-weight: 500; }
-.progress-item .note { font-size: 0.85em; color: #888; }
-.progress-item.best { border: 1px solid #06c; background: #f0f7ff; }
-.progress-item.best .name { color: #06c; }
-
-.company-card {
-  background: #f8f9fc; border: 1px solid #e0e4ea; border-radius: 10px;
-  padding: 18px 22px; margin-bottom: 12px; text-align: left;
-}
-.company-card .label { font-size: 0.7em; color: #888; margin-bottom: 2px; }
-.company-card .value { font-size: 0.9em; font-weight: 500; color: #1d1d1f; }
-
 @media (max-width: 768px) {
-  .features-grid,.two-col { grid-template-columns: 1fr; }
-  .tech-grid { grid-template-columns: 1fr 1fr; }
+  .card-grid,.card-grid.col-3,.two-col { grid-template-columns: 1fr; }
   .reveal h1 { font-size: 2em; }
   .reveal h2 { font-size: 1.4em; }
 }
@@ -146,7 +94,7 @@ body { font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif; backg
 
 <div class="reveal"><div class="slides">
 
-<!-- ===================== P1：封面 ===================== -->
+<!-- =================== 封面 =================== -->
 <section class="cover-slide">
   <div>
     <div style="font-size:0.55em; letter-spacing:0.15em; color:#999; margin-bottom:28px;">Apple 游戏路演报告 · 2026</div>
@@ -155,133 +103,126 @@ body { font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif; backg
     <div class="accent-line"></div>
     <p style="font-size:1.2em; font-weight:300; margin-top:18px; color:#1d1d1f;">轻松经营你的王国，自动征服整个大陆。</p>
     <p style="font-size:0.7em; margin-top:28px; color:#888;">开发商：XXXX Studio ｜ 发行商：XXXX ｜ 预计上线：2026 Q4</p>
-    <div style="display:inline-block; background:#f0f4ff; border:1px solid #d0d7e0; padding:6px 24px; border-radius:20px; font-size:0.7em; color:#666; margin-top:24px;">面向 Apple 编辑推荐 · 全球发布</div>
+    <div style="display:inline-block; background:#f0f4ff; border:1px solid #d0d7e0; padding:6px 24px; border-radius:20px; font-size:0.7em; color:#666; margin-top:24px;">iOS / iPadOS / macOS</div>
   </div>
 </section>
 
-<!-- ===================== P2：公司介绍 ===================== -->
+<!-- =================== 一、公司介绍 =================== -->
 <section>
-  <h2>公司介绍</h2>
-  <p class="muted" style="font-size:0.75em;">Company Profile</p>
-  <div style="max-width:700px; margin:16px auto 0;">
-    <div class="company-card">
-      <div class="label">成立时间</div>
-      <div class="value">2014 年</div>
-    </div>
-    <div class="company-card">
-      <div class="label">产品理念</div>
-      <div class="value">做好玩耐玩的游戏</div>
-    </div>
-    <div class="company-card">
-      <div class="label">运营理念</div>
-      <div class="value">专注全球发行，长线运营</div>
-    </div>
+  <h2>一、公司介绍</h2>
+  <div class="card" style="margin-bottom:12px;">
+    <p style="font-size:0.75em; color:#888; margin-bottom:2px;">成立时间</p>
+    <p style="font-size:0.95em; font-weight:500;">2014 年</p>
   </div>
-  <div style="margin-top:16px;">
-    <p style="font-size:0.75em; color:#888; margin-bottom:8px;">代表产品</p>
-    <div class="two-col">
-      <div style="background:#f8f9fc; border:1px solid #e0e4ea; border-radius:8px; padding:14px 18px;">
-        <p style="font-weight:600; font-size:0.85em; margin:0;">《极品芝麻官》</p>
-        <p style="font-size:0.7em; color:#888; margin:4px 0 0;">首款当官题材手游 · 全球流水破 <strong class="accent">135 亿</strong> · 持续运营 <strong class="accent">9 年</strong></p>
-      </div>
-      <div style="background:#f8f9fc; border:1px solid #e0e4ea; border-radius:8px; padding:14px 18px;">
-        <p style="font-weight:600; font-size:0.85em; margin:0;">《球球英雄》</p>
-        <p style="font-size:0.7em; color:#888; margin:4px 0 0;">创新 1V1 休闲塔防竞技 · 全球流水破 <strong class="accent">25 亿</strong> · 持续运营 <strong class="accent">6 年</strong></p>
-      </div>
+  <div class="card" style="margin-bottom:12px;">
+    <p style="font-size:0.75em; color:#888; margin-bottom:2px;">产品理念</p>
+    <p style="font-size:0.95em; font-weight:500;">做好玩耐玩的游戏</p>
+  </div>
+  <div class="card" style="margin-bottom:16px;">
+    <p style="font-size:0.75em; color:#888; margin-bottom:2px;">运营理念</p>
+    <p style="font-size:0.95em; font-weight:500;">专注全球发行，长线运营</p>
+  </div>
+  <p style="font-size:0.75em; color:#888; margin-bottom:8px;">代表产品</p>
+  <div class="card-grid">
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">《极品芝麻官》</p>
+      <p style="font-size:0.7em; color:#888; margin:4px 0 0;">首款当官题材手游，全球流水破 <strong class="accent">135 亿</strong>，持续运营 <strong class="accent">9 年</strong></p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">《球球英雄》</p>
+      <p style="font-size:0.7em; color:#888; margin:4px 0 0;">创新 1V1 休闲塔防竞技，全球流水破 <strong class="accent">25 亿</strong>，持续运营 <strong class="accent">6 年</strong></p>
     </div>
   </div>
 </section>
 
-<!-- ===================== P3：项目背景 ===================== -->
+<!-- =================== 二、项目背景 =================== -->
 <section>
-  <h2>项目背景</h2>
-  <p class="muted" style="font-size:0.75em;">Project Background</p>
-  <div style="max-width:650px; margin:16px auto 0; text-align:left;">
-    <p style="font-size:0.85em; margin-bottom:20px; line-height:1.7;">
-      基于公司百亿级项目《极品芝麻官》数值底层的进阶经验，面向 <strong class="accent">全球轻策略赛道</strong> 全新打造。
-    </p>
-    <p style="font-size:0.75em; color:#888; margin-bottom:10px;">核心创新点</p>
-    <ul style="list-style:none; padding:0;">
-      <li style="padding:7px 0; font-size:0.8em; border-bottom:1px solid #f0f0f0;">1. 中世纪奇幻世界观 · <span style="color:#666;">轻松治愈的王国征服题材</span></li>
-      <li style="padding:7px 0; font-size:0.8em; border-bottom:1px solid #f0f0f0;">2. 自动出兵 + 节点占领 · <span style="color:#666;">创新轻策略核心玩法</span></li>
-      <li style="padding:7px 0; font-size:0.8em; border-bottom:1px solid #f0f0f0;">3. Q 版童话美学 · <span style="color:#666;">高辨识度全球化美术风格</span></li>
-      <li style="padding:7px 0; font-size:0.8em; border-bottom:1px solid #f0f0f0;">4. 兵种养成 + 英雄体系 · <span style="color:#666;">长线成长与深度策略</span></li>
-      <li style="padding:7px 0; font-size:0.8em;">5. 竖屏单手操作 · <span style="color:#666;">真正为移动端设计的轻策略体验</span></li>
-    </ul>
+  <h2>二、项目背景</h2>
+  <p style="font-size:0.8em; margin-bottom:16px; line-height:1.7;">基于公司百亿项目《极品芝麻官》数值底层的进阶经验，面向全球轻策略赛道全新打造。</p>
+  <p style="font-size:0.75em; color:#888; margin-bottom:8px;">核心创新点</p>
+  <div class="card" style="margin-bottom:8px; padding:12px 18px;">
+    <p style="font-size:0.8em; margin:0;">1. 中世纪奇幻世界观 · 轻松治愈的王国征服题材</p>
+  </div>
+  <div class="card" style="margin-bottom:8px; padding:12px 18px;">
+    <p style="font-size:0.8em; margin:0;">2. 自动出兵 + 节点占领 · 创新轻策略核心玩法</p>
+  </div>
+  <div class="card" style="margin-bottom:8px; padding:12px 18px;">
+    <p style="font-size:0.8em; margin:0;">3. Q 版童话美学 · 高辨识度全球化美术风格</p>
+  </div>
+  <div class="card" style="margin-bottom:8px; padding:12px 18px;">
+    <p style="font-size:0.8em; margin:0;">4. 兵种养成 + 英雄体系 · 长线成长与深度策略</p>
+  </div>
+  <div class="card" style="padding:12px 18px;">
+    <p style="font-size:0.8em; margin:0;">5. 竖屏单手操作 · 真正为移动端设计的轻策略体验</p>
   </div>
 </section>
 
-<!-- ===================== P4：目录 ===================== -->
+<!-- =================== 三、目录 =================== -->
 <section>
-  <h2 style="letter-spacing:0.1em;">目 录</h2>
-  <div class="accent-line" style="width:50px; height:2px; background:#06c; margin:10px auto 24px; border-radius:2px;"></div>
-  <div style="display:flex; flex-direction:column; gap:20px; max-width:500px; margin:0 auto;">
+  <h2>三、目录</h2>
+  <div style="display:flex; flex-direction:column; gap:16px; max-width:480px; margin:20px auto 0;">
     <div style="display:flex; align-items:center; gap:16px; background:#f0f4ff; border-radius:10px; padding:16px 24px; border-left:4px solid #06c;">
-      <span style="font-size:1.6em; font-weight:700; color:#06c;">01</span>
+      <span style="font-size:1.6em; font-weight:700; color:#06c;">1</span>
       <span style="font-size:1em; font-weight:500;">美术 &amp; 世界观</span>
     </div>
     <div style="display:flex; align-items:center; gap:16px; background:#f8f9fc; border-radius:10px; padding:16px 24px; border-left:4px solid #999;">
-      <span style="font-size:1.6em; font-weight:700; color:#666;">02</span>
+      <span style="font-size:1.6em; font-weight:700; color:#666;">2</span>
       <span style="font-size:1em; font-weight:500;">玩法 &amp; 商业化</span>
     </div>
     <div style="display:flex; align-items:center; gap:16px; background:#f8f9fc; border-radius:10px; padding:16px 24px; border-left:4px solid #999;">
-      <span style="font-size:1.6em; font-weight:700; color:#666;">03</span>
-      <span style="font-size:1em; font-weight:500;">市场计划 &amp; Apple 整合</span>
+      <span style="font-size:1.6em; font-weight:700; color:#666;">3</span>
+      <span style="font-size:1em; font-weight:500;">市场计划</span>
     </div>
   </div>
 </section>
 
-<!-- ===================== PART 01 美术&世界观 ===================== -->
+<!-- =================== 四、美术&世界观 =================== -->
 <section class="section-divider">
-  <div class="section-num">PART 01</div>
+  <div class="section-num">1/3</div>
   <h2>美术 &amp; 世界观</h2>
   <p style="opacity:0.4; font-weight:400; color:#666;">Art &amp; World Building</p>
 </section>
 
-<!-- ===================== P5：世界观 ===================== -->
+<!-- =================== 4.1 世界观 =================== -->
 <section>
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">4.1</h3>
   <h2>世界观设定</h2>
-  <p class="muted" style="font-size:0.75em;">World Setting</p>
-  <div style="max-width:700px; margin:16px auto 0; text-align:left;">
-    <p style="font-size:0.85em; line-height:1.7; margin-bottom:20px;">
-      在云海之上的浮空大陆，玩家扮演一位初出茅庐的领主，通过经营城堡、招募兵种、征服据点，
-      逐步建立起属于自己的 <strong class="accent">云顶王国</strong>。
-    </p>
-    <div class="two-col">
-      <div>
-        <h4>世界基调</h4>
-        <ul>
-          <li>中世纪奇幻 · 童话质感</li>
-          <li>明亮治愈 · 轻松愉悦</li>
-          <li>不烧脑、不压抑</li>
-          <li>全年龄段友好</li>
-        </ul>
-      </div>
-      <div>
-        <h4>阵营设定</h4>
-        <ul>
-          <li>🏰 人类王国 — 平衡之盾</li>
-          <li>🧝 精灵森林 — 自然之力</li>
-          <li>💀 亡灵军团 — 黑暗侵袭</li>
-          <li>🐉 龙裔部落 — 远古之怒</li>
-        </ul>
-      </div>
+  <p class="muted" style="font-size:0.75em;">中世纪奇幻 · 轻松治愈</p>
+  <p style="font-size:0.85em; line-height:1.7; max-width:680px; margin:16px auto 20px;">在云海之上的浮空大陆，玩家扮演一位初出茅庐的领主，通过经营城堡、招募兵种、征服据点，逐步建立起属于自己的云顶王国。</p>
+  <div class="two-col">
+    <div>
+      <h4>世界基调</h4>
+      <ul>
+        <li>中世纪奇幻 · 童话质感</li>
+        <li>明亮治愈 · 轻松愉悦</li>
+        <li>不烧脑、不压抑</li>
+        <li>全年龄段友好</li>
+      </ul>
+    </div>
+    <div>
+      <h4>四大阵营</h4>
+      <ul>
+        <li>🏰 人类王国 — 平衡之盾</li>
+        <li>🧝 精灵森林 — 自然之力</li>
+        <li>💀 亡灵军团 — 黑暗侵袭</li>
+        <li>🐉 龙裔部落 — 远古之怒</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- ===================== P6：美术风格 ===================== -->
+<!-- =================== 4.2 美术风格 =================== -->
 <section>
-  <h2>美术风格</h2>
-  <p class="muted" style="font-size:0.75em;">Art Style</p>
-  <div class="two-col" style="margin-top:16px;">
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">4.2</h3>
+  <h2>Q 版童话美学</h2>
+  <div class="two-col">
     <div>
       <h4>风格关键词</h4>
       <ul>
-        <li><strong class="accent">明亮 · 治愈</strong> — 区别于暗黑策略游戏</li>
-        <li><strong class="accent">Q版卡通</strong> — 高辨识度角色设计</li>
-        <li><strong class="accent">全球化</strong> — 适配东西方审美</li>
-        <li><strong class="accent">童话质感</strong> — 温暖而有吸引力的世界</li>
+        <li>明亮 · 治愈 — 区别于暗黑策略游戏</li>
+        <li>Q 版卡通 — 高辨识度角色设计</li>
+        <li>全球化 — 适配东西方审美</li>
+        <li>童话质感 — 温暖而有吸引力的世界</li>
       </ul>
       <div style="margin-top:18px;">
         <h4>设计内容</h4>
@@ -294,26 +235,55 @@ body { font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif; backg
         </ul>
       </div>
     </div>
-    <div style="background:#f8f9fc; border-radius:10px; border:1px solid #e0e4ea; padding:30px; text-align:center; display:flex; flex-direction:column; justify-content:center; min-height:240px;">
+    <div style="background:#f8f9fc; border-radius:10px; border:1px solid #e0e4ea; padding:30px; text-align:center; display:flex; flex-direction:column; justify-content:center; min-height:220px;">
       <div style="font-size:2.5em; margin-bottom:8px;">🖼️</div>
-      <p style="font-size:0.8em; color:#999;">高清游戏截图 / Key Visual</p>
-      <p style="font-size:0.65em; color:#bbb;">待补充游戏实机截图</p>
+      <p style="font-size:0.8em; color:#999;">高清游戏截图区域</p>
+      <p style="font-size:0.65em; color:#bbb;">Game Screenshots &amp; Key Visual</p>
     </div>
   </div>
 </section>
 
-<!-- ===================== PART 02 玩法&商业化 ===================== -->
+<!-- =================== 4.3 阵营设计 =================== -->
+<section>
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">4.3</h3>
+  <h2>阵营与兵种设计</h2>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;">
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">🏰 人类王国</p>
+      <p style="font-size:0.7em; color:#888; margin:4px 0;">剑士 · 骑士 · 弓手 · 牧师</p>
+      <p style="font-size:0.65em; color:#aaa;">均衡型 · 适合新手</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">🧝 精灵森林</p>
+      <p style="font-size:0.7em; color:#888; margin:4px 0;">射手 · 德鲁伊 · 树精 · 仙女</p>
+      <p style="font-size:0.65em; color:#aaa;">远程型 · 高爆发</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">💀 亡灵军团</p>
+      <p style="font-size:0.7em; color:#888; margin:4px 0;">骷髅 · 巫妖 · 死骑 · 骨龙</p>
+      <p style="font-size:0.65em; color:#aaa;">召唤型 · 人海战术</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">🐉 龙裔部落</p>
+      <p style="font-size:0.7em; color:#888; margin:4px 0;">龙骑 · 萨满 · 狂战 · 巨兽</p>
+      <p style="font-size:0.65em; color:#aaa;">肉搏型 · 高防御</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 五、玩法&商业化 =================== -->
 <section class="section-divider">
-  <div class="section-num">PART 02</div>
+  <div class="section-num">2/3</div>
   <h2>玩法 &amp; 商业化</h2>
   <p style="opacity:0.4; font-weight:400; color:#666;">Gameplay &amp; Monetization</p>
 </section>
 
-<!-- ===================== P7：核心玩法 ===================== -->
+<!-- =================== 5.1 核心玩法 =================== -->
 <section>
-  <h2>核心玩法循环</h2>
-  <p class="muted" style="font-size:0.8em;">Core Gameplay Loop</p>
-  <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px; max-width:750px; margin:24px auto 0;">
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">5.1</h3>
+  <h2>核心玩法 · 自动出兵 + 节点占领</h2>
+  <p class="muted" style="font-size:0.75em;">Core Gameplay</p>
+  <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px; max-width:750px; margin:20px auto 0;">
     <div style="background:#f8f9fc; border:1px solid #e0e4ea; padding:12px 18px; border-radius:8px; font-size:0.85em; font-weight:500;">🏰 升级主城</div>
     <span style="font-size:1.2em; color:#06c; opacity:0.5;">→</span>
     <div style="background:#f8f9fc; border:1px solid #e0e4ea; padding:12px 18px; border-radius:8px; font-size:0.85em; font-weight:500;">⚔️ 解锁兵种</div>
@@ -328,219 +298,263 @@ body { font-family: 'Noto Sans SC','PingFang SC',-apple-system,sans-serif; backg
     <span style="font-size:1.2em; color:#06c; opacity:0.5;">→</span>
     <div style="background:#f8f9fc; border:1px solid #e0e4ea; padding:12px 18px; border-radius:8px; font-size:0.85em; font-weight:500;">🗺️ 挑战更高</div>
   </div>
-  <p style="font-size:0.7em; color:#999; margin-top:20px;">每局 3-5 分钟 ｜ 自动战斗零微操 ｜ 策略决策为王</p>
-  <div class="stats-row">
-    <div class="stat-item"><div class="num">3-5</div><div class="desc">分钟/局</div></div>
-    <div class="stat-item"><div class="num">1</div><div class="desc">分钟上手</div></div>
-    <div class="stat-item"><div class="num">👆</div><div class="desc">单手操作</div></div>
-  </div>
+  <p style="font-size:0.7em; color:#999; margin-top:16px;">每局 3-5 分钟 ｜ 自动战斗零微操 ｜ 策略决策为王</p>
 </section>
 
-<!-- ===================== P8：特色玩法 ===================== -->
+<!-- =================== 5.2 特色玩法 =================== -->
 <section>
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">5.2</h3>
   <h2>特色玩法系统</h2>
-  <p class="muted" style="font-size:0.75em;">Feature Systems</p>
-  <div class="features-grid" style="margin-top:16px;">
-    <div class="feature-card">
-      <div class="icon">🤖</div>
-      <h4>自动出兵 + 节点占领</h4>
-      <p>无需复杂微操，玩家专注兵种搭配、路线选择、出击时机三大策略决策。</p>
+  <div class="card-grid">
+    <div class="card">
+      <p style="font-size:1.3em; margin:0 0 4px;">🤖</p>
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">自动出兵</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">配置兵种后自动出战，专注策略决策而非操作</p>
     </div>
-    <div class="feature-card">
-      <div class="icon">🧠</div>
-      <h4>兵种克制体系</h4>
-      <p>步兵 → 骑兵 → 弓兵 → 法师 → 形成克制闭环，搭配英雄技能影响战局。</p>
+    <div class="card">
+      <p style="font-size:1.3em; margin:0 0 4px;">🧠</p>
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">兵种克制</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">步兵→骑兵→弓兵→法师，克制闭环决定战局走向</p>
     </div>
-    <div class="feature-card">
-      <div class="icon">🏰</div>
-      <h4>城堡经营</h4>
-      <p>主城升级解锁新兵种与功能建筑，建筑布局影响出兵路线与防御。</p>
+    <div class="card">
+      <p style="font-size:1.3em; margin:0 0 4px;">🏰</p>
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">城堡经营</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">建筑布局影响出兵路线与王国防御能力</p>
     </div>
-    <div class="feature-card">
-      <div class="icon">🦸</div>
-      <h4>英雄养成</h4>
-      <p>每位英雄拥有独特技能与天赋树，合理搭配形成不同战术流派。</p>
+    <div class="card">
+      <p style="font-size:1.3em; margin:0 0 4px;">🦸</p>
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">英雄养成</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">独特技能与天赋树，搭配形成不同战术流派</p>
     </div>
   </div>
 </section>
 
-<!-- ===================== P9：商业化 ===================== -->
+<!-- =================== 5.3 创新战斗系统 =================== -->
 <section>
-  <h2>商业化设计</h2>
-  <p class="muted" style="font-size:0.75em;">Monetization Strategy</p>
-  <div class="two-col" style="margin-top:16px;">
-    <div>
-      <h4>付费模式</h4>
-      <ul>
-        <li>🆓 F2P 免费下载 + IAP 内购</li>
-        <li>🎫 Battle Pass 赛季通行证</li>
-        <li>🎁 新手礼包 · 月卡 · 周卡</li>
-        <li>🛒 限时礼包 · 节日活动</li>
-      </ul>
-      <div style="margin-top:18px;">
-        <h4>长线运营储备</h4>
-        <ul>
-          <li>📦 首发储备：8 个副本活动</li>
-          <li>🏆 4 个赛季玩法</li>
-          <li>📖 2 个英雄资料片</li>
-          <li>🔄 以两周为单位的活动更新</li>
-        </ul>
-      </div>
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">5.3</h3>
+  <h2>创新战斗系统</h2>
+  <div class="card-grid">
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 6px;">🎯 自动出兵 PvE 推图</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">配置兵种组合，自动出战攻克关卡，策略搭配决定胜负</p>
     </div>
-    <div>
-      <h4>成长体系</h4>
-      <div class="progress-item"><span style="color:#aaa;">⬜</span><span class="name">主城等级</span><span class="note">解锁功能与兵种</span></div>
-      <div class="progress-item"><span style="color:#4a9eff;">🟦</span><span class="name">兵种培养</span><span class="note">升级 · 升阶 · 突破</span></div>
-      <div class="progress-item"><span style="color:#a855f7;">🟪</span><span class="name">英雄养成</span><span class="note">等级 · 技能 · 天赋</span></div>
-      <div class="progress-item best"><span style="color:#06c;">🟡</span><span class="name">科技研究</span><span class="note">全局增益 · 流派强化</span></div>
-      <p style="font-size:0.7em; color:#888; margin-top:12px;">
-        <strong class="accent">资质保值</strong> · 数值随等级和养成指数放大，越充越爽
-      </p>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 6px;">⚔️ 异步 PvP 对抗</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">通过流派加成与技能优势，让中小 R 也可与大 R 有一拼之力</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 6px;">🌍 世界 Boss 战</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">同屏策略对战，战场指挥，GVG 实时对抗</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 6px;">🗺️ 类沙盒地图</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">非线性的关卡设计，承载彩蛋、遗迹探索等玩法</p>
     </div>
   </div>
 </section>
 
-<!-- ===================== PART 03 市场计划 & Apple ===================== -->
+<!-- =================== 5.4 核心商业化 =================== -->
+<section>
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">5.4</h3>
+  <h2>核心商业化</h2>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">无限数值坑与资质保值</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">资质数值无边际效应，随等级和其他养成指数性放大，给玩家越充越爽的体验</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">荣誉冲榜体系</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">延续公司核心商业化活动，紧握用户心理，强化【冲榜】及【称号】价值</p>
+    </div>
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">付费模式</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">F2P + IAP ｜ Battle Pass ｜ 月卡 ｜ 限时礼包</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">Apple 内购整合</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">Game Center 成就 ｜ 排行榜 ｜ Apple Search Ads</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 5.5 长线运营 =================== -->
+<section>
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">5.5</h3>
+  <h2>长线运营</h2>
+  <p class="muted" style="font-size:0.75em;">构筑全周期运营体系</p>
+  <div class="card-grid col-3" style="margin-top:16px;">
+    <div class="card" style="text-align:center; padding:20px;">
+      <p style="font-size:1.8em; font-weight:700; color:#06c; margin:0;">8</p>
+      <p style="font-size:0.75em; color:#888;">副本活动</p>
+      <p style="font-size:0.65em; color:#aaa;">以两周为单位更新</p>
+    </div>
+    <div class="card" style="text-align:center; padding:20px;">
+      <p style="font-size:1.8em; font-weight:700; color:#06c; margin:0;">4</p>
+      <p style="font-size:0.75em; color:#888;">赛季玩法</p>
+      <p style="font-size:0.65em; color:#aaa;">以月为单位更新</p>
+    </div>
+    <div class="card" style="text-align:center; padding:20px;">
+      <p style="font-size:1.8em; font-weight:700; color:#06c; margin:0;">2</p>
+      <p style="font-size:0.75em; color:#888;">资料片</p>
+      <p style="font-size:0.65em; color:#aaa;">以三个月为周期</p>
+    </div>
+  </div>
+  <p style="font-size:0.75em; color:#888; margin-top:14px;">首发储备：8 副本活动，4 赛季玩法，2 资料片</p>
+</section>
+
+<!-- =================== 六、市场计划 =================== -->
 <section class="section-divider">
-  <div class="section-num">PART 03</div>
-  <h2>市场计划 &amp; Apple 整合</h2>
-  <p style="opacity:0.4; font-weight:400; color:#666;">Go-to-Market &amp; Apple Integration</p>
+  <div class="section-num">3/3</div>
+  <h2>市场计划</h2>
+  <p style="opacity:0.4; font-weight:400; color:#666;">Go-to-Market</p>
 </section>
 
-<!-- ===================== P10：Apple 技术整合 ===================== -->
+<!-- =================== 6.1 用户圈层 =================== -->
 <section>
-  <h2>Apple 技术整合</h2>
-  <p class="muted" style="font-size:0.75em;">Apple Technology Integration</p>
-  <p style="font-size:0.8em; margin-bottom:16px;">充分利用 Apple 平台能力，提供最佳游戏体验</p>
-  <div class="tech-grid">
-    <div class="tech-item"><div class="tech-icon">🎮</div><div class="name">Metal</div><div style="color:#888;">高性能渲染</div></div>
-    <div class="tech-item"><div class="tech-icon">✨</div><div class="name">MetalFX</div><div style="color:#888;">图像优化</div></div>
-    <div class="tech-item"><div class="tech-icon">⚡</div><div class="name">ProMotion</div><div style="color:#888;">120Hz 高刷</div></div>
-    <div class="tech-item"><div class="tech-icon">🤲</div><div class="name">Core Haptics</div><div style="color:#888;">触觉反馈</div></div>
-    <div class="tech-item"><div class="tech-icon">🔊</div><div class="name">空间音频</div><div style="color:#888;">Spatial Audio</div></div>
-    <div class="tech-item"><div class="tech-icon">🏆</div><div class="name">Game Center</div><div style="color:#888;">成就排行榜</div></div>
-    <div class="tech-item"><div class="tech-icon">☁️</div><div class="name">iCloud</div><div style="color:#888;">云存档同步</div></div>
-    <div class="tech-item"><div class="tech-icon">📱</div><div class="name">iPhone/iPad</div><div style="color:#888;">原生竖屏</div></div>
-    <div class="tech-item"><div class="tech-icon">💻</div><div class="name">Mac</div><div style="color:#888;">Apple Silicon</div></div>
-  </div>
-  <p style="font-size:0.7em; color:#888; margin-top:14px;">未来规划：Apple TV ｜ 手柄支持 ｜ 跨平台 iCloud 存档</p>
-</section>
-
-<!-- ===================== P11：用户圈层 ===================== -->
-<section>
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">6.1</h3>
   <h2>用户圈层分析</h2>
-  <p class="muted" style="font-size:0.75em;">Target Audience</p>
-  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:16px;">
-    <div style="background:#f0f4ff; border-radius:10px; padding:18px; border-top:3px solid #06c; text-align:left;">
-      <p style="font-weight:600; font-size:0.9em; margin-bottom:6px;">🎯 核心用户</p>
-      <p style="font-size:0.75em; color:#555;">策略游戏爱好者</p>
-      <p style="font-size:0.7em; color:#888; margin-top:6px;">喜爱轻策略品类，注重策略深度与搭配乐趣的玩家</p>
+  <div class="card-grid col-3">
+    <div class="card" style="border-top:3px solid #06c;">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">🎯 核心用户</p>
+      <p style="font-size:0.72em; color:#555; margin:6px 0;">轻策略玩法用户</p>
+      <p style="font-size:0.68em; color:#888; margin:0;">喜爱策略深度与兵种搭配乐趣的玩家</p>
     </div>
-    <div style="background:#f8f9fc; border-radius:10px; padding:18px; border-top:3px solid #999; text-align:left;">
-      <p style="font-weight:600; font-size:0.9em; margin-bottom:6px;">📈 次核心用户</p>
-      <p style="font-size:0.75em; color:#555;">养成收集型玩家</p>
-      <p style="font-size:0.7em; color:#888; margin-top:6px;">喜欢城堡经营、兵种收集、长线养成的轻度玩家</p>
+    <div class="card" style="border-top:3px solid #999;">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">📈 次核心用户</p>
+      <p style="font-size:0.72em; color:#555; margin:6px 0;">养成向玩法用户</p>
+      <p style="font-size:0.68em; color:#888; margin:0;">喜欢城堡经营、兵种收集与长线养成的玩家</p>
     </div>
-    <div style="background:#f8f9fc; border-radius:10px; padding:18px; border-top:3px solid #999; text-align:left;">
-      <p style="font-weight:600; font-size:0.9em; margin-bottom:6px;">🌍 泛用户</p>
-      <p style="font-size:0.75em; color:#555;">休闲内容型玩家</p>
-      <p style="font-size:0.7em; color:#888; margin-top:6px;">被 Q 版美术吸引，追求碎片化轻松体验的泛用户</p>
+    <div class="card" style="border-top:3px solid #999;">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">🌍 泛用户</p>
+      <p style="font-size:0.72em; color:#555; margin:6px 0;">内容需求型用户</p>
+      <p style="font-size:0.68em; color:#888; margin:0;">被 Q 版美术吸引，追求碎片化轻松体验的玩家</p>
     </div>
   </div>
 </section>
 
-<!-- ===================== P12：营销推广 ===================== -->
+<!-- =================== 6.2 内容营销 =================== -->
 <section>
-  <h2>营销与 KOL 矩阵</h2>
-  <p class="muted" style="font-size:0.75em;">Marketing &amp; KOL Strategy</p>
-  <div class="two-col" style="margin-top:16px;">
-    <div>
-      <h4>内容营销</h4>
-      <ul>
-        <li>📱 ASO 应用商店优化</li>
-        <li>🔍 Apple Search Ads</li>
-        <li>🎬 高品质 gameplay 预告片</li>
-        <li>📖 官方漫画 / 世界观短片</li>
-        <li>🎵 主题曲合作</li>
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">6.2</h3>
+  <h2>内容营销</h2>
+  <div class="card-grid" style="margin-top:16px;">
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">🎬 高品质预告片</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">60-90 秒 gameplay trailer，展示核心玩法与美术亮点</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">📖 世界观短片</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">阵营故事动画，提前培育角色情感</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">📱 社媒矩阵</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">TikTok / YouTube / X / Discord / Reddit 全域覆盖</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0 0 4px;">🎨 玩家二创</p>
+      <p style="font-size:0.72em; color:#888; margin:0;">创作者激励计划，瓜分奖励金</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 6.3 KOL矩阵 =================== -->
+<section>
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">6.3</h3>
+  <h2>直播与 KOL 矩阵</h2>
+  <div class="card-grid col-3">
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">🎮 游戏类 KOL</p>
+      <ul style="list-style:none; padding:0; margin:8px 0 0; font-size:0.72em; color:#888;">
+        <li style="padding:2px 0;">• 前置体验</li>
+        <li style="padding:2px 0;">• 攻略铺陈</li>
+        <li style="padding:2px 0;">• 入服带玩</li>
       </ul>
     </div>
-    <div>
-      <h4>KOL 矩阵</h4>
-      <ul>
-        <li>🎮 <strong>游戏类 KOL</strong> — 前置体验、攻略教学、入服带玩</li>
-        <li>📺 <strong>泛娱乐 KOL</strong> — 搞笑短剧、趣味道具展示</li>
-        <li>🎨 <strong>美术类 KOL</strong> — 角色设计解读、二创激励</li>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">🖌️ 美术 &amp; 搞笑类</p>
+      <ul style="list-style:none; padding:0; margin:8px 0 0; font-size:0.72em; color:#888;">
+        <li style="padding:2px 0;">• 角色设计解读</li>
+        <li style="padding:2px 0;">• 趣味短剧</li>
+        <li style="padding:2px 0;">• 玩家二创传播</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p style="font-weight:600; font-size:0.85em; margin:0;">🎵 跨界合作</p>
+      <ul style="list-style:none; padding:0; margin:8px 0 0; font-size:0.72em; color:#888;">
+        <li style="padding:2px 0;">• 主题曲合作</li>
+        <li style="padding:2px 0;">• 非遗联动</li>
+        <li style="padding:2px 0;">• 国漫 IP 联动</li>
       </ul>
     </div>
   </div>
-  <div style="margin-top:16px; background:#f8f9fc; border-radius:8px; padding:14px 18px; text-align:left;">
-    <p style="font-size:0.75em;"><strong>社媒矩阵：</strong>抖音 ｜ TikTok ｜ YouTube ｜ X ｜ Discord ｜ Reddit</p>
-    <p style="font-size:0.75em; color:#888; margin-top:4px;">目标市场：北美、日本、韩国、东南亚</p>
-  </div>
+  <p style="font-size:0.7em; color:#888; margin-top:12px;">预算规模：$30 万 - $50 万 ｜ 目标市场：北美、日本、韩国、东南亚</p>
 </section>
 
-<!-- ===================== P13：发行路线 ===================== -->
+<!-- =================== 6.4 宣发节奏 =================== -->
 <section>
-  <h2>发行路线图</h2>
-  <p class="muted" style="font-size:0.8em;">Release Roadmap</p>
-  <div class="timeline" style="margin-top:16px;">
-    <div class="timeline-item"><div class="phase">Phase 1 · 2026 Q4</div><div class="detail">软发布：加拿大、新加坡、澳大利亚 → 验证留存与商业化模型</div></div>
-    <div class="timeline-item"><div class="phase">Phase 2 · 2027 Q1</div><div class="detail">全球正式上线 · 申请 <strong style="color:#06c;">Apple 编辑推荐</strong></div></div>
-    <div class="timeline-item"><div class="phase">Phase 3 · 2027 Q2</div><div class="detail">版本 1.1 — 新增兵种 &amp; 英雄 · 再次申请 Featuring</div></div>
-    <div class="timeline-item"><div class="phase">Phase 4 · 2027 Q3</div><div class="detail">版本 1.2 — 赛季玩法 &amp; PvP 竞技场</div></div>
-    <div class="timeline-item"><div class="phase">Phase 5 · 2027 Q4+</div><div class="detail">版本 2.0 — 大型资料片 · 年度重磅更新</div></div>
-  </div>
-  <p style="font-size:0.7em; color:#06c; margin-top:6px;">每次重大版本更新均申请 Apple 编辑推荐（Featuring）</p>
-</section>
-
-<!-- ===================== P14：竞品定位 ===================== -->
-<section>
-  <h2>竞品定位</h2>
-  <p class="muted" style="font-size:0.75em;">Market Positioning</p>
-  <table class="comparison-table">
+  <h3 style="font-size:1em; color:#06c; margin-bottom:4px;">6.4</h3>
+  <h2>宣发节奏</h2>
+  <table class="table-compare" style="margin-top:16px;">
     <thead>
-      <tr><th>产品</th><th>品类</th><th>单局时长</th><th>操作门槛</th><th>美术风格</th></tr>
+      <tr><th style="width:20%;">阶段</th><th style="width:25%;">时间</th><th>核心动作</th></tr>
     </thead>
     <tbody>
-      <tr><td>Last War</td><td>SLG</td><td>10-15min</td><td>⭐⭐⭐</td><td>写实</td></tr>
-      <tr><td>Whiteout Survival</td><td>SLG</td><td>15-20min</td><td>⭐⭐⭐</td><td>写实卡通</td></tr>
-      <tr><td>Rush Royale</td><td>塔防</td><td>5-8min</td><td>⭐⭐</td><td>欧美卡通</td></tr>
-      <tr><td>Top War</td><td>轻策略</td><td>5-10min</td><td>⭐⭐</td><td>卡通</td></tr>
-      <tr class="highlight-row"><td>✨ 云顶王国</td><td>轻策略</td><td><strong>3-5min</strong></td><td><strong>⭐</strong></td><td><strong>Q版治愈</strong></td></tr>
+      <tr>
+        <td><strong>预热期</strong></td>
+        <td>2026 Q3</td>
+        <td>预约启幕，积蓄热度；首曝预告片，KOL 前置体验</td>
+      </tr>
+      <tr>
+        <td><strong>首发期</strong></td>
+        <td>2026 Q4</td>
+        <td>重磅上线，声量全开；申请 <strong class="accent">Apple 编辑推荐</strong></td>
+      </tr>
+      <tr>
+        <td><strong>持续期</strong></td>
+        <td>2027 起</td>
+        <td>长线运营，赛季更新；联动二创病毒式传播</td>
+      </tr>
     </tbody>
   </table>
-  <p style="font-size:0.75em; margin-top:12px; text-align:left; max-width:600px; margin-left:auto; margin-right:auto; color:#555;">
-    <strong class="accent">核心定位：</strong>一款更轻松、更易上手、更适合移动端的王国策略游戏
-  </p>
+  <div style="margin-top:16px;">
+    <p style="font-size:0.75em; color:#888;">Apple 整合亮点</p>
+    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+      <span class="tag">Metal 渲染</span>
+      <span class="tag">ProMotion 120Hz</span>
+      <span class="tag">Core Haptics</span>
+      <span class="tag">空间音频</span>
+      <span class="tag">Game Center</span>
+      <span class="tag">iCloud 存档</span>
+      <span class="tag">Apple Silicon 原生</span>
+    </div>
+  </div>
 </section>
 
-<!-- ===================== P15：首发目标 & 结尾 ===================== -->
+<!-- =================== 七、首发目标 =================== -->
 <section>
-  <h2>首发目标</h2>
-  <p class="muted" style="font-size:0.75em;">Launch Goals</p>
-  <div class="data-badges" style="margin-top:24px;">
-    <div class="data-badge">
-      <div class="number">$30-50万</div>
-      <div class="label">首发 UA 预算</div>
+  <h2>七、首发目标</h2>
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:20px;">
+    <div class="card" style="text-align:center; padding:24px;">
+      <p style="font-size:0.7em; color:#888; margin:0;">首发 UA 预算</p>
+      <p style="font-size:1.8em; font-weight:700; color:#06c; margin:6px 0;">$30-50万</p>
     </div>
-    <div class="data-badge">
-      <div class="number">2026 Q4</div>
-      <div class="label">目标上线时间</div>
+    <div class="card" style="text-align:center; padding:24px;">
+      <p style="font-size:0.7em; color:#888; margin:0;">目标上线</p>
+      <p style="font-size:1.8em; font-weight:700; color:#06c; margin:6px 0;">2026 Q4</p>
     </div>
-    <div class="data-badge">
-      <div class="number">iOS 首发</div>
-      <div class="label">iPhone / iPad / Mac</div>
+    <div class="card" style="text-align:center; padding:24px;">
+      <p style="font-size:0.7em; color:#888; margin:0;">首发平台</p>
+      <p style="font-size:1.8em; font-weight:700; color:#06c; margin:6px 0;">iOS 首发</p>
     </div>
   </div>
-  <div style="margin-top:24px; max-width:550px; margin-left:auto; margin-right:auto;">
-    <p style="font-size:0.8em; color:#888; margin-bottom:8px;">目标：成为 2027 年最受欢迎的轻策略手游</p>
-    <div class="company-card">
-      <p style="font-size:0.75em;"><strong class="accent">核心策略</strong> · Apple 编辑推荐为第一优先级 · 长线运营为核心 · 全球发行</p>
-    </div>
+  <div class="card" style="margin-top:16px; text-align:center; padding:16px;">
+    <p style="font-size:0.85em; font-weight:500; margin:0;">目标：成为 2027 年最受欢迎的轻策略手游</p>
+    <p style="font-size:0.7em; color:#888; margin:6px 0 0;">Apple 编辑推荐为第一优先级 · 长线运营为核心 · 全球发行</p>
   </div>
 </section>
 
-<!-- ===================== 结尾 ===================== -->
+<!-- =================== 结尾 =================== -->
 <section class="ending-slide">
   <div>
     <p style="font-size:0.55em; letter-spacing:0.15em; color:#999; margin-bottom:20px;">THANK YOU</p>
