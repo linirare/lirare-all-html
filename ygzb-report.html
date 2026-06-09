@@ -114,37 +114,64 @@
   .footer { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 32px; padding-top: 16px; border-top: 1px solid #f0f0f0; }
 
   @media (max-width: 720px) {
-    body { padding: 12px 8px; }
-    .slide { padding: 24px 16px; margin-bottom: 20px; border-radius: 10px; }
-    h1 { font-size: 26px; }
-    h2 { font-size: 20px; margin-bottom: 16px; }
-    h3 { font-size: 15px; }
-    .subtitle { font-size: 14px; }
-    .grid-2, .grid-3, .grid-4, .grid-6, .option-grid { grid-template-columns: 1fr; gap: 12px; }
-    .card { padding: 14px; }
-    .card-value { font-size: 18px; }
-    .card-title { font-size: 12px; }
-    .option-card { padding: 14px; }
-    .option-card .label { font-size: 15px; }
-    .slide-header { padding-bottom: 10px; margin-bottom: 16px; flex-wrap: wrap; gap: 6px; }
-    .recommend { padding: 14px 16px; }
+    body { padding: 8px 6px; }
+    .slide { padding: 18px 12px; margin-bottom: 14px; border-radius: 8px; }
+    h1 { font-size: 24px; }
+    h2 { font-size: 18px; margin-bottom: 12px; }
+    h3 { font-size: 14px; margin-bottom: 8px; }
+    .subtitle { font-size: 13px; }
+    .grid-2, .grid-3, .grid-4, .grid-6, .option-grid { grid-template-columns: 1fr; gap: 10px; }
+    .card { padding: 12px; }
+    .card-value { font-size: 16px; }
+    .card-title { font-size: 11px; }
+    .option-card { padding: 12px; }
+    .option-card .label { font-size: 14px; }
+    .option-card .label .rec { font-size: 10px; }
+    .slide-header { padding-bottom: 8px; margin-bottom: 12px; flex-wrap: wrap; gap: 4px; }
+    .recommend { padding: 12px 14px; }
+    .recommend p, .recommend strong { font-size: 13px; }
 
-    /* 表格横滚 */
-    table { font-size: 12px; }
-    th, td { padding: 6px 8px; white-space: nowrap; }
-    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -4px; }
+    /* 表格横滚 — 核心修复 */
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -2px; }
+    .table-wrap table { min-width: 560px; } /* 保证表格不会被压扁到无法阅读 */
+    table { font-size: 11px; width: 100%; }
+    th, td { padding: 5px 6px; white-space: nowrap; }
+    td .tag-green, td .tag-yellow, td .tag-red, td .tag-blue { font-size: 9px; padding: 1px 5px; white-space: nowrap; }
 
-    .star { font-size: 11px; }
-    .badge, .tag-green, .tag-yellow, .tag-red, .tag-blue { font-size: 10px; padding: 1px 7px; }
+    /* 没有 .table-wrap 包裹的普通表格改用 block 滚动 */
+    .slide > table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 11px; }
+    .slide > table th,
+    .slide > table td { padding: 5px 6px; white-space: nowrap; }
 
-    ul, ol { font-size: 13px; padding-left: 14px; }
+    .star { font-size: 10px; letter-spacing: 0.5px; }
+    .badge, .tag-green, .tag-yellow, .tag-red, .tag-blue { font-size: 9px; padding: 1px 6px; }
+
+    ul { font-size: 12px; padding-left: 14px; }
+    li { margin-bottom: 3px; }
+    .text-sm { font-size: 12px; }
+    .mt-16 { margin-top: 10px; }
+    .mt-24 { margin-top: 14px; }
+    .mb-16 { margin-bottom: 10px; }
+
+    /* 封面适配 */
+    .slide:first-child > div { min-height: auto !important; padding: 20px 0; }
+    .slide:first-child h1 { font-size: 28px; }
+    .slide:first-child > div > div[style*="font-size: 20px"] { font-size: 16px !important; }
 
     /* 执行路径卡片 */
     .flex.gap-16 { flex-direction: column; gap: 10px; }
-    .flex.gap-16 > div { min-width: auto !important; padding: 14px !important; display: flex; align-items: center; gap: 10px; text-align: left; }
-    .flex.gap-16 > div > div:first-child { font-size: 22px !important; margin-bottom: 0 !important; min-width: 30px; }
-    .flex.gap-16 > div > div:nth-child(2) { white-space: nowrap; }
+    .flex.gap-16 > div { min-width: auto !important; padding: 12px 14px !important; display: flex; align-items: center; gap: 10px; text-align: left; }
+    .flex.gap-16 > div > div:first-child { font-size: 20px !important; margin-bottom: 0 !important; min-width: 28px; }
+    .flex.gap-16 > div > div:nth-child(2) { white-space: nowrap; font-size: 13px !important; }
     .flex.gap-16 > div > .text-sm { display: none; }
+
+    /* 深度方案卡片内的列表 */
+    .card ul { padding-left: 14px; }
+    .card ul li { font-size: 12px; }
+
+    /* 分类色块行列不折行 */
+    .option-card .pros,
+    .option-card .cons { font-size: 12px; }
   }
 </style>
 </head>
@@ -390,49 +417,122 @@
   </div>
 </div>
 
-<!-- P4 世界观换皮总览 -->
+<!-- P4 换皮方案总览（13选项完整版） -->
 <div class="slide">
-  <div class="slide-header"><h2>换皮方案总览</h2><span class="page-num">04</span></div>
+  <div class="slide-header"><h2>换皮方案总览 · 13选项</h2><span class="page-num">04</span></div>
   <p class="subtitle mb-16">核心原则：玩法（拉线出兵+城防）和数值体系不变，只换美术资源和世界观包装</p>
 
-  <div class="grid-2" style="margin-bottom: 24px;">
-    <div class="option-card" style="border-left: 4px solid #4f46e5;">
-      <div class="label">A. 优化狱国<span class="rec">最快</span></div>
-      <div class="desc">保留狱国世界观，优化美术品质 + 改名，最小改动验证市场</div>
-      <div class="pros">✅ 开发量最小 · 保留差异化 · 已跑通商业模式</div>
-      <div class="cons">❌ 天花板有限 · "狱"字负面联想</div>
-    </div>
-    <div class="option-card" style="border-left: 4px solid #10b981;">
-      <div class="label">B. 末日废土<span class="rec">稳健</span></div>
-      <div class="desc">末世幸存者基地，拉线派兵搜刮打丧尸，最大验证赛道</div>
-      <div class="pros">✅ 买量效率最高 · 《无尽冬日》类已验证 · 审核友好</div>
-      <div class="cons">❌ 竞争激烈 · 需差异化微创新</div>
-    </div>
-    <div class="option-card" style="border-left: 4px solid #10b981;">
-      <div class="label">C. 动物王国<span class="rec">扩圈</span></div>
-      <div class="desc">萌宠部落战争，玩法反差萌，用户盘最大</div>
-      <div class="pros">✅ 零审核风险 · 男女通吃 · 可出海 · 生命周期长</div>
-      <div class="cons">❌ 付费深度存疑 · 核心男性付费用户可能不买账</div>
-    </div>
-    <div class="option-card" style="border-left: 4px solid #f59e0b;">
-      <div class="label">D. 正经三国</div>
-      <div class="desc">纯正Q版三国，去掉冥界设定，对标《放开那三国》画风</div>
-      <div class="pros">✅ 认知成本为零 · 换皮难度低 · 用户池最大</div>
-      <div class="cons">❌ 极卷 · "狱国"必须改名 · 失去差异化</div>
-    </div>
-    <div class="option-card" style="border-left: 4px solid #f59e0b;">
-      <div class="label">E. 西游神话</div>
-      <div class="desc">天庭vs地府vs妖怪，孙悟空哪吒神话大乱斗</div>
-      <div class="pros">✅ 国民级IP · 兵种替换自然 · 策划空间大</div>
-      <div class="cons">❌ 游戏品类红海 · 美术需高投入才有差异化</div>
-    </div>
-    <div class="option-card" style="border-left: 4px solid #ef4444;">
-      <div class="label">F. 武侠江湖</div>
-      <div class="desc">各门派争武林盟主，弟子下山=派兵</div>
-      <div class="pros">✅ 30-45岁核心用户情怀牌 · 审核极低风险</div>
-      <div class="cons">❌ 微信小游戏品类验证不足 · 女性吸引力弱</div>
-    </div>
-  </div>
+  <table>
+    <thead>
+      <tr><th style="width:9%">方案</th><th style="width:14%">题材</th><th style="width:29%">说明</th><th style="width:12%">开发量</th><th style="width:18%">核心优势</th><th style="width:18%">核心劣势</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:#f0fdf4;">
+        <td class="fw-600">A. 优化狱国</td>
+        <td>冥界三国</td>
+        <td>保留狱国世界观，优化美术+改名</td>
+        <td><span class="tag-green">小</span></td>
+        <td style="color:#065f46;">投入产出比最高，已跑通</td>
+        <td style="color:#991b1b;">"狱"字负面联想，天花板有限</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td class="fw-600">B. 末日废土</td>
+        <td>丧尸末世</td>
+        <td>幸存者基地，拉线搜刮打丧尸</td>
+        <td><span class="tag-yellow">中</span></td>
+        <td style="color:#065f46;">买量效率最高，最大验证赛道</td>
+        <td style="color:#991b1b;">竞争激烈，需微创新</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td class="fw-600">C. 动物王国</td>
+        <td>萌宠部落</td>
+        <td>萌宠部落战争，玩法反差萌</td>
+        <td><span class="tag-red">大</span></td>
+        <td style="color:#065f46;">零审核风险，全年龄通吃</td>
+        <td style="color:#991b1b;">付费深度存疑</td>
+      </tr>
+      <tr>
+        <td class="fw-600">D. 正经三国</td>
+        <td>三国历史</td>
+        <td>纯正Q版三国，去掉冥界设定</td>
+        <td><span class="tag-green">小</span></td>
+        <td style="color:#065f46;">认知成本为零，用户池最大</td>
+        <td style="color:#991b1b;">极卷，缺乏差异化</td>
+      </tr>
+      <tr>
+        <td class="fw-600">E. 西游神话</td>
+        <td>西游记</td>
+        <td>天庭vs地府vs妖怪大乱斗</td>
+        <td><span class="tag-yellow">中</span></td>
+        <td style="color:#065f46;">国民级IP，兵种替换自然</td>
+        <td style="color:#991b1b;">红海，需高投入做差异化</td>
+      </tr>
+      <tr>
+        <td class="fw-600">F. 武侠江湖</td>
+        <td>江湖门派</td>
+        <td>各门派争武林盟主，弟子下山</td>
+        <td><span class="tag-red">大</span></td>
+        <td style="color:#065f46;">30-45岁情怀牌，审核低风险</td>
+        <td style="color:#991b1b;">品类验证不足</td>
+      </tr>
+      <tr style="background:#fefce8;">
+        <td class="fw-600">G. 星际太空</td>
+        <td>银河科幻</td>
+        <td>星际舰队指挥官，拉线=设定航线</td>
+        <td><span class="tag-red">大</span></td>
+        <td style="color:#92400e;">蓝海零竞品，出海潜力极强</td>
+        <td style="color:#991b1b;">美术开发量大，需教育用户</td>
+      </tr>
+      <tr style="background:#fefce8;">
+        <td class="fw-600">H. 山海经异兽</td>
+        <td>上古神话</td>
+        <td>驯异兽、统部落、上古争霸</td>
+        <td><span class="tag-red">大</span></td>
+        <td style="color:#92400e;">国风美学天花板，IP富矿</td>
+        <td style="color:#991b1b;">高度依赖美术品质</td>
+      </tr>
+      <tr style="background:#fefce8;">
+        <td class="fw-600">I. 火柴人</td>
+        <td>极简</td>
+        <td>极简线条火柴人对战</td>
+        <td><span class="tag-green">极小</span></td>
+        <td style="color:#92400e;">开发极快，全球通吃</td>
+        <td style="color:#991b1b;">天花板低，无护城河</td>
+      </tr>
+      <tr>
+        <td class="fw-600">J. 中世纪骑士</td>
+        <td>欧式中古</td>
+        <td>城堡攻防，骑士法师弓箭手</td>
+        <td><span class="tag-yellow">中</span></td>
+        <td style="color:#065f46;">全球验证率最高的策略题材</td>
+        <td style="color:#991b1b;">国内不出彩，与占城大师撞车</td>
+      </tr>
+      <tr>
+        <td class="fw-600">K. 盗墓摸金</td>
+        <td>盗墓探险</td>
+        <td>摸金校尉下墓倒斗探宝</td>
+        <td><span class="tag-red">大</span></td>
+        <td style="color:#065f46;">IP粉丝大，差异化极强</td>
+        <td style="color:#991b1b;"><span class="tag-red">审核红线</span></td>
+      </tr>
+      <tr>
+        <td class="fw-600">L. 像素复古</td>
+        <td>不限</td>
+        <td>经典8bit/16bit像素风，题材不限</td>
+        <td><span class="tag-green">小</span></td>
+        <td style="color:#065f46;">美术成本低，怀旧情怀</td>
+        <td style="color:#991b1b;">天花板低，廉价感印象</td>
+      </tr>
+      <tr>
+        <td class="fw-600">M. 二次元日系</td>
+        <td>日系幻想</td>
+        <td>日式RPG幻想世界，立绘精美</td>
+        <td><span class="tag-red">大</span></td>
+        <td style="color:#065f46;">二次元付费意愿强粘性高</td>
+        <td style="color:#991b1b;">成本极高，与策略用户重叠一般</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <!-- P4 方案对比矩阵 -->
@@ -506,6 +606,69 @@
         <td><span class="star">★★★★</span>☆</td>
         <td>情怀但未验证</td>
       </tr>
+      <tr style="background:#fefce8;">
+        <td class="fw-600">G. 星际太空</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="tag-red">大</span></td>
+        <td><span class="dot-green"></span>低</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="star">★★★★★</span></td>
+        <td><strong>蓝海标的</strong></td>
+      </tr>
+      <tr style="background:#fefce8;">
+        <td class="fw-600">H. 山海经异兽</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="tag-red">大</span></td>
+        <td><span class="dot-green"></span>低</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="star">★★★★★</span></td>
+        <td><strong>美学天花板</strong></td>
+      </tr>
+      <tr style="background:#fefce8;">
+        <td class="fw-600">I. 火柴人</td>
+        <td><span class="star">★★★</span>☆☆</td>
+        <td><span class="tag-green">极小</span></td>
+        <td><span class="dot-green"></span>极低</td>
+        <td><span class="star">★★</span>☆☆☆</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td>快速验证可用</td>
+      </tr>
+      <tr>
+        <td class="fw-600">J. 中世纪骑士</td>
+        <td><span class="star">★★★</span>☆☆</td>
+        <td><span class="tag-yellow">中</span></td>
+        <td><span class="dot-green"></span>极低</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="star">★★</span>☆☆☆</td>
+        <td>全球通吃国内冷</td>
+      </tr>
+      <tr>
+        <td class="fw-600">K. 盗墓摸金</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="tag-red">大</span></td>
+        <td><span class="dot-red"></span>高</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="star">★★★★★</span></td>
+        <td><strong style="color:#991b1b;">审核劝退</strong></td>
+      </tr>
+      <tr>
+        <td class="fw-600">L. 像素复古</td>
+        <td><span class="star">★★★</span>☆☆</td>
+        <td><span class="tag-green">小</span></td>
+        <td><span class="dot-green"></span>极低</td>
+        <td><span class="star">★★</span>☆☆☆</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td>情怀天花板</td>
+      </tr>
+      <tr>
+        <td class="fw-600">M. 二次元日系</td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td><span class="tag-red">大</span></td>
+        <td><span class="dot-green"></span>低</td>
+        <td><span class="star">★★★★★</span></td>
+        <td><span class="star">★★★★</span>☆</td>
+        <td>高投入高回报</td>
+      </tr>
     </tbody>
   </table>
 
@@ -516,9 +679,157 @@
   </div>
 </div>
 
-<!-- P5 重点方案详析 -->
+<!-- P6 末日废土 深度融合 -->
 <div class="slide">
-  <div class="slide-header"><h2>重点方案详析：A / B / C</h2><span class="page-num">06</span></div>
+  <div class="slide-header"><h2>末日废土 · 深度融合方案</h2><span class="page-num">06</span></div>
+
+  <h3 class="mb-16">世界观包装：拉线出兵 → 废土搜刮</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>狱国原版</th><th>→ 末日废土包装</th></tr></thead>
+    <tbody>
+      <tr><td>出兵攻打城池</td><td>派出搜刮队去废墟/丧尸区搜物资</td></tr>
+      <tr><td>兵种（青州兵/大象）</td><td>幸存者职业（拾荒者/机枪手/掷弹兵/重装盾兵）</td></tr>
+      <tr><td>城防/建筑升级</td><td>避难所升级（工坊/医务室/兵营/雷达站）</td></tr>
+      <tr><td>资源（金币/木材）</td><td>废土资源（净水/食物/弹药/零件）</td></tr>
+      <tr><td>联盟国战</td><td>幸存者营地之间的资源争夺战</td></tr>
+      <tr><td>武将/英雄</td><td>幸存者领袖（医生加血、机械师造陷阱）</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="grid-2 mt-16">
+    <div class="card">
+      <h3>🎨 美术风格</h3>
+      <p class="text-sm" style="line-height:1.7; margin-top:6px;">
+      <strong>Q版暗黑卡通</strong>（避开《无尽冬日》写实路线）<br>
+      参考《幸存者33天》Q版丧尸 + 《辐射避难所》明快废土<br>
+      丧尸做成搞怪/Q版（独眼僵尸、西装僵尸），降低血腥度<br>
+      场景：废弃城市、荒野公路、核电站废墟、地下避难所<br>
+      色彩：暖黄/橙 + 冷灰 + 荧光绿
+      </p>
+    </div>
+    <div class="card">
+      <h3>🕹️ 拉线操作包装</h3>
+      <p class="text-sm" style="line-height:1.7; margin-top:6px;">
+      基地在左，废墟地图在右→手指向右滑动→<br>
+      轨迹线出现→幸存者小队沿路线出发→<br>
+      途经废墟→自动搜出物资弹窗→<br>
+      遇丧尸群→自动战斗（兵种克制动画）→<br>
+      到达据点→占领、染色、建前哨站
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-2 mt-16">
+    <div class="card">
+      <h3>⚡ 末日特色系统</h3>
+      <ul>
+        <li><strong>士气系统</strong>：小队在外太久会恐惧/疲惫，拉回基地休息→轮换部队付费点</li>
+        <li><strong>辐射区</strong>：随机刷新，需特定兵种（防护服）进入</li>
+        <li><strong>丧尸潮</strong>：周期性袭击基地→促使用户建防御工事</li>
+        <li><strong>搜刮随机事件</strong>：发现幸存者/变异体/稀有武器</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📣 买量素材方向</h3>
+      <ul>
+        <li>"拉线派幸存者出门打丧尸"→ 解压+爽感</li>
+        <li>"避难所从零建到堡垒"→ 缩时摄影展示</li>
+        <li>"尸潮来袭守住啊！"→ 紧张守城调度</li>
+        <li>"这片废墟我说了算"→ 大地图快速扩张</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="recommend mt-16">
+    <strong>与《无尽冬日》的差异定位：</strong>
+    无尽冬日是写实SLG，你做的是Q版休闲RTS——<strong>完全不同用户群</strong>。
+    你做的是"可以玩操作的废土"（拉线=操作感），无尽冬日是"看数值的城建"。
+    你的节奏更快（3分钟一局），无尽冬日慢节奏。
+  </div>
+</div>
+
+<!-- P7 星际太空 深度融合 -->
+<div class="slide">
+  <div class="slide-header"><h2>星际太空 · 深度融合方案</h2><span class="page-num">07</span></div>
+
+  <h3 class="mb-16">世界观包装：拉线出兵 → 星际舰队</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>狱国原版</th><th>→ 星际太空包装</th></tr></thead>
+    <tbody>
+      <tr><td>出兵攻打城池</td><td>派出舰队攻击敌方星舰/行星据点</td></tr>
+      <tr><td>兵种克制</td><td>舰种克制（护卫舰→轰炸机→航母→护卫舰）</td></tr>
+      <tr><td>城池占领</td><td>星域/行星占领，染成阵营色</td></tr>
+      <tr><td>资源（金币/木材）</td><td>能量矿/钛合金/反物质/暗物质</td></tr>
+      <tr><td>联盟国战</td><td>银河阵营大战（帝国vs联邦vs虫族）</td></tr>
+      <tr><td>武将/英雄</td><td>舰长（各有人物技能和旗舰专属）</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="grid-2 mt-16">
+    <div class="card">
+      <h3>🎨 美术风格</h3>
+      <p class="text-sm" style="line-height:1.7; margin-top:6px;">
+      <strong>Q版科幻卡通风</strong>（避开硬核太空）<br>
+      战舰设计参考《家园》风格差异化+卡通化<br>
+      舰长走《银河护卫队》搞怪角色路线<br>
+      场景：星云、小行星带、空间站、虫洞、戴森球<br>
+      色彩：深蓝/紫太空背景 + 鲜艳战舰色<br>
+      特效：激光炮、导弹轨迹、护盾闪烁
+      </p>
+    </div>
+    <div class="card">
+      <h3>🕹️ 核心视觉差异</h3>
+      <p class="text-sm" style="line-height:1.7; margin-top:6px;">
+      <strong>太空有天然优势：真正的"立体感"</strong><br>
+      不像废土地面拉线、三国平原打仗—<br>
+      太空是三维战场：<br>
+      · 拉线穿过小行星带<br>
+      · 绕到星球背后偷袭<br>
+      · 穿越虫洞瞬间出现在战场另一侧<br>
+      → 拉线操作比任何地面题材都爽
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-2 mt-16">
+    <div class="card">
+      <h3>⚡ 太空特色系统</h3>
+      <ul>
+        <li><strong>虫洞跳跃</strong>：舰队穿越后快速出现在另一区域</li>
+        <li><strong>行星类型差异化</strong>：资源星/堡垒星/科技星/首都星</li>
+        <li><strong>旗舰系统</strong>：英雄单位，被击沉则全员属性下降</li>
+        <li><strong>太空站贸易</strong>：交易资源、招募雇佣兵</li>
+        <li><strong>舰种克制链</strong>：护卫舰→轰炸机→航母→护卫舰</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📣 买量素材方向</h3>
+      <ul>
+        <li>"指尖指挥星际舰队"→ 画线穿越星云轰炸</li>
+        <li>"从一条小船到银河帝国"→ 舰队壮大展示</li>
+        <li>"虫洞偷袭！"→ 绕后打垮十倍之敌</li>
+        <li>"你的星域你做主"→ 大地图扩张染色</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="recommend mt-16">
+    <p>
+      <strong>为什么太空题材适合你们的游戏：</strong><br>
+      ✅ 微信小游戏上策略类太空 ≈ <strong>零竞品蓝海</strong>（只有消除类太空游戏）<br>
+      ✅ 拉线=设定航线，比三国/中世纪更自然的操作映射<br>
+      ✅ 出海潜力最强——太空无文化障碍，欧美付费意愿极高
+    </p>
+  </div>
+</div>
+
+<!-- P8 重点方案详析 -->
+<div class="slide">
+  <div class="slide-header"><h2>重点方案详析：A / B / C</h2><span class="page-num">08</span></div>
 
   <!-- A -->
   <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #4f46e5;">
@@ -610,7 +921,7 @@
 
 <!-- P6 核心建议 -->
 <div class="slide">
-  <div class="slide-header"><h2>行动建议</h2><span class="page-num">07</span></div>
+  <div class="slide-header"><h2>行动建议</h2><span class="page-num">09</span></div>
 
   <div style="margin-bottom: 32px;">
     <h3 style="margin-bottom: 16px;">第一优先 · 改名（最快见效，零成本）</h3>
@@ -672,7 +983,7 @@
 
 <!-- P7 改名建议 -->
 <div class="slide">
-  <div class="slide-header"><h2>改名方案 · 候选列表</h2><span class="page-num">08</span></div>
+  <div class="slide-header"><h2>改名方案 · 候选列表</h2><span class="page-num">10</span></div>
   <p class="subtitle mb-16">去掉"狱"字的负面影响，同时保留争霸/策略的指向性</p>
 
   <div class="grid-2">
