@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>狱国争霸 · 竞品拆解 &amp; 新项目立项</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/animations/animations.css">
+<link rel="stylesheet" href="assets/themes/tokyo-night.css">
+<style>
+/* ── Custom ── */
+body { background: var(--bg); }
+.deck { max-width: 1280px; margin: 0 auto; }
+
+/* Slide spacing */
+.slide { padding: 80px 100px; }
+
+/* Section tag */
+.section-tag {
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 8px; font-weight: 600;
+}
+.section-tag.accent { color: var(--accent); }
+
+/* Kicker */
+.kicker { font-size: 13px; letter-spacing: 3px; color: var(--text-3); margin-bottom: 8px; }
+
+/* Buttons / pills */
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.pill {
+  font-size: 12px; padding: 6px 14px; border-radius: 20px;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-2);
+}
+.pill-accent { background: rgba(122,162,247,0.12); border-color: rgba(122,162,247,0.25); color: var(--accent); }
+
+/* Custom grid */
+.cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.cols-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+.cols-12 { display: grid; grid-template-columns: repeat(6,1fr); gap: 10px; }
+
+/* Tables */
+.tbl-wrap { overflow-x: auto; }
+.tbl {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+.tbl th {
+  padding: 10px 12px; text-align: left; font-size: 11px; letter-spacing: 1px;
+  color: var(--text-3); font-weight: 600; border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.tbl td {
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+  color: var(--text-2); font-size: 13px; line-height: 1.4;
+}
+.tbl tr:hover td { background: rgba(122,162,247,0.04); }
+.tbl .hl { color: var(--text-1); font-weight: 500; }
+
+/* Cards */
+.card-custom {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+}
+.card-custom h4 { font-size: 15px; color: var(--text-1); margin-bottom: 6px; }
+.card-custom p { font-size: 12px; color: var(--text-2); line-height: 1.6; }
+
+/* Metric */
+.metric-box {
+  text-align: center; padding: 24px 16px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.metric-box .n { font-size: 32px; font-weight: 700; color: var(--accent); }
+.metric-box .l { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+
+/* Status badges */
+.badge {
+  display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 4px;
+  font-weight: 500;
+}
+.badge-green { background: rgba(158,206,106,0.15); color: var(--good); }
+.badge-yellow { background: rgba(224,175,104,0.15); color: var(--warn); }
+.badge-red { background: rgba(247,118,142,0.15); color: var(--bad); }
+.badge-blue { background: rgba(122,162,247,0.15); color: var(--accent); }
+
+/* Star rating */
+.stars { color: var(--warn); font-size: 12px; letter-spacing: 1px; }
+
+/* Cover */
+.cover-slide {
+  display: flex; flex-direction: column; justify-content: center;
+  background: linear-gradient(135deg, #1a1b26 0%, #24283b 50%, #1a1b26 100%);
+  position: relative; overflow: hidden;
+}
+.cover-slide::before {
+  content: ''; position: absolute; top: -40%; right: -20%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(122,162,247,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cover-slide::after {
+  content: ''; position: absolute; bottom: -30%; left: -10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(187,154,247,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cover-slide .subtitle {
+  font-size: 11px; letter-spacing: 6px; color: var(--text-3);
+  margin-bottom: 16px; font-weight: 500;
+}
+.cover-slide h1 {
+  font-size: 48px; font-weight: 800; color: var(--text-1);
+  letter-spacing: -1px; line-height: 1.1;
+}
+.cover-slide h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.cover-slide .lede {
+  font-size: 16px; color: var(--text-2); max-width: 480px;
+  line-height: 1.6; margin-top: 20px;
+}
+.cover-slide .meta-line {
+  margin-top: 40px; display: flex; gap: 32px;
+  font-size: 12px; color: var(--text-3);
+}
+
+/* Theme tag labels for 12 directions */
+.theme-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.theme-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px;
+  transition: all 0.2s;
+}
+.theme-card:hover { border-color: var(--accent); }
+.theme-card .id { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 2px; }
+.theme-card .name { font-size: 13px; color: var(--text-1); font-weight: 500; }
+.theme-card .cost { font-size: 10px; color: var(--text-3); margin-top: 4px; }
+.theme-card .cost span { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 9px; }
+.cost-low { background: rgba(158,206,106,0.12); color: var(--good); }
+.cost-mid { background: rgba(224,175,104,0.12); color: var(--warn); }
+.cost-high { background: rgba(247,118,142,0.12); color: var(--bad); }
+
+/* Mapping table */
+.map-tbl { font-size: 13px; width: 100%; border-collapse: collapse; }
+.map-tbl td, .map-tbl th { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+.map-tbl th { font-size: 11px; color: var(--text-3); letter-spacing: 1px; font-weight: 600; text-align: left; }
+.map-tbl .arrow-cell { color: var(--text-3); text-align: center; font-size: 16px; width: 40px; }
+
+/* Verdict */
+.verdict { font-size: 13px; padding: 12px 16px; border-radius: var(--radius-sm); margin-top: 12px; }
+.verdict-blue { background: rgba(122,162,247,0.08); border: 1px solid rgba(122,162,247,0.15); }
+.verdict-green { background: rgba(158,206,106,0.08); border: 1px solid rgba(158,206,106,0.15); }
+.verdict-amber { background: rgba(224,175,104,0.08); border: 1px solid rgba(224,175,104,0.15); }
+
+/* Naming tags */
+.name-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.name-tag {
+  font-size: 12px; padding: 4px 10px; border-radius: 6px;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-2);
+}
+
+/* Platform badges */
+.platform { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 500; }
+.platform-wx { background: rgba(158,206,106,0.12); color: var(--good); }
+.platform-dy { background: rgba(122,162,247,0.12); color: var(--accent); }
+
+/* Risk legend */
+.risk-legend { display: flex; gap: 20px; font-size: 11px; color: var(--text-3); margin-top: 10px; }
+.risk-legend span::before { content: '● '; }
+
+/* Subsection titles */
+.subsec { font-size: 13px; color: var(--text-3); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+
+/* Overview grid for 12 themes table */
+.ov-grid { display: flex; flex-direction: column; gap: 3px; }
+.ov-row { display: grid; grid-template-columns: 30px 90px 1fr 60px 1fr 80px; gap: 8px; align-items: center; padding: 6px 10px; border-radius: 6px; font-size: 12px; }
+.ov-row:hover { background: rgba(122,162,247,0.04); }
+.ov-row .id { font-weight: 700; color: var(--accent); }
+.ov-row .name { color: var(--text-1); font-weight: 500; }
+.ov-row .desc { color: var(--text-2); font-size: 11px; }
+.ov-row .cost-tag { font-size: 10px; text-align: center; }
+.ov-row .risk { font-size: 10px; text-align: center; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .slide { padding: 40px 24px; }
+  .cover-slide h1 { font-size: 32px; }
+  .cols-2, .cols-3, .cols-4, .theme-grid { grid-template-columns: 1fr 1fr; }
+  .cols-12 { grid-template-columns: repeat(3,1fr); }
+  .ov-row { grid-template-columns: 24px 70px 1fr 50px; }
+  .ov-row .risk, .ov-row .cost-tag { display: none; }
+}
+@media (max-width: 600px) {
+  .cols-2, .cols-3, .cols-4, .theme-grid { grid-template-columns: 1fr; }
+  .tbl { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 1 · Cover -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide cover-slide is-active" data-title="封面">
+  <div class="subtitle" data-anim="fade-up">Competitive Analysis &amp; New Project Initiation</div>
+  <h1 data-anim="fade-up" data-anim-delay="200">狱国争霸<br><span class="grad">竞品拆解</span> &amp; 新项目立项</h1>
+  <p class="lede" data-anim="fade-up" data-anim-delay="400">拉线出兵 + 城池攻防核心玩法复刻 × 新题材/美术重构<br>参考蓝本 · 买量策略 · 12 题材方向 · 深度融合方案</p>
+  <div class="meta-line" data-anim="fade-up" data-anim-delay="600">
+    <span>2026 年 6 月</span>
+    <span>基于引力引擎/抖音畅销公开数据</span>
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="1" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 2 · 参考蓝本 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="参考蓝本">
+  <p class="section-tag accent">Reference Blueprint</p>
+  <h2 class="h2">参考蓝本 · 狱国争霸</h2>
+  <div class="cols-2 mt-l" style="align-items:stretch;">
+    <div>
+      <div class="card-custom" style="height:100%;">
+        <h4>🎮 核心玩法（复刻）</h4>
+        <p style="margin-top:8px;"><strong>拉线出兵</strong> — 手指拖拽→士兵行军→城池攻防</p>
+        <p><strong>城池占领</strong> — 占领、建筑升级、资源产出</p>
+        <p><strong>兵种克制</strong> — 青州兵/大象/弓箭手三角克制</p>
+        <p><strong>联盟国战</strong> — 多玩家协同攻防</p>
+        <div class="pills">
+          <span class="pill pill-accent">轻量策略战棋</span>
+          <span class="pill pill-accent">休闲 RTS</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card-custom" style="height:100%;">
+        <h4>📊 市场验证</h4>
+        <div style="display:flex;gap:16px;margin-top:12px;">
+          <div class="metric-box" style="flex:1;"><div class="n">TOP 9</div><div class="l">抖音小游戏畅销榜<br>2026 年 5 月</div></div>
+          <div class="metric-box" style="flex:1;"><div class="n">✓</div><div class="l">核心玩法已验证<br>低门槛·高爽感</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:16px;">
+    <div class="card-custom">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;">
+        <div><span class="badge badge-blue">目标平台</span> 微信小游戏 + 抖音小游戏</div>
+        <div><span class="badge badge-blue">变现模式</span> Hybrid — 激励视频 + IAP（月卡/礼包）</div>
+        <div><span class="badge badge-blue">美术策略</span> Q版卡通3D ← 原淡彩水墨（将全部替换）</div>
+      </div>
+    </div>
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="2" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 3 · 买量素材方向 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="买量素材">
+  <p class="section-tag accent">UA Creative Strategy</p>
+  <h2 class="h2">买量素材方向</h2>
+  <p class="lede mt-s" style="color:var(--text-3);">核心公式：拉线操作视觉秀 + 兵种克制展示 + 翻盘爽点</p>
+
+  <div class="tbl-wrap mt-l">
+    <table class="tbl">
+      <thead><tr><th>类型</th><th>内容</th><th>优先级</th></tr></thead>
+      <tbody>
+        <tr><td class="hl">🎯 拉线操作秀</td><td>手指拖拽 → 士兵行军 → 攻城，一镜到底</td><td><span class="badge badge-green">必备基础</span></td></tr>
+        <tr><td class="hl">🔥 翻盘/偷家</td><td>1v3 绝地翻盘，残血偷家 + 对面反应</td><td><span class="badge badge-green">高转化</span></td></tr>
+        <tr><td class="hl">📖 兵种克制科普</td><td>"大象 vs 步兵谁赢？" 好奇心驱动</td><td><span class="badge badge-blue">深度用户</span></td></tr>
+        <tr><td class="hl">❓ 狱国悬念</td><td>"为什么是狱国？三国怎么在地府打？"</td><td><span class="badge badge-yellow">差异化钩子</span></td></tr>
+        <tr><td class="hl">🎪 副玩法引流</td><td>数字门/走钢丝 + Q版角色反差</td><td><span class="badge badge-yellow">可选扩量</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cols-2 mt-l">
+    <div class="card-custom">
+      <h4>📱 抖音策略</h4>
+      <ul style="font-size:13px;color:var(--text-2);line-height:2;padding-left:18px;margin-top:8px;">
+        <li>快节奏，前 3 秒定生死</li>
+        <li>强烈翻盘 + 热门 BGM</li>
+        <li>视觉差异化要第一眼认出</li>
+      </ul>
+    </div>
+    <div class="card-custom">
+      <h4>💚 微信策略</h4>
+      <ul style="font-size:13px;color:var(--text-2);line-height:2;padding-left:18px;margin-top:8px;">
+        <li>用户 30-50 岁，节奏放慢</li>
+        <li>兵种搭配攻略 + 联盟战报</li>
+        <li>社交裂变分享奖励</li>
+      </ul>
+    </div>
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="3" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 4 · 直接竞品 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="竞品分析">
+  <p class="section-tag accent">Market Landscape</p>
+  <h2 class="h2">引力畅销排行 · 直接竞品</h2>
+  <p class="lede mt-s" style="color:var(--text-3);">基于 2026 年 5 月引力引擎微信小游戏 Top 100</p>
+
+  <div class="tbl-wrap mt-l">
+    <table class="tbl">
+      <thead><tr><th>游戏</th><th>排名 (WX / DY)</th><th>类型</th><th>美术风格</th><th>题材</th></tr></thead>
+      <tbody>
+        <tr><td class="hl">占城大师</td><td>WX #7 / DY #2</td><td>六边形 RTS 自动出兵+占地</td><td>Q版卡通西幻，CR-like UI</td><td>兽人·亡灵·机甲·中世纪奇幻</td></tr>
+        <tr><td class="hl">掌上谈兵</td><td>WX TOP10</td><td>塔防划兵控制</td><td>卡通火柴人</td><td>军事/战争 轻卡通</td></tr>
+        <tr><td class="hl">小兵打天下</td><td>WX #13</td><td>TD+SLG 混合</td><td>Q版卡通 中低品质</td><td>穿越+军事+多文明</td></tr>
+        <tr><td class="hl">爆裂守卫</td><td>WX TOP30</td><td>地形 TD 陷阱+怪物</td><td>粗线条卡通</td><td>末日科幻</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="verdict verdict-blue mt-l">
+    <strong>🔍 关键发现：</strong> 此子品类下畅销榜仅 <strong>占城大师</strong> 一款 —— 空间仍是蓝海。<br>最稳妥路线：西幻 Q 版（对标占城大师 + 差异化突破）
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="4" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 5 · SLG题材分布 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="SLG题材分布">
+  <p class="section-tag accent">SLG Theme Distribution</p>
+  <h2 class="h2">畅销 SLG 题材分布 · 适配分析</h2>
+
+  <div class="tbl-wrap mt-l">
+    <table class="tbl">
+      <thead><tr><th>题材</th><th>代表产品</th><th>美术风格</th><th>畅销排名</th><th>适配拉线出兵?</th></tr></thead>
+      <tbody>
+        <tr><td class="hl">❄️ 冰雪末日</td><td>无尽冬日</td><td>写实暗冷色调</td><td>TOP 1-2</td><td>⚠️ 需做 Q 化轻量</td></tr>
+        <tr><td class="hl">🧊 三国+冰雪</td><td>三国：冰河时代</td><td>写实 + 冰雪</td><td>TOP 3-5</td><td>⚠️ 三层混合有风险</td></tr>
+        <tr><td class="hl">🌊 洪水末日/海洋</td><td>疯狂水世界</td><td>彩色卡通轻量</td><td>TOP 10</td><td>✅ 适配度高</td></tr>
+        <tr><td class="hl">🧘 修仙仙侠</td><td>九霄仙府</td><td>东方水墨</td><td>TOP 20</td><td>✅ 叙事契合度高</td></tr>
+        <tr><td class="hl">🏡 怀旧/农场</td><td>天天农场</td><td>复古风格</td><td>TOP 15</td><td>❌ 种田+打仗冲突</td></tr>
+        <tr><td class="hl">⚔️ 西幻魔法</td><td>占城大师</td><td>Q版卡通西幻</td><td>TOP 7</td><td>✅ 最佳对标</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="display:flex;gap:20px;margin-top:20px;">
+    <div class="card-custom" style="flex:1;">
+      <h4>🥇 第一梯队</h4>
+      <p>西幻魔法战争 · 修仙仙侠</p>
+    </div>
+    <div class="card-custom" style="flex:1;">
+      <h4>🥈 第二梯队</h4>
+      <p>洪水末日/海洋求生 · 冰雪末日（需 Q 化）</p>
+    </div>
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="5" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 6 · 12个新题材方向 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="12题材方向">
+  <p class="section-tag accent">New Theme Directions</p>
+  <h2 class="h2">12 个新项目题材方向</h2>
+  <p class="lede mt-s" style="color:var(--text-3);">保留「拉线出兵+城防」核心，完整题材/美术重构</p>
+
+  <div class="tbl-wrap mt-l">
+    <table class="tbl">
+      <thead><tr><th>#</th><th>题材</th><th>一句话描述</th><th>成本</th><th>核心优势</th><th>主要风险</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-blue">A</span></td><td class="hl">末日废土</td><td>幸存者基地，拉线派出搜尸队 vs 僵尸</td><td><span class="badge badge-yellow">中</span></td><td>买量效率最高，已验证赛道最大</td><td>竞争激烈</td></tr>
+        <tr><td><span class="badge badge-blue">B</span></td><td class="hl">星际太空</td><td>舰队指挥官，拉线=设定航线</td><td><span class="badge badge-red">大</span></td><td>零竞品蓝海，出海潜力最佳</td><td>美术量大，用户教育</td></tr>
+        <tr><td><span class="badge badge-blue">C</span></td><td class="hl">动物王国</td><td>Q萌部落战争，玩法反差萌</td><td><span class="badge badge-red">大</span></td><td>零审核风险，全年龄段通吃</td><td>付费深度未知</td></tr>
+        <tr><td><span class="badge badge-blue">D</span></td><td class="hl">山海经异兽</td><td>驯服异兽，部落征战，上古争霸</td><td><span class="badge badge-red">大</span></td><td>国风美学天花板，IP 富矿</td><td>极度依赖美术</td></tr>
+        <tr><td><span class="badge badge-green">E</span></td><td class="hl">正经三国</td><td>纯 Q 版三国，认知成本最低</td><td><span class="badge badge-green">小</span></td><td>用户池最大，开发量小</td><td>极度饱和，无差异化</td></tr>
+        <tr><td><span class="badge badge-green">F</span></td><td class="hl">西游神话</td><td>天庭·地府·妖魔三界争霸</td><td><span class="badge badge-yellow">中</span></td><td>国民 IP，天然兵种替换</td><td>红海，高投入</td></tr>
+        <tr><td><span class="badge badge-blue">G</span></td><td class="hl">二次元日系</td><td>JRPG 奇幻，精美立绘</td><td><span class="badge badge-red">大</span></td><td>付费意愿高，用户粘性强</td><td>成本极高，策略用户重叠度中等</td></tr>
+        <tr><td><span class="badge badge-blue">H</span></td><td class="hl">武侠江湖</td><td>各门派争夺武林盟主</td><td><span class="badge badge-red">大</span></td><td>30-45 岁情怀，审核风险低</td><td>品类未验证</td></tr>
+        <tr><td><span class="badge badge-green">I</span></td><td class="hl">中世纪骑士</td><td>城堡围攻，骑士/法师/弓箭手</td><td><span class="badge badge-yellow">中</span></td><td>全球最成熟的策略题材</td><td>国内无特色，撞车占城大师</td></tr>
+        <tr><td><span class="badge badge-green">J</span></td><td class="hl">火柴人</td><td>极简火柴人战斗</td><td><span class="badge badge-green">极小</span></td><td>开发最快，受众广</td><td>天花板低，无护城河</td></tr>
+        <tr><td><span class="badge badge-green">K</span></td><td class="hl">像素复古</td><td>8bit/16bit 像素（可套任何题材）</td><td><span class="badge badge-green">小</span></td><td>美术成本低，怀旧感</td><td>天花板低，廉价感</td></tr>
+        <tr><td><span class="badge badge-red">L</span></td><td class="hl">盗墓摸金</td><td>倒斗探险，墓室争夺</td><td><span class="badge badge-red">大</span></td><td>IP 受众大，差异化强</td><td><strong>审核红线</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="risk-legend">
+    <span style="color:var(--good)">● 风险可控</span>
+    <span style="color:var(--warn)">● 需关注</span>
+    <span style="color:var(--bad)">● 高风险</span>
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="6" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 7 · 对比矩阵 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="对比矩阵">
+  <p class="section-tag accent">Comparison Matrix</p>
+  <h2 class="h2">方案对比矩阵</h2>
+
+  <div class="tbl-wrap mt-l">
+    <table class="tbl">
+      <thead><tr><th>ID</th><th>买量效率</th><th>开发成本</th><th>过审风险</th><th>变现潜力</th><th>差异化</th><th>总评</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(122,162,247,0.03);"><td class="hl">A</td><td><span class="stars">★★★★★</span></td><td><span class="badge badge-yellow">中</span></td><td><span class="badge badge-green">低</span></td><td><span class="stars">★★★★★</span></td><td><span class="stars">★★</span></td><td class="hl">最稳健</td></tr>
+        <tr><td class="hl">B</td><td><span class="stars">★★★★</span></td><td><span class="badge badge-red">大</span></td><td><span class="badge badge-green">低</span></td><td><span class="stars">★★★★</span></td><td><span class="stars">★★★★★</span></td><td class="hl">蓝海标的</td></tr>
+        <tr><td class="hl">C</td><td><span class="stars">★★★★</span></td><td><span class="badge badge-red">大</span></td><td><span class="badge badge-green">极低</span></td><td><span class="stars">★★★</span></td><td><span class="stars">★★★★★</span></td><td>扩圈首选</td></tr>
+        <tr><td class="hl">D</td><td><span class="stars">★★★★</span></td><td><span class="badge badge-red">大</span></td><td><span class="badge badge-green">低</span></td><td><span class="stars">★★★★</span></td><td><span class="stars">★★★★★</span></td><td>美学天花板</td></tr>
+        <tr><td class="hl">E</td><td><span class="stars">★★★★</span></td><td><span class="badge badge-green">小</span></td><td><span class="badge badge-green">极低</span></td><td><span class="stars">★★★★</span></td><td><span class="stars">★</span></td><td>红海竞争</td></tr>
+        <tr><td class="hl">F</td><td><span class="stars">★★★★</span></td><td><span class="badge badge-yellow">中</span></td><td><span class="badge badge-green">极低</span></td><td><span class="stars">★★★★</span></td><td><span class="stars">★★</span></td><td>IP 强但卷</td></tr>
+        <tr><td class="hl">G</td><td><span class="stars">★★★★</span></td><td><span class="badge badge-red">大</span></td><td><span class="badge badge-green">低</span></td><td><span class="stars">★★★★★</span></td><td><span class="stars">★★★★</span></td><td>高投入高回报</td></tr>
+        <tr><td class="hl">H</td><td><span class="stars">★★★</span></td><td><span class="badge badge-red">大</span></td><td><span class="badge badge-green">低</span></td><td><span class="stars">★★★</span></td><td><span class="stars">★★★★</span></td><td>情怀未验证</td></tr>
+        <tr><td class="hl">I</td><td><span class="stars">★★★</span></td><td><span class="badge badge-yellow">中</span></td><td><span class="badge badge-green">极低</span></td><td><span class="stars">★★★★</span></td><td><span class="stars">★★</span></td><td>全球通吃国内冷</td></tr>
+        <tr><td class="hl">J</td><td><span class="stars">★★★</span></td><td><span class="badge badge-green">极小</span></td><td><span class="badge badge-green">极低</span></td><td><span class="stars">★★</span></td><td><span class="stars">★★★★</span></td><td>快速验证可用</td></tr>
+        <tr><td class="hl">K</td><td><span class="stars">★★★</span></td><td><span class="badge badge-green">小</span></td><td><span class="badge badge-green">极低</span></td><td><span class="stars">★★</span></td><td><span class="stars">★★★★</span></td><td>情怀天花板</td></tr>
+        <tr style="background:rgba(247,118,142,0.04);"><td class="hl">L</td><td><span class="stars">★★★★</span></td><td><span class="badge badge-red">大</span></td><td><span class="badge badge-red">高</span></td><td><span class="stars">★★★★</span></td><td><span class="stars">★★★★★</span></td><td style="color:var(--bad);">审核劝退</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="7" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 8 · 末日废土 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="末日废土">
+  <p class="section-tag accent">Deep Integration · Option A</p>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <h2 class="h2" style="margin:0;">末日废土深度融合</h2>
+    <span class="badge badge-yellow" style="font-size:12px;padding:4px 10px;">开发成本 中</span>
+    <span class="badge badge-green" style="font-size:12px;padding:4px 10px;">推荐指数 ★★★★★</span>
+  </div>
+
+  <div class="cols-2 mt-l" style="align-items:start;">
+    <div>
+      <p class="subsec">狱国 → 末日映射</p>
+      <table class="map-tbl">
+        <thead><tr><th>狱国原版</th><th></th><th>末日废土包装</th></tr></thead>
+        <tbody>
+          <tr><td>出兵攻打城池</td><td class="arrow-cell">→</td><td>派出搜尸队前往废墟/僵尸区</td></tr>
+          <tr><td>兵种（青州兵/大象）</td><td class="arrow-cell">→</td><td>幸存者职业：搜刮者·枪手·掷弹兵·重盾</td></tr>
+          <tr><td>城防/建筑升级</td><td class="arrow-cell">→</td><td>庇护所升级：工坊·医疗·兵营·雷达</td></tr>
+          <tr><td>资源（金币/木材）</td><td class="arrow-cell">→</td><td>废土资源：水·食物·弹药·零件</td></tr>
+          <tr><td>联盟国战</td><td class="arrow-cell">→</td><td>营地间资源争夺战</td></tr>
+          <tr><td>武将/英雄</td><td class="arrow-cell">→</td><td>幸存者领袖：医疗兵·机械师</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p class="subsec">美术方向</p>
+      <div class="card-custom">
+        <p><span class="badge badge-blue">风格</span> Q版暗黑卡通（避开无尽冬日写实风）</p>
+        <p style="margin-top:8px;"><span class="badge badge-blue">参考</span> 幸存者33天 Q版僵尸 + 辐射避难所明亮废土</p>
+        <p style="margin-top:8px;"><span class="badge badge-blue">色板</span> 暖黄/橙 + 冷灰 + 荧光绿</p>
+        <p style="margin-top:8px;"><span class="badge badge-blue">场景</span> 废弃都市 · 废土公路 · 核电站废墟 · 地下庇护所</p>
+        <p style="margin-top:8px;"><span class="badge badge-blue">僵尸</span> Q版搞笑风格降低血腥感</p>
+      </div>
+      <p class="subsec mt-l">特有系统</p>
+      <div class="card-custom">
+        <p><strong>士气系统：</strong> 小队在外久了会疲劳/恐惧 → 轮换部队（变现点）</p>
+        <p><strong>辐射区：</strong> 随机生成，需特殊单位（防化服）</p>
+        <p><strong>尸潮：</strong> 周期性基地袭击 → 驱动防御建设</p>
+        <p><strong>搜刮随机事件：</strong> 发现幸存者/变异体/稀有武器</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="verdict verdict-green mt-l">
+    <strong>✅ vs 无尽冬日：</strong> 无尽冬日 = 写实 SLG（看数字成长）| 本产品 = Q版休闲 RTS（爽感操作，3 分钟一局）
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="8" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 9 · 星际太空 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="星际太空">
+  <p class="section-tag accent">Deep Integration · Option B</p>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <h2 class="h2" style="margin:0;">星际太空深度融合</h2>
+    <span class="badge badge-red" style="font-size:12px;padding:4px 10px;">开发成本 大</span>
+    <span class="badge badge-accent" style="font-size:12px;padding:4px 10px;background:rgba(122,162,247,0.15);color:var(--accent);">蓝海标的</span>
+  </div>
+
+  <div class="cols-2 mt-l" style="align-items:start;">
+    <div>
+      <p class="subsec">狱国 → 星际映射</p>
+      <table class="map-tbl">
+        <thead><tr><th>狱国原版</th><th></th><th>星际太空包装</th></tr></thead>
+        <tbody>
+          <tr><td>出兵攻打城池</td><td class="arrow-cell">→</td><td>舰队攻击敌舰/行星前哨</td></tr>
+          <tr><td>兵种克制</td><td class="arrow-cell">→</td><td>舰船三角：护卫舰→轰炸机→航母→护卫舰</td></tr>
+          <tr><td>城池占领</td><td class="arrow-cell">→</td><td>星区/行星占领，阵营色填充</td></tr>
+          <tr><td>资源</td><td class="arrow-cell">→</td><td>能量矿石·钛合金·反物质·暗物质</td></tr>
+          <tr><td>联盟国战</td><td class="arrow-cell">→</td><td>银河阵营战：帝国 vs 联邦 vs 虫族</td></tr>
+          <tr><td>武将/英雄</td><td class="arrow-cell">→</td><td>舰长：特有技能+旗舰加成</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p class="subsec">3D 战场 · 独占优势</p>
+      <div class="card-custom" style="border-left:3px solid var(--accent);">
+        <p>太空题材独有的 3D 战场维度：</p>
+        <ul style="font-size:13px;color:var(--text-2);line-height:2;padding-left:18px;margin-top:6px;">
+          <li>拉线穿越小行星带</li>
+          <li>绕行行星后方进行夹击</li>
+          <li>通过虫洞跳跃至战场另一端</li>
+          <li>比任何地面题材都更具操作爽感</li>
+        </ul>
+      </div>
+
+      <p class="subsec mt-l">特有系统</p>
+      <div class="card-custom">
+        <p><strong>虫洞跳跃：</strong> 舰队瞬间传送至另一区域</p>
+        <p><strong>行星类型：</strong> 资源星/堡垒星/科技星/首都星</p>
+        <p><strong>旗舰系统：</strong> 英雄单位，旗舰沉没则全局属性下降</p>
+        <p><strong>空间站交易：</strong> 资源兑换·雇佣兵招募</p>
+        <p><strong>舰船克制链：</strong> 护卫舰→轰炸机→航母→护卫舰</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="verdict verdict-blue mt-l">
+    <strong>🌌 为什么选太空：</strong> 微信小游戏零太空策略竞品 · 「拉线=设定航线」最自然的操作映射 · 出海零文化壁垒
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="9" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 10 · 动物王国 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="动物王国">
+  <p class="section-tag accent">Deep Integration · Option C</p>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <h2 class="h2" style="margin:0;">动物王国深度融合</h2>
+    <span class="badge badge-red" style="font-size:12px;padding:4px 10px;">开发成本 大</span>
+    <span class="badge badge-green" style="font-size:12px;padding:4px 10px;">推荐 ★★★★</span>
+  </div>
+
+  <div class="cols-2 mt-l" style="align-items:start;">
+    <div>
+      <p class="subsec">核心设计</p>
+      <div class="card-custom">
+        <p><span class="badge badge-blue">世界观</span> 森林/草原/沙漠/冰川各动物部落的领地之争</p>
+        <p style="margin-top:8px;"><span class="badge badge-blue">兵种</span> 狮子（重装）· 狼群（快速）· 大象（攻城）· 鹰（侦察）· 蛇（偷袭）</p>
+        <p style="margin-top:8px;"><span class="badge badge-blue">美术</span> 顶级 Q 版卡通，电影级角色设计（参考 Zootopia/疯狂动物城）</p>
+        <p style="margin-top:8px;"><span class="badge badge-blue">资源</span> 食物·水源·木材·皮毛</p>
+        <p style="margin-top:8px;"><span class="badge badge-blue">场景</span> 雨林树屋 · 沙漠绿洲 · 冰原雪洞 · 火山堡垒</p>
+      </div>
+    </div>
+    <div>
+      <p class="subsec">优势 &amp; 风险</p>
+      <div class="card-custom" style="border-left:3px solid var(--good);">
+        <p><strong>优势</strong></p>
+        <ul style="font-size:13px;color:var(--text-2);line-height:2;padding-left:18px;margin-top:4px;">
+          <li>零审核风险 —— 动物主题国内最宽松</li>
+          <li>全年龄段通吃，女性/儿童用户友好</li>
+          <li>微信小游戏动物类有成功先例（动物餐厅）</li>
+          <li>长生命周期 + 出海无文化障碍</li>
+        </ul>
+      </div>
+      <div class="card-custom" style="border-left:3px solid var(--bad);margin-top:12px;">
+        <p><strong>风险</strong></p>
+        <ul style="font-size:13px;color:var(--text-2);line-height:2;padding-left:18px;margin-top:4px;">
+          <li>核心付费群体（30-45 男）转化摩擦</li>
+          <li>战争情绪被可爱稀释</li>
+          <li>付费深度未验证</li>
+          <li>美术量大</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="10" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 11 · A/B/C 对比 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="方案对比ABC">
+  <p class="section-tag accent">Final Comparison</p>
+  <h2 class="h2">重点方案 · A / B / C 选哪个？</h2>
+
+  <div class="cols-3 mt-l">
+    <div class="card-custom" style="text-align:center;border-top:3px solid var(--good);">
+      <div style="font-size:36px;margin-bottom:8px;">☢️</div>
+      <h4 style="font-size:18px;">A · 末日废土</h4>
+      <p style="font-size:11px;color:var(--text-3);margin-bottom:12px;">最稳健</p>
+      <div style="text-align:left;">
+        <p style="font-size:12px;color:var(--good);margin:4px 0;">✓ 最大 SLG/策略赛道</p>
+        <p style="font-size:12px;color:var(--good);margin:4px 0;">✓ 买量模板成熟</p>
+        <p style="font-size:12px;color:var(--good);margin:4px 0;">✓ 拉线→搜尸天然契合</p>
+        <p style="font-size:12px;color:var(--warn);margin:4px 0;">⚠ 赛道拥挤需微创新</p>
+        <p style="font-size:12px;color:var(--warn);margin:4px 0;">⚠ 用户偏男性</p>
+      </div>
+    </div>
+    <div class="card-custom" style="text-align:center;border-top:3px solid var(--accent);">
+      <div style="font-size:36px;margin-bottom:8px;">🚀</div>
+      <h4 style="font-size:18px;">B · 星际太空</h4>
+      <p style="font-size:11px;color:var(--text-3);margin-bottom:12px;">最佳蓝海</p>
+      <div style="text-align:left;">
+        <p style="font-size:12px;color:var(--good);margin:4px 0;">✓ 微信零太空策略竞品</p>
+        <p style="font-size:12px;color:var(--good);margin:4px 0;">✓ 拉线=航线最自然映射</p>
+        <p style="font-size:12px;color:var(--good);margin:4px 0;">✓ 出海零文化壁垒</p>
+        <p style="font-size:12px;color:var(--bad);margin:4px 0;">✗ 美术量最大</p>
+        <p style="font-size:12px;color:var(--warn);margin:4px 0;">⚠ 国内需用户教育</p>
+      </div>
+    </div>
+    <div class="card-custom" style="text-align:center;border-top:3px solid var(--warn);">
+      <div style="font-size:36px;margin-bottom:8px;">🦁</div>
+      <h4 style="font-size:18px;">C · 动物王国</h4>
+      <p style="font-size:11px;color:var(--text-3);margin-bottom:12px;">扩圈首选</p>
+      <div style="text-align:left;">
+        <p style="font-size:12px;color:var(--good);margin:4px 0;">✓ 审核最宽松</p>
+        <p style="font-size:12px;color:var(--good);margin:4px 0;">✓ 全年龄段</p>
+        <p style="font-size:12px;color:var(--good);margin:4px 0;">✓ 出海友好</p>
+        <p style="font-size:12px;color:var(--bad);margin:4px 0;">✗ 核心付费群体转化摩擦</p>
+        <p style="font-size:12px;color:var(--warn);margin:4px 0;">⚠ 付费深度未验证</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="verdict verdict-blue mt-l" style="text-align:center;">
+    <strong>推荐路径：</strong> ① 选方向 → ② 3-4 周可玩原型 → ③ 小规模 UA 测 CTR/转化成本 → ④ 验证后全面开发
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="11" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 12 · 行动建议 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide" data-title="行动建议">
+  <p class="section-tag accent">Action Plan</p>
+  <h2 class="h2">行动建议 · 决策路径</h2>
+
+  <div class="cols-2 mt-l">
+    <div>
+      <p class="subsec">执行路线</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+        <div class="card-custom" style="display:flex;align-items:center;gap:14px;padding:14px 18px;">
+          <span style="font-size:20px;color:var(--accent);">01</span>
+          <div><strong style="color:var(--text-1);">选题材方向</strong><p style="font-size:12px;color:var(--text-3);margin:0;">从 A/B/C 中选择</p></div>
+        </div>
+        <div class="card-custom" style="display:flex;align-items:center;gap:14px;padding:14px 18px;">
+          <span style="font-size:20px;color:var(--accent);">02</span>
+          <div><strong style="color:var(--text-1);">搭建可玩原型</strong><p style="font-size:12px;color:var(--text-3);margin:0;">3-4 周出 demo</p></div>
+        </div>
+        <div class="card-custom" style="display:flex;align-items:center;gap:14px;padding:14px 18px;">
+          <span style="font-size:20px;color:var(--accent);">03</span>
+          <div><strong style="color:var(--text-1);">小规模 UA 测试</strong><p style="font-size:12px;color:var(--text-3);margin:0;">验证 CTR / 转化成本</p></div>
+        </div>
+        <div class="card-custom" style="display:flex;align-items:center;gap:14px;padding:14px 18px;">
+          <span style="font-size:20px;color:var(--accent);">04</span>
+          <div><strong style="color:var(--text-1);">全面开发</strong><p style="font-size:12px;color:var(--text-3);margin:0;">方向验证后全量投入</p></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="subsec">决策因素</p>
+      <div class="card-custom">
+        <ul style="font-size:13px;color:var(--text-2);line-height:2.4;padding-left:18px;">
+          <li>团队美术能力</li>
+          <li>目标市场（国内 vs 全球）</li>
+          <li>预算体量</li>
+          <li>开发周期</li>
+        </ul>
+      </div>
+
+      <p class="subsec mt-l">命名参考</p>
+      <div class="card-custom">
+        <p style="font-size:11px;color:var(--text-3);margin-bottom:6px;">实力派</p>
+        <div class="name-tags">
+          <span class="name-tag">乱世争霸</span>
+          <span class="name-tag">诸侯争霸</span>
+          <span class="name-tag">王城争霸</span>
+          <span class="name-tag">挂帅出征</span>
+          <span class="name-tag">铁骑争锋</span>
+        </div>
+        <p style="font-size:11px;color:var(--text-3);margin:8px 0 6px;">玩法派</p>
+        <div class="name-tags">
+          <span class="name-tag">点兵点将</span>
+          <span class="name-tag">一指定江山</span>
+          <span class="name-tag">出兵就完事了</span>
+          <span class="name-tag">这城我要了</span>
+          <span class="name-tag">指尖攻城</span>
+        </div>
+        <p style="font-size:11px;color:var(--text-3);margin:8px 0 6px;">世界观派</p>
+        <div class="name-tags">
+          <span class="name-tag">冥界争霸</span>
+          <span class="name-tag">幽冥争霸</span>
+          <span class="name-tag">灵域争霸</span>
+          <span class="name-tag">将魂出征</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="12" data-total="13"></span></div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 13 · 结尾 -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide cover-slide" data-title="结尾" style="justify-content:center;">
+  <div class="subtitle" data-anim="fade-up">Thank You</div>
+  <h1 style="font-size:48px;font-weight:800;letter-spacing:-1px;" data-anim="fade-up" data-anim-delay="200">
+    数据驱动<br><span class="grad">决策先行</span>
+  </h1>
+  <p class="lede" style="max-width:400px;font-size:14px;" data-anim="fade-up" data-anim-delay="400">
+    本报告基于引力引擎 / 抖音畅销公开数据整理 · 2026 年 6 月
+  </p>
+  <div class="meta-line" style="margin-top:40px;" data-anim="fade-up" data-anim-delay="600">
+    <span>gh.lirare.xyz/ygzb-report.html</span>
+  </div>
+  <div class="deck-footer"><span class="slide-number" data-current="13" data-total="13"></span></div>
+</section>
+
+</div>
+<script src="assets/runtime.js"></script>
+</body>
+</html>
