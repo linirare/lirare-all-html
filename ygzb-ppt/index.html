@@ -87,7 +87,8 @@ body { background: var(--bg); }
 
 /* Cover */
 .cover-slide {
-  display: flex; flex-direction: column; justify-content: center;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  min-height: 100vh; padding: 60px 80px;
   background: linear-gradient(135deg, #1a1b26 0%, #24283b 50%, #1a1b26 100%);
   position: relative; overflow: hidden;
 }
@@ -253,11 +254,11 @@ body { background: var(--bg); }
 <!-- ════════════════════════════════════════════ -->
 <!-- SLIDE 1 · Cover -->
 <!-- ════════════════════════════════════════════ -->
-<section class="slide cover-slide is-active" data-title="封面">
-  <div class="subtitle" data-anim="fade-up">Competitive Analysis &amp; New Project Initiation</div>
-  <h1 data-anim="fade-up" data-anim-delay="200">狱国争霸<br><span class="grad">竞品拆解</span> &amp; 新项目立项</h1>
-  <p class="lede" data-anim="fade-up" data-anim-delay="400">拉线出兵 + 城池攻防核心玩法复刻 × 新题材/美术重构<br>参考蓝本 · 买量策略 · 12 题材方向 · 深度融合方案</p>
-  <div class="meta-line" data-anim="fade-up" data-anim-delay="600">
+<section class="slide cover-slide is-active" data-title="封面" data-fx="starfield">
+  <div class="subtitle" data-anim="rise-in">Competitive Analysis &amp; New Project Initiation</div>
+  <h1 data-anim="rise-in" data-anim-delay="200">狱国争霸<br><span class="grad">竞品拆解</span> &amp; 新项目立项</h1>
+  <p class="lede" data-anim="rise-in" data-anim-delay="400">拉线出兵 + 城池攻防核心玩法复刻 × 新题材/美术重构<br>参考蓝本 · 买量策略 · 12 题材方向 · 深度融合方案</p>
+  <div class="meta-line" data-anim="rise-in" data-anim-delay="600">
     <span>2026 年 6 月</span>
     <span>基于引力引擎/抖音畅销公开数据</span>
   </div>
@@ -268,11 +269,11 @@ body { background: var(--bg); }
 <!-- SLIDE 2 · 参考蓝本 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="参考蓝本">
-  <p class="section-tag accent">Reference Blueprint</p>
+  <p class="section-tag accent" data-anim="blur-in">Reference Blueprint</p>
   <h2 class="h2">参考蓝本 · 狱国争霸</h2>
-  <div class="cols-2 mt-l" style="align-items:stretch;">
+  <div class="cols-2 mt-l anim-stagger-list" style="align-items:stretch;">
     <div>
-      <div class="card-custom" style="height:100%;">
+      <div class="card-custom anim-rise-in" style="height:100%;">
         <h4>🎮 核心玩法（复刻）</h4>
         <p style="margin-top:8px;"><strong>拉线出兵</strong> — 手指拖拽→士兵行军→城池攻防</p>
         <p><strong>城池占领</strong> — 占领、建筑升级、资源产出</p>
@@ -285,7 +286,7 @@ body { background: var(--bg); }
       </div>
     </div>
     <div>
-      <div class="card-custom" style="height:100%;">
+      <div class="card-custom anim-rise-in" style="height:100%;">
         <h4>📊 市场验证</h4>
         <div style="display:flex;gap:16px;margin-top:12px;">
           <div class="metric-box" style="flex:1;"><div class="n">TOP 9</div><div class="l">抖音小游戏畅销榜<br>2026 年 5 月</div></div>
@@ -310,7 +311,7 @@ body { background: var(--bg); }
 <!-- SLIDE 3 · 买量素材方向 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="买量素材">
-  <p class="section-tag accent">UA Creative Strategy</p>
+  <p class="section-tag accent" data-anim="blur-in">UA Creative Strategy</p>
   <h2 class="h2">买量素材方向</h2>
   <p class="lede mt-s" style="color:var(--text-3);">核心公式：拉线操作视觉秀 + 兵种克制展示 + 翻盘爽点</p>
 
@@ -327,7 +328,7 @@ body { background: var(--bg); }
     </table>
   </div>
 
-  <div class="cols-2 mt-l">
+  <div class="cols-2 mt-l anim-stagger-list">
     <div class="card-custom">
       <h4>📱 抖音策略</h4>
       <ul style="font-size:13px;color:var(--text-2);line-height:2;padding-left:18px;margin-top:8px;">
@@ -352,7 +353,7 @@ body { background: var(--bg); }
 <!-- SLIDE 4 · 直接竞品 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="竞品分析">
-  <p class="section-tag accent">Market Landscape</p>
+  <p class="section-tag accent" data-anim="blur-in">Market Landscape</p>
   <h2 class="h2">引力畅销排行 · 直接竞品</h2>
   <p class="lede mt-s" style="color:var(--text-3);">基于 2026 年 5 月引力引擎微信小游戏 Top 100</p>
 
@@ -378,7 +379,7 @@ body { background: var(--bg); }
 <!-- SLIDE 5 · SLG题材分布 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="SLG题材分布">
-  <p class="section-tag accent">SLG Theme Distribution</p>
+  <p class="section-tag accent" data-anim="blur-in">SLG Theme Distribution</p>
   <h2 class="h2">畅销 SLG 题材分布 · 适配分析</h2>
 
   <div class="tbl-wrap mt-l">
@@ -412,7 +413,7 @@ body { background: var(--bg); }
 <!-- SLIDE 6 · 12个新题材方向 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="12题材方向">
-  <p class="section-tag accent">New Theme Directions</p>
+  <p class="section-tag accent" data-anim="blur-in">New Theme Directions</p>
   <h2 class="h2">12 个新项目题材方向</h2>
   <p class="lede mt-s" style="color:var(--text-3);">保留「拉线出兵+城防」核心，完整题材/美术重构</p>
 
@@ -448,7 +449,7 @@ body { background: var(--bg); }
 <!-- SLIDE 7 · 对比矩阵 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="对比矩阵">
-  <p class="section-tag accent">Comparison Matrix</p>
+  <p class="section-tag accent" data-anim="blur-in">Comparison Matrix</p>
   <h2 class="h2">方案对比矩阵</h2>
 
   <div class="tbl-wrap mt-l">
@@ -477,7 +478,7 @@ body { background: var(--bg); }
 <!-- SLIDE 8 · 末日废土 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="末日废土">
-  <p class="section-tag accent">Deep Integration · Option A</p>
+  <p class="section-tag accent" data-anim="blur-in">Deep Integration · Option A</p>
   <div style="display:flex;align-items:center;gap:16px;">
     <h2 class="h2" style="margin:0;">末日废土深度融合</h2>
     <span class="badge badge-yellow" style="font-size:12px;padding:4px 10px;">开发成本 中</span>
@@ -528,7 +529,7 @@ body { background: var(--bg); }
 <!-- SLIDE 9 · 星际太空 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="星际太空">
-  <p class="section-tag accent">Deep Integration · Option B</p>
+  <p class="section-tag accent" data-anim="blur-in">Deep Integration · Option B</p>
   <div style="display:flex;align-items:center;gap:16px;">
     <h2 class="h2" style="margin:0;">星际太空深度融合</h2>
     <span class="badge badge-red" style="font-size:12px;padding:4px 10px;">开发成本 大</span>
@@ -583,7 +584,7 @@ body { background: var(--bg); }
 <!-- SLIDE 10 · 动物王国 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="动物王国">
-  <p class="section-tag accent">Deep Integration · Option C</p>
+  <p class="section-tag accent" data-anim="blur-in">Deep Integration · Option C</p>
   <div style="display:flex;align-items:center;gap:16px;">
     <h2 class="h2" style="margin:0;">动物王国深度融合</h2>
     <span class="badge badge-red" style="font-size:12px;padding:4px 10px;">开发成本 大</span>
@@ -630,10 +631,10 @@ body { background: var(--bg); }
 <!-- SLIDE 11 · A/B/C 对比 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="方案对比ABC">
-  <p class="section-tag accent">Final Comparison</p>
+  <p class="section-tag accent" data-anim="blur-in">Final Comparison</p>
   <h2 class="h2">重点方案 · A / B / C 选哪个？</h2>
 
-  <div class="cols-3 mt-l">
+  <div class="cols-3 mt-l anim-stagger-list">
     <div class="card-custom" style="text-align:center;border-top:3px solid var(--good);">
       <div style="font-size:36px;margin-bottom:8px;">☢️</div>
       <h4 style="font-size:18px;">A · 末日废土</h4>
@@ -682,10 +683,10 @@ body { background: var(--bg); }
 <!-- SLIDE 12 · 行动建议 -->
 <!-- ════════════════════════════════════════════ -->
 <section class="slide" data-title="行动建议">
-  <p class="section-tag accent">Action Plan</p>
+  <p class="section-tag accent" data-anim="blur-in">Action Plan</p>
   <h2 class="h2">行动建议 · 决策路径</h2>
 
-  <div class="cols-2 mt-l">
+  <div class="cols-2 mt-l anim-stagger-list">
     <div>
       <p class="subsec">执行路线</p>
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
@@ -752,21 +753,19 @@ body { background: var(--bg); }
 <!-- ════════════════════════════════════════════ -->
 <!-- SLIDE 13 · 结尾 -->
 <!-- ════════════════════════════════════════════ -->
-<section class="slide cover-slide" data-title="结尾" style="justify-content:center;">
-  <div class="subtitle" data-anim="fade-up">Thank You</div>
-  <h1 style="font-size:48px;font-weight:800;letter-spacing:-1px;" data-anim="fade-up" data-anim-delay="200">
+<section class="slide cover-slide" data-title="结尾" style="justify-content:center;min-height:100vh;padding:60px 80px;" data-fx="constellation">
+  <div class="subtitle" data-anim="rise-in">Thank You</div>
+  <h1 style="font-size:48px;font-weight:800;letter-spacing:-1px;text-align:center;" data-anim="rise-in" data-anim-delay="200">
     数据驱动<br><span class="grad">决策先行</span>
   </h1>
-  <p class="lede" style="max-width:400px;font-size:14px;" data-anim="fade-up" data-anim-delay="400">
+  <p class="lede" style="max-width:400px;font-size:14px;text-align:center;" data-anim="rise-in" data-anim-delay="400">
     本报告基于引力引擎 / 抖音畅销公开数据整理 · 2026 年 6 月
   </p>
-  <div class="meta-line" style="margin-top:40px;" data-anim="fade-up" data-anim-delay="600">
-    <span>gh.lirare.xyz/ygzb-report.html</span>
-  </div>
   <div class="deck-footer"><span class="slide-number" data-current="13" data-total="13"></span></div>
 </section>
 
 </div>
+<script src="assets/animations/fx-runtime.js"></script>
 <script src="assets/runtime.js"></script>
 </body>
 </html>
