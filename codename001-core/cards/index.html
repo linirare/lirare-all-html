@@ -252,18 +252,36 @@
 <!-- ==================== 执行字段 ==================== -->
 <div class="section">
   <h2><span class="num">八</span>执行字段（研发用）</h2>
-  <p>每张功能牌需定义以下执行维度：</p>
+  <p>每张功能牌的执行维度定义：</p>
+  <div class="table-wrap">
   <table>
-    <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+    <thead><tr><th>名称</th><th>Tier</th><th>触发时机</th><th>目标类型</th><th>可取消</th><th>失败条件</th><th>公开</th><th>时效</th></tr></thead>
     <tbody>
-      <tr><td>触发时机</td><td>enum</td><td>回合开始前 / 选牌阶段 / 出牌后 / 结算前 / 对手出牌后</td></tr>
-      <tr><td>目标类型</td><td>enum</td><td>自身手牌 / 对手手牌 / 公共牌 / 牌堆 / 无目标（全局）</td></tr>
-      <tr><td>是否可被取消</td><td>bool</td><td>技能效果能否被其他技能抵消或反制</td></tr>
-      <tr><td>失败条件</td><td>string</td><td>什么情况下技能不生效（如目标不足、条件不满足）</td></tr>
-      <tr><td>是否公开给对手</td><td>bool</td><td>对手是否能看到此技能被使用</td></tr>
-      <tr><td>持续时效</td><td>string</td><td>仅本回合 / 持续到本局结束 / 整场有效</td></tr>
+      <tr><td>5-Joker</td><td>T0</td><td>回合开始前</td><td>牌堆 → 自身手牌</td><td>否</td><td>牌堆为空</td><td>是</td><td>即时</td></tr>
+      <tr><td>魔术师</td><td>T0</td><td>选牌阶段</td><td>自身手牌</td><td>否</td><td>手牌 ≤0</td><td>是</td><td>即时</td></tr>
+      <tr><td>神偷</td><td>T0</td><td>回合开始前</td><td>对手手牌 → 自身</td><td>否</td><td>对手手牌 ≤0</td><td>是</td><td>即时</td></tr>
+      <tr><td>命运一击</td><td>T0</td><td>选牌阶段</td><td>自身手牌（弃1张）</td><td>否</td><td>手牌 ≤0</td><td>是</td><td>整场（A牌加入手牌）</td></tr>
+      <tr><td>黑客</td><td>T0</td><td>回合开始前</td><td>对手手牌</td><td>否</td><td>对手手牌 ≤0</td><td>是</td><td>即时</td></tr>
+      <tr><td>幸运日</td><td>T1</td><td>出牌前</td><td>全局（自身牌型）</td><td>否</td><td>未出顺子</td><td>是</td><td>仅本回合</td></tr>
+      <tr><td>破坏专家</td><td>T1</td><td>回合开始前</td><td>对手手牌</td><td>否</td><td>对手手牌 ≤1</td><td>是</td><td>即时</td></tr>
+      <tr><td>白手套</td><td>T1</td><td>选牌阶段</td><td>公共牌 → 自身手牌</td><td>否</td><td>无可用公共牌</td><td>是</td><td>即时</td></tr>
+      <tr><td>提前爆发</td><td>T1</td><td>选牌阶段</td><td>全局（出牌上限+1）</td><td>否</td><td>已打满手牌</td><td>是</td><td>仅本回合</td></tr>
+      <tr><td>赌神</td><td>T1</td><td>回合开始前</td><td>牌堆 → 自身手牌</td><td>否</td><td>牌堆为空</td><td>是</td><td>即时</td></tr>
+      <tr><td>加一减一</td><td>T2</td><td>选牌阶段</td><td>自身手牌</td><td>否</td><td>手牌 ≤0</td><td>是</td><td>整场（改过的牌保留）</td></tr>
+      <tr><td>情报员</td><td>T2</td><td>回合开始前</td><td>牌堆 → 自身手牌</td><td>否</td><td>牌堆 ≤1</td><td>是</td><td>即时</td></tr>
+      <tr><td>我要验牌</td><td>T2</td><td>回合开始前</td><td>对手手牌（仅查看）</td><td>否</td><td>—</td><td>否</td><td>仅本回合</td></tr>
+      <tr><td>回收</td><td>T2</td><td>选牌阶段</td><td>弃牌堆 → 自身手牌</td><td>否</td><td>弃牌堆为空</td><td>是</td><td>即时</td></tr>
+      <tr><td>封锁</td><td>T2</td><td>回合开始前</td><td>对手（出牌上限-1）</td><td>否</td><td>对手N=3（已最少）</td><td>是</td><td>仅本回合</td></tr>
+      <tr><td>幸运赌徒</td><td>T2</td><td>回合开始前</td><td>牌堆 / 自身手牌</td><td>否</td><td>牌堆为空（抽牌分支）</td><td>是</td><td>即时</td></tr>
+      <tr><td>同花信徒</td><td>T2</td><td>出牌前</td><td>全局（条件→收益）</td><td>否</td><td>本回合未出同花</td><td>是</td><td>本回合+下回合</td></tr>
+      <tr><td>拖延</td><td>T2</td><td>回合开始前</td><td>对手（下回合少补1张）</td><td>否</td><td>对手已触发保底补牌</td><td>是</td><td>对手下回合</td></tr>
+      <tr><td>扰乱</td><td>T2</td><td>回合开始前</td><td>对手手牌</td><td>否</td><td>对手手牌 ≤0</td><td>是</td><td>即时</td></tr>
+      <tr><td>洗牌师</td><td>T3</td><td>选牌阶段</td><td>自身手牌（弃1抽2）</td><td>否</td><td>手牌 ≤0</td><td>是</td><td>即时</td></tr>
+      <tr><td>交换师</td><td>T3</td><td>回合开始前</td><td>自身手牌 ↔ 对手手牌</td><td>否</td><td>自身/对手手牌 ≤0</td><td>是</td><td>即时</td></tr>
+      <tr><td>蓄力</td><td>T3</td><td>回合开始前</td><td>全局（出牌数调整）</td><td>否</td><td>N=3（已最少出牌）</td><td>是</td><td>本回合-1，下回合+1</td></tr>
     </tbody>
   </table>
+  </div>
 </div>
 
 <!-- ==================== 九、待实现功能 ==================== -->
