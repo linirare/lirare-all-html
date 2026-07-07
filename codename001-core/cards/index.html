@@ -532,47 +532,92 @@
   </table>
   </div>
 
-  <h3>8.6 函数接口配表</h3>
-  <p>每种牌型的校验和执行函数签名。服务端统一调用，函数名建议使用以下命名：</p>
+  <h3>8.6 数据配表（JSON Schema）</h3>
+  <p>每张功能牌对应一条配置记录，由统一的 <code>CardExecutor</code> 引擎读取并执行。</p>
+  <div class="code-block">{
+  "card_id": "fivejoker",
+  "name_zh": "5-Joker",
+  "tier": 0,
+  "type": "strategy",
+  "round_limit": { "min": 1, "max": 5 },
+  "phase": "round_start",
+  "effect": {
+    "type": "conditional_draw",
+    "conditions": [
+      { "if": { "round_max": 4 }, "then": { "draw": { "source": "deck", "count": 1 } } },
+      { "if": { "round_min": 5 }, "then": { "generate_joker": true } }
+    ]
+  },
+  "fail_condition": { "deck_empty": true, "skip_on_fail": true },
+  "visibility": "opaque",           // "full"丨"opaque"(知用不知详)丨"hidden"
+  "duration": "instant",
+  "note": "1-4回合抽1，5回合必生Joker"
+}</div>
+
+  <h3>8.7 Effect Type 枚举（统一引擎入口）</h3>
+  <p>所有 22 张牌的效果归为以下 10 种 effect.type，引擎只需实现这 10 种处理器：</p>
   <div class="table-wrap">
   <table>
-    <thead><tr><th>名称</th><th>校验函数</th><th>执行函数</th><th>参数</th><th>返回值</th></tr></thead>
+    <thead><tr><th>类型枚举</th><th>处理函数</th><th>说明</th><th>适用牌</th></tr></thead>
     <tbody>
-      <tr><td>5-Joker</td><td><code>check_5joker</code></td><td><code>exec_5joker</code></td><td>(round, hand, deck)</td><td>{added_card, is_joker}</td></tr>
-      <tr><td>魔术师</td><td><code>check_magician</code></td><td><code>exec_magician</code></td><td>(hand, target_card)</td><td>{copied_card}</td></tr>
-      <tr><td>神偷</td><td><code>check_thief</code></td><td><code>exec_thief</code></td><td>(opp_hand)</td><td>{stolen_card}</td></tr>
-      <tr><td>命运一击</td><td><code>check_fate</code></td><td><code>exec_fate</code></td><td>(hand, target_card, deck, discard_pile)</td><td>{replaced_card, ace_card}</td></tr>
-      <tr><td>黑客</td><td><code>check_hacker</code></td><td><code>exec_hacker</code></td><td>(opp_hand, selected_card)</td><td>{copied_card}</td></tr>
-      <tr><td>幸运日</td><td><code>check_lucky</code></td><td><code>exec_lucky</code></td><td>(round)</td><td>{flag: "lucky_active"}</td></tr>
-      <tr><td>破坏专家</td><td><code>check_destroyer</code></td><td><code>exec_destroyer</code></td><td>(opp_hand, count=2)</td><td>{removed_cards[]}</td></tr>
-      <tr><td>白手套</td><td><code>check_glove</code></td><td><code>exec_glove</code></td><td>(community_cards, target_card)</td><td>{copied_card}</td></tr>
-      <tr><td>提前爆发</td><td><code>check_burst</code></td><td><code>exec_burst</code></td><td>(round, hand)</td><td>{new_play_limit}</td></tr>
-      <tr><td>赌神</td><td><code>check_god</code></td><td><code>exec_god</code></td><td>(deck)</td><td>{drawn_card}</td></tr>
-      <tr><td>加一减一</td><td><code>check_plusminus</code></td><td><code>exec_plusminus</code></td><td>(hand, target_card, direction)</td><td>{modified_card}</td></tr>
-      <tr><td>情报员</td><td><code>check_intel</code></td><td><code>exec_intel</code></td><td>(deck)</td><td>{selected_card, returned_card}</td></tr>
-      <tr><td>我要验牌</td><td><code>check_inspect</code></td><td><code>exec_inspect</code></td><td>(opp_hand)</td><td>{revealed_cards[]}</td></tr>
-      <tr><td>回收</td><td><code>check_recycle</code></td><td><code>exec_recycle</code></td><td>(discard_pile)</td><td>{recovered_card}</td></tr>
-      <tr><td>封锁</td><td><code>check_lock</code></td><td><code>exec_lock</code></td><td>(opp_round)</td><td>{new_opp_play_limit}</td></tr>
-      <tr><td>幸运赌徒</td><td><code>check_gambler</code></td><td><code>exec_gambler</code></td><td>(hand, deck)</td><td>{result: "draw"|"discard", cards[]}</td></tr>
-      <tr><td>同花信徒</td><td><code>check_flushbeliever</code></td><td><code>exec_flushbeliever</code></td><td>(round, hand_result)</td><td>{flag: "flush_pending"}</td></tr>
-      <tr><td>拖延</td><td><code>check_delay</code></td><td><code>exec_delay</code></td><td>(opp_round)</td><td>{flag: "delay_active"}</td></tr>
-      <tr><td>扰乱</td><td><code>check_rogue</code></td><td><code>exec_rogue</code></td><td>(opp_hand, count=1)</td><td>{discarded_card}</td></tr>
-      <tr><td>洗牌师</td><td><code>check_shuffler</code></td><td><code>exec_shuffler</code></td><td>(hand, target_card, deck)</td><td>{discarded_card, drawn_cards[]}</td></tr>
-      <tr><td>交换师</td><td><code>check_swapper</code></td><td><code>exec_swapper</code></td><td>(hand, target_card, opp_hand)</td><td>{my_card, their_card}</td></tr>
-      <tr><td>蓄力</td><td><code>check_charge</code></td><td><code>exec_charge</code></td><td>(round)</td><td>{this_play_limit, next_play_limit}</td></tr>
+      <tr><td><code>draw</code></td><td><code>handle_draw(ctx, params)</code></td><td>从牌堆/弃牌堆抽牌加入手牌</td><td>5-Joker, 赌神, 情报员, 洗牌师, 幸运赌徒(抽牌分支)</td></tr>
+      <tr><td><code>copy_card</code></td><td><code>handle_copy(ctx, params)</code></td><td>复制一张牌生成副本加入手牌</td><td>魔术师, 黑客, 白手套</td></tr>
+      <tr><td><code>steal_card</code></td><td><code>handle_steal(ctx, params)</code></td><td>从对手手牌移一张入手</td><td>神偷</td></tr>
+      <tr><td><code>transform_card</code></td><td><code>handle_transform(ctx, params)</code></td><td>弃1张→获指定牌（找牌堆/生成）</td><td>命运一击</td></tr>
+      <tr><td><code>discard_opponent</code></td><td><code>handle_discard_opponent(ctx, params)</code></td><td>弃对手手牌(进弃牌堆/移出)</td><td>破坏专家, 扰乱, 幸运赌徒(弃牌分支)</td></tr>
+      <tr><td><code>modify_card</code></td><td><code>handle_modify(ctx, params)</code></td><td>改一张手牌的点数</td><td>加一减一</td></tr>
+      <tr><td><code>alter_play_limit</code></td><td><code>handle_alter_play_limit(ctx, params)</code></td><td>调出牌上限（自身/对手，+/-）</td><td>提前爆发, 封锁, 蓄力</td></tr>
+      <tr><td><code>hand_type_boost</code></td><td><code>handle_type_boost(ctx, params)</code></td><td>牌型结算时升格（条件满足→高cat）</td><td>幸运日, 同花信徒</td></tr>
+      <tr><td><code>reveal_hand</code></td><td><code>handle_reveal(ctx, params)</code></td><td>客户端展示对手手牌</td><td>我要验牌</td></tr>
+      <tr><td><code>swap_card</code></td><td><code>handle_swap(ctx, params)</code></td><td>双方各1张牌互换归属</td><td>交换师</td></tr>
     </tbody>
   </table>
   </div>
-  <div class="code-block">// 通用调用入口
-function useCard(cardId, context):
-    check = validator[cardId](context)         // → {ok, error}
-    if !check.ok: return check.error
-    result = executor[cardId](context)         // → 特定返回值
-    emit("card_used", {cardId, result, visible: card_public[cardId]})
-    if card_lingering[cardId]: write_round_flag(cardId, context)
+  <div class="code-block">// CardExecutor 主循环
+function CardExecutor(ctx):
+    card = load_config(ctx.card_id)
+    if !validate(card, ctx): return error(card.fail_condition)
+
+    handler = HANDLERS[card.effect.type]
+    result = handler(ctx, card.effect)
+    
+    broadcast(card.visibility, ctx.card_id, result)
+    if card.effect.lingering: ctx.set_round_flag(next_round, card.effect)
     return result</div>
+
+  <h3>8.8 完整配表（22 条）</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>card_id</th><th>tier</th><th>type</th><th>round</th><th>phase</th><th>effect.type</th><th>关键参数</th><th>visibility</th></tr></thead>
+    <tbody>
+      <tr><td>fivejoker</td><td>0</td><td>strategy</td><td>1-5</td><td>round_start</td><td>draw</td><td>1-4r抽1deck; 5r生成joker</td><td>opaque</td></tr>
+      <tr><td>magician</td><td>0</td><td>copy</td><td>1-4</td><td>card_select</td><td>copy_card</td><td>source=self_hand, need_select=1</td><td>full</td></tr>
+      <tr><td>thief</td><td>0</td><td>steal</td><td>1-4</td><td>round_start</td><td>steal_card</td><td>source=opp_hand, random=1</td><td>opaque</td></tr>
+      <tr><td>fate</td><td>0</td><td>transform</td><td>1-5</td><td>card_select</td><td>transform_card</td><td>discard1→ace同花色, search=deck→discard→generate</td><td>full</td></tr>
+      <tr><td>hacker</td><td>0</td><td>copy</td><td>1-4</td><td>round_start</td><td>copy_card</td><td>source=opp_hand, reveal_first=1, need_select=1</td><td>opaque</td></tr>
+      <tr><td>lucky</td><td>1</td><td>boost</td><td>1-5</td><td>before_deal</td><td>hand_type_boost</td><td>from=4, to=8, fail=expire</td><td>full</td></tr>
+      <tr><td>destroyer</td><td>1</td><td>disrupt</td><td>1-4</td><td>round_start</td><td>discard_opponent</td><td>count=2, to=removed(不进弃牌堆)</td><td>opaque</td></tr>
+      <tr><td>glove</td><td>1</td><td>copy</td><td>1-4</td><td>card_select</td><td>copy_card</td><td>source=community, need_select=1</td><td>full</td></tr>
+      <tr><td>burst</td><td>1</td><td>extra</td><td>3-5</td><td>card_select</td><td>alter_play_limit</td><td>target=self, delta=+1, round=current</td><td>full</td></tr>
+      <tr><td>god</td><td>1</td><td>draw</td><td>1-4</td><td>round_start</td><td>draw</td><td>pool=[A♠~Q♣]12张, prioritize_deck=1</td><td>full</td></tr>
+      <tr><td>plusminus</td><td>2</td><td>adjust</td><td>1-5</td><td>card_select</td><td>modify_card</td><td>delta=±1, fail_on=A+1丨2-1, linger=1(整场)</td><td>full</td></tr>
+      <tr><td>intel</td><td>2</td><td>select_draw</td><td>1-4</td><td>round_start</td><td>draw</td><td>count=2, pick=1, return_rest=bottom</td><td>opaque</td></tr>
+      <tr><td>inspect</td><td>2</td><td>info</td><td>1-5</td><td>round_start</td><td>reveal_hand</td><td>target=opp_hand, show_all=1</td><td>hidden</td></tr>
+      <tr><td>recycle</td><td>2</td><td>recover</td><td>2-5</td><td>card_select</td><td>draw</td><td>source=discard_pile, filter=self_discarded, need_select=1</td><td>full</td></tr>
+      <tr><td>lock</td><td>2</td><td>disrupt</td><td>1-4</td><td>round_start</td><td>alter_play_limit</td><td>target=opp, delta=-1, min=3, round=current</td><td>full</td></tr>
+      <tr><td>gambler</td><td>2</td><td>random</td><td>1-5</td><td>round_start</td><td>draw丨discard_opponent</td><td>p=0.6→draw3; else→discard1_self, skip_on_fail=1</td><td>full</td></tr>
+      <tr><td>flushbeliever</td><td>2</td><td>advance</td><td>1-3</td><td>before_deal</td><td>hand_type_boost</td><td>condition=cat5→trigger: draw2_next_round, fail=expire</td><td>full</td></tr>
+      <tr><td>delay</td><td>2</td><td>disrupt</td><td>1-4</td><td>round_start</td><td>alter_play_limit</td><td>effect=draw_limit, target=opp, delta=-1, offset_round=+1</td><td>full</td></tr>
+      <tr><td>rogue</td><td>2</td><td>disrupt</td><td>1-4</td><td>round_start</td><td>discard_opponent</td><td>count=1, to=discard_pile</td><td>full</td></tr>
+      <tr><td>shuffler</td><td>3</td><td>replace</td><td>1-5</td><td>card_select</td><td>draw</td><td>discard1→draw2, source=deck</td><td>full</td></tr>
+      <tr><td>swapper</td><td>3</td><td>swap</td><td>1-4</td><td>round_start</td><td>swap_card</td><td>self_select=1, opp_random=1</td><td>opaque</td></tr>
+      <tr><td>charge</td><td>3</td><td>strategy</td><td>1-4</td><td>round_start</td><td>alter_play_limit</td><td>delta_now=-1, delta_next=+1, min=3, fail_at_round5=expire</td><td>full</td></tr>
+    </tbody>
+  </table>
+  </div>
   
   <h3>8.5 通用执行规范</h3>
+  <table>
     <thead><tr><th>规范项</th><th>规则</th></tr></thead>
     <tbody>
       <tr><td>技能使用顺序</td><td>同时使用多张技能时按玩家点击顺序结算，后结算的技能以前面技能的结果为输入</td></tr>
