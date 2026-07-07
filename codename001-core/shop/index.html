@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代号001 · 商店与经济策划案 v1.0</title>
+<style>
+  :root { --bg: #f8f9fb; --surface: #ffffff; --border: #e4e7ed; --accent: #d97706; --accent-soft: #fef3c7; --text: #1a1a2e; --text-secondary: #5a6072; --text-muted: #9098a8; --radius: 12px; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Helvetica Neue", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 40px 20px; }
+  .container { max-width: 920px; margin: 0 auto; }
+  .header { background: var(--surface); border-radius: var(--radius); padding: 36px 48px; margin-bottom: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); }
+  .header h1 { font-size: 26px; font-weight: 700; color: var(--text); }
+  .header .meta { display: flex; gap: 20px; margin-top: 10px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
+  .header .desc { margin-top: 14px; padding: 12px 16px; background: var(--accent-soft); border-radius: 8px; font-size: 13.5px; color: var(--text-secondary); border-left: 3px solid var(--accent); }
+  .section { background: var(--surface); border-radius: var(--radius); padding: 28px 44px; margin-bottom: 16px; border: 1px solid var(--border); }
+  .section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: flex; align-items: center; gap: 8px; }
+  .section h2 .num { background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: 5px; }
+  .section h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+  .section h3:first-of-type { margin-top: 0; }
+  .section p { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; }
+  .section ul, .section ol { margin: 6px 0 12px 18px; font-size: 14px; color: var(--text-secondary); }
+  .section li { margin-bottom: 3px; }
+  .section li strong { color: var(--text); }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 13px; border-radius: 8px; overflow: hidden; }
+  thead { background: var(--accent); color: #fff; }
+  th { padding: 7px 10px; text-align: left; font-weight: 600; font-size: 12px; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
+  .table-wrap { overflow-x: auto; margin: 10px 0 16px; }
+  .table-wrap table { margin: 0; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 8px; }
+  .t0 { background: #fef3f2; color: #f04438; }
+  .t1 { background: #fffaeb; color: #f79009; }
+  .note-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 6px; font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+  @media (max-width: 720px) { body { padding: 16px 12px; } .header, .section { padding: 20px 18px; } td:first-child { white-space: normal; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>代号 001 · 商店与经济系统策划案</h1>
+  <div class="meta">
+    <span>📄 v1.0</span>
+    <span>📅 2026-07-07</span>
+    <span>🏷️ 系统策划 / 一致性优化</span>
+    <span>🏪 商店与经济</span>
+  </div>
+  <div class="desc">
+    商店与经济系统负责功能牌库存、角色招募、任务、签到、宝箱、邮件和基础货币循环。首发保持克制，不做充值、限时礼包、通行证、活动商店和公会商店。
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">一</span>系统定位</h2>
+  <ul>
+    <li><strong>入口：</strong>底部"商店"入口进入；功能牌库存不足时由对战入口引导补充。</li>
+    <li><strong>输出：</strong>功能牌库存、角色/碎片、金币、钻石、奖励领取状态。</li>
+    <li><strong>定位：</strong>功能牌卡包、角色招募、任务、签到、宝箱、邮件。</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2><span class="num">二</span>货币与初始资源</h2>
+  <table>
+    <thead><tr><th>货币 / 资源</th><th>主要用途</th><th>主要获取</th></tr></thead>
+    <tbody>
+      <tr><td>金币</td><td>角色升级</td><td>对战结算、代号A PvE 加成、邮件</td></tr>
+      <tr><td>钻石</td><td>功能牌抽卡、角色招募</td><td>对战结算、每日任务、代号Q签到、宝箱、邮件</td></tr>
+      <tr><td>功能牌库存</td><td>正式对战带入与消耗</td><td>功能牌抽卡、新号初始配置、后续奖励</td></tr>
+      <tr><td>角色碎片</td><td>角色升级</td><td>角色招募重复获得</td></tr>
+      <tr><td>通用角色碎片</td><td>补足任意角色升级差额</td><td>满级角色重复转化</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.1 新号初始资源</h3>
+  <table>
+    <thead><tr><th>资源</th><th>数量 / 状态</th></tr></thead>
+    <tbody>
+      <tr><td>金币</td><td>888</td></tr>
+      <tr><td>钻石</td><td>88</td></tr>
+      <tr><td>功能牌</td><td>T3 功能牌各 5 张</td></tr>
+      <tr><td>角色</td><td>默认拥有代号A、代号Q</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">三</span>商店首发结构</h2>
+  <table>
+    <thead><tr><th>模块</th><th>功能</th><th>首发说明</th></tr></thead>
+    <tbody>
+      <tr><td>功能牌卡包</td><td>功能牌抽取、奖池查看、保底进度</td><td><span class="tag t0">P0</span> 用于补充开战消耗。</td></tr>
+      <tr><td>角色招募</td><td>角色解锁、重复转化碎片、新角色保底</td><td><span class="tag t0">P0</span> 用于角色收集和升级来源。</td></tr>
+      <tr><td>今日进度</td><td>每日任务入口、奖励领取</td><td><span class="tag t1">P1</span> 提供每日钻石。</td></tr>
+      <tr><td>宝箱</td><td>PvE 宝箱进度与开启</td><td><span class="tag t1">P1</span> 作为中期奖励。</td></tr>
+      <tr><td>签到</td><td>代号Q绑定钻石领取</td><td><span class="tag t1">P1</span> 与角色系统联动。</td></tr>
+      <tr><td>邮件</td><td>公告、补偿、附件领取</td><td><span class="tag t1">P1</span> 承接系统奖励与通知。</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">四</span>功能牌抽卡</h2>
+  <table>
+    <thead><tr><th>抽取方式</th><th>消耗</th></tr></thead>
+    <tbody>
+      <tr><td>单抽</td><td>钻石 ×100</td></tr>
+      <tr><td>十连</td><td>钻石 ×1,000</td></tr>
+    </tbody>
+  </table>
+  <table>
+    <thead><tr><th>Tier</th><th>概率</th><th>定位</th></tr></thead>
+    <tbody>
+      <tr><td>T0</td><td>6%</td><td>最强功能牌</td></tr>
+      <tr><td>T1</td><td>17%</td><td>高级功能牌</td></tr>
+      <tr><td>T2</td><td>32%</td><td>中级功能牌</td></tr>
+      <tr><td>T3</td><td>45%</td><td>普通功能牌</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>十连中至少获得 1 张 T2 或以上功能牌。</li>
+    <li>连续 50 抽未获得 T0，则第 50 抽必出 T0；获得 T0 后重置计数。</li>
+    <li>获得功能牌后，对应库存 +1。</li>
+    <li>正式对战创建成功时消耗带入功能牌库存；教学、匹配取消、未创建对局不消耗。</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2><span class="num">五</span>角色招募</h2>
+  <table>
+    <thead><tr><th>招募方式</th><th>消耗</th></tr></thead>
+    <tbody>
+      <tr><td>单抽</td><td>钻石 ×100</td></tr>
+      <tr><td>十连</td><td>钻石 ×1,000</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>首发 4 个角色等概率，各 25%；稀有度只影响价值感，不影响首发概率。</li>
+    <li>抽到未拥有角色时直接解锁；抽到已拥有角色转化为该角色碎片 ×10。</li>
+    <li>满级重复转化为通用角色碎片 ×10。</li>
+    <li>若仍有未拥有角色，连续 10 次招募未解锁新角色，则下一次必定获得一个未拥有角色。</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2><span class="num">六</span>日常、宝箱与邮件</h2>
+  <table>
+    <thead><tr><th>模块</th><th>规则</th></tr></thead>
+    <tbody>
+      <tr><td>每日任务</td><td>3 场对战 / 5 次功能牌 / 赢 6 小局 / 顺子+；合计钻石 ×70，教学不计入。</td></tr>
+      <tr><td>每日签到</td><td>拥有代号Q后每日 1 次；30 + (代号Q等级-1) × 20 钻石。</td></tr>
+      <tr><td>宝箱</td><td>上限 10 点；PvE 胜 +2，平/负 +1；PvP 不积累；满进度开钻石 ×50。</td></tr>
+      <tr><td>邮件</td><td>通知、补偿、欢迎奖励和个人补发；附件手动领取，防重复。</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">七</span>红点归属</h2>
+  <table>
+    <thead><tr><th>场景</th><th>红点位置</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>任务奖励可领取</td><td>商店入口 / 今日进度入口</td><td>领取后消失。</td></tr>
+      <tr><td>宝箱满进度</td><td>商店入口 / 宝箱入口</td><td>开启后消失。</td></tr>
+      <tr><td>签到可领取</td><td>商店入口 / 签到入口</td><td>领取后消失。</td></tr>
+      <tr><td>邮件未读或附件未领取</td><td>邮件入口</td><td>阅读/领取后消失。</td></tr>
+      <tr><td>功能牌库存不足</td><td>不做商店强红点</td><td>开战时阻断并引导到功能牌/商店。</td></tr>
+      <tr><td>角色可升级</td><td>角色入口 / 角色卡</td><td>不归入商店红点。</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <div class="note-box">
+    <strong>🔗 跨系统依赖：</strong>商店提供功能牌抽卡（支持对战消耗）和角色招募（支持角色收集）；任务/签到/宝箱/邮件提供金币与钻石来源；功能牌库存不足时由对战入口引导，不主动做商店强红点。
+  </div>
+  <hr>
+  <p style="font-size: 12px; color: var(--text-muted); text-align: center;">完整联动规则请参考总控文档"联动规则总表"</p>
+</div>
+
+</div>
+</body>
+</html>

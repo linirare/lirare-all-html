@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代号001 · 对战策划案 v1.0</title>
+<style>
+  :root { --bg: #f8f9fb; --surface: #ffffff; --border: #e4e7ed; --accent: #e8590c; --accent-soft: #fff4e5; --text: #1a1a2e; --text-secondary: #5a6072; --text-muted: #9098a8; --radius: 12px; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Helvetica Neue", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 40px 20px; }
+  .container { max-width: 920px; margin: 0 auto; }
+  .header { background: var(--surface); border-radius: var(--radius); padding: 36px 48px; margin-bottom: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); }
+  .header h1 { font-size: 26px; font-weight: 700; color: var(--text); }
+  .header .meta { display: flex; gap: 20px; margin-top: 10px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
+  .header .desc { margin-top: 14px; padding: 12px 16px; background: var(--accent-soft); border-radius: 8px; font-size: 13.5px; color: var(--text-secondary); border-left: 3px solid var(--accent); }
+  .section { background: var(--surface); border-radius: var(--radius); padding: 28px 44px; margin-bottom: 16px; border: 1px solid var(--border); }
+  .section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: flex; align-items: center; gap: 8px; }
+  .section h2 .num { background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: 5px; }
+  .section h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+  .section h3:first-of-type { margin-top: 0; }
+  .section p { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; }
+  .section ul, .section ol { margin: 6px 0 12px 18px; font-size: 14px; color: var(--text-secondary); }
+  .section li { margin-bottom: 3px; }
+  .section li strong { color: var(--text); }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 13px; border-radius: 8px; overflow: hidden; }
+  thead { background: var(--accent); color: #fff; }
+  th { padding: 7px 10px; text-align: left; font-weight: 600; font-size: 12px; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
+  .table-wrap { overflow-x: auto; margin: 10px 0 16px; }
+  .table-wrap table { margin: 0; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+  .back { font-size: 13px; margin-bottom: 16px; }
+  .back a { color: var(--accent); text-decoration: none; }
+  .back a:hover { text-decoration: underline; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 8px; }
+  .t0 { background: #fef3f2; color: #f04438; }
+  .t1 { background: #fffaeb; color: #f79009; }
+  .t2 { background: #ecfdf3; color: #12b76a; }
+  .t3 { background: #f2f4f7; color: #98a2b3; }
+  .note-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 6px; font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+  .flow-chart { margin: 10px 0 16px; padding: 14px 18px; background: #fafbfc; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; color: var(--text-secondary); line-height: 2; text-align: center; }
+  .flow-chart .arrow { color: var(--accent); font-weight: 700; margin: 0 4px; }
+  @media (max-width: 720px) { body { padding: 16px 12px; } .header, .section { padding: 20px 18px; } td:first-child { white-space: normal; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>代号 001 · 对战系统策划案</h1>
+  <div class="meta">
+    <span>📄 v1.0</span>
+    <span>📅 2026-07-07</span>
+    <span>🏷️ 系统策划 / 一致性优化</span>
+    <span>⚔️ 对战</span>
+  </div>
+  <div class="desc">
+    对战系统是项目的核心玩法入口，负责从"开始对战"到"整场结算"的完整闭环。本文件仅包含对战系统相关的规则与数据，跨系统规则请参考联动总表。
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">一</span>系统定位</h2>
+  <p>对战系统承接主页主按钮，完成匹配、出牌、小局与整场结算。</p>
+  <ul>
+    <li><strong>入口：</strong>主页"开始对战"点击后进入；对局中隐藏底部导航。</li>
+    <li><strong>输出：</strong>胜负、奖励、任务进度、天梯变化、角色加成展示。</li>
+    <li><strong>前置条件：</strong>必须配置 2 张功能牌且库存足够；未配置时阻断并引导。</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2><span class="num">二</span>对战模式</h2>
+  <table>
+    <thead><tr><th>模式</th><th>对手</th><th>入口</th><th>奖励 / 天梯</th><th>定位</th></tr></thead>
+    <tbody>
+      <tr><td>PvP 天梯匹配</td><td>真人</td><td>开始对战后优先匹配</td><td>正式奖励 + 天梯变化</td><td>核心竞争模式</td></tr>
+      <tr><td>AI 对战</td><td>AI</td><td>PvP 超时兜底</td><td>正式奖励 + 可计入基础天梯</td><td>保证随时可玩</td></tr>
+      <tr><td>教学</td><td>AI / 固定流程</td><td>新号引导或教学入口</td><td>无正式奖励，不计天梯</td><td>理解规则与功能牌</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">三</span>核心战斗规则</h2>
+  <ul>
+    <li>对战采用 <strong>5 局 3 胜制</strong>，双方初始 <strong>3 点生命</strong>。</li>
+    <li>每小局比较双方由"出牌 + 3 张固定公共牌"组成的最优 5 张牌型。</li>
+    <li>每场对战开始时发出 3 张公共牌，<strong>整场固定</strong>。</li>
+    <li>每小局赢家使对手 -1 生命；任意一方生命归零或先赢 3 小局，对战结束。</li>
+    <li>若打满第 5 小局仍未结束，则按小局胜场判定；胜场相同判定平局。</li>
+  </ul>
+  <table>
+    <thead><tr><th>小局</th><th>默认需出牌数</th></tr></thead>
+    <tbody>
+      <tr><td>第 1 局</td><td>3 张</td></tr>
+      <tr><td>第 2 局</td><td>3 张</td></tr>
+      <tr><td>第 3 局</td><td>3 张</td></tr>
+      <tr><td>第 4 局</td><td>4 张</td></tr>
+      <tr><td>第 5 局</td><td>5 张</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">四</span>发起匹配流程</h2>
+  <div class="flow-chart">
+    点击开始对战 <span class="arrow">→</span> 校验配置和库存 <span class="arrow">→</span> 进入匹配界面 <span class="arrow">→</span> 优先 PvP <span class="arrow">→</span> 超时进 AI <span class="arrow">→</span> 创建成功扣除库存
+  </div>
+  <table>
+    <thead><tr><th>检查项</th><th>规则</th><th>不满足处理</th></tr></thead>
+    <tbody>
+      <tr><td>功能牌配置</td><td>必须配置 2 张且库存足够</td><td>阻断匹配，弹出引导，跳转功能牌页</td></tr>
+      <tr><td>当前状态</td><td>玩家不能同时处于多个对局</td><td>优先恢复或提示继续对局</td></tr>
+      <tr><td>网络状态</td><td>正式 PvP 需要可连接状态</td><td>提示重连；必要时进 AI 兜底</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">五</span>功能牌使用规则</h2>
+  <table>
+    <thead><tr><th>规则</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>带入数量</td><td>每场正式对战带入 2 张功能牌。</td></tr>
+      <tr><td>库存消耗</td><td>正式对战创建成功时扣除各 1 张；取消、教学、未创建不消耗。</td></tr>
+      <tr><td>使用次数</td><td>每回合最多使用 2 张；每张牌每场只能使用 1 次。</td></tr>
+      <tr><td>跨小局状态</td><td>小局切换时重置"每回合使用次数"，不重置已用功能牌。</td></tr>
+      <tr><td>目标选择</td><td>部分功能牌需要先选中手牌或对手牌作为目标。</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">六</span>结算与奖励</h2>
+  <p>结算向天梯、经济、任务和角色系统输出统一结果。所有正式奖励、段位变化、任务进度和胜负统计均以结算结果为准。<strong>段位倍率只作用于对战基础金币和钻石</strong>，不影响其他奖励。</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>结果</th><th>金币</th><th>钻石</th><th>宝箱进度</th></tr></thead>
+    <tbody>
+      <tr><td>PvP 胜利</td><td>200 × 段位倍率</td><td>50 × 段位倍率</td><td>首发不积累</td></tr>
+      <tr><td>PvP 失败</td><td>80 × 段位倍率</td><td>20 × 段位倍率</td><td>首发不积累</td></tr>
+      <tr><td>AI 胜利</td><td>200 × 段位倍率</td><td>50 × 段位倍率</td><td>+2</td></tr>
+      <tr><td>AI 平局</td><td>120 × 段位倍率</td><td>25 × 段位倍率</td><td>+1</td></tr>
+      <tr><td>AI 失败</td><td>80 × 段位倍率</td><td>20 × 段位倍率</td><td>+1</td></tr>
+      <tr><td>教学</td><td>无</td><td>无</td><td>无</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">七</span>UI 与异常处理</h2>
+  <ul>
+    <li>对局中隐藏底部导航与非必要入口，避免状态丢失。</li>
+    <li>手牌选中需有明确浮起 / 高亮效果，出牌按钮在满足数量后激活。</li>
+    <li>PvP 出牌超时由服务端到期代打，客户端倒计时只做展示。</li>
+    <li>PvP 掉线给 <strong>15 秒</strong> 重连宽限；超时未回视为离场或投降。</li>
+    <li>网络重连后恢复当前对局状态，不能重复发放奖励。</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="note-box">
+    <strong>🔗 跨系统依赖：</strong>开战前需校验功能牌配置（依赖商店/功能牌）；结算后输出天梯变化（天梯系统）、任务进度（商店系统）、角色加成（角色系统）。
+  </div>
+  <hr>
+  <p style="font-size: 12px; color: var(--text-muted); text-align: center;">完整联动规则请参考总控文档"联动规则总表"</p>
+</div>
+
+</div>
+</body>
+</html>
