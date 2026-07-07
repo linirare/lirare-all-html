@@ -82,7 +82,7 @@
     <tbody>
       <tr><td>PvP 天梯匹配</td><td>真人</td><td>开始对战自动匹配</td><td>正式奖励 + 天梯变化</td><td>核心竞争模式</td></tr>
       <tr><td>人机兜底</td><td>AI</td><td>系统匹配不到真人时自动分配</td><td>正式奖励 + 可计入基础天梯</td><td>保证随时可玩，玩家视觉无感</td></tr>
-      <tr><td>教学</td><td>AI / 固定流程</td><td>新号引导入口</td><td>无正式奖励，不计天梯</td><td>理解规则与功能牌</td></tr>
+      <tr><td>教学</td><td>AI / 固定流程</td><td>新号引导入口</td><td>无正式奖励，不计天梯</td><td>理解规则（≠新手保护赛）</td></tr>
     </tbody>
   </table>
 </div>
@@ -115,7 +115,7 @@
 <div class="section">
   <h2><span class="num">四</span>发起匹配流程</h2>
   <div class="flow-chart">
-    点击开始对战 <span class="arrow">→</span> 校验配置和库存 <span class="arrow">→</span> 进入匹配界面 <span class="arrow">→</span> 自动匹配真人 <span class="arrow">→</span> 无人则转人机兜底 <span class="arrow">→</span> 创建成功，服务端扣除库存
+    点击开始对战 <span class="arrow">→</span> 校验配置和库存 <span class="arrow">→</span> 进入匹配界面 <span class="arrow">→</span> 5-10-15s分段匹配 <span class="arrow">→</span> 无人则转人机兜底 <span class="arrow">→</span> 创建成功，服务端扣除库存
   </div>
   <table>
     <thead><tr><th>检查项</th><th>规则</th><th>不满足处理</th></tr></thead>
@@ -167,7 +167,7 @@
     <li>对局中隐藏底部导航与非必要入口，避免状态丢失。</li>
     <li>手牌选中需有明确浮起 / 高亮效果，出牌按钮在满足数量后激活。</li>
     <li>PvP 出牌超时由服务端到期代打，客户端倒计时只做展示。</li>
-    <li>PvP 掉线给 <strong>15 秒</strong> 重连宽限；超时未回视为离场或投降。</li>
+    <li>PvP 掉线：15s AI代打（仅选牌出牌），再等15s可重连恢复不判负，超过30s未重连视为离场。</li>
     <li>网络重连后恢复当前对局状态，不能重复发放奖励。</li>
   </ul>
 </div>
