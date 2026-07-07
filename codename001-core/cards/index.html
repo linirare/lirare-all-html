@@ -532,8 +532,47 @@
   </table>
   </div>
 
-  <h3>8.5 通用执行规范</h3>
+  <h3>8.6 函数接口配表</h3>
+  <p>每种牌型的校验和执行函数签名。服务端统一调用，函数名建议使用以下命名：</p>
+  <div class="table-wrap">
   <table>
+    <thead><tr><th>名称</th><th>校验函数</th><th>执行函数</th><th>参数</th><th>返回值</th></tr></thead>
+    <tbody>
+      <tr><td>5-Joker</td><td><code>check_5joker</code></td><td><code>exec_5joker</code></td><td>(round, hand, deck)</td><td>{added_card, is_joker}</td></tr>
+      <tr><td>魔术师</td><td><code>check_magician</code></td><td><code>exec_magician</code></td><td>(hand, target_card)</td><td>{copied_card}</td></tr>
+      <tr><td>神偷</td><td><code>check_thief</code></td><td><code>exec_thief</code></td><td>(opp_hand)</td><td>{stolen_card}</td></tr>
+      <tr><td>命运一击</td><td><code>check_fate</code></td><td><code>exec_fate</code></td><td>(hand, target_card, deck, discard_pile)</td><td>{replaced_card, ace_card}</td></tr>
+      <tr><td>黑客</td><td><code>check_hacker</code></td><td><code>exec_hacker</code></td><td>(opp_hand, selected_card)</td><td>{copied_card}</td></tr>
+      <tr><td>幸运日</td><td><code>check_lucky</code></td><td><code>exec_lucky</code></td><td>(round)</td><td>{flag: "lucky_active"}</td></tr>
+      <tr><td>破坏专家</td><td><code>check_destroyer</code></td><td><code>exec_destroyer</code></td><td>(opp_hand, count=2)</td><td>{removed_cards[]}</td></tr>
+      <tr><td>白手套</td><td><code>check_glove</code></td><td><code>exec_glove</code></td><td>(community_cards, target_card)</td><td>{copied_card}</td></tr>
+      <tr><td>提前爆发</td><td><code>check_burst</code></td><td><code>exec_burst</code></td><td>(round, hand)</td><td>{new_play_limit}</td></tr>
+      <tr><td>赌神</td><td><code>check_god</code></td><td><code>exec_god</code></td><td>(deck)</td><td>{drawn_card}</td></tr>
+      <tr><td>加一减一</td><td><code>check_plusminus</code></td><td><code>exec_plusminus</code></td><td>(hand, target_card, direction)</td><td>{modified_card}</td></tr>
+      <tr><td>情报员</td><td><code>check_intel</code></td><td><code>exec_intel</code></td><td>(deck)</td><td>{selected_card, returned_card}</td></tr>
+      <tr><td>我要验牌</td><td><code>check_inspect</code></td><td><code>exec_inspect</code></td><td>(opp_hand)</td><td>{revealed_cards[]}</td></tr>
+      <tr><td>回收</td><td><code>check_recycle</code></td><td><code>exec_recycle</code></td><td>(discard_pile)</td><td>{recovered_card}</td></tr>
+      <tr><td>封锁</td><td><code>check_lock</code></td><td><code>exec_lock</code></td><td>(opp_round)</td><td>{new_opp_play_limit}</td></tr>
+      <tr><td>幸运赌徒</td><td><code>check_gambler</code></td><td><code>exec_gambler</code></td><td>(hand, deck)</td><td>{result: "draw"|"discard", cards[]}</td></tr>
+      <tr><td>同花信徒</td><td><code>check_flushbeliever</code></td><td><code>exec_flushbeliever</code></td><td>(round, hand_result)</td><td>{flag: "flush_pending"}</td></tr>
+      <tr><td>拖延</td><td><code>check_delay</code></td><td><code>exec_delay</code></td><td>(opp_round)</td><td>{flag: "delay_active"}</td></tr>
+      <tr><td>扰乱</td><td><code>check_rogue</code></td><td><code>exec_rogue</code></td><td>(opp_hand, count=1)</td><td>{discarded_card}</td></tr>
+      <tr><td>洗牌师</td><td><code>check_shuffler</code></td><td><code>exec_shuffler</code></td><td>(hand, target_card, deck)</td><td>{discarded_card, drawn_cards[]}</td></tr>
+      <tr><td>交换师</td><td><code>check_swapper</code></td><td><code>exec_swapper</code></td><td>(hand, target_card, opp_hand)</td><td>{my_card, their_card}</td></tr>
+      <tr><td>蓄力</td><td><code>check_charge</code></td><td><code>exec_charge</code></td><td>(round)</td><td>{this_play_limit, next_play_limit}</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="code-block">// 通用调用入口
+function useCard(cardId, context):
+    check = validator[cardId](context)         // → {ok, error}
+    if !check.ok: return check.error
+    result = executor[cardId](context)         // → 特定返回值
+    emit("card_used", {cardId, result, visible: card_public[cardId]})
+    if card_lingering[cardId]: write_round_flag(cardId, context)
+    return result</div>
+  
+  <h3>8.5 通用执行规范</h3>
     <thead><tr><th>规范项</th><th>规则</th></tr></thead>
     <tbody>
       <tr><td>技能使用顺序</td><td>同时使用多张技能时按玩家点击顺序结算，后结算的技能以前面技能的结果为输入</td></tr>
