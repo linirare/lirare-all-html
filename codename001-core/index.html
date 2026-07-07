@@ -712,58 +712,53 @@
 <div id="page-ai" class="page">
   <div class="header-card" style="--accent:#059669;">
     <h1>代号 001 · AI 人机策划案</h1>
-    <div class="meta">v2.0 | 2026-07-07 | 设计文档</div>
-    <div class="desc">AI 对手设计的核心不是做出「最强对手」，而是做出「合适的对手」。让玩家在 PvE 中持续感受到「我在进步」而不是「AI 在作弊」。</div>
+    <div class="meta">v2.1 | 2026-07-07 | 设计文档</div>
+    <div class="desc">AI 对手设计的核心不是做出「最强对手」，而是做出「合适的对手」。</div>
   </div>
 
   <div class="card">
     <h2><span class="num">一</span>设计目标与原则</h2>
     <ul>
-      <li><strong>玩家感觉 AI 会玩，不是 AI 在放水</strong>——AI 行为模式要像真人，简单难度也不犯低级错误。</li>
-      <li><strong>难度变化是平滑的，不是跳崖的</strong>——AI 强度渐变，玩家感受不到「换了一台机器」。</li>
-      <li><strong>动态调节只反馈，不惩罚</strong>——连胜后 AI 变强是给挑战；连败后变弱是给喘息。</li>
+      <li>AI 行为要像真人，不犯低级错误，不因难度降档故意放水。</li>
+      <li>难度平滑渐变，动态调节只反馈不惩罚。</li>
     </ul>
   </div>
 
   <div class="card">
-    <h2><span class="num">二</span>难点拆解</h2>
-    <p><strong>选牌</strong>是数学问题，全难度统一——不存在故意选差牌，会被玩家一眼看穿。</p>
-    <p><strong>技能使用</strong>是策略问题——这才是难度分层的落脚点。首发用人工规则实现，全部配置化。</p>
-  </div>
-
-  <div class="card">
-    <h2><span class="num">三</span>难度分层</h2>
+    <h2><span class="num">二</span>难度分层</h2>
     <table>
-      <thead><tr><th>档位</th><th>玩家感受</th><th>本质变化</th></tr></thead>
+      <thead><tr><th>档位</th><th>技能使用率</th><th>技能池</th></tr></thead>
       <tbody>
-        <tr><td>简单</td><td>AI 偶尔用技能，不太构成威胁</td><td>技能使用率低，仅 T2/T3 技能</td></tr>
-        <tr><td>普通</td><td>AI 会用技能，需要认真对待</td><td>技能使用率中等，能形成有效干扰</td></tr>
-        <tr><td>困难</td><td>AI 频繁用技能，有策略</td><td>技能使用率高，排除 T3，获得 T0</td></tr>
+        <tr><td>简单</td><td><strong>15-25%</strong></td><td>T2+T3</td></tr>
+        <tr><td>普通</td><td><strong>40-55%</strong></td><td>T1+T2+T3</td></tr>
+        <tr><td>困难</td><td><strong>65-80%</strong></td><td>T0+T1+T2（无 T3）</td></tr>
       </tbody>
     </table>
-    <p><strong>动态调节：</strong>连胜/连败 2 场升/降一档。段位加成：<code>rankIdx × 0.045</code>，上限 88%。</p>
+    <p><strong>动态调节：</strong>连胜/连败 2 场调一档，调节后 3 局冷却防抖。</p>
+    <p><strong>段位加成：</strong>青铜-铂金 rankIdx×0.04，大师-传奇 (idx-4)×0.08。推荐改为加成技能选择准确度而非使用率。</p>
   </div>
 
   <div class="card">
-    <h2><span class="num">四</span>决策逻辑</h2>
+    <h2><span class="num">三</span>决策逻辑</h2>
     <p><strong>选牌：</strong>穷举最优牌型，全难度统一。</p>
-    <p><strong>技能（客户端）：</strong>优先级列表 + 概率触发，追求即时响应。</p>
-    <p><strong>技能（服务端）：</strong>进攻/防御/通用三维评分 + 局势因子，用于 PvP 代打和远期结算。</p>
-    <p>最终评分乘 <strong>0.7-1.3</strong> 随机系数，避免行为固化。</p>
+    <p><strong>技能（客户端）：</strong>优先级列表+概率触发，追求即时响应。</p>
+    <p><strong>技能（服务端）：</strong>三维评分+局势因子（优势/均势/劣势），用于 PvP 代打和 PvE 权威结算。</p>
+    <p>最终评分乘 <strong>0.7-1.3</strong> 随机系数。📌 待首发后验证调整。</p>
+    <div class="warn-box" style="font-size:12px;padding:8px 12px;"><strong>⚠ PvE 计入天梯期间：</strong>AI 决策在服务端统一结算，客户端仅展示，维护天梯公信力。</div>
   </div>
 
   <div class="card">
-    <h2><span class="num">五</span>教学与边界</h2>
+    <h2><span class="num">四</span>教学与边界</h2>
     <p>教学用固定牌组，不计天梯、不消耗资源、不触发动态调节。</p>
     <table>
       <thead><tr><th>边界场景</th><th>处理</th></tr></thead>
       <tbody>
         <tr><td>AI 无可用技能</td><td>正常出牌</td></tr>
         <tr><td>PvP 超时代打</td><td>仅选牌不出技能</td></tr>
-        <tr><td>已在最高/最低难度</td><td>计数增长不跳档</td></tr>
+        <tr><td>极高/低难度边界</td><td>计数增长不跳档</td></tr>
       </tbody>
     </table>
-    <div class="note-box" style="border-left-color:#059669;background:#d1fae5;"><strong>🔗 关联：</strong>AI 人机是对战系统的 PvE 实现方，负责 PvP 超时代打和教学 AI。</div>
+    <div class="note-box" style="border-left-color:#059669;background:#d1fae5;"><strong>🔗 关联：</strong>AI 是对战系统的 PvE 实现方，负责 PvP 超时代打和教学 AI。</div>
   </div>
 </div>
 

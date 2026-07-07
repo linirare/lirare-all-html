@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>代号001 · AI人机策划案 v2.0</title>
+<title>代号001 · AI人机策划案 v2.1</title>
 <style>
   :root { --bg: #f8f9fb; --surface: #ffffff; --border: #e4e7ed; --accent: #059669; --accent-soft: #d1fae5; --text: #1a1a2e; --text-secondary: #5a6072; --text-muted: #9098a8; --radius: 12px; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,6 +35,7 @@
   .table-wrap table { margin: 0; }
   hr { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
   .note-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 6px; font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+  .warn-box { background: #fef3f2; border-left: 3px solid #f04438; padding: 10px 14px; border-radius: 6px; font-size: 13px; color: #912018; margin-bottom: 12px; }
   .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 8px; }
   @media (max-width: 720px) { body { padding: 16px 12px; } .header, .section { padding: 20px 18px; } td:first-child { white-space: normal; } }
 </style>
@@ -45,7 +46,7 @@
 <div class="header">
   <h1>代号 001 · AI 人机策划案</h1>
   <div class="meta">
-    <span>📄 v2.0</span>
+    <span>📄 v2.1</span>
     <span>📅 2026-07-07</span>
     <span>🏷️ 设计文档</span>
     <span>🤖 AI 人机</span>
@@ -60,7 +61,7 @@
   <ul>
     <li><strong>玩家感觉 AI 会玩，不是 AI 在放水</strong>——AI 行为模式要像真人，该用技能时用技能，该打大牌时打大牌。简单难度也不犯低级错误。</li>
     <li><strong>难度变化是平滑的，不是跳崖的</strong>——AI 强度渐变，玩家感受不到「换了一台机器」，而是「对手好像更会打了」。</li>
-    <li><strong>动态调节只反馈，不惩罚</strong>——连胜后 AI 变强是给挑战，不是惩罚；连败后变弱是给喘息空间，不是施舍。</li>
+    <li><strong>动态调节只反馈，不惩罚</strong>——连胜后 AI 变强是给挑战，不是惩罚；连败后变弱是给喘息空间，不是施舍。玩家察觉不到调节的发生。</li>
   </ul>
 </div>
 
@@ -81,31 +82,54 @@
   <h3>3.1 三档难度</h3>
   <p>选三档不是五档或两档的理由：两档太少跨度大，五档太多没有数据验证。</p>
   <table>
-    <thead><tr><th>档位</th><th>玩家感受</th><th>本质变化</th></tr></thead>
+    <thead><tr><th>档位</th><th>玩家感受</th><th>技能使用率</th><th>技能池</th></tr></thead>
     <tbody>
-      <tr><td>简单</td><td>AI 偶尔用技能，不太构成威胁</td><td>技能使用率低，仅 T2/T3 技能</td></tr>
-      <tr><td>普通</td><td>AI 会用技能，需要认真对待</td><td>技能使用率中等，能形成有效干扰</td></tr>
-      <tr><td>困难</td><td>AI 技能用得频繁且有策略</td><td>技能使用率高，排除 T3，获得 T0 技能</td></tr>
+      <tr><td>简单</td><td>AI 偶尔用技能，不太构成威胁</td><td><strong>15-25%</strong></td><td>T2 + T3</td></tr>
+      <tr><td>普通</td><td>AI 会用技能，需要认真对待</td><td><strong>40-55%</strong></td><td>T1 + T2 + T3</td></tr>
+      <tr><td>困难</td><td>AI 频繁用技能，有策略压制</td><td><strong>65-80%</strong></td><td>T0 + T1 + T2（排除 T3）</td></tr>
     </tbody>
   </table>
+  <p>段位加成在此基准上乘。技能使用率全局上限 <strong>88%</strong>，避免顶级 AI 每回合必放技能。</p>
 
   <h3>3.2 动态调节</h3>
-  <p>基于连续胜负比总胜率更能反映状态。连胜 2 场升一档，连败 2 场降一档，调节后计数归零避免乒乓效应。从简单到困难需要连胜 4 场，从困难到简单需要连败 4 场。</p>
+  <p>基于连续胜负比总胜率更能反映状态。连胜 2 场升一档，连败 2 场降一档，调节后计数归零。从简单到困难需要连胜 4 场，从困难到简单需要连败 4 场。</p>
+  <p><strong>防抖：</strong>每次调节后进入 <strong>3 局冷却期</strong>，冷却期间胜负不计入升降计数。避免玩家在普通↔困难之间反复跳档。</p>
 
   <h3>3.3 段位加成</h3>
-  <p>AI 参数随玩家段位平滑增长：<code>rankIdx × 0.045</code>。青铜（idx=1）加 4.5%，传奇（idx=6）加 27%。配合技能使用率上限 88%，避免顶级段位玩家面对「每回合必放技能」的 AI。</p>
+  <p>段位加成让 AI 参数随玩家段位平滑增长，但线性公式对高段区分度不足。建议分两段：</p>
+  <table>
+    <thead><tr><th>段位区间</th><th>加成公式</th><th>举例</th></tr></thead>
+    <tbody>
+      <tr><td>青铜 ~ 铂金（idx 1-4）</td><td><code>rankIdx × 0.04</code></td><td>青铜+4%，铂金+16%</td></tr>
+      <tr><td>大师 ~ 传奇（idx 5-6）</td><td><code>4 × 0.04 + (rankIdx-4) × 0.08</code></td><td>大师+24%，传奇+32%</td></tr>
+    </tbody>
+  </table>
+  <div class="note-box">
+    <strong>💡 替代方案（推荐）：</strong>段位加成不直接乘技能使用率，而是乘<strong>技能选择准确度</strong>。即高段位 AI 不是更频繁放技能（容易显得假），而是同样频率下选得更准。需要服务端评分策略支持。
+  </div>
 </div>
 
 <div class="section">
   <h2><span class="num">四</span>AI 决策逻辑</h2>
 
   <h3>4.1 选牌：确定性问题</h3>
-  <p>纯数学。从手牌选 N 张，与 3 张公共牌组成最优 5 张牌型。评分标准与玩家端一致。所有难度统一。让玩家输的时候觉得「对面运气好/技能强」，而不是「AI 作弊或 AI 是傻子」。</p>
+  <p>纯数学。从手牌选 N 张，与 3 张公共牌组成最优 5 张牌型。评分标准与玩家端一致。所有难度统一。</p>
 
   <h3>4.2 功能牌：不确定性问题</h3>
   <p>分两层设计：</p>
   <p><strong>客户端简化策略</strong>（PvE 实时对局）：优先级列表 + 概率触发。AI 从优先级列表遍历，找到可用技能后按使用率决定是否发动。只有一个维度（技能 ID 固定顺序），没有复杂局势判断——因为 PvE 响应需要即时。</p>
-  <p><strong>服务端评分策略</strong>（PvP 代打、远期权威结算）：每个技能配置进攻/防御/通用三维评分 + 局势因子。PvP 代打在服务端运行，没有实时渲染压力，可用更复杂公式。后续 PvE 迁移到服务端权威结算时可接管。</p>
+  <p><strong>服务端评分策略</strong>（PvP 代打、PvE 权威结算）：每个技能配置进攻/防御/通用三维评分 + 局势因子。局势因子定义如下：</p>
+  <table>
+    <thead><tr><th>局势</th><th>判定条件</th></tr></thead>
+    <tbody>
+      <tr><td>优势</td><td>我方生命 ≥ 对方 + 2，或我方牌型预估 >= 对方 + 1 级</td></tr>
+      <tr><td>均势</td><td>上述条件不满足，且生命差 ≤ 1</td></tr>
+      <tr><td>劣势</td><td>我方生命 ≤ 对方 - 2，或手牌数 / 牌型明显落后</td></tr>
+    </tbody>
+  </table>
+  <div class="warn-box">
+    <strong>⚠ PvE 计入天梯的结算权：</strong>首发 PvE 计入天梯期间，AI 决策必须在<strong>服务端统一结算</strong>，客户端只做展示。避免不同设备性能差异导致同场对局 AI 行为不一致，维护天梯公信力。服务端评分策略可直接复用。
+  </div>
 
   <h3>4.3 技能权重意图（示例）</h3>
   <table>
@@ -120,7 +144,8 @@
   </table>
 
   <h3>4.4 随机因子</h3>
-  <p>最终评分乘以 <strong>0.7-1.3</strong> 随机系数。让 AI 行为有一定不可预测性：避免每次都选同一个技能、给低分技能偶尔出场机会。太窄（±10%）随机性不足，太宽（±50%）削弱权重设计意义。</p>
+  <p>最终评分乘以 <strong>0.7-1.3</strong> 随机系数。让 AI 行为有一定不可预测性：避免每次都选同一个技能、给低分技能偶尔出场机会。</p>
+  <p style="font-size: 13px; color: var(--text-muted);">📌 待验证：±30% 是感觉值而非实测值。首发后根据 AI 行为数据回头验证该系数——如果 AI 方差过大（行为怪）则收窄到 ±20%，过小（行为固化）则放宽到 ±40%。</p>
 </div>
 
 <div class="section">
@@ -160,7 +185,7 @@
     </tbody>
   </table>
   <hr>
-  <div class="note-box"><strong>🔗 关联系统：</strong>AI 人机是对战系统的 PvE 实现方，负责 PvP 超时代打和教学模式的 AI 对手逻辑。</div>
+  <div class="note-box"><strong>🔗 关联系统：</strong>AI 人机是对战系统的 PvE 实现方，负责 PvP 超时代打和教学模式的 AI 对手逻辑。PvE 计入天梯期间决策走服务端统一结算。</div>
 </div>
 
 </div>
