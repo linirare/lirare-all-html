@@ -241,7 +241,11 @@
   <div class="nav-item" onclick="switchPage('cards')">
     <span class="icon">🃏</span><span class="label">功能牌</span>
   </div>
-  <!-- audit record removed per user request -->
+  <div class="nav-divider"></div>
+  <div class="nav-section">执行</div>
+  <div class="nav-item" onclick="switchPage('spec')">
+    <span class="icon">⚙️</span><span class="label">研发执行规格</span>
+  </div>
 </nav>
 
 <!-- ===== Main Content ===== -->
@@ -848,6 +852,47 @@
   <div class="card" style="text-align:center;padding:14px 20px;">
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版功能牌策划案 ▼</p>
     <iframe src="cards/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
+  </div>
+</div>
+
+<!-- ==================== 研发执行规格 ==================== -->
+<div id="page-spec" class="page">
+  <div class="header-card" style="--accent:#dc2626;">
+    <h1>代号 001 · 研发执行规格</h1>
+    <div class="meta">v1.0 | 2026-07-07 | 执行规格 / 边界对齐</div>
+    <div class="desc">不重复玩法规则，只规定服务端/客户端边界、状态流转、异常处理、结算字段和验收标准。研发开工前必须对齐的执行层规格。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>服务端权威边界</h2>
+    <p>匹配、库存、胜负、奖励、天梯、任务、红点——全部由服务端计算，客户端只展示和提交操作。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>核心流程</h2>
+    <div class="flow-chart" style="font-size:12px;">
+      开始对战 → 校验配置+库存 → 匹配队列 → 真人成功/超时人机 → 创建对局+扣库存 → 对战 → 服务端结算 → 返回结果+红点 → 关闭结算回主页刷新
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>异常场景（共 10 类）</h2>
+    <p>匹配取消、创建失败、对手掉线、自己掉线、主动退出、结算失败、无有效结算、重复领取、库存不足——每类已定义扣库存/发奖励/计天梯规则。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">四</span>结算字段（22 项）</h2>
+    <p>每场结算产出：胜负、对手类型、是否计天梯、金币、钻石、宝箱、天梯变化（大段/小段/星数/积分/连胜/保护）、功能牌消耗/返还、任务进度、角色加成、红点摘要。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">五</span>验收标准（14 条）</h2>
+    <p>每条对应一个可测试场景：未配置阻断、超时人机无感、无结算返还库存、掉线重连15秒、重复领取防重、段位保护等。</p>
+  </div>
+
+  <div class="card" style="text-align:center;padding:14px 20px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版研发执行规格 ▼</p>
+    <iframe src="spec/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
   </div>
 </div>
 

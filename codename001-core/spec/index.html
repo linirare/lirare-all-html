@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代号001 · 研发执行规格 v1.0</title>
+<style>
+  :root { --bg: #f8f9fb; --surface: #ffffff; --border: #e4e7ed; --accent: #dc2626; --accent-soft: #fee2e2; --text: #1a1a2e; --text-secondary: #5a6072; --text-muted: #9098a8; --radius: 12px; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Helvetica Neue", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 40px 20px; }
+  .container { max-width: 960px; margin: 0 auto; }
+  .header { background: var(--surface); border-radius: var(--radius); padding: 36px 48px; margin-bottom: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); }
+  .header h1 { font-size: 26px; font-weight: 700; color: var(--text); }
+  .header .meta { display: flex; gap: 20px; margin-top: 10px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
+  .header .desc { margin-top: 14px; padding: 12px 16px; background: var(--accent-soft); border-radius: 8px; font-size: 13.5px; color: var(--text-secondary); border-left: 3px solid var(--accent); }
+  .section { background: var(--surface); border-radius: var(--radius); padding: 28px 44px; margin-bottom: 16px; border: 1px solid var(--border); }
+  .section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: flex; align-items: center; gap: 8px; }
+  .section h2 .num { background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: 5px; }
+  .section h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+  .section h3:first-of-type { margin-top: 0; }
+  .section p { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; }
+  .section ul, .section ol { margin: 6px 0 12px 18px; font-size: 14px; color: var(--text-secondary); }
+  .section li { margin-bottom: 3px; }
+  .section li strong { color: var(--text); }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 13px; border-radius: 8px; overflow: hidden; }
+  thead { background: var(--accent); color: #fff; }
+  th { padding: 6px 9px; text-align: left; font-weight: 600; font-size: 11.5px; }
+  td { padding: 6px 9px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; font-size: 12.5px; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
+  .table-wrap { overflow-x: auto; margin: 10px 0 16px; }
+  .table-wrap table { margin: 0; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+  .note-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 6px; font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+  .warn-box { background: #fef3f2; border-left: 3px solid #f04438; padding: 10px 14px; border-radius: 6px; font-size: 13px; color: #912018; margin-bottom: 12px; }
+  .code-block { background: #f4f5f7; padding: 10px 14px; border-radius: 6px; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 12.5px; line-height: 1.8; margin: 8px 0 12px; overflow-x: auto; white-space: pre; border: 1px solid var(--border); }
+  .flow-chart { margin: 8px 0 14px; padding: 12px 16px; background: #fafbfc; border-radius: 6px; border: 1px solid var(--border); font-size: 12.5px; color: var(--text-secondary); line-height: 2; text-align: center; }
+  .flow-chart .arrow { color: var(--accent); font-weight: 700; margin: 0 4px; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 6px; }
+  .t0 { background: #fef3f2; color: #f04438; }
+  .t1 { background: #fffaeb; color: #f79009; }
+  .t2 { background: #ecfdf3; color: #12b76a; }
+  .t3 { background: #f2f4f7; color: #98a2b3; }
+  @media (max-width: 720px) { body { padding: 16px 12px; } .header, .section { padding: 20px 18px; } td:first-child { white-space: normal; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>代号 001 · 研发执行规格</h1>
+  <div class="meta">
+    <span>📄 v1.0</span>
+    <span>📅 2026-07-07</span>
+    <span>🏷️ 执行规格 / 边界对齐</span>
+    <span>⚙️ 研发用</span>
+  </div>
+  <div class="desc">
+    本文档不重复策划案中的玩法规则，只规定"服务端/客户端边界、状态流转、异常处理、结算字段"——研发开工前必须对齐的执行层规格。<br>
+    <strong>以下所有规则以服务端实现为准，客户端仅展示和提交操作。</strong>
+  </div>
+</div>
+
+<!-- ==================== 一、服务端权威边界 ==================== -->
+<div class="section">
+  <h2><span class="num">一</span>服务端权威边界</h2>
+  <table>
+    <thead><tr><th>模块</th><th>服务端计算</th><th>客户端职责</th></tr></thead>
+    <tbody>
+      <tr><td>匹配</td><td>校验库存 → 创建匹配队列 → 分配对手（真人/人机）→ 返回匹配结果</td><td>展示匹配中界面 → 收到结果后进入对局</td></tr>
+      <tr><td>功能牌库存</td><td>创建对局时扣除 → 检测异常并返还 → 返回消耗结果</td><td>展示库存数量 → 提交装备操作</td></tr>
+      <tr><td>对战</td><td>出牌校验 → 牌型计算 → 小局胜负 → 整场胜负 → 超时代打</td><td>展示手牌 → 提交出牌指令 → 显示服务端计算结果</td></tr>
+      <tr><td>结算</td><td>统一产出奖励/段位/任务/宝箱/红点摘要</td><td>展示结算结果，不做任何数值计算</td></tr>
+      <tr><td>天梯</td><td>接收结算结果 → 更新段位/星数/积分 → 升降段判定 → 保护/连胜计算</td><td>展示当前段位，不做段位计算</td></tr>
+      <tr><td>任务/签到/宝箱/邮件</td><td>进度追踪 → 条件判定 → 奖励发放 → 领取防重</td><td>展示进度 → 提交领取请求 → 展示结果</td></tr>
+      <tr><td>红点摘要</td><td>结算时产出红点变化 → 事件触发时刷新</td><td>展示红点状态 → 点击后通知服务端已读</td></tr>
+      <tr><td>商店/抽卡</td><td>钻石校验 → 扣钻石 → 随机选牌/角色 → 库存增加 → 保底计算</td><td>展示卡池 → 提交抽卡请求 → 播放动画</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== 二、核心流程 ==================== -->
+<div class="section">
+  <h2><span class="num">二</span>核心流程</h2>
+
+  <h3>2.1 开战→结算→回主页 完整链路</h3>
+  <div class="flow-chart">
+    开始对战 <span class="arrow">→</span>
+    服务端校验配置+库存 <span class="arrow">→</span>
+    进入匹配队列 <span class="arrow">→</span>
+    匹配真人成功 / 超时转人机 <span class="arrow">→</span>
+    服务端创建对局+扣除库存 <span class="arrow">→</span>
+    对战（5局3胜） <span class="arrow">→</span>
+    服务端统一结算 <span class="arrow">→</span>
+    返回结算结果+红点摘要 <span class="arrow">→</span>
+    客户端展示结算页 <span class="arrow">→</span>
+    关闭结算 → 回主页刷新指定字段
+  </div>
+
+  <h3>2.2 匹配流程（服务端）</h3>
+  <ol>
+    <li>客户端提交"开始对战"请求。</li>
+    <li>服务端校验：功能牌配置（2张） + 库存是否足够（每种≥1）。</li>
+    <li>校验不通过 → 返回错误码 + 引导跳转到功能牌/商店页面。</li>
+    <li>校验通过 → 加入匹配队列，设置匹配超时（建议 15-30 秒）。</li>
+    <li>超时前匹配到真人 → 创建对局，返回"真人匹配成功"。</li>
+    <li>超时未匹配到 → 创建人机对局，返回"人机兜底"，对手类型标记为 AI。</li>
+    <li>无论真人/人机，创建成功后服务端扣除带入功能牌库存（每种 -1）。</li>
+    <li>若创建失败（服务器异常等），不扣库存，客户端回到主页。</li>
+  </ol>
+
+  <h3>2.3 结算流程（服务端）</h3>
+  <ol>
+    <li>对局结束 → 服务端计算胜负、奖励、段位变化。</li>
+    <li>统一产出结算结果（详见第四节字段表）。</li>
+    <li>更新天梯段位/星数/积分。</li>
+    <li>更新任务进度。</li>
+    <li>计算角色加成（仅 PvE/日常）。</li>
+    <li>更新宝箱进度（仅 PvE）。</li>
+    <li>产出红点摘要（哪些入口新亮了/灭了）。</li>
+    <li>返回完整结算数据给客户端。</li>
+  </ol>
+
+  <h3>2.4 回主页刷新</h3>
+  <p>进入主页/结算返回主页时，客户端请求以下字段：</p>
+  <ul>
+    <li>玩家资源（金币、钻石）</li>
+    <li>当前段位/小段/星数</li>
+    <li>上阵功能牌配置</li>
+    <li>功能牌库存</li>
+    <li>红点摘要</li>
+    <li>聊天最新一条消息（可选）</li>
+  </ul>
+  <p>不请求：全量功能牌列表、全量商店数据、排行榜全量等。</p>
+</div>
+
+<!-- ==================== 三、关键状态表 ==================== -->
+<div class="section">
+  <h2><span class="num">三</span>关键状态表</h2>
+
+  <h3>3.1 匹配状态</h3>
+  <table>
+    <thead><tr><th>状态</th><th>说明</th><th>客户端展示</th></tr></thead>
+    <tbody>
+      <tr><td>idle</td><td>未匹配</td><td>显示"开始对战"按钮</td></tr>
+      <tr><td>matching</td><td>匹配中</td><td>匹配动画/倒计时</td></tr>
+      <tr><td>matched_pvp</td><td>匹配到真人</td><td>对手信息 → 进入对局</td></tr>
+      <tr><td>matched_ai</td><td>超时转入人机</td><td>直接进入对局（玩家无感）</td></tr>
+      <tr><td>failed</td><td>匹配失败</td><td>提示并回到主页</td></tr>
+      <tr><td>cancelled</td><td>玩家取消匹配</td><td>回到主页，不扣库存</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.2 对局状态</h3>
+  <table>
+    <thead><tr><th>状态</th><th>说明</th><th>处理</th></tr></thead>
+    <tbody>
+      <tr><td>created</td><td>对局创建成功</td><td>扣除功能牌库存，开始第1局</td></tr>
+      <tr><td>playing</td><td>进行中</td><td>双方选牌/出牌/技能</td></tr>
+      <tr><td>paused</td><td>玩家掉线</td><td>服务端等待15秒，AI代打</td></tr>
+      <tr><td>finished</td><td>正常结束</td><td>进入结算流程</td></tr>
+      <tr><td>aborted</td><td>异常终止</td><td>未产生有效结算，视情况返还库存</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.3 结算状态</h3>
+  <table>
+    <thead><tr><th>状态</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>settled</td><td>结算完成，可正常发奖</td></tr>
+      <tr><td>no_settle</td><td>无有效结算，不发奖励不扣天梯</td></tr>
+      <tr><td>refunded</td><td>无有效结算且非玩家责任，返还功能牌</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.4 领取状态（任务/签到/宝箱/邮件）</h3>
+  <table>
+    <thead><tr><th>状态</th><th>处理</th></tr></thead>
+    <tbody>
+      <tr><td>未领取</td><td>可点击领取</td></tr>
+      <tr><td>已领取</td><td>不可重复领取，服务端防重</td></tr>
+      <tr><td>已过期</td><td>每日任务/签到过期后不可补领</td></tr>
+    </tbody>
+  </table>
+  <p><strong>防重原则：</strong>所有领取请求以服务端是否已发放为准。客户端重复点击只返回"已领取"状态，不重复发奖。</p>
+</div>
+
+<!-- ==================== 四、结算字段表 ==================== -->
+<div class="section">
+  <h2><span class="num">四</span>结算字段表</h2>
+  <p>每场正式对战结束后，服务端产出以下数据返回客户端：</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>对战结果</td><td></td><td></td></tr>
+      <tr><td style="padding-left:18px;">result</td><td>win/lose/draw</td><td>本场最终胜负</td></tr>
+      <tr><td style="padding-left:18px;">opponent_type</td><td>pvp/ai</td><td>对手类型，用于后台统计</td></tr>
+      <tr><td style="padding-left:18px;">is_ranked</td><td>bool</td><td>是否计入天梯</td></tr>
+      <tr><td>奖励变化</td><td></td><td></td></tr>
+      <tr><td style="padding-left:18px;">gold_change</td><td>int</td><td>金币变化量（含段位倍率）</td></tr>
+      <tr><td style="padding-left:18px;">diamond_change</td><td>int</td><td>钻石变化量（含段位倍率）</td></tr>
+      <tr><td style="padding-left:18px;">chest_progress</td><td>int[]</td><td>宝箱进度变化（当前值/上限）</td></tr>
+      <tr><td>天梯变化</td><td></td><td></td></tr>
+      <tr><td style="padding-left:18px;">rank_tier</td><td>string</td><td>大段（青铜/白银/...）</td></tr>
+      <tr><td style="padding-left:18px;">rank_sub_tier</td><td>string</td><td>小段（Ⅲ/Ⅱ/Ⅰ）</td></tr>
+      <tr><td style="padding-left:18px;">stars</td><td>int</td><td>当前星数</td></tr>
+      <tr><td style="padding-left:18px;">score</td><td>int</td><td>大师+积分</td></tr>
+      <tr><td style="padding-left:18px;">streak</td><td>int</td><td>当前连胜/连败数</td></tr>
+      <tr><td style="padding-left:18px;">streak_bonus</td><td>bool</td><td>本场是否触发连胜奖励</td></tr>
+      <tr><td style="padding-left:18px;">protection_used</td><td>bool</td><td>本场是否消耗大段保护</td></tr>
+      <tr><td>功能牌</td><td></td><td></td></tr>
+      <tr><td style="padding-left:18px;">cards_consumed</td><td>string[]</td><td>本场消耗的功能牌 ID 列表</td></tr>
+      <tr><td style="padding-left:18px;">cards_refunded</td><td>bool</td><td>是否返还功能牌</td></tr>
+      <tr><td>任务</td><td></td><td></td></tr>
+      <tr><td style="padding-left:18px;">quest_progress</td><td>map</td><td>各任务当前进度</td></tr>
+      <tr><td>角色</td><td></td><td></td></tr>
+      <tr><td style="padding-left:18px;">hero_bonus</td><td>map</td><td>角色加成详情</td></tr>
+      <tr><td>红点</td><td></td><td></td></tr>
+      <tr><td style="padding-left:18px;">reddot_summary</td><td>map</td><td>各入口红点状态（亮/灭）</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ==================== 五、异常与兜底表 ==================== -->
+<div class="section">
+  <h2><span class="num">五</span>异常与兜底表</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>场景</th><th>触发条件</th><th>系统处理</th><th>玩家提示</th><th>扣库存</th><th>发奖励</th><th>计天梯</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>匹配取消</td>
+        <td>玩家在匹配中关掉界面或点取消</td>
+        <td>退出匹配队列</td>
+        <td>无</td>
+        <td style="color:#059669;font-weight:700;">否</td>
+        <td style="color:#059669;font-weight:700;">否</td>
+        <td style="color:#059669;font-weight:700;">否</td>
+      </tr>
+      <tr>
+        <td>对局创建失败</td>
+        <td>服务器异常、资源不足</td>
+        <td>返回创建失败状态</td>
+        <td>"对局创建失败，请重试"</td>
+        <td style="color:#059669;font-weight:700;">否</td>
+        <td style="color:#059669;font-weight:700;">否</td>
+        <td style="color:#059669;font-weight:700;">否</td>
+      </tr>
+      <tr>
+        <td>创建成功但对手掉线</td>
+        <td>匹配到真人后对方在创建时掉线</td>
+        <td>转为AI对局，对手类型标记AI</td>
+        <td>不影响当前玩家</td>
+        <td style="color:#f04438;font-weight:700;">是</td>
+        <td style="color:#059669;font-weight:700;">正常</td>
+        <td style="color:#059669;font-weight:700;">正常</td>
+      </tr>
+      <tr>
+        <td>对局中掉线（自己）</td>
+        <td>玩家网络中断</td>
+        <td>服务端等待15秒，超时后AI代打</td>
+        <td>"网络连接中..."</td>
+        <td style="color:#f04438;font-weight:700;">是</td>
+        <td>按结果发放</td>
+        <td>按结果计入</td>
+      </tr>
+      <tr>
+        <td>对局中掉线（对手）</td>
+        <td>对手网络中断</td>
+        <td>对手15秒超时后AI代打</td>
+        <td>"等待对手重连"</td>
+        <td style="color:#f04438;font-weight:700;">是</td>
+        <td>按结果发放</td>
+        <td>按结果计入</td>
+      </tr>
+      <tr>
+        <td>玩家主动退出</td>
+        <td>全服内强行退出对局</td>
+        <td>视为投降，对手获胜</td>
+        <td>"确认退出？"弹窗</td>
+        <td style="color:#f04438;font-weight:700;">是</td>
+        <td>按失败发放</td>
+        <td style="color:#f04438;font-weight:700;">是</td>
+      </tr>
+      <tr>
+        <td>结算失败</td>
+        <td>服务端结算异常</td>
+        <td>对局记录保留，异步重试结算</td>
+        <td>通知玩家"结算中，奖励稍后到账"</td>
+        <td style="color:#f04438;font-weight:700;">是</td>
+        <td style="color:#f79009;font-weight:700;">异步补发</td>
+        <td style="color:#f79009;font-weight:700;">异步补录</td>
+      </tr>
+      <tr>
+        <td>对局无有效结算</td>
+        <td>对局开始后异常中断，未完成任何小局</td>
+        <td>不产出结算结果</td>
+        <td>"对局异常，可重新开始"</td>
+        <td style="color:#059669;font-weight:700;">返还</td>
+        <td style="color:#059669;font-weight:700;">否</td>
+        <td style="color:#059669;font-weight:700;">否</td>
+      </tr>
+      <tr>
+        <td>重复点击领取</td>
+        <td>玩家连续点领取/抽卡</td>
+        <td>服务端防重检测</td>
+        <td>只弹出一次结果</td>
+        <td>—</td>
+        <td>不重复发</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>功能牌库存不足</td>
+        <td>装备时某牌库存=0</td>
+        <td>阻止装备，开战时阻断</td>
+        <td>"库存不足，请先补充"</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ==================== 六、经济校验 ==================== -->
+<div class="section">
+  <h2><span class="num">六</span>经济日收益校验</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>玩家类型</th><th>每日对战</th><th>钻石收入</th><th>功能牌消耗</th><th>抽卡频率</th><th>库存变化</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>轻度（仅任务）</td>
+        <td>3 场人机</td>
+        <td>任务70 + 签到30 + 宝箱50 ≈ 150💎</td>
+        <td>6 张/天</td>
+        <td>约 6-7 天一次十连</td>
+        <td style="color:#059669;">正（抽>消耗）</td>
+      </tr>
+      <tr>
+        <td>中度（任务+额外）</td>
+        <td>6-8 场混打</td>
+        <td>约 250💎</td>
+        <td>12-16 张/天</td>
+        <td>约 4 天一次十连</td>
+        <td style="color:#059669;">平衡</td>
+      </tr>
+      <tr>
+        <td>重度（高活跃）</td>
+        <td>15+ 场 PvP</td>
+        <td>约 500💎（含段位倍率）</td>
+        <td>30+ 张/天</td>
+        <td>约 2 天一次十连</td>
+        <td style="color:#f04438;">可能负（消耗>抽）</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="warn-box">
+    <strong>⚠ 风险点：</strong>
+    <ul style="margin:4px 0 0 16px;font-size:12.5px;">
+      <li>重度玩家日消耗 30+ 张，十连只补充 10 张，库存入不敷出 → 需要额外抽卡来源（任务/活动）</li>
+      <li>段位倍率如果影响钻石，高段位玩家收入远超测算，需要限定倍率上限</li>
+      <li>若钻石产出超过预期，可调整：降低钻石倍率 / 宝箱钻石减半 / 签到设为分段</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== 七、验收标准 ==================== -->
+<div class="section">
+  <h2><span class="num">七</span>验收标准</h2>
+  <p>以下为可测试的验收条目，研发实现后逐条验证：</p>
+  <table>
+    <thead><tr><th>#</th><th>验收场景</th><th>预期结果</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>未配置 2 张功能牌，点击开始对战</td><td>阻断匹配，弹出引导，跳转功能牌页</td></tr>
+      <tr><td>2</td><td>已配置功能牌但库存不足</td><td>阻断匹配，提示"库存不足"</td></tr>
+      <tr><td>3</td><td>点击开始对战，真人匹配超时</td><td>自动进入人机对局，玩家无感，无模式选择</td></tr>
+      <tr><td>4</td><td>人机兜底局结束后查后台数据</td><td>opponent_type=ai，有对应记录</td></tr>
+      <tr><td>5</td><td>对局创建成功但异常中断无有效结算</td><td>功能牌返还，不扣奖励，不计天梯</td></tr>
+      <tr><td>6</td><td>对局中玩家掉线后 15 秒内重连</td><td>恢复对局，继续比赛</td></tr>
+      <tr><td>7</td><td>对局中掉线超 15 秒</td><td>AI 代打，继续比赛到结束，按结果结算</td></tr>
+      <tr><td>8</td><td>对局正常结束，查看结算数据</td><td>返回第四节字段表中所有字段</td></tr>
+      <tr><td>9</td><td>对局正常结束，回主页后检查刷新范围</td><td>只刷新资源/段位/功能牌/红点，不请求全量数据</td></tr>
+      <tr><td>10</td><td>重复点击奖励领取按钮</td><td>只发一次奖励，后续返回"已领取"</td></tr>
+      <tr><td>11</td><td>功能牌已扣但服务端结算失败</td><td>异步重试结算，不重复扣库存</td></tr>
+      <tr><td>12</td><td>青铜玩家连续失败</td><td>不掉星，不降回新手局</td></tr>
+      <tr><td>13</td><td>刚升入白银/黄金/铂金后 0 星失败</td><td>优先消耗大段保护，不降段</td></tr>
+      <tr><td>14</td><td>装备 T0 牌后查看 AI 难度变化</td><td>AI 难度根据技能品质系数调整（后台验证）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+</body>
+</html>
