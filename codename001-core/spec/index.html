@@ -71,7 +71,7 @@
     <thead><tr><th>模块</th><th>服务端计算</th><th>客户端职责</th></tr></thead>
     <tbody>
       <tr><td>匹配</td><td>校验库存 → 创建匹配队列 → 分配对手（真人/人机）→ 返回匹配结果</td><td>展示匹配中界面 → 收到结果后进入对局</td></tr>
-      <tr><td>功能牌库存</td><td>创建对局时扣除 → 检测异常并返还 → 返回消耗结果</td><td>展示库存数量 → 提交装备操作</td></tr>
+      <tr><td>功能牌库存</td><td>创建对局时暂扣 → 结算时胜退败扣 → 异常检测返还</td><td>展示库存数量 → 提交装备操作</td></tr>
       <tr><td>对战</td><td>出牌校验 → 牌型计算 → 小局胜负 → 整场胜负 → 超时代打</td><td>展示手牌 → 提交出牌指令 → 显示服务端计算结果</td></tr>
       <tr><td>结算</td><td>统一产出奖励/段位/任务/宝箱/红点摘要</td><td>展示结算结果，不做任何数值计算</td></tr>
       <tr><td>天梯</td><td>接收结算结果 → 更新段位/星数/积分 → 升降段判定 → 保护/连胜计算</td><td>展示当前段位，不做段位计算</td></tr>
@@ -107,7 +107,7 @@
     <li>校验不通过 → 返回错误码 + 引导跳转到功能牌/商店页面。</li>
     <li>校验通过 → 加入匹配队列。</li>
     <li><strong>分阶段匹配：</strong>0-5s 精确匹配（同段位±1小段）→ 5-10s 放宽（±1大段）→ 10-15s 全段位 → 15s 超时自动转入人机兜底。</li>
-    <li>无论真人/人机，创建成功后服务端扣除带入功能牌库存（每种 -1）。</li>
+    <li>无论真人/人机，创建成功后服务端<strong>暂扣</strong>带入功能牌库存（每种 -1，标记已占用）。</li>
     <li>若创建失败（服务器异常等），不扣库存，客户端回到主页。</li>
   </ol>
 
@@ -229,9 +229,8 @@
       <tr><td style="padding-left:18px;">streak_bonus</td><td>bool</td><td>本场是否触发连胜奖励</td></tr>
       <tr><td style="padding-left:18px;">protection_used</td><td>bool</td><td>本场是否消耗大段保护</td></tr>
       <tr><td>功能牌</td><td></td><td></td></tr>
-      <tr><td style="padding-left:18px;">cards_consumed</td><td>{card_id,count}</td><td>本场消耗的功能牌及数量，如 [{fivejoker,1},{thief,1}]</td></tr>
-      <tr><td style="padding-left:18px;">cards_refunded</td><td>bool</td><td>是否返还功能牌</td></tr>
-      <tr><td style="padding-left:18px;">cards_refunded_detail</td><td>{card_id,count}[]</td><td>返还的功能牌及数量，用于对账</td></tr>
+      <tr><td style="padding-left:18px;">cards_consumed</td><td>{card_id,count}</td><td>本场实际消耗的功能牌（败方/掉线/投降时有值，胜方为空）</td></tr>
+      <tr><td style="padding-left:18px;">cards_returned</td><td>bool</td><td>胜方退还暂扣库存，true=已退还</td></tr>
       <tr><td style="padding-left:18px;">inventory_after</td><td>map</td><td>结算后各功能牌库存余量，用于客服查证</td></tr>
       <tr><td>任务</td><td></td><td></td></tr>
       <tr><td style="padding-left:18px;">quest_progress</td><td>map</td><td>各任务当前进度</td></tr>
@@ -395,7 +394,7 @@
     <strong>✅ 首发决策：</strong>
     <ul style="margin:4px 0 0 16px;font-size:12.5px;">
       <li><strong>段位倍率首发只影响金币，钻石段位倍率固定为 1.0（不随段位增长）</strong>。</li>
-      <li>每日每种 T3 功能牌各补充 3 张（通过每日福利发放），重度玩家(30+场/天)消耗 30 张/天，补充 24 张/天(8种T3×3)，净亏 6 张/天，需额外通过抽卡补充。中度玩家(12场/天)消耗 12 张，补充 24 张，净盈。</li>
+      <li>每日每种 T3 功能牌各补充 3 张（通过每日福利发放）。胜方不消耗功能牌，败方消耗。按 50% 胜率估算：重度玩家(30场/天)实际消耗 15 场×2张=30张/天，补充 24张/天(8种T3×3)，净亏 6张/天；中度玩家(12场)消耗 6场×2=12张，补充24张，净盈12张。</li>
       <li>若首发后钻石产出超出预期，调整手段：降低宝箱钻石 / 签到分段奖励 / 任务奖励下调。</li>
     </ul>
   </div>

@@ -115,7 +115,7 @@
 <div class="section">
   <h2><span class="num">四</span>发起匹配流程</h2>
   <div class="flow-chart">
-    点击开始对战 <span class="arrow">→</span> 校验配置和库存 <span class="arrow">→</span> 进入匹配界面 <span class="arrow">→</span> 5-10-15s分段匹配 <span class="arrow">→</span> 无人则转人机兜底 <span class="arrow">→</span> 创建成功，服务端扣除库存
+    点击开始对战 <span class="arrow">→</span> 校验配置和库存 <span class="arrow">→</span> 进入匹配界面 <span class="arrow">→</span> 5-10-15s分段匹配 <span class="arrow">→</span> 无人则转人机兜底 <span class="arrow">→</span> 创建成功，暂扣库存 → 战后胜退败扣
   </div>
   <table>
     <thead><tr><th>检查项</th><th>规则</th><th>不满足处理</th></tr></thead>
@@ -133,8 +133,8 @@
     <thead><tr><th>规则</th><th>说明</th></tr></thead>
     <tbody>
       <tr><td>带入数量</td><td>每场正式对战带入 2 张功能牌。</td></tr>
-      <tr><td>库存消耗</td><td>由服务端在对局创建成功时扣除。结算结果中返回本场功能牌消耗状态。若未产生有效结算且非玩家主动投降/离场/恶意断线，则返还或补偿。</td></tr>
-      <tr><td>异常返还</td><td>对局未产生有效结算且非玩家主动投降/离场/恶意断线时，返还已扣功能牌或发等价补偿。</td></tr>
+      <tr><td>库存消耗</td><td>创建对局时暂扣（标记占用）；结算时胜方退还，败方/掉线/投降扣除。未产生有效结算且非主动离场则退还。</td></tr>
+      <tr><td>异常返还</td><td>对局未产生有效结算且非主动离场时，退还暂扣库存。胜方正常退还，败方/掉线/投降正常扣除。</td></tr>
       <tr><td>使用次数</td><td>每回合最多使用 2 张；每张牌每场只能使用 1 次。</td></tr>
       <tr><td>跨小局状态</td><td>小局切换时重置"每回合使用次数"，不重置已用功能牌。</td></tr>
       <tr><td>目标选择</td><td>部分功能牌需要先选中手牌或对手牌作为目标。</td></tr>
@@ -144,7 +144,7 @@
 
 <div class="section">
   <h2><span class="num">六</span>结算与奖励</h2>
-  <p><strong>以服务端结算为唯一权威。</strong>结算向天梯、经济、任务和角色系统输出统一结果。每场输出：胜负、对手类型（真人/人机）、是否计入天梯、金币/钻石/宝箱变化、段位/星数/积分变化、连胜及保护标记、任务进度、角色加成、功能牌消耗结果。</p>
+  <p><strong>以服务端结算为唯一权威。</strong>结算向天梯、经济、任务和角色系统输出统一结果。每场输出：胜负、对手类型、是否计入天梯、金币/钻石/宝箱变化、段位/星数变化、连胜及保护标记、任务进度、角色加成、功能牌消耗/退还结果。</p>
   <p>段位倍率首发只影响金币，钻石段位倍率固定为 1.0</strong>，避免高段位玩家钻石滚雪球。</p>
   <p><strong>结算汇总字段表</strong></p>
   <div class="table-wrap">
