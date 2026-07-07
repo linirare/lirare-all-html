@@ -238,6 +238,9 @@
   <div class="nav-item" onclick="switchPage('ai')">
     <span class="icon">🤖</span><span class="label">AI 人机</span>
   </div>
+  <div class="nav-item" onclick="switchPage('cards')">
+    <span class="icon">🃏</span><span class="label">功能牌</span>
+  </div>
   <!-- audit record removed per user request -->
 </nav>
 
@@ -786,6 +789,43 @@
   <div class="card" style="text-align:center;padding:14px 20px;">
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版 AI 人机策划案 ▼</p>
     <iframe src="ai/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
+  </div>
+</div>
+
+<!-- ==================== 功能牌 ==================== -->
+<div id="page-cards" class="page">
+  <div class="header-card" style="--accent:#c026d3;">
+    <h1>代号 001 · 功能牌策划案</h1>
+    <div class="meta">v2.0 | 2026-07-07 | 设计文档</div>
+    <div class="desc">功能牌是游戏的核心策略变量和经济系统核心付费点。22 张牌，4 个 Tier，10 种类型。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>牌池速览</h2>
+    <p>T0 5 张（泛用）· T1 5 张（条件强）· T2 9 张（功能型）· T3 3 张（代价型）</p>
+    <p><strong>核心机制：</strong>每场装备 2 张，每回合最多用 2 张，每张每场只能用 1 次。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>抽卡与经济</h2>
+    <p>单抽 100💎 / 十连 1,000💎。概率 T0 6% · T1 17% · T2 32% · T3 45%。新号送 T3 各 5 张。</p>
+    <div class="warn-box" style="font-size:12px;padding:8px 12px;"><strong>⚠ 待实现：</strong>十连保底（至少 1 张 T2+）缺失。库存溢出处理（碎片合成/分解货币）待决策。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>类型分布</h2>
+    <p>干扰 5 · 复制 3 · 策略 2 · 抽牌 2 · 调整 2 · 信息 2 · 增幅 1 · 额外 1 · 随机 1 · 预支 1</p>
+    <p><strong>建议：</strong>增幅类只有 lucky 1 张，风险集中，后续补一张。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">四</span>AI 联动</h2>
+    <p>AI 根据装备最高 Tier 调整难度。T3+T3→基准不变，T0+T0→显著变难。</p>
+  </div>
+
+  <div class="card" style="text-align:center;padding:14px 20px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版功能牌策划案 ▼</p>
+    <iframe src="cards/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
   </div>
 </div>
 
