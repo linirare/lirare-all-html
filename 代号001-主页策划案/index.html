@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代号001 · 主页策划案 v0.1 · 精简版</title>
+<style>
+  :root {
+    --bg: #f8f9fb;
+    --surface: #ffffff;
+    --border: #e4e7ed;
+    --accent: #4a6cf7;
+    --accent-soft: #eef1ff;
+    --text: #1a1a2e;
+    --text-secondary: #5a6072;
+    --text-muted: #9098a8;
+    --tag-p0: #f04438;
+    --tag-p1: #f79009;
+    --tag-p2: #12b76a;
+    --tag-p3: #98a2b3;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  .header {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 36px 48px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--accent);
+  }
+  .header h1 { font-size: 26px; font-weight: 700; color: var(--text); }
+  .header .meta {
+    display: flex; gap: 20px; margin-top: 10px;
+    font-size: 13px; color: var(--text-muted); flex-wrap: wrap;
+  }
+  .header .desc {
+    margin-top: 14px; padding: 12px 16px;
+    background: var(--accent-soft); border-radius: 8px;
+    font-size: 13.5px; color: var(--text-secondary);
+    border-left: 3px solid var(--accent);
+  }
+
+  .section {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 28px 44px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+  }
+  .section h2 {
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 16px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section h2 .num {
+    background: var(--accent); color: #fff;
+    font-size: 12px; font-weight: 600;
+    width: 22px; height: 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 5px;
+  }
+  .section h3 {
+    font-size: 15px; font-weight: 600; color: var(--text);
+    margin: 20px 0 8px;
+  }
+  .section h3:first-of-type { margin-top: 0; }
+  .section p {
+    font-size: 14px; color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+  .section ul, .section ol {
+    margin: 6px 0 12px 18px;
+    font-size: 14px; color: var(--text-secondary);
+  }
+  .section li { margin-bottom: 3px; }
+  .section li strong { color: var(--text); }
+
+  table {
+    width: 100%; border-collapse: collapse;
+    margin: 10px 0 16px; font-size: 13.5px;
+    border-radius: 8px; overflow: hidden;
+  }
+  thead { background: var(--accent); color: #fff; }
+  th { padding: 8px 12px; text-align: left; font-weight: 600; font-size: 12.5px; }
+  td {
+    padding: 8px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary); vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 1px 7px; border-radius: 8px;
+  }
+  .t0 { background: #fef3f2; color: var(--tag-p0); }
+  .t1 { background: #fffaeb; color: var(--tag-p1); }
+  .t2 { background: #ecfdf3; color: var(--tag-p2); }
+  .t3 { background: #f2f4f7; color: var(--tag-p3); }
+
+  img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); }
+  .fig { text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 14px; }
+  .fig p { margin-bottom: 6px; }
+  .fig img { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+  .principle-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; margin: 8px 0 14px;
+    border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .principle-grid .item { padding: 12px 16px; background: #fafbfc; }
+  .principle-grid .item:nth-child(odd) { background: var(--surface); }
+  .principle-grid .item .label {
+    font-weight: 600; color: var(--text);
+    font-size: 13px; margin-bottom: 2px;
+  }
+  .principle-grid .item .desc {
+    font-size: 12.5px; color: var(--text-secondary);
+  }
+
+  .pri-line { font-size: 12.5px; color: var(--text-muted); margin-top: -6px; margin-bottom: 8px; }
+
+  .table-wrap { overflow-x: auto; margin: 10px 0 16px; }
+  .table-wrap table { margin: 0; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+
+  @media (max-width: 720px) {
+    body { padding: 16px 12px; }
+    .header, .section { padding: 20px 18px; }
+    .principle-grid { grid-template-columns: 1fr; }
+    .header .meta { flex-direction: column; gap: 4px; }
+    td:first-child { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>代号 001 · 主页策划案</h1>
+  <div class="meta">
+    <span>📄 v0.1</span>
+    <span>📅 2026-07-06</span>
+    <span>🏷️ 功能策划 / UI 交互</span>
+    <span>✂️ 删繁就简版</span>
+  </div>
+  <div class="desc">
+    本文档以正式项目主页为准；配套线框图说明页面层级和交互入口，不代表最终美术效果。三版并存：简版（纯内容）、原始版（繁）、本版（删繁就简）。<br>📎 图片文件 <code>图3-1_主页线框图.png</code> 需与 HTML 放在同一目录。
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">一</span>文档定位</h2>
+  <p>明确《代号 001》正式主页的定位、信息层级、核心模块、基础交互和首发范围。本文新增主页线框示意图，图中标注与策划规则建立对应关系。</p>
+  <table>
+    <thead><tr><th>项目</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td>适用范围</td><td>正式项目主页 / 对战大厅界面设计</td></tr>
+      <tr><td>不包含</td><td>具体开发实现、资源清单、服务器架构</td></tr>
+      <tr><td>粒度</td><td>中等粒度：够落地，不展开到实现细节</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">二</span>核心目标与设计原则</h2>
+  <p>《代号 001》是轻量化休闲竞技卡牌对战。主页需要让玩家一眼看清身份，一键开始对战，并在开战前完成功能牌配置。</p>
+  <div class="principle-grid">
+    <div class="item">
+      <div class="label">🎯 单核心按钮</div>
+      <div class="desc">只设一个 CTA"开始对战"，点击直接匹配，不给模式选择页。</div>
+    </div>
+    <div class="item">
+      <div class="label">⚙️ 强制前置配置</div>
+      <div class="desc">功能牌必须配好才能开战，未配置时阻断开战并引导去功能牌页。</div>
+    </div>
+    <div class="item">
+      <div class="label">📊 信息分层</div>
+      <div class="desc">核心信息在上半屏，运营入口走底栏、弹窗或后续版本。</div>
+    </div>
+    <div class="item">
+      <div class="label">☀️ 轻量明亮</div>
+      <div class="desc">休闲、干净、圆润，不做沉重信息堆叠。</div>
+    </div>
+    <div class="item">
+      <div class="label">🚀 首发克制</div>
+      <div class="desc">社交/运营入口首发只开放聊天；赛季/通行证/公会/强运营活动全部后续扩展。</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">三</span>主页布局</h2>
+  <p>竖屏大厅结构，从上到下：顶部信息栏 → 主视觉/身份区 → 开始对战 → 功能牌配置区 → 聊天入口 → 底部导航。线框图仅表现首屏核心路径。</p>
+
+  <h3>3.1 线框示意图</h3>
+  <div class="fig">
+    <p>图 3-1 主页手绘黑白线条示意图</p>
+    <img src="图3-1_主页线框图.png" alt="主页线框图">
+  </div>
+
+  <h3>3.2 页面模块一览</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>区域</th><th>内容</th><th>交互</th><th>优先级</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>顶部信息栏</td>
+        <td>头像/昵称/等级/金币/钻石/设置</td>
+        <td>点头像→个人信息；点资源→获取途径/商店</td>
+        <td><span class="tag t0">P0</span></td>
+      </tr>
+      <tr>
+        <td>主视觉/身份区</td>
+        <td>当前角色/段位/星级/段位进度</td>
+        <td>点段位→规则；点角色→详情/切换</td>
+        <td><span class="tag t0">P0</span></td>
+      </tr>
+      <tr>
+        <td>开始对战主按钮</td>
+        <td>—</td>
+        <td>校验功能牌配置→通过后直接匹配</td>
+        <td><span class="tag t0">P0</span></td>
+      </tr>
+      <tr>
+        <td>功能牌配置区</td>
+        <td>已上阵功能牌展示</td>
+        <td>点→功能牌仓库；未配置时阻断开战</td>
+        <td><span class="tag t0">P0</span></td>
+      </tr>
+      <tr>
+        <td>聊天入口</td>
+        <td>大厅/世界聊天，展示最新消息</td>
+        <td>首发开放；点→展开聊天面板</td>
+        <td><span class="tag t1">P1</span></td>
+      </tr>
+      <tr>
+        <td>邮件/公告入口</td>
+        <td>系统通知/补偿/公告</td>
+        <td>从设置或弹窗进入，未读红点</td>
+        <td><span class="tag t2">P2</span></td>
+      </tr>
+      <tr>
+        <td>底部导航栏</td>
+        <td>商店·功能牌·对战·角色·排行（固定顺序）</td>
+        <td>中间"对战"回到主页</td>
+        <td><span class="tag t0">P0</span></td>
+      </tr>
+      <tr>
+        <td>运营入口（预留）</td>
+        <td>后续扩展</td>
+        <td>当前首屏不展示</td>
+        <td><span class="tag t3">P3</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="pri-line">▸ <span class="tag t0">P0</span> 常驻视觉最强 · <span class="tag t1">P1</span> 常驻/轻量入口 · <span class="tag t2">P2</span> 红点/弹窗 · <span class="tag t3">P3</span> 后续版本</div>
+</div>
+
+<div class="section">
+  <h2><span class="num">四</span>核心交互流程</h2>
+
+  <h3>4.1 进入对战</h3>
+  <ol>
+    <li>进主页 → 展示身份/段位/资源/功能牌配置状态。</li>
+    <li>点"开始对战" → 系统校验配置。</li>
+    <li>配置未通过 → 弹引导，不匹配，<strong>不使用默认牌</strong>。</li>
+    <li>配置通过 → 直接匹配 → 对战 → 结算 → 回主页刷新所有状态。</li>
+  </ol>
+
+  <h3>4.2 功能牌配置</h3>
+  <ol>
+    <li>从主页配置区或底部"功能牌"进入仓库。</li>
+    <li>按规则配置指定数量 → 回主页显示已上阵牌。</li>
+    <li>未完成时"开始对战"可点但弹引导，不进匹配。</li>
+  </ol>
+
+  <h3>4.3 聊天、邮件、活动</h3>
+  <ol>
+    <li>聊天<strong>首发开放</strong>，主页显示最新一条消息，点开展开面板。</li>
+    <li>邮件/公告用红点或弹窗接入，不抢主按钮权重。</li>
+    <li>运营活动不占首屏；需要强曝光时走商店/邮件/公告/新增活动条。</li>
+  </ol>
+</div>
+
+<div class="section">
+  <h2><span class="num">五</span>底部导航</h2>
+  <table>
+    <thead><tr><th>顺序</th><th>Tab</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>商店</td><td>购买、补给、抽卡</td></tr>
+      <tr><td>2</td><td>功能牌</td><td>查看/获得/升级/配置，开战前置入口</td></tr>
+      <tr><td>3</td><td>对战</td><td>中间主入口，回到主页/大厅</td></tr>
+      <tr><td>4</td><td>角色</td><td>查看/养成/切换/外观</td></tr>
+      <tr><td>5</td><td>排行</td><td>段位排行、战绩排行、好友/全服榜单</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">六</span>红点规则与刷新</h2>
+  <p><strong>通用逻辑：</strong>有未读 / 可领 / 可升级 → 亮红点；查看或操作后消失。覆盖：功能牌、任务/奖励、聊天、邮件、角色、商店/礼包、排行、运营入口。</p>
+  <p style="font-size: 13px; color: var(--text-muted); margin-top: -6px;">注：任务/奖励入口暂由结算页和弹窗承接，主页模块表中未单独列出。</p>
+  <p><strong>刷新时机：</strong></p>
+  <ul>
+    <li><strong>首次进入主页</strong> → 全量刷新资源、身份、功能牌、红点状态。</li>
+    <li><strong>对战结算返回</strong> → 刷新资源、段位、奖励、宝箱、功能牌状态。</li>
+    <li><strong>商店/功能牌/角色返回</strong> → 刷新资源、上阵配置、对应入口红点。</li>
+    <li><strong>定时刷新</strong> → 仅聊天/邮件/倒计时。</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2><span class="num">七</span>UI 风格</h2>
+  <table>
+    <thead><tr><th>方向</th><th>要求</th></tr></thead>
+    <tbody>
+      <tr><td>整体</td><td>明亮休闲、欧美卡通、圆润干净</td></tr>
+      <tr><td>布局节奏</td><td>上半屏角色&段位，中部开始对战，下半屏功能牌&聊天</td></tr>
+      <tr><td>按钮</td><td>主按钮颜色最强，辅助按钮降低饱和度</td></tr>
+      <tr><td>图标</td><td>图标配简短文字，不单靠图标</td></tr>
+      <tr><td>动效</td><td>主按钮/奖励/升段加强；普通入口克制</td></tr>
+      <tr><td>适配</td><td>竖屏优先，底栏适配安全区，信息不贴边</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">八</span>版本范围</h2>
+  <table>
+    <thead><tr><th>版本</th><th>内容</th><th>目标</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="tag t0">首发</span></td>
+        <td>主页、直接匹配、功能牌强制配置、商店、对战、角色、排行、聊天、基础红点</td>
+        <td>核心循环可玩 + 基础在线感</td>
+      </tr>
+      <tr>
+        <td><span class="tag t3">运营</span></td>
+        <td>赛季、通行证、活动入口、限时活动、礼包强化</td>
+        <td>长期目标 + 留存 + 商业化</td>
+      </tr>
+      <tr>
+        <td><span class="tag t2">扩展</span></td>
+        <td>公会、社交玩法、排行细分、活动扩展</td>
+        <td>社区 + 竞争驱动</td>
+      </tr>
+    </tbody>
+  </table>
+  <hr>
+  <p style="font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 6px;">代号 001 · 删繁就简版 · 2026-07-06</p>
+</div>
+
+</div>
+</body>
+</html>
