@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>代号001 · 对战流程</title>
+<style>
+  body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:1100px; margin:20px auto; padding:20px; background:#f5f6f8; color:#1a1a2e; }
+  h1 { font-size:20px; margin-bottom:16px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; background:#fff; }
+  th { background:#1a1a2e; color:#fff; padding:7px 10px; text-align:left; font-size:12px; }
+  td { padding:8px 10px; border-bottom:1px solid #e4e7ed; vertical-align:top; }
+  .phase-row td { background:#fef3f2; font-weight:700; font-size:14px; color:#dc2626; border-bottom:2px solid #dc2626; }
+  .sub td { padding-left:24px; color:#666; }
+  .sub td:first-child { color:#dc2626; font-weight:600; }
+  p { color:#9098a8; font-size:12px; margin:4px 0 0 0; }
+</style>
+</head>
+<body>
+
+<h1>代号001 · 对战流程</h1>
+
+<table>
+  <tr><th width="50">序号</th><th width="100">阶段</th><th width="200">做什么</th><th width="200">怎么验证</th><th>备注</th></tr>
+
+  <!-- 1. 准备 -->
+  <tr class="phase-row"><td colspan="5">一、准备阶段</td></tr>
+  <tr>
+    <td>1</td><td>装备功能牌</td>
+    <td>玩家在功能牌仓库选2张牌上阵</td>
+    <td>检查装备数量=2，每种库存≥1</td>
+    <td>数量不足阻断，引导去商店/领福利</td>
+  </tr>
+  <tr>
+    <td>2</td><td>开战</td>
+    <td>玩家点"开始对战"</td>
+    <td>验证装备2张+库存≥1+不在其他对局中</td>
+    <td>不通过→弹引导；通过→进匹配</td>
+  </tr>
+
+  <!-- 2. 匹配 -->
+  <tr class="phase-row"><td colspan="5">二、匹配阶段</td></tr>
+  <tr>
+    <td>3</td><td>进入队列</td>
+    <td>玩家加入匹配池</td>
+    <td>—</td>
+    <td>显示"匹配中"+倒计时</td>
+  </tr>
+  <tr>
+    <td>4</td><td>分级匹配</td>
+    <td>0-5s同段±1小段 → 5-10s放宽±1大段 → 10-15s全段位</td>
+    <td>—</td>
+    <td>玩家可随时取消，取消不扣库存</td>
+  </tr>
+  <tr>
+    <td>5</td><td>匹配结果</td>
+    <td>匹配到真人：创建对局<br>15s无人：转人机兜底<small>（对玩家无感，不需要选择模式）</small></td>
+    <td>—</td>
+    <td>对手掉线→也转人机兜底</td>
+  </tr>
+
+  <!-- 3. 对局创建 -->
+  <tr class="phase-row"><td colspan="5">三、对局创建</td></tr>
+  <tr>
+    <td>6</td><td>发牌</td>
+    <td>洗52张牌 → 每人发7张手牌 → 发3张公共牌<small>（整场固定）</small></td>
+    <td>—</td>
+    <td>牌堆空→自动洗新牌</td>
+  </tr>
+  <tr>
+    <td>7</td><td>暂扣库存</td>
+    <td>双方装备的2张功能牌库存各-1<small>（标记为"占用"）</small></td>
+    <td>库存≥1<small>（已在步骤2验证过）</small></td>
+    <td>最终胜退败扣，不是现在扣</td>
+  </tr>
+  <tr>
+    <td>8</td><td>初始化</td>
+    <td>round=1, hp=3, win=0, 每回合技能次数=0</td>
+    <td>—</td>
+    <td>展示对手信息+手牌+公共牌</td>
+  </tr>
+
+  <!-- 4. 回合循环 -->
+  <tr class="phase-row"><td colspan="5">四、回合循环（每回合重复，共1-5回合）</td></tr>
+  <tr>
+    <td>9</td><td>补牌</td>
+    <td>每人手牌补至7张</td>
+    <td>—</td>
+    <td>第一回合已发7张，不补</td>
+  </tr>
+  <tr>
+    <td>10</td><td>重置</td>
+    <td>本回合技能使用次数清零；处理上回合延时效果<small>（如同花信徒/拖延）</small></td>
+    <td>—</td>
+    <td>start 25s倒计时</td>
+  </tr>
+  <tr>
+    <td>11</td><td>选牌</td>
+    <td>玩家从手牌中选出N张<small>（第1-3回N=3，第4回N=4，第5回N=5）</small></td>
+    <td>选满N张→确认按钮亮；不满N张不可确认</td>
+    <td>超时→AI代打选牌<small>（仅出牌，不用技能）</small></td>
+  </tr>
+  <tr>
+    <td>12</td><td>用技能</td>
+    <td>可选使用功能牌<small>（最多2张/回合，每张牌整场只能用1次）</small></td>
+    <td>本回合次数<2 且 该牌未使用 且 回合在可用范围内 且 条件满足</td>
+    <td>可用时机：回合开始前或选牌阶段；部分牌需要点选目标</td>
+  </tr>
+  <tr>
+    <td>13</td><td>确认出牌</td>
+    <td>选满N张→点确认</td>
+    <td>牌来自手牌，数量=N</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>14</td><td>牌型判定</td>
+    <td>出的N张+3公共牌→取最优5张→算牌型→应用技能加成</td>
+    <td>—</td>
+    <td>同比→逐位比较→全相同看花色♠>♥>♦>♣</td>
+  </tr>
+  <tr>
+    <td>15</td><td>本回合结果</td>
+    <td>胜/负；败方hp-1</td>
+    <td>—</td>
+    <td>极罕见同分→单局打平不扣血</td>
+  </tr>
+  <tr>
+    <td>16</td><td>检查终局</td>
+    <td>hp==0 或 win_count==3 → 比赛结束进结算<br>否则 → 回到步骤9继续</td>
+    <td>—</td>
+    <td>—</td>
+  </tr>
+
+  <!-- 5. 结算 -->
+  <tr class="phase-row"><td colspan="5">五、结算阶段</td></tr>
+  <tr>
+    <td>17</td><td>处理库存</td>
+    <td>胜方：退还暂扣的2张 → stock+2<br>败方：扣除暂扣的2张 → stock保持-2</td>
+    <td>—</td>
+    <td>掉线/投降视同败方</td>
+  </tr>
+  <tr>
+    <td>18</td><td>算奖励</td>
+    <td>金币×段位倍率 + 钻石固定 + 宝箱进度<small>（仅人机局）</small>+ 角色加成<small>（仅PvE）</small></td>
+    <td>—</td>
+    <td>服务端计算，客户端只展示</td>
+  </tr>
+  <tr>
+    <td>19</td><td>算天梯</td>
+    <td>胜+1星/25分，败-1星/15分，青铜不掉星，连胜/保护判定</td>
+    <td>—</td>
+    <td>人机兜底局计入天梯<small>（与PvP规则相同）</small></td>
+  </tr>
+  <tr>
+    <td>20</td><td>算任务/成就/红点</td>
+    <td>更新任务进度、牌型统计、红点状态</td>
+    <td>—</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>21</td><td>生成结算单</td>
+    <td>生成 settlement_id → 推送结算结果给双方 → 结算失败异步重试</td>
+    <td>—</td>
+    <td>5分钟重试3次→邮件补偿</td>
+  </tr>
+  <tr>
+    <td>22</td><td>回主页</td>
+    <td>关闭结算页 → 刷新主页（资源/段位/红点）</td>
+    <td>—</td>
+    <td>—</td>
+  </tr>
+
+  <!-- 6. 掉线 -->
+  <tr class="phase-row"><td colspan="5">六、掉线处理</td></tr>
+  <tr>
+    <td>23</td><td>0-15s</td>
+    <td>等待重连，暂不代打</td>
+    <td>—</td>
+    <td>显示"网络连接中…"</td>
+  </tr>
+  <tr>
+    <td>24</td><td>15-30s</td>
+    <td>AI代打<small>（仅选牌出牌，不用技能）</small></td>
+    <td>—</td>
+    <td>重连后恢复控制</td>
+  </tr>
+  <tr>
+    <td>25</td><td>30s+</td>
+    <td>判离场→按失败结算<small>（扣除暂扣库存）</small></td>
+    <td>—</td>
+    <td>不可重连</td>
+  </tr>
+</table>
+
+<p style="margin-top:20px;">52张牌，每场最多消耗28张(7手牌+3公共牌+18补牌)，一副牌够用。5局3胜，先赢3局结束。</p>
+
+</body>
+</html>

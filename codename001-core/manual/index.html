@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>代号001 · 对战系统研发执行手册</title>
+<style>
+  body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:1200px; margin:0 auto; padding:20px; background:#f5f6f8; color:#1a1a2e; line-height:1.6; }
+  h1 { font-size:22px; border-left:4px solid #dc2626; padding-left:12px; margin:28px 0 14px; }
+  h2 { font-size:17px; background:#dc2626; color:#fff; padding:6px 14px; margin:24px 0 10px; border-radius:4px; }
+  h3 { font-size:14px; color:#dc2626; margin:16px 0 6px; }
+  table { width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:13px; background:#fff; border-radius:6px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  th { background:#1a1a2e; color:#fff; padding:6px 8px; text-align:left; font-weight:600; font-size:12px; white-space:nowrap; }
+  td { padding:6px 8px; border-bottom:1px solid #e4e7ed; vertical-align:top; font-size:12.5px; }
+  tr:last-child td { border-bottom:none; }
+  tr:nth-child(even) td { background:#fafbfc; }
+  .phase { background:#fee2e2; color:#991b1b; font-weight:700; text-align:center; }
+  .srv { color:#dc2626; font-weight:600; }
+  .cli { color:#2563eb; font-weight:600; }
+  .both { color:#7c3aed; font-weight:600; }
+  code { background:#f1f5f9; padding:1px 5px; border-radius:3px; font-size:12px; color:#0f172a; }
+  .note { font-size:12px; color:#9098a8; margin-top:2px; }
+  .warn { background:#fef3f2; border-left:3px solid #f04438; padding:8px 12px; margin:8px 0; font-size:12.5px; }
+  .ok { background:#ecfdf3; border-left:3px solid #059669; padding:8px 12px; margin:8px 0; font-size:12.5px; }
+  ul { margin:4px 0 4px 16px; font-size:13px; }
+  li { margin-bottom:2px; }
+</style>
+</head>
+<body>
+
+<h1>代号001 · 对战系统研发执行手册</h1>
+<p style="color:#9098a8;font-size:13px;">本手册描述从"玩家点击开始对战"到"结算完毕回主页"的完整服务端-客户端交互、数据流和异常路径。研发可直接据此实现。</p>
+
+<!-- ============ STATE MACHINE ============ -->
+<h2>一、对战状态机</h2>
+<table>
+  <tr><th>状态</th><th>枚举值</th><th>进入条件</th><th>离开条件</th><th>服务端行为</th><th>客户端行为</th></tr>
+  <tr>
+    <td>空闲</td>
+    <td><code>IDLE</code></td>
+    <td>登录/结算后回主页</td>
+    <td>点击"开始对战"</td>
+    <td>—</td>
+    <td>展示主页，按钮可用</td>
+  </tr>
+  <tr>
+    <td>校验中</td>
+    <td><code>VALIDATING</code></td>
+    <td>收到开战请求</td>
+    <td>校验通过/不通过</td>
+    <td>检查装备数量=2，库存≥1</td>
+    <td>按钮loading态</td>
+  </tr>
+  <tr>
+    <td>匹配中</td>
+    <td><code>MATCHING</code></td>
+    <td>校验通过</td>
+    <td>匹配成功/超时</td>
+    <td>加入匹配队列，启动计时器</td>
+    <td>显示匹配计时动画</td>
+  </tr>
+  <tr>
+    <td>对局创建</td>
+    <td><code>CREATING</code></td>
+    <td>匹配成功/兜底触发</td>
+    <td>创建成功/失败</td>
+    <td>生成game_id，洗牌，发牌，暂扣库存</td>
+    <td>发牌动画</td>
+  </tr>
+  <tr>
+    <td>回合进行</td>
+    <td><code>PLAYING</code></td>
+    <td>对局创建成功</td>
+    <td>回合结束/比赛结束</td>
+    <td>倒计时(默认25s)；收到出牌后判定</td>
+    <td>选牌+技能UI</td>
+  </tr>
+  <tr>
+    <td>回合结算</td>
+    <td><code>ROUND_SETTLE</code></td>
+    <td>双方出牌完毕</td>
+    <td>进入下回合/比赛结束</td>
+    <td>牌型判定→扣血→检查终局条件</td>
+    <td>展示结果动画(2s)</td>
+  </tr>
+  <tr>
+    <td>终局结算</td>
+    <td><code>MATCH_SETTLE</code></td>
+    <td>比赛结束</td>
+    <td>结算完成</td>
+    <td>胜退败扣→算奖励→输出22字段</td>
+    <td>结算页面</td>
+  </tr>
+  <tr>
+    <td>掉线</td>
+    <td><code>DISCONNECTED</code></td>
+    <td>socket断开</td>
+    <td>重连成功/超时判负</td>
+    <td>15s等待→15-30s代打→30s判负</td>
+    <td>"重连中"提示</td>
+  </tr>
+  <tr>
+    <td>已结束</td>
+    <td><code>FINISHED</code></td>
+    <td>结算完成</td>
+    <td>回主页</td>
+    <td>清空对局上下文</td>
+    <td>展示主页</td>
+  </tr>
+</table>
+
+<!-- ============ MATCH LIFECYCLE ============ -->
+<h2>二、完整对战生命周期</h2>
+
+<h3>Phase 1: 匹配阶段</h3>
+<table>
+  <tr><th>步</th><th>谁</th><th>动作</th><th>输入/校验</th><th>输出/数据变更</th><th>失败处理</th></tr>
+  <tr>
+    <td class="phase">1.0</td>
+    <td class="cli">客户端</td>
+    <td>发送开战请求</td>
+    <td><code>POST /match/start {}</code></td>
+    <td>—</td>
+    <td>网络不通→toast提示</td>
+  </tr>
+  <tr>
+    <td class="phase">1.1</td>
+    <td class="srv">服务端</td>
+    <td>校验装备</td>
+    <td><code>equipped.length == 2</code></td>
+    <td>—</td>
+    <td>→ 返回 <code>{error:"NOT_EQUIPPED", redirect:"cards"}</code></td>
+  </tr>
+  <tr>
+    <td class="phase">1.2</td>
+    <td class="srv">服务端</td>
+    <td>校验库存</td>
+    <td><code>stock[equipped[0]] >= 1 && stock[equipped[1]] >= 1</code></td>
+    <td>—</td>
+    <td>→ 返回 <code>{error:"STOCK_EMPTY", card_ids:[...]}</code></td>
+  </tr>
+  <tr>
+    <td class="phase">1.3</td>
+    <td class="srv">服务端</td>
+    <td>状态检查</td>
+    <td>玩家不处于其他对局中</td>
+    <td>—</td>
+    <td>→ 返回 <code>{error:"ALREADY_IN_MATCH", game_id:"xxx"}</code>，客户端恢复对局</td>
+  </tr>
+  <tr>
+    <td class="phase">1.4</td>
+    <td class="srv">服务端</td>
+    <td>加入匹配队列</td>
+    <td>段位/MMR写入匹配池</td>
+    <td>客户端收到 <code>{status:"matching", wait_time:0}</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">1.5</td>
+    <td class="srv">服务端</td>
+    <td>分级匹配</td>
+    <td><code>0-5s: 同段±1小段<br>5-10s: ±1大段<br>10-15s: 全段位</code></td>
+    <td>客户端收到实时 wait_time</td>
+    <td>15s无人→转人机兜底(1.6)</td>
+  </tr>
+  <tr>
+    <td class="phase">1.6</td>
+    <td class="srv">服务端</td>
+    <td>人机兜底</td>
+    <td>创建AI对手实例</td>
+    <td><code>match_origin="人机兜底", opponent_type="AI"</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">1.7</td>
+    <td class="srv">服务端</td>
+    <td>匹配取消</td>
+    <td>玩家主动取消/断线</td>
+    <td>移出匹配队列，不扣库存</td>
+    <td>—</td>
+  </tr>
+</table>
+
+<h3>Phase 2: 对局创建</h3>
+<table>
+  <tr><th>步</th><th>谁</th><th>动作</th><th>详细逻辑</th><th>数据变更</th><th>失败处理</th></tr>
+  <tr>
+    <td class="phase">2.0</td>
+    <td class="srv">服务端</td>
+    <td>生成game_id</td>
+    <td><code>UUID v4</code></td>
+    <td><code>game_id = uuid()</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">2.1</td>
+    <td class="srv">服务端</td>
+    <td>初始化牌堆</td>
+    <td>创建52张标准牌数组(4花色×13点数)<br>Fisher-Yates洗牌</td>
+    <td><code>deck = shuffle([A♠,2♠,...,K♣])</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">2.2</td>
+    <td class="srv">服务端</td>
+    <td>发手牌</td>
+    <td>deck.pop()×7→双方hand[]<br>牌堆空→自动洗新牌(兜底)</td>
+    <td><code>p1.hand = [7张], p2.hand = [7张]</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">2.3</td>
+    <td class="srv">服务端</td>
+    <td>发公共牌</td>
+    <td>deck.pop()×3→community[]<br>整场固定不变</td>
+    <td><code>community = [3张]</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">2.4</td>
+    <td class="srv">服务端</td>
+    <td>暂扣库存</td>
+    <td>双方 stock[card1]-1, stock[card2]-1<br>标记为 occupied(非最终扣除)</td>
+    <td><code>stock-2(occupied)</code></td>
+    <td>扣库存失败(并发)→回滚对局创建</td>
+  </tr>
+  <tr>
+    <td class="phase">2.5</td>
+    <td class="srv">服务端</td>
+    <td>初始化比赛状态</td>
+    <td>round=1, N=3, hp=[3,3], win=[0,0], skill_used_this_round=[0,0], discard_pile=[]</td>
+    <td>状态对象创建</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">2.6</td>
+    <td class="srv">服务端</td>
+    <td>通知客户端</td>
+    <td>推送 <code>{game_id, hand[7], community[3], opponent_info, round:1, N:3, hp:3, skill_used_this_round:0}</code></td>
+    <td>—</td>
+    <td>—</td>
+  </tr>
+</table>
+
+<h3>Phase 3: 回合循环（每回合重复）</h3>
+<table>
+  <tr><th>步</th><th>回合</th><th>N</th><th>谁</th><th>动作</th><th>详细逻辑</th><th>数据变更</th></tr>
+  <tr>
+    <td class="phase">3.0</td>
+    <td>all</td>
+    <td>—</td>
+    <td class="srv">服务端</td>
+    <td>补牌</td>
+    <td>双方 hand 补至7张：draw(7 - hand.length)</td>
+    <td>hand补至7</td>
+  </tr>
+  <tr>
+    <td class="phase">3.1</td>
+    <td>all</td>
+    <td>—</td>
+    <td class="srv">服务端</td>
+    <td>重置回合技能次数</td>
+    <td>skill_used_this_round = 0</td>
+    <td>skill_used_this_round=0</td>
+  </tr>
+  <tr>
+    <td class="phase">3.2</td>
+    <td>all</td>
+    <td>—</td>
+    <td class="srv">服务端</td>
+    <td>开始出牌倒计时</td>
+    <td>25秒(可配)，超时触发AI代打</td>
+    <td>timer=25s</td>
+  </tr>
+  <tr>
+    <td class="phase">3.3</td>
+    <td>all</td>
+    <td>—</td>
+    <td class="srv">服务端</td>
+    <td>处理跨回合状态</td>
+    <td>读取上回合写入的flag(同花信徒/拖延/蓄力)<br>执行延时效果→清除flag</td>
+    <td>flag执行后清除</td>
+  </tr>
+</table>
+
+<h3>Phase 3.4: 选牌阶段（回合内详细）</h3>
+<table>
+  <tr><th>子步</th><th>谁</th><th>动作</th><th>详细逻辑</th><th>限制/校验</th></tr>
+  <tr>
+    <td class="phase">3.4.0</td>
+    <td class="cli">客户端</td>
+    <td>展示手牌+公共牌</td>
+    <td>hand[7张]可点选，community[3张]只读</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">3.4.1</td>
+    <td class="cli">客户端</td>
+    <td>玩家点选手牌</td>
+    <td>点击=选中高亮，再点=取消</td>
+    <td>最多选N张(当前回合的N值)</td>
+  </tr>
+  <tr>
+    <td class="phase">3.4.2</td>
+    <td class="cli">客户端</td>
+    <td>选满N张→确认按钮亮</td>
+    <td>selected.length == N → 激活"确认出牌"</td>
+    <td>不满N张不可确认</td>
+  </tr>
+  <tr>
+    <td class="phase">3.4.3</td>
+    <td class="srv">服务端</td>
+    <td>超时代打</td>
+    <td>25s到期未确认→AI选N张出牌(穷举最优)</td>
+    <td>仅出牌，不使用技能</td>
+  </tr>
+</table>
+
+<h3>Phase 3.5: 技能使用（穿插在选牌阶段）</h3>
+<table>
+  <tr><th>子步</th><th>谁</th><th>动作</th><th>详细逻辑</th><th>限制/校验</th></tr>
+  <tr>
+    <td class="phase">3.5.0</td>
+    <td class="cli">客户端</td>
+    <td>展示技能按钮</td>
+    <td>装备的2张牌显示为可用按钮</td>
+    <td>本场已用的牌灰掉不可点</td>
+  </tr>
+  <tr>
+    <td class="phase">3.5.1</td>
+    <td class="cli">客户端</td>
+    <td>点击技能</td>
+    <td>发送 <code>POST /match/skill {card_id, target?}</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">3.5.2</td>
+    <td class="srv">服务端</td>
+    <td>校验技能可用性</td>
+    <td>
+      ① skill_used_this_round < 2<br>
+      ② card.used == false<br>
+      ③ round 在 card.round_limit 范围内<br>
+      ④ card.fail_condition 不满足<br>
+    </td>
+    <td>任一不满足→返回 <code>{error:"SKILL_UNAVAILABLE", reason:"xxx"}</code></td>
+  </tr>
+  <tr>
+    <td class="phase">3.5.3</td>
+    <td class="srv">服务端</td>
+    <td>执行技能</td>
+    <td><code>HANDLERS[effect.type](ctx, params)</code></td>
+    <td>详见功能牌执行字段表</td>
+  </tr>
+  <tr>
+    <td class="phase">3.5.4</td>
+    <td class="srv">服务端</td>
+    <td>记录状态</td>
+    <td>
+      skill_used_this_round++<br>
+      card.used = true<br>
+      如需跨回合→写入round_flag
+    </td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">3.5.5</td>
+    <td class="srv">服务端</td>
+    <td>广播技能使用</td>
+    <td>
+      visibility=full → 对手看到牌名+效果<br>
+      visibility=opaque → 对手只看到"对方使用了技能"<br>
+      visibility=hidden → 对手不通知
+    </td>
+    <td>—</td>
+  </tr>
+</table>
+
+<h3>Phase 3.6: 出牌&判定</h3>
+<table>
+  <tr><th>子步</th><th>谁</th><th>动作</th><th>详细逻辑</th></tr>
+  <tr>
+    <td class="phase">3.6.0</td>
+    <td class="srv">服务端</td>
+    <td>确认出牌</td>
+    <td>客户端发 <code>POST /match/play {selected:[card1..cardN]}</code><br>服务端记录：selected_cards = [...], selected_count = N</td>
+  </tr>
+  <tr>
+    <td class="phase">3.6.1</td>
+    <td class="srv">服务端</td>
+    <td>双方都出牌后→组合</td>
+    <td>每人：selected_cards(N张) + community(3张) = N+3 张</td>
+  </tr>
+  <tr>
+    <td class="phase">3.6.2</td>
+    <td class="srv">服务端</td>
+    <td>取最优5张</td>
+    <td>遍历 C(N+3, 5) 所有组合 → 计算每种组合的牌型评分 → 取最大</td>
+  </tr>
+  <tr>
+    <td class="phase">3.6.3</td>
+    <td class="srv">服务端</td>
+    <td>应用技能加成</td>
+    <td>如 lucky标记→若牌型=顺子(cat=4)则升为同花顺(cat=8)</td>
+  </tr>
+  <tr>
+    <td class="phase">3.6.4</td>
+    <td class="srv">服务端</td>
+    <td>比较评分向量</td>
+    <td>逐位比较 [cat, val1, val2, ...]<br>全相等→按花色：♠>♥>♦>♣</td>
+  </tr>
+  <tr>
+    <td class="phase">3.6.5</td>
+    <td class="srv">服务端</td>
+    <td>判定回合结果</td>
+    <td>
+      胜方：无变化<br>
+      败方：hp-1, win_count不变<br>
+      平分：都不变(极罕见)
+    </td>
+  </tr>
+</table>
+
+<h3>Phase 4: 终局判定&结算</h3>
+<table>
+  <tr><th>步</th><th>谁</th><th>动作</th><th>条件</th><th>详细逻辑</th></tr>
+  <tr>
+    <td class="phase">4.0</td>
+    <td class="srv">服务端</td>
+    <td>检查比赛结束</td>
+    <td>hp==0 或 win_count==3 (5局3胜)</td>
+    <td>→进入4.1结算</td>
+  </tr>
+  <tr>
+    <td class="phase">4.1</td>
+    <td class="srv">服务端</td>
+    <td>判定胜负</td>
+    <td>—</td>
+    <td>先到3胜者=winner<br>对方=loser</td>
+  </tr>
+  <tr>
+    <td class="phase">4.2</td>
+    <td class="srv">服务端</td>
+    <td>处理库存</td>
+    <td>胜方：stock[card1]+1, stock[card2]+1(退还暂扣)<br>败方：不退还(扣除暂扣)</td>
+    <td>stock变更</td>
+  </tr>
+  <tr>
+    <td class="phase">4.3</td>
+    <td class="srv">服务端</td>
+    <td>计算奖励</td>
+    <td>
+      金币：base_gold × 段位倍率<br>
+      钻石：base_diamond(固定，不吃倍率)<br>
+      宝箱：人机局胜+2败+1，PvP不积累<br>
+      角色加成(PvE)：代号A金币加成/代号K胜利钻石加成
+    </td>
+    <td>gold_change, diamond_change, chest_delta</td>
+  </tr>
+  <tr>
+    <td class="phase">4.4</td>
+    <td class="srv">服务端</td>
+    <td>计算天梯</td>
+    <td>
+      胜+1星(+25分大师+)、负-1星(-15分大师+)<br>
+      青铜不掉星、连胜奖励、大段保护判定
+    </td>
+    <td>stars/score变更</td>
+  </tr>
+  <tr>
+    <td class="phase">4.5</td>
+    <td class="srv">服务端</td>
+    <td>计算任务/成就/红点</td>
+    <td>任务进度更新、成就handCounts+1、计算红点变化</td>
+    <td>quest/achieve/reddot</td>
+  </tr>
+  <tr>
+    <td class="phase">4.6</td>
+    <td class="srv">服务端</td>
+    <td>生成结算单</td>
+    <td>组装22字段 → settlement_id=uuid → 存储</td>
+    <td>settlement记录</td>
+  </tr>
+  <tr>
+    <td class="phase">4.7</td>
+    <td class="srv">服务端</td>
+    <td>推送结算结果</td>
+    <td>向双方推送完整结算JSON</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td class="phase">4.8</td>
+    <td class="srv">服务端</td>
+    <td>结算失败处理</td>
+    <td>异步重试(5分钟内×3次)→仍失败→邮件补偿</td>
+    <td>settlement retry queue</td>
+  </tr>
+</table>
+
+<!-- ============ DATA STRUCTURES ============ -->
+<h2>三、关键数据结构</h2>
+
+<h3>3.1 对局上下文 (match_ctx)</h3>
+<table>
+  <tr><th>字段</th><th>类型</th><th>示例值</th><th>说明</th></tr>
+  <tr><td>game_id</td><td>string</td><td>"a1b2c3d4"</td><td>UUID</td></tr>
+  <tr><td>round</td><td>int</td><td>1-5</td><td>当前回合</td></tr>
+  <tr><td>N</td><td>int</td><td>[3,3,3,4,5][round-1]</td><td>本回合需出牌数</td></tr>
+  <tr><td>match_origin</td><td>string</td><td>"真人匹配"/"人机兜底"/"教学"</td><td>对手来源</td></tr>
+  <tr><td>opponent_type</td><td>string</td><td>"真人"/"AI"</td><td>对手类型</td></tr>
+  <tr><td>deck</td><td>array</td><td>[{suit:"♠",rank:13},...]</td><td>剩余牌堆</td></tr>
+  <tr><td>community</td><td>array</td><td>[3张固定]</td><td>公共牌</td></tr>
+  <tr><td>discard_pile</td><td>array</td><td>[]</td><td>弃牌堆(可回收)</td></tr>
+  <tr><td>removed_pile</td><td>array</td><td>[]</td><td>直接移出牌(不可回收,如破坏专家)</td></tr>
+  <tr><td>timer</td><td>int</td><td>25</td><td>出牌倒计时秒数</td></tr>
+</table>
+
+<h3>3.2 玩家对局状态 (player_state)</h3>
+<table>
+  <tr><th>字段</th><th>类型</th><th>示例值</th><th>说明</th></tr>
+  <tr><td>hand</td><td>array</td><td>[7张]</td><td>手牌，初始7张，每回合补至7</td></tr>
+  <tr><td>selected</td><td>array</td><td>[N张]</td><td>本回合已选牌</td></tr>
+  <tr><td>hp</td><td>int</td><td>3→2→1→0</td><td>生命值</td></tr>
+  <tr><td>win_count</td><td>int</td><td>0→1→2→3</td><td>获胜回合数</td></tr>
+  <tr><td>skill_used_this_round</td><td>int</td><td>0-2</td><td>本回合已用技能次数(每回合重置)</td></tr>
+  <tr><td>equipped</td><td>array</td><td>[card_id1, card_id2]</td><td>本场装备功能牌(暂扣库存中)</td></tr>
+  <tr><td>card_used_map</td><td>map</td><td>{card_id1:false, card_id2:false}</td><td>每张牌本场是否已使用</td></tr>
+  <tr><td>round_flags</td><td>map</td><td>{flush_pending:true,...}</td><td>跨回合延时效果标记</td></tr>
+  <tr><td>disconnected</td><td>bool</td><td>false</td><td>是否处于掉线状态</td></tr>
+  <tr><td>disconnect_at</td><td>timestamp</td><td>null</td><td>掉线开始时间</td></tr>
+</table>
+
+<!-- ============ API ============ -->
+<h2>四、API 接口清单</h2>
+<table>
+  <tr><th>接口</th><th>方法</th><th>请求</th><th>成功响应</th><th>错误码</th></tr>
+  <tr>
+    <td>发起匹配</td>
+    <td>POST</td>
+    <td><code>/match/start {}</code></td>
+    <td><code>{status:"matching"}</code></td>
+    <td>NOT_EQUIPPED / STOCK_EMPTY / ALREADY_IN_MATCH</td>
+  </tr>
+  <tr>
+    <td>取消匹配</td>
+    <td>POST</td>
+    <td><code>/match/cancel {}</code></td>
+    <td><code>{status:"cancelled"}</code></td>
+    <td>NOT_MATCHING</td>
+  </tr>
+  <tr>
+    <td>匹配状态推送</td>
+    <td>WS</td>
+    <td>—(服务端主动推)</td>
+    <td><code>{status, wait_time, match_origin, opponent_type}</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>对局初始化推送</td>
+    <td>WS</td>
+    <td>—(服务端主动推)</td>
+    <td><code>{game_id, hand[7], community[3], round:1, N:3, hp:3, opponent_info}</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>选牌</td>
+    <td>POST</td>
+    <td><code>/match/select {game_id, cards:[card1..cardN]}</code></td>
+    <td><code>{status:"selected"}</code></td>
+    <td>INVALID_CARD / WRONG_COUNT / NOT_YOUR_TURN</td>
+  </tr>
+  <tr>
+    <td>确认出牌</td>
+    <td>POST</td>
+    <td><code>/match/play {game_id}</code></td>
+    <td><code>{status:"played"}</code></td>
+    <td>NOT_ENOUGH_SELECTED / TIMEOUT</td>
+  </tr>
+  <tr>
+    <td>使用技能</td>
+    <td>POST</td>
+    <td><code>/match/skill {game_id, card_id, target?}</code></td>
+    <td><code>{effect, result}</code></td>
+    <td>SKILL_UNAVAILABLE / ROUND_LIMIT / CARD_USED</td>
+  </tr>
+  <tr>
+    <td>回合结果推送</td>
+    <td>WS</td>
+    <td>—(服务端主动推)</td>
+    <td><code>{round_result, hp, win_count, is_match_over}</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>补牌推送</td>
+    <td>WS</td>
+    <td>—(服务端主动推)</td>
+    <td><code>{drawn_cards[补至7张]}</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>结算推送</td>
+    <td>WS</td>
+    <td>—(服务端主动推)</td>
+    <td><code>{settlement_id, result, gold, diamond, chest, rank, cards_returned, ...}</code></td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>重连恢复</td>
+    <td>POST</td>
+    <td><code>/match/reconnect {}</code></td>
+    <td>当前对局完整状态(hand/community/round/N/hp/...)</td>
+    <td>NO_ACTIVE_MATCH</td>
+  </tr>
+  <tr>
+    <td>投降</td>
+    <td>POST</td>
+    <td><code>/match/surrender {game_id}</code></td>
+    <td>进入结算(视同失败)</td>
+    <td>NOT_IN_MATCH</td>
+  </tr>
+</table>
+
+<!-- ============ VALIDATION ============ -->
+<h2>五、关键校验规则速查</h2>
+<table>
+  <tr><th>场景</th><th>校验项</th><th>条件</th><th>不通过处理</th></tr>
+  <tr><td rowspan="3">开战</td><td>装备数量</td><td>equipped.length == 2</td><td>弹引导→跳功能牌页</td></tr>
+  <tr><td>库存充足</td><td>stock[card1]≥1 && stock[card2]≥1</td><td>提示→跳商店</td></tr>
+  <tr><td>不在其它对局</td><td>player.active_match == null</td><td>恢复对局</td></tr>
+  <tr><td rowspan="4">选牌</td><td>数量正确</td><td>selected.length == N</td><td>确认按钮灰</td></tr>
+  <tr><td>牌属于手牌</td><td>selected ⊆ hand</td><td>拒绝请求</td></tr>
+  <tr><td>回合匹配</td><td>在PLAYING状态</td><td>拒绝请求</td></tr>
+  <tr><td>超时</td><td>timer > 0</td><td>AI代打</td></tr>
+  <tr><td rowspan="4">技能</td><td>回合次数</td><td>skill_used_this_round < 2</td><td>按钮灰</td></tr>
+  <tr><td>卡未使用</td><td>card_used_map[id] == false</td><td>按钮灰</td></tr>
+  <tr><td>回合限制</td><td>round ∈ [min,max]</td><td>按钮看不到</td></tr>
+  <tr><td>失败条件</td><td>!card.fail_condition(ctx)</td><td>提示无法使用</td></tr>
+  <tr><td rowspan="3">结算</td><td>服务端权威</td><td>客户端不计算奖励</td><td>仅展示服务端结果</td></tr>
+  <tr><td>防重</td><td>settlement_id唯一约束</td><td>重复请求返回已有结果</td></tr>
+  <tr><td>库存一致性</td><td>结算后库存 = 暂扣前 - consumed + returned</td><td>异常→报警+补偿</td></tr>
+</table>
+
+<div class="ok"><strong>✅ 实现建议：</strong>先实现状态机骨架+牌型判定引擎(Phase 0-2)，再接入技能系统(Phase 3.5)，最后加异常路径(掉线/重连/取消)。</div>
+
+</body>
+</html>

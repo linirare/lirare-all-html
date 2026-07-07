@@ -261,6 +261,12 @@
   <div class="nav-item" onclick="switchPage('spec')">
     <span class="icon">⚙️</span><span class="label">研发执行规格</span>
   </div>
+  <div class="nav-item" onclick="switchPage('flow')">
+    <span class="icon">🔁</span><span class="label">对战流程</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('manual')">
+    <span class="icon">📖</span><span class="label">对战研发手册</span>
+  </div>
 </nav>
 
 <!-- ===== Main Content ===== -->
@@ -1064,6 +1070,32 @@
   <div class="card" style="text-align:center;padding:14px 20px;">
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版研发执行规格 ▼</p>
     <iframe src="spec/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
+  </div>
+</div>
+
+<!-- ==================== 对战流程 ==================== -->
+<div id="page-flow" class="page">
+  <div class="header-card" style="--accent:#dc2626;">
+    <h1>代号 001 · 对战流程</h1>
+    <div class="meta">研发用 · 25步完整流程</div>
+    <div class="desc">从装备功能牌到结算回主页，包含匹配、对局创建、回合循环、结算、掉线处理。</div>
+  </div>
+  <div class="card" style="text-align:center;padding:14px 20px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 对战流程 ▼</p>
+    <iframe src="flow/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
+  </div>
+</div>
+
+<!-- ==================== 对战研发手册 ==================== -->
+<div id="page-manual" class="page">
+  <div class="header-card" style="--accent:#dc2626;">
+    <h1>代号 001 · 对战研发手册</h1>
+    <div class="meta">研发用 · 状态机+数据结构+API+校验</div>
+    <div class="desc">完整的状态机、生命周期、关键数据结构、API清单和校验规则速查。</div>
+  </div>
+  <div class="card" style="text-align:center;padding:14px 20px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 对战研发手册 ▼</p>
+    <iframe src="manual/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
   </div>
 </div>
 
