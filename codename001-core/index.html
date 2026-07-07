@@ -1,19 +1,802 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>代号001 · 核心系统索引</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代号001 · 全系统聚合</title>
 <style>
-body { font-family: -apple-system, "PingFang SC", sans-serif; max-width: 600px; margin: 60px auto; padding: 0 24px; line-height: 2; }
-h1 { font-size: 22px; margin-bottom: 20px; }
-a { display: block; font-size: 16px; color: #4a6cf7; text-decoration: none; padding: 8px 14px; border-radius: 8px; background: #f8f9fb; margin-bottom: 6px; }
-a:hover { background: #eef1ff; }
-.sys { font-size: 13px; color: #888; margin-left: 8px; }
+  :root {
+    --sidebar: 220px;
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --border: #e4e7ed;
+    --accent: #4a6cf7;
+    --accent-soft: #eef1ff;
+    --text: #1a1a2e;
+    --text-secondary: #5a6072;
+    --text-muted: #9098a8;
+    --radius: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* ===== Sidebar ===== */
+  .sidebar {
+    width: var(--sidebar);
+    min-width: var(--sidebar);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 20px 0;
+  }
+  .sidebar .brand {
+    padding: 0 18px 16px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+  .sidebar .brand small {
+    display: block;
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .nav-item:hover {
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+  .nav-item.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+    border-left-color: var(--accent);
+  }
+  .nav-item .icon { font-size: 16px; }
+  .nav-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 16px;
+  }
+  .nav-section {
+    padding: 6px 18px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== Main ===== */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 36px;
+    background: var(--bg);
+  }
+  .page {
+    display: none;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .page.active { display: block; }
+
+  /* Content styling (reuse from system HTMLs) */
+  .page .header-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 28px 36px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .page .header-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    border-radius: var(--radius) 0 0 var(--radius);
+  }
+  .page .header-card h1 { font-size: 22px; font-weight: 700; }
+  .page .header-card .meta {
+    font-size: 12px; color: var(--text-muted); margin-top: 6px;
+  }
+  .page .header-card .desc {
+    margin-top: 10px; padding: 10px 14px;
+    background: var(--accent-soft); border-radius: 6px;
+    font-size: 13px; color: var(--text-secondary);
+    border-left: 3px solid var(--accent);
+  }
+
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 24px 32px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+  }
+  .card h2 {
+    font-size: 17px; font-weight: 700;
+    margin-bottom: 14px; padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card h2 .num {
+    background: var(--accent); color: #fff;
+    font-size: 11px; font-weight: 600;
+    width: 20px; height: 20px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 4px;
+  }
+  .card h3 {
+    font-size: 14.5px; font-weight: 600;
+    margin: 18px 0 8px;
+  }
+  .card p { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 8px; }
+  .card ul, .card ol { margin: 4px 0 10px 16px; font-size: 13.5px; color: var(--text-secondary); }
+  .card li { margin-bottom: 2px; }
+  .card li strong { color: var(--text); }
+
+  table {
+    width: 100%; border-collapse: collapse;
+    margin: 8px 0 14px; font-size: 12.5px;
+    border-radius: 6px; overflow: hidden;
+  }
+  thead { background: var(--accent); color: #fff; }
+  th { padding: 6px 10px; text-align: left; font-weight: 600; font-size: 12px; }
+  td { padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
+  .table-wrap { overflow-x: auto; }
+
+  .tag {
+    display: inline-block; font-size: 9px; font-weight: 700;
+    padding: 1px 6px; border-radius: 6px;
+  }
+  .t0 { background: #fef3f2; color: #f04438; }
+  .t1 { background: #fffaeb; color: #f79009; }
+  .t2 { background: #ecfdf3; color: #12b76a; }
+  .t3 { background: #f2f4f7; color: #98a2b3; }
+
+  .flow-chart {
+    margin: 8px 0 14px; padding: 12px 16px;
+    background: #fafbfc; border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 12.5px; color: var(--text-secondary);
+    line-height: 2; text-align: center;
+  }
+  .flow-chart .arrow { color: var(--accent); font-weight: 700; margin: 0 4px; }
+
+  .note-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 8px 12px; border-radius: 6px; font-size: 12.5px; color: var(--text-secondary); margin-bottom: 10px; }
+  .warn-box { background: #fef3f2; border-left: 3px solid #f04438; padding: 8px 12px; border-radius: 6px; font-size: 12.5px; color: #912018; margin-bottom: 10px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+  .pri-line { font-size: 11.5px; color: var(--text-muted); margin-top: -4px; margin-bottom: 8px; }
+
+  /* Accordion for audit */
+  .accordion { margin: 8px 0; }
+  .accordion summary {
+    cursor: pointer; font-weight: 600;
+    font-size: 13.5px; padding: 6px 0;
+    color: var(--text);
+  }
+  .accordion[open] summary { margin-bottom: 6px; }
+  .audit-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; margin: 6px 0 10px;
+    border-radius: 6px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .audit-grid .item { padding: 8px 12px; background: #fafbfc; }
+  .audit-grid .item:nth-child(odd) { background: var(--surface); }
+  .audit-grid .item .label { font-weight: 600; color: var(--text); font-size: 12px; }
+  .audit-grid .item .desc { font-size: 11.5px; color: var(--text-secondary); }
+  .audit-grid .item .risk { font-size: 11px; color: #f04438; margin-top: 1px; }
+
+  .img-wrap { text-align: center; margin: 8px 0; }
+  .img-wrap img { max-width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border); }
+  .img-wrap .cap { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+
+  @media (max-width: 720px) {
+    .sidebar { width: 56px; min-width: 56px; }
+    .sidebar .brand, .nav-item .label, .nav-section, .nav-divider { display: none; }
+    .nav-item { justify-content: center; padding: 12px 0; }
+    .main { padding: 16px; }
+    .page .header-card, .card { padding: 16px; }
+    td:first-child { white-space: normal; }
+    .audit-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
-<h1>代号 001 · 核心系统</h1>
-<a href="./battle/">⚔️ 对战系统 <span class="sys">匹配 · 出牌 · 结算</span></a>
-<a href="./ranked/">🏆 天梯系统 <span class="sys">段位 · 星数 · 排行</span></a>
-<a href="./character/">👤 角色系统 <span class="sys">收集 · 养成 · PvE加成</span></a>
-<a href="./shop/">🏪 商店与经济系统 <span class="sys">抽卡 · 招募 · 任务 · 宝箱</span></a>
+
+<!-- ===== Sidebar ===== -->
+<nav class="sidebar">
+  <div class="brand">
+    代号 001
+    <small>全系统策划案 v1.0</small>
+  </div>
+  <div class="nav-section">系统</div>
+  <div class="nav-item active" onclick="switchPage('home')">
+    <span class="icon">🏠</span><span class="label">主页</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('battle')">
+    <span class="icon">⚔️</span><span class="label">对战</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('ranked')">
+    <span class="icon">🏆</span><span class="label">天梯</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('character')">
+    <span class="icon">👤</span><span class="label">角色</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('shop')">
+    <span class="icon">🏪</span><span class="label">商店与经济</span>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-section">参考</div>
+  <div class="nav-item" onclick="switchPage('audit')">
+    <span class="icon">📋</span><span class="label">审计记录</span>
+  </div>
+</nav>
+
+<!-- ===== Main Content ===== -->
+<div class="main">
+
+<!-- ==================== 主页 ==================== -->
+<div id="page-home" class="page active">
+  <div class="header-card" style="--accent:#4a6cf7;">
+    <h1>代号 001 · 主页策划案</h1>
+    <div class="meta">v0.1 | 2026-07-06 | 功能策划 / UI 交互</div>
+    <div class="desc">本文档以正式项目主页为准；配套线框图说明页面层级和交互入口，不代表最终美术效果。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>文档定位</h2>
+    <p>明确《代号 001》正式主页的定位、信息层级、核心模块、基础交互和首发范围。本文新增主页线框示意图，图中标注与策划规则建立对应关系。</p>
+    <table>
+      <thead><tr><th>项目</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>适用范围</td><td>正式项目主页 / 对战大厅界面设计</td></tr>
+        <tr><td>不包含</td><td>具体开发实现、资源清单、服务器架构</td></tr>
+        <tr><td>粒度</td><td>中等粒度：够落地，不展开到实现细节</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>核心目标与设计原则</h2>
+    <p>《代号 001》是轻量化休闲竞技卡牌对战。主页需要让玩家一眼看清身份，一键开始对战，并在开战前完成功能牌配置。</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin:8px 0;">
+      <div style="padding:10px 14px;background:#fafbfc;">
+        <div style="font-weight:600;font-size:12.5px;">🎯 单核心按钮</div>
+        <div style="font-size:12px;color:var(--text-secondary);">只设一个 CTA"开始对战"，点击直接匹配，不给模式选择页。</div>
+      </div>
+      <div style="padding:10px 14px;background:var(--surface);">
+        <div style="font-weight:600;font-size:12.5px;">⚙️ 强制前置配置</div>
+        <div style="font-size:12px;color:var(--text-secondary);">功能牌必须配好才能开战，未配置时阻断开战并引导去功能牌页。</div>
+      </div>
+      <div style="padding:10px 14px;background:var(--surface);">
+        <div style="font-weight:600;font-size:12.5px;">📊 信息分层</div>
+        <div style="font-size:12px;color:var(--text-secondary);">核心信息在上半屏，运营入口走底栏、弹窗或后续版本。</div>
+      </div>
+      <div style="padding:10px 14px;background:#fafbfc;">
+        <div style="font-weight:600;font-size:12.5px;">☀️ 轻量明亮</div>
+        <div style="font-size:12px;color:var(--text-secondary);">休闲、干净、圆润，不做沉重信息堆叠。</div>
+      </div>
+      <div style="padding:10px 14px;background:#fafbfc;">
+        <div style="font-weight:600;font-size:12.5px;">🚀 首发克制</div>
+        <div style="font-size:12px;color:var(--text-secondary);">社交/运营入口首发只开放聊天；赛季/通行证/公会/强运营活动全部后续扩展。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>主页布局</h2>
+    <p>竖屏大厅结构：顶部信息栏 → 主视觉/身份区 → 开始对战 → 功能牌配置区 → 聊天入口 → 底部导航。线框图仅表现首屏核心路径。</p>
+    <h3>3.1 页面模块一览</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>区域</th><th>内容</th><th>交互</th><th>优先级</th></tr></thead>
+      <tbody>
+        <tr><td>顶部信息栏</td><td>头像/昵称/等级/金币/钻石/设置</td><td>点头像→个人信息；点资源→获取途径/商店</td><td><span class="tag t0">P0</span></td></tr>
+        <tr><td>主视觉/身份区</td><td>当前角色/段位/星级/段位进度</td><td>点段位→规则；点角色→详情/切换</td><td><span class="tag t0">P0</span></td></tr>
+        <tr><td>开始对战主按钮</td><td>—</td><td>校验功能牌配置→通过后直接匹配</td><td><span class="tag t0">P0</span></td></tr>
+        <tr><td>功能牌配置区</td><td>已上阵功能牌展示</td><td>点→功能牌仓库；未配置时阻断开战</td><td><span class="tag t0">P0</span></td></tr>
+        <tr><td>聊天入口</td><td>大厅/世界聊天，展示最新消息</td><td>首发开放；点→展开聊天面板</td><td><span class="tag t1">P1</span></td></tr>
+        <tr><td>邮件/公告入口</td><td>系统通知/补偿/公告</td><td>从设置或弹窗进入，未读红点</td><td><span class="tag t2">P2</span></td></tr>
+        <tr><td>底部导航栏</td><td>商店·功能牌·对战·角色·排行（固定顺序）</td><td>中间"对战"回到主页</td><td><span class="tag t0">P0</span></td></tr>
+        <tr><td>运营入口（预留）</td><td>后续扩展</td><td>当前首屏不展示</td><td><span class="tag t3">P3</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="pri-line">▸ <span class="tag t0">P0</span> 常驻视觉最强 · <span class="tag t1">P1</span> 常驻/轻量入口 · <span class="tag t2">P2</span> 红点/弹窗 · <span class="tag t3">P3</span> 后续版本</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">四</span>核心交互流程</h2>
+    <h3>4.1 进入对战</h3>
+    <ol>
+      <li>进主页 → 展示身份/段位/资源/功能牌配置状态。</li>
+      <li>点"开始对战" → 系统校验配置。</li>
+      <li>配置未通过 → 弹引导，不匹配，<strong>不使用默认牌</strong>。</li>
+      <li>配置通过 → 直接匹配 → 对战 → 结算 → 回主页刷新所有状态。</li>
+    </ol>
+    <h3>4.2 功能牌配置</h3>
+    <ol>
+      <li>从主页配置区或底部"功能牌"进入仓库。</li>
+      <li>按规则配置指定数量 → 回主页显示已上阵牌。</li>
+      <li>未完成时"开始对战"可点但弹引导，不进匹配。</li>
+    </ol>
+    <h3>4.3 聊天、邮件、活动</h3>
+    <ol>
+      <li>聊天<strong>首发开放</strong>，主页显示最新一条消息，点开展开面板。</li>
+      <li>邮件/公告用红点或弹窗接入，不抢主按钮权重。</li>
+      <li>运营活动不占首屏；需要强曝光时走商店/邮件/公告/新增活动条。</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">五</span>底部导航</h2>
+    <table>
+      <thead><tr><th>顺序</th><th>Tab</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>商店</td><td>购买、补给、抽卡</td></tr>
+        <tr><td>2</td><td>功能牌</td><td>查看/获得/升级/配置，开战前置入口</td></tr>
+        <tr><td>3</td><td>对战</td><td>中间主入口，回到主页/大厅</td></tr>
+        <tr><td>4</td><td>角色</td><td>查看/养成/切换/外观</td></tr>
+        <tr><td>5</td><td>排行</td><td>段位排行、战绩排行、好友/全服榜单</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">六</span>红点规则与刷新</h2>
+    <p><strong>通用逻辑：</strong>有未读 / 可领 / 可升级 → 亮红点；查看或操作后消失。覆盖：功能牌、任务/奖励、聊天、邮件、角色、商店/礼包、排行、运营入口。</p>
+    <p style="font-size:12.5px;color:var(--text-muted);">注：任务/奖励入口暂由结算页和弹窗承接，主页模块表中未单独列出。</p>
+    <p><strong>刷新时机：</strong></p>
+    <ul>
+      <li><strong>首次进入主页</strong> → 全量刷新资源、身份、功能牌、红点状态。</li>
+      <li><strong>对战结算返回</strong> → 刷新资源、段位、奖励、宝箱、功能牌状态。</li>
+      <li><strong>商店/功能牌/角色返回</strong> → 刷新资源、上阵配置、对应入口红点。</li>
+      <li><strong>定时刷新</strong> → 仅聊天/邮件/倒计时。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">七</span>UI 风格</h2>
+    <table>
+      <thead><tr><th>方向</th><th>要求</th></tr></thead>
+      <tbody>
+        <tr><td>整体</td><td>明亮休闲、欧美卡通、圆润干净</td></tr>
+        <tr><td>布局节奏</td><td>上半屏角色&段位，中部开始对战，下半屏功能牌&聊天</td></tr>
+        <tr><td>按钮</td><td>主按钮颜色最强，辅助按钮降低饱和度</td></tr>
+        <tr><td>图标</td><td>图标配简短文字，不单靠图标</td></tr>
+        <tr><td>动效</td><td>主按钮/奖励/升段加强；普通入口克制</td></tr>
+        <tr><td>适配</td><td>竖屏优先，底栏适配安全区，信息不贴边</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">八</span>版本范围</h2>
+    <table>
+      <thead><tr><th>版本</th><th>内容</th><th>目标</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag t0">首发</span></td><td>主页、直接匹配、功能牌强制配置、商店、对战、角色、排行、聊天、基础红点</td><td>核心循环可玩 + 基础在线感</td></tr>
+        <tr><td><span class="tag t3">运营</span></td><td>赛季、通行证、活动入口、限时活动、礼包强化</td><td>长期目标 + 留存 + 商业化</td></tr>
+        <tr><td><span class="tag t2">扩展</span></td><td>公会、社交玩法、排行细分、活动扩展</td><td>社区 + 竞争驱动</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== 对战 ==================== -->
+<div id="page-battle" class="page">
+  <div class="header-card" style="--accent:#e8590c;">
+    <h1>代号 001 · 对战系统策划案</h1>
+    <div class="meta">v1.0 | 2026-07-07 | 系统策划 / 一致性优化</div>
+    <div class="desc">对战系统是项目的核心玩法入口，负责从"开始对战"到"整场结算"的完整闭环。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>系统定位</h2>
+    <ul>
+      <li><strong>入口：</strong>主页"开始对战"点击后进入；对局中隐藏底部导航。</li>
+      <li><strong>输出：</strong>胜负、奖励、任务进度、天梯变化、角色加成展示。</li>
+      <li><strong>前置条件：</strong>必须配置 2 张功能牌且库存足够。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>对战模式</h2>
+    <table>
+      <thead><tr><th>模式</th><th>对手</th><th>入口</th><th>奖励/天梯</th><th>定位</th></tr></thead>
+      <tbody>
+        <tr><td>PvP 天梯匹配</td><td>真人</td><td>开始对战后优先匹配</td><td>正式奖励 + 天梯变化</td><td>核心竞争模式</td></tr>
+        <tr><td>AI 对战</td><td>AI</td><td>PvP 超时兜底</td><td>正式奖励 + 可计入基础天梯</td><td>保证随时可玩</td></tr>
+        <tr><td>教学</td><td>AI/固定流程</td><td>新号引导或教学入口</td><td>无正式奖励，不计天梯</td><td>理解规则与功能牌</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>核心战斗规则</h2>
+    <ul>
+      <li>5 局 3 胜制，双方初始 <strong>3 点生命</strong>。</li>
+      <li>每小局比较双方由"出牌 + 3 张固定公共牌"组成的最优 5 张牌型。</li>
+      <li>每场对战开始时发出 3 张公共牌，<strong>整场固定</strong>。</li>
+      <li>赢家使对手 -1 生命；生命归零或先赢 3 小局，对战结束。</li>
+      <li>打满 5 局按小局胜场判定；胜场相同为平局。</li>
+    </ul>
+    <table>
+      <thead><tr><th>小局</th><th>需出牌数</th></tr></thead>
+      <tbody>
+        <tr><td>第 1-3 局</td><td>3 张</td></tr>
+        <tr><td>第 4 局</td><td>4 张</td></tr>
+        <tr><td>第 5 局</td><td>5 张</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">四</span>匹配流程</h2>
+    <div class="flow-chart">
+      点击开始对战 <span class="arrow">→</span> 校验配置和库存 <span class="arrow">→</span> 进入匹配界面 <span class="arrow">→</span> 优先 PvP <span class="arrow">→</span> 超时进 AI <span class="arrow">→</span> 创建成功扣除库存
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">五</span>功能牌使用规则</h2>
+    <table>
+      <thead><tr><th>规则</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>带入数量</td><td>每场 2 张。</td></tr>
+        <tr><td>库存消耗</td><td>对战创建成功时各扣 1 张；取消/教学/未创建不扣。</td></tr>
+        <tr><td>使用次数</td><td>每回合最多用 2 张；每张牌每场只能用 1 次。</td></tr>
+        <tr><td>跨小局</td><td>重置回合次数，不重置已用功能牌。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">六</span>结算与奖励</h2>
+    <p>段位倍率仅作用于对战基础金币/钻石，不影响其他奖励。</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>结果</th><th>金币</th><th>钻石</th><th>宝箱进度</th></tr></thead>
+      <tbody>
+        <tr><td>PvP 胜利</td><td>200 × 倍率</td><td>50 × 倍率</td><td>首发不积累</td></tr>
+        <tr><td>PvP 失败</td><td>80 × 倍率</td><td>20 × 倍率</td><td>首发不积累</td></tr>
+        <tr><td>AI 胜利</td><td>200 × 倍率</td><td>50 × 倍率</td><td>+2</td></tr>
+        <tr><td>AI 平局</td><td>120 × 倍率</td><td>25 × 倍率</td><td>+1</td></tr>
+        <tr><td>AI 失败</td><td>80 × 倍率</td><td>20 × 倍率</td><td>+1</td></tr>
+        <tr><td>教学</td><td>无</td><td>无</td><td>无</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">七</span>UI 与异常处理</h2>
+    <ul>
+      <li>对局中隐藏底部导航与非必要入口。</li>
+      <li>手牌选中需有明确浮起/高亮效果。</li>
+      <li>PvP 出牌超时由服务端代打，客户端只做倒计时展示。</li>
+      <li>PvP 掉线给 <strong>15 秒</strong> 重连宽限；超时视为离场/投降。</li>
+      <li>重连后恢复当前对局状态，不重复发奖。</li>
+    </ul>
+    <div class="note-box"><strong>🔗 跨系统：</strong>开战前校验功能牌配置（依赖商店）；结算后输出天梯变化、任务进度、角色加成。</div>
+  </div>
+</div>
+
+<!-- ==================== 天梯 ==================== -->
+<div id="page-ranked" class="page">
+  <div class="header-card" style="--accent:#7c3aed;">
+    <h1>代号 001 · 天梯系统策划案</h1>
+    <div class="meta">v1.0 | 2026-07-07 | 系统策划 / 一致性优化</div>
+    <div class="desc">天梯系统承接正式对战后的长期成长反馈。首发不做赛季重置，不引入通行证。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>系统定位</h2>
+    <ul>
+      <li><strong>入口：</strong>底部"排行"入口进入；结算页可跳转。</li>
+      <li><strong>输出：</strong>段位、小段、星数/积分、排行榜、保护与连胜反馈。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>段位结构</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>大段</th><th>小段</th><th>星数/积分</th><th>升降规则</th><th>定位</th></tr></thead>
+      <tbody>
+        <tr><td>新手局</td><td>—</td><td>3 场保护</td><td>打满 3 场进青铜Ⅲ</td><td>缓冲区</td></tr>
+        <tr><td>青铜</td><td>Ⅲ/Ⅱ/Ⅰ</td><td>每小段 3 星</td><td>胜+1，败不掉星</td><td>入门成长</td></tr>
+        <tr><td>白银</td><td>Ⅲ/Ⅱ/Ⅰ</td><td>每小段 3 星</td><td>胜+1，败-1</td><td>基础竞争</td></tr>
+        <tr><td>黄金</td><td>Ⅲ/Ⅱ/Ⅰ</td><td>每小段 4 星</td><td>胜+1，败-1；可连胜奖励</td><td>主体成长</td></tr>
+        <tr><td>铂金</td><td>Ⅲ/Ⅱ/Ⅰ</td><td>每小段 4 星</td><td>胜+1，败-1；无连胜</td><td>高压过渡</td></tr>
+        <tr><td>大师</td><td>—</td><td>1000 分起</td><td>胜+25，负-15；1500 进传奇</td><td>高段竞争</td></tr>
+        <tr><td>传奇</td><td>—</td><td>1500 分+</td><td>按积分排行；首发可不降段</td><td>荣誉段</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>升降段与保护</h2>
+    <ul>
+      <li>满星胜利 → 晋级下一段，星数重置为 0。</li>
+      <li>白银+ 在 0 星失败 → 降小段；大段最低小段无保护则降大段。</li>
+      <li>刚升入白银/黄金/铂金 → 获 <strong>1 次大段保护</strong>，优先消耗。</li>
+      <li>青铜永久不掉星，不回新手局。</li>
+    </ul>
+    <table>
+      <thead><tr><th>条件</th><th>变化</th></tr></thead>
+      <tbody>
+        <tr><td>普通胜利</td><td>+1 星；大师+ +25 分</td></tr>
+        <tr><td>普通失败</td><td>白银+ -1 星；大师+ -15 分</td></tr>
+        <tr><td>青铜失败</td><td>不掉星</td></tr>
+        <tr><td>青铜/白银/黄金 3 连胜</td><td>额外 +1 星</td></tr>
+        <tr><td>铂金+ 连胜</td><td>无额外星数</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">四</span>天梯计入范围</h2>
+    <table>
+      <thead><tr><th>模式</th><th>计入</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>PvP</td><td>是</td><td>正式竞争，影响段位和排行。</td></tr>
+        <tr><td>AI</td><td>首发计入</td><td>低在线时保证成长；后续可拆分。</td></tr>
+        <tr><td>教学</td><td>否</td><td>不计入，不发奖励。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">五</span>排行页</h2>
+    <p>归属底部"排行"入口。排序：大段 → 小段 → 星数/积分 → 胜率/总胜场。不建议首发强红点。</p>
+    <table>
+      <thead><tr><th>输出</th><th>使用方</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td>段位/小段/星数</td><td>主页、排行、结算</td><td>身份展示和成长反馈</td></tr>
+        <tr><td>段位倍率</td><td>对战结算</td><td>影响基础金币/钻石</td></tr>
+        <tr><td>保护/连胜标记</td><td>结算页</td><td>说明星数变化来源</td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><strong>🔗 跨系统：</strong>天梯接收对战结算输出的胜负结果；段位倍率输出给对战结算影响奖励。</div>
+  </div>
+</div>
+
+<!-- ==================== 角色 ==================== -->
+<div id="page-character" class="page">
+  <div class="header-card" style="--accent:#0891b2;">
+    <h1>代号 001 · 角色系统策划案</h1>
+    <div class="meta">v1.0 | 2026-07-07 | 系统策划 / 一致性优化</div>
+    <div class="desc">角色系统服务于玩家身份表达、主页展示和对战形象。角色加成首发只作用于 PvE 或日常收益，不影响 PvP 公平性。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>首发角色</h2>
+    <table>
+      <thead><tr><th>角色</th><th>稀有度</th><th>初始</th><th>加成摘要</th></tr></thead>
+      <tbody>
+        <tr><td>代号A</td><td>普通</td><td>默认拥有</td><td>PvE 结算额外金币：100 + (等级-1)×50</td></tr>
+        <tr><td>代号Q</td><td>稀有</td><td>默认拥有</td><td>每日签到额外钻石：30 + (等级-1)×20</td></tr>
+        <tr><td>代号J</td><td>史诗</td><td>未拥有</td><td>PvE 宝箱倍率：Lv.1-3 ×2，Lv.4-5 ×3</td></tr>
+        <tr><td>代号K</td><td>传说</td><td>未拥有</td><td>PvE 胜利额外钻石：50 + (等级-1)×30</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>核心规则</h2>
+    <table>
+      <thead><tr><th>模块</th><th>规则</th></tr></thead>
+      <tbody>
+        <tr><td>获取</td><td>商店"角色招募"获得；抽到未拥有直接解锁 Lv.1。</td></tr>
+        <tr><td>重复</td><td>转化为该角色碎片×10；满级后转通用碎片×10。</td></tr>
+        <tr><td>上阵</td><td>同时只能上阵 1 个，必须已拥有。</td></tr>
+        <tr><td>PvP</td><td>角色被动不在 PvP 生效，只展示外观。</td></tr>
+        <tr><td>教学</td><td>不触发正式收益加成。</td></tr>
+      </tbody>
+    </table>
+    <h3>升级消耗</h3>
+    <table>
+      <thead><tr><th>等级</th><th>碎片</th><th>金币</th></tr></thead>
+      <tbody>
+        <tr><td>Lv.1 → Lv.2</td><td>12</td><td>960</td></tr>
+        <tr><td>Lv.2 → Lv.3</td><td>16</td><td>1,280</td></tr>
+        <tr><td>Lv.3 → Lv.4</td><td>20</td><td>1,600</td></tr>
+        <tr><td>Lv.4 → Lv.5</td><td>24</td><td>1,920</td></tr>
+        <tr><td><strong>合计</strong></td><td><strong>72</strong></td><td><strong>5,760</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>红点</h2>
+    <ul>
+      <li>角色可升级或新角色解锁未查看 → 角色入口 + 对应角色卡红点。</li>
+      <li>仅差金币或碎片 → 进度提示，不强红点。</li>
+    </ul>
+    <div class="note-box"><strong>🔗 跨系统：</strong>角色通过商店"角色招募"获得；代号Q 绑定签到系统；加成仅影响 PvE 结算。</div>
+  </div>
+</div>
+
+<!-- ==================== 商店与经济 ==================== -->
+<div id="page-shop" class="page">
+  <div class="header-card" style="--accent:#d97706;">
+    <h1>代号 001 · 商店与经济系统策划案</h1>
+    <div class="meta">v1.0 | 2026-07-07 | 系统策划 / 一致性优化</div>
+    <div class="desc">负责功能牌库存、角色招募、任务、签到、宝箱、邮件和基础货币循环。首发不做充值、限时礼包、通行证、活动商店。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>货币与初始资源</h2>
+    <table>
+      <thead><tr><th>货币</th><th>用途</th><th>获取</th></tr></thead>
+      <tbody>
+        <tr><td>金币</td><td>角色升级（专用货币）</td><td>对战结算、代号A 加成、邮件</td></tr>
+        <tr><td>钻石</td><td>功能牌抽卡、角色招募（共用货币）</td><td>对战结算、每日任务、签到、宝箱、邮件</td></tr>
+        <tr><td>功能牌库存</td><td>正式对战消耗</td><td>功能牌抽卡、新号初始配置</td></tr>
+        <tr><td>角色碎片</td><td>角色升级</td><td>角色招募重复获得</td></tr>
+      </tbody>
+    </table>
+    <p><strong>新号资源：</strong>金币 888 · 钻石 88 · 功能牌 T3 各 5 张 · 代号A、代号Q 默认拥有</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>抽卡与招募</h2>
+    <table>
+      <thead><tr><th>类型</th><th>单抽</th><th>十连</th></tr></thead>
+      <tbody><tr><td>功能牌抽卡</td><td>钻石×100</td><td>钻石×1,000</td></tr>
+      <tr><td>角色招募</td><td>钻石×100</td><td>钻石×1,000</td></tr></tbody>
+    </table>
+    <p><strong>功能牌概率：</strong>T0 6% · T1 17% · T2 32% · T3 45%。十连至少 1 张 T2+。50 抽保底 T0。</p>
+    <p><strong>角色：</strong>4 角色等概率各 25%。连续 10 抽未解锁新角色 → 下一次必定获得未拥有角色。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>日常、宝箱、邮件</h2>
+    <table>
+      <thead><tr><th>模块</th><th>规则</th></tr></thead>
+      <tbody>
+        <tr><td>每日任务</td><td>3 场对战/5 次功能牌/赢 6 小局/顺子+；合计钻石×70</td></tr>
+        <tr><td>每日签到</td><td>拥有代号Q 后每日 1 次；30+(等级-1)×20 钻石</td></tr>
+        <tr><td>宝箱</td><td>上限 10 点；PvE 胜+2，平/负+1；PvP 不积累</td></tr>
+        <tr><td>邮件</td><td>通知、补偿、奖励；附件手动领取</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">四</span>红点归属</h2>
+    <table>
+      <thead><tr><th>场景</th><th>红点位置</th></tr></thead>
+      <tbody>
+        <tr><td>任务/宝箱/签到可领</td><td>商店入口 → 对应子入口</td></tr>
+        <tr><td>邮件未读</td><td>邮件入口</td></tr>
+        <tr><td>功能牌不足</td><td>不开商店强红点，开战时阻断引导</td></tr>
+        <tr><td>角色可升级</td><td>角色入口（不归商店）</td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><strong>🔗 跨系统：</strong>商店提供功能牌抽卡（支持对战消耗）和角色招募（支持角色收集）；任务/签到/宝箱/邮件提供金币与钻石来源。</div>
+  </div>
+</div>
+
+<!-- ==================== 审计记录 ==================== -->
+<div id="page-audit" class="page">
+  <div class="header-card" style="--accent:#6b7280;">
+    <h1>一致性审计记录</h1>
+    <div class="meta">优化过程记录 · 非最终游戏规则</div>
+    <div class="desc">以下为本次一致性优化过程中发现的口径冲突及处理结论。原始文档已有此章节，此处集中保留供回溯参考，各系统 HTML 中不再重复。</div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:13px;">本次优化重点不是大改数值，而是统一正式口径、删除无关内容、明确跨系统边界，集中约束容易冲突的规则。</p>
+    <div class="audit-grid">
+      <div class="item">
+        <div class="label">非正式内容</div>
+        <div class="desc">各文档存在非正式对照、背景说明等。</div>
+        <div class="risk">→ 已删除或改写为正式规则。</div>
+      </div>
+      <div class="item">
+        <div class="label">底部导航口径</div>
+        <div class="desc">主页/对战/排行/天梯混用。</div>
+        <div class="risk">→ 统一为商店/功能牌/对战/角色/排行；天梯归入"排行"。</div>
+      </div>
+      <div class="item">
+        <div class="label">开始对战</div>
+        <div class="desc">模式选择页 vs 直接匹配双口径。</div>
+        <div class="risk">→ 统一为点击后直接匹配，不先进模式选择。</div>
+      </div>
+      <div class="item">
+        <div class="label">功能牌配置</div>
+        <div class="desc">默认牌兜底 vs 必须配置双口径。</div>
+        <div class="risk">→ 统一为必须配置 2 张，不配置不进匹配。</div>
+      </div>
+      <div class="item">
+        <div class="label">PvE 是否计天梯</div>
+        <div class="desc">AI 兜底是否计入段位。</div>
+        <div class="risk">→ 首发计入，后续可拆分练习与正式。</div>
+      </div>
+      <div class="item">
+        <div class="label">PvP 公平性</div>
+        <div class="desc">角色加成/段位倍率被误读为影响战斗。</div>
+        <div class="risk">→ 角色被动不影响 PvP；段位倍率只影响结算奖励。</div>
+      </div>
+      <div class="item">
+        <div class="label">宝箱来源</div>
+        <div class="desc">对战奖励与商店宝箱冲突。</div>
+        <div class="risk">→ PvP 首发不发宝箱进度；PvE 胜+2，平/负+1。</div>
+      </div>
+      <div class="item">
+        <div class="label">赛季/通行证</div>
+        <div class="desc">天梯和商店可能提前引入。</div>
+        <div class="risk">→ 首发不做赛季重置/通行证/限时礼包/活动商店。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">附</span>待确认事项</h2>
+    <table>
+      <thead><tr><th>事项</th><th>当前建议</th></tr></thead>
+      <tbody>
+        <tr><td>PvE 长期是否计天梯</td><td>首发计入；PvP 在线稳定后可拆分 AI 练习与正式天梯。</td></tr>
+        <tr><td>段位倍率作用范围</td><td>仅作用于对战基础金币/钻石，不影响任务/签到/邮件/宝箱/角色加成。</td></tr>
+        <tr><td>宝箱是否加入 PvP</td><td>首发不加，后续可做 PvP 胜场或段位宝箱。</td></tr>
+        <tr><td>外装系统首发范围</td><td>称号/头像框可先规划，不做首发 P0。</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warn-box">
+      <strong>⚠ 审计发现：</strong>文档中"金币"和"钻石"的用途描述有轻微不一致——1.3 说"金币用于角色升级"，3.6 又给出金币奖励。实际钻石也可用于角色招募（6.4-6.5）。聚合页中已统一为：<strong>钻石是对战+日常+抽卡共用货币，金币是角色升级专用货币</strong>。
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function switchPage(id) {
+  // Update sidebar
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.querySelector(`.nav-item[onclick*="${id}"]`).classList.add('active');
+  // Update content
+  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  // Scroll to top
+  document.querySelector('.main').scrollTop = 0;
+}
+</script>
 </body>
 </html>
