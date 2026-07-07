@@ -198,12 +198,19 @@
     <tbody>
       <tr><td>对战结果</td><td></td><td></td></tr>
       <tr><td style="padding-left:18px;">result</td><td>win/lose/draw</td><td>本场最终胜负</td></tr>
-      <tr><td style="padding-left:18px;">opponent_type</td><td>pvp/ai</td><td>对手类型，用于后台统计</td></tr>
+      <tr><td style="padding-left:18px;">match_origin</td><td>string</td><td>真人匹配 / 人机兜底 / 教学</td></tr>
+      <tr><td style="padding-left:18px;">opponent_type</td><td>string</td><td>真人 / AI</td></tr>
+      <tr><td style="padding-left:18px;">fallback_reason</td><td>string|null</td><td>匹配超时 / 对手创建前掉线 / 系统兜底 / null（真人匹配成功）</td></tr>
       <tr><td style="padding-left:18px;">is_ranked</td><td>bool</td><td>是否计入天梯</td></tr>
       <tr><td>奖励变化</td><td></td><td></td></tr>
-      <tr><td style="padding-left:18px;">gold_change</td><td>int</td><td>金币变化量（含段位倍率）</td></tr>
-      <tr><td style="padding-left:18px;">diamond_change</td><td>int</td><td>钻石变化量（含段位倍率）</td></tr>
-      <tr><td style="padding-left:18px;">chest_progress</td><td>int[]</td><td>宝箱进度变化（当前值/上限）</td></tr>
+      <tr><td style="padding-left:18px;">gold_change</td><td>int</td><td>金币变化量（金币段位倍率）</td></tr>
+      <tr><td style="padding-left:18px;">diamond_change</td><td>int</td><td>钻石变化量（钻石段位倍率，首发固定或低倍率）</td></tr>
+      <tr><td>宝箱</td><td></td><td></td></tr>
+      <tr><td style="padding-left:18px;">chest_before</td><td>int</td><td>宝箱变化前进度</td></tr>
+      <tr><td style="padding-left:18px;">chest_delta</td><td>int</td><td>本场宝箱进度变化量</td></tr>
+      <tr><td style="padding-left:18px;">chest_after</td><td>int</td><td>宝箱变化后进度</td></tr>
+      <tr><td style="padding-left:18px;">chest_cap</td><td>int</td><td>宝箱进度上限（10）</td></tr>
+      <tr><td style="padding-left:18px;">chest_claimable</td><td>bool</td><td>是否可开启宝箱</td></tr>
       <tr><td>天梯变化</td><td></td><td></td></tr>
       <tr><td style="padding-left:18px;">rank_tier</td><td>string</td><td>大段（青铜/白银/...）</td></tr>
       <tr><td style="padding-left:18px;">rank_sub_tier</td><td>string</td><td>小段（Ⅲ/Ⅱ/Ⅰ）</td></tr>
@@ -213,14 +220,14 @@
       <tr><td style="padding-left:18px;">streak_bonus</td><td>bool</td><td>本场是否触发连胜奖励</td></tr>
       <tr><td style="padding-left:18px;">protection_used</td><td>bool</td><td>本场是否消耗大段保护</td></tr>
       <tr><td>功能牌</td><td></td><td></td></tr>
-      <tr><td style="padding-left:18px;">cards_consumed</td><td>string[]</td><td>本场消耗的功能牌 ID 列表</td></tr>
+      <tr><td style="padding-left:18px;">cards_consumed</td><td>{card_id,count}</td><td>本场消耗的功能牌及数量，如 [{fivejoker,1},{thief,1}]</td></tr>
       <tr><td style="padding-left:18px;">cards_refunded</td><td>bool</td><td>是否返还功能牌</td></tr>
       <tr><td>任务</td><td></td><td></td></tr>
       <tr><td style="padding-left:18px;">quest_progress</td><td>map</td><td>各任务当前进度</td></tr>
       <tr><td>角色</td><td></td><td></td></tr>
       <tr><td style="padding-left:18px;">hero_bonus</td><td>map</td><td>角色加成详情</td></tr>
       <tr><td>红点</td><td></td><td></td></tr>
-      <tr><td style="padding-left:18px;">reddot_summary</td><td>map</td><td>各入口红点状态（亮/灭）</td></tr>
+      <tr><td style="padding-left:18px;">reddot_summary</td><td>map</td><td>固定 key：shop/quest/chest/mail/hero/cards/chat。每 key 返回 {on:bool, reason:string}。例：{shop:{on:true,reason:\"可领取\"}, cards:{on:false,reason:\"\"}}</td></tr>
     </tbody>
   </table>
   </div>
@@ -263,7 +270,7 @@
       <tr>
         <td>对局中掉线（自己）</td>
         <td>玩家网络中断</td>
-        <td>服务端等待15秒，超时后AI代打</td>
+        <td>服务端等待15秒，超时后AI代打（仅选牌出牌，不主动用功能牌）</td>
         <td>"网络连接中..."</td>
         <td style="color:#f04438;font-weight:700;">是</td>
         <td>按结果发放</td>
@@ -272,7 +279,7 @@
       <tr>
         <td>对局中掉线（对手）</td>
         <td>对手网络中断</td>
-        <td>对手15秒超时后AI代打</td>
+        <td>对手15秒超时后AI代打（仅选牌出牌，不主动用功能牌）</td>
         <td>"等待对手重连"</td>
         <td style="color:#f04438;font-weight:700;">是</td>
         <td>按结果发放</td>
@@ -290,8 +297,8 @@
       <tr>
         <td>结算失败</td>
         <td>服务端结算异常</td>
-        <td>对局记录保留，异步重试结算</td>
-        <td>通知玩家"结算中，奖励稍后到账"</td>
+        <td>对局记录保留，异步重试结算（5分钟内重试3次）；重试仍失败时转为邮件补偿。</td>
+        <td>"结算中，奖励稍后到账"；下次进入时主动拉取未完成结算</td>
         <td style="color:#f04438;font-weight:700;">是</td>
         <td style="color:#f79009;font-weight:700;">异步补发</td>
         <td style="color:#f79009;font-weight:700;">异步补录</td>
@@ -362,12 +369,12 @@
     </tbody>
   </table>
   </div>
-  <div class="warn-box">
-    <strong>⚠ 风险点：</strong>
+  <div class="note-box">
+    <strong>✅ 首发决策：</strong>
     <ul style="margin:4px 0 0 16px;font-size:12.5px;">
-      <li>重度玩家日消耗 30+ 张，十连只补充 10 张，库存入不敷出 → 需要额外抽卡来源（任务/活动）</li>
-      <li>段位倍率如果影响钻石，高段位玩家收入远超测算，需要限定倍率上限</li>
-      <li>若钻石产出超过预期，可调整：降低钻石倍率 / 宝箱钻石减半 / 签到设为分段</li>
+      <li><strong>段位倍率首发只影响金币，钻石段位倍率固定为 1.0（不随段位增长）</strong>。避免高段位玩家钻石滚雪球。</li>
+      <li>重度玩家功能牌入不敷出问题 → 后续通过任务/活动/日活奖励补充功能牌库存，首发不解决。</li>
+      <li>若首发后钻石产出超出预期，调整手段：降低宝箱钻石 / 签到分段奖励 / 任务奖励下调。</li>
     </ul>
   </div>
 </div>

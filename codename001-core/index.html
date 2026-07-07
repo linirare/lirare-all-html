@@ -480,12 +480,12 @@
     <h2><span class="num">六</span>结算与奖励</h2>
     <p><strong>以服务端结算为唯一权威。</strong>客户端只展示结果，不计算段位、奖励、库存。</p>
     <p>每场结算输出：胜负、对手类型（真人/人机）、是否计入天梯、金币/钻石/宝箱变化、段位/星数/积分变化、连胜及保护标记、任务进度、角色加成、功能牌消耗结果。</p>
-    <p>段位倍率仅作用于对战基础金币/钻石，不影响其他奖励。</p>
+    <p>段位倍率仅作用于对战基础金币，钻石段位倍率固定为 1.0，不影响其他奖励。</p>
     <div class="table-wrap">
     <table>
       <thead><tr><th>结果</th><th>金币</th><th>钻石</th><th>宝箱进度</th></tr></thead>
       <tbody>
-        <tr><td>PvP 胜利</td><td>200 × 倍率</td><td>50 × 倍率<span style="font-size:11px;color:var(--text-muted);">⚠</span></td><td>首发不积累</td></tr>
+        <tr><td>PvP 胜利</td><td>200 × 倍率</td><td>50（固定，不吃段位倍率）</td><td>首发不积累</td></tr>
         <tr><td>PvP 失败</td><td>80 × 倍率</td><td>20 × 倍率</td><td>首发不积累</td></tr>
         <tr><td>AI 胜利</td><td>200 × 倍率</td><td>50 × 倍率</td><td>+2</td></tr>
         <tr><td>AI 平局</td><td>120 × 倍率</td><td>25 × 倍率</td><td>+1</td></tr>
@@ -493,7 +493,7 @@
         <tr><td>教学</td><td>无</td><td>无</td><td>无</td></tr>
       </tbody>
     </table>
-    <p style="font-size:12px;color:var(--text-muted);">⚠ 高段位钻石倍率过高会导致强玩家抽卡更快、资源滚雪球。建议段位倍率主要影响金币，钻石倍率压低或固定。</p>
+    <p style="font-size:12px;color:var(--text-muted);">段位倍率首发只影响金币，钻石固定，避免高段位抽卡资源滚雪球。</p>
     </div>
   </div>
 
