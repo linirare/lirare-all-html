@@ -517,7 +517,7 @@
       <li>对局中隐藏底部导航与非必要入口。</li>
       <li>手牌选中需有明确浮起/高亮效果。</li>
       <li>PvP 出牌超时由服务端代打，客户端只做倒计时展示。</li>
-      <li>PvP 掉线给 <strong>15 秒</strong> 重连宽限；超时视为离场/投降。</li>
+      <li>PvP 掉线：15s AI代打，再等15s可重连不判负，超30s视为离场。</li>
       <li>重连后恢复当前对局状态，不重复发奖。</li>
     </ul>
     <div class="note-box"><strong>🔗 跨系统：</strong>开战前校验功能牌配置（依赖商店）；结算后输出天梯变化、任务进度、角色加成。</div>
@@ -550,7 +550,7 @@
     <table>
       <thead><tr><th>大段</th><th>小段</th><th>星数/积分</th><th>升降规则</th><th>定位</th></tr></thead>
       <tbody>
-        <tr><td>新手局</td><td>—</td><td>3 场保护</td><td>打满 3 场进青铜Ⅲ</td><td>缓冲区</td></tr>
+        <tr><td>新手局</td><td>—</td><td>3 场 AI 保护赛</td><td>打满 3 场 AI 对战进青铜Ⅲ（有正常奖励）</td><td>缓冲区</td></tr>
         <tr><td>青铜</td><td>Ⅲ/Ⅱ/Ⅰ</td><td>每小段 3 星</td><td>胜+1，败不掉星</td><td>入门成长</td></tr>
         <tr><td>白银</td><td>Ⅲ/Ⅱ/Ⅰ</td><td>每小段 3 星</td><td>胜+1，败-1</td><td>基础竞争</td></tr>
         <tr><td>黄金</td><td>Ⅲ/Ⅱ/Ⅰ</td><td>每小段 4 星</td><td>胜+1，败-1；可连胜奖励</td><td>主体成长</td></tr>
