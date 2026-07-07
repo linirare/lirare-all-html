@@ -225,7 +225,9 @@
       <tr><td>任务</td><td></td><td></td></tr>
       <tr><td style="padding-left:18px;">quest_progress</td><td>map</td><td>各任务当前进度</td></tr>
       <tr><td>角色</td><td></td><td></td></tr>
-      <tr><td style="padding-left:18px;">hero_bonus</td><td>map</td><td>角色加成详情</td></tr>
+      <tr><td style="padding-left:18px;">hero_id</td><td>string</td><td>本场上阵角色</td></tr>
+      <tr><td style="padding-left:18px;">hero_bonus_gold</td><td>int</td><td>角色加成金币（代号A，仅PvE）</td></tr>
+      <tr><td style="padding-left:18px;">hero_bonus_diamond</td><td>int</td><td>角色加成钻石（代号K，仅PvE胜利）</td></tr>
       <tr><td>红点</td><td></td><td></td></tr>
       <tr><td style="padding-left:18px;">reddot_summary</td><td>map</td><td>固定 key：shop/quest/chest/mail/hero/cards/chat。每 key 返回 {on:bool, reason:string}。例：{shop:{on:true,reason:\"可领取\"}, cards:{on:false,reason:\"\"}}</td></tr>
     </tbody>
@@ -268,13 +270,22 @@
         <td style="color:#059669;font-weight:700;">正常</td>
       </tr>
       <tr>
-        <td>对局中掉线（自己）</td>
-        <td>玩家网络中断</td>
-        <td>服务端等待15秒，AI代打（仅选牌出牌，不主动用功能牌）；再等15秒可重连恢复，不判负</td>
+        <td>对局中掉线（自己，PvP局）</td>
+        <td>PvP对局中网络中断</td>
+        <td>0-15s AI代打（仅选牌），15-30s可重连恢复，超30s未重连判负</td>
         <td>"网络连接中..."</td>
         <td style="color:#f04438;font-weight:700;">是</td>
         <td>按结果发放</td>
         <td>按结果计入</td>
+      </tr>
+      <tr>
+        <td>对局中掉线（自己，AI局）</td>
+        <td>人机兜底局中网络中断</td>
+        <td>0-15s AI代打，15-30s可重连，超30s判负</td>
+        <td>"网络连接中..."</td>
+        <td style="color:#059669;font-weight:700;">不退</td>
+        <td>无</td>
+        <td>不计</td>
       </tr>
       <tr>
         <td>对局中掉线（对手）</td>
