@@ -194,29 +194,8 @@
   .flow-chart .arrow { color: var(--accent); font-weight: 700; margin: 0 4px; }
 
   .note-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 8px 12px; border-radius: 6px; font-size: 12.5px; color: var(--text-secondary); margin-bottom: 10px; }
-  .warn-box { background: #fef3f2; border-left: 3px solid #f04438; padding: 8px 12px; border-radius: 6px; font-size: 12.5px; color: #912018; margin-bottom: 10px; }
   hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
   .pri-line { font-size: 11.5px; color: var(--text-muted); margin-top: -4px; margin-bottom: 8px; }
-
-  /* Accordion for audit */
-  .accordion { margin: 8px 0; }
-  .accordion summary {
-    cursor: pointer; font-weight: 600;
-    font-size: 13.5px; padding: 6px 0;
-    color: var(--text);
-  }
-  .accordion[open] summary { margin-bottom: 6px; }
-  .audit-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 1px; margin: 6px 0 10px;
-    border-radius: 6px; overflow: hidden;
-    border: 1px solid var(--border);
-  }
-  .audit-grid .item { padding: 8px 12px; background: #fafbfc; }
-  .audit-grid .item:nth-child(odd) { background: var(--surface); }
-  .audit-grid .item .label { font-weight: 600; color: var(--text); font-size: 12px; }
-  .audit-grid .item .desc { font-size: 11.5px; color: var(--text-secondary); }
-  .audit-grid .item .risk { font-size: 11px; color: #f04438; margin-top: 1px; }
 
   .img-wrap { text-align: center; margin: 8px 0; }
   .img-wrap img { max-width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border); }
@@ -229,7 +208,6 @@
     .main { padding: 16px; }
     .page .header-card, .card { padding: 16px; }
     td:first-child { white-space: normal; }
-    .audit-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -349,7 +327,7 @@
     <h3>4.2 功能牌配置</h3>
     <ol>
       <li>从主页配置区或底部"功能牌"进入仓库。</li>
-      <li>按规则配置指定数量 → 回主页显示已上阵牌。</li>
+      <li>按规则配置指定数量（<strong>2 张</strong>）→ 回主页显示已上阵牌。</li>
       <li>未完成时"开始对战"可点但弹引导，不进匹配。</li>
     </ol>
     <h3>4.3 聊天、邮件、活动</h3>
@@ -674,7 +652,22 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">二</span>抽卡与招募</h2>
+    <h2><span class="num">二</span>商店首发结构</h2>
+    <table>
+      <thead><tr><th>模块</th><th>功能</th><th>优先级</th></tr></thead>
+      <tbody>
+        <tr><td>功能牌卡包</td><td>功能牌抽取、奖池查看、保底进度</td><td><span class="tag t0">P0</span></td></tr>
+        <tr><td>角色招募</td><td>角色解锁、重复转化、保底</td><td><span class="tag t0">P0</span></td></tr>
+        <tr><td>今日进度</td><td>每日任务入口、奖励领取</td><td><span class="tag t1">P1</span></td></tr>
+        <tr><td>宝箱</td><td>PvE 宝箱进度与开启</td><td><span class="tag t1">P1</span></td></tr>
+        <tr><td>签到</td><td>代号Q 绑定钻石领取</td><td><span class="tag t1">P1</span></td></tr>
+        <tr><td>邮件</td><td>公告、补偿、附件领取</td><td><span class="tag t1">P1</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>抽卡与招募</h2>
     <table>
       <thead><tr><th>类型</th><th>单抽</th><th>十连</th></tr></thead>
       <tbody><tr><td>功能牌抽卡</td><td>钻石×100</td><td>钻石×1,000</td></tr>
@@ -685,7 +678,7 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">三</span>日常、宝箱、邮件</h2>
+    <h2><span class="num">四</span>日常、宝箱、邮件</h2>
     <table>
       <thead><tr><th>模块</th><th>规则</th></tr></thead>
       <tbody>
@@ -698,7 +691,7 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">四</span>红点归属</h2>
+    <h2><span class="num">五</span>红点归属</h2>
     <table>
       <thead><tr><th>场景</th><th>红点位置</th></tr></thead>
       <tbody>
