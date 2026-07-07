@@ -170,7 +170,7 @@
   <h2><span class="num">四</span>AI 决策逻辑</h2>
   <p>AI 决策分两层，因为 PvP/PvE 对实时性要求不同。</p>
 
-  <h3>4.1 客户端层（PvE 实时对局）</h3>
+  <h3>4.1 客户端层（表现与预演）</h3>
   <p>功能：选牌 + 技能使用。响应需要 &lt;50ms，否则玩家出牌后 AI 有明显停顿。</p>
   <p><strong>选牌：</strong>穷举所有 C(N, 需出牌数) 种组合，与 3 张公共牌组成 5 张，取最高评分。评分标准与玩家端一致，全难度统一。</p>
   <p><strong>技能使用：</strong>优先级列表 + 概率触发。AI 从优先级列表遍历，找到可用技能后按概率决定是否发动。</p>
@@ -185,7 +185,8 @@
   <div class="code-block">普通池: destroyer → bomb → thief → hacker → lucky → magician → burst → gambler
 强池:   destroyer → bomb → thief → hacker → lucky → magician → burst → gambler → god → fivejoker</div>
 
-  <h3>4.2 服务端层（PvP 代打、PvE 权威结算）</h3>
+  <h3>4.2 服务端层（权威结算）</h3>
+  <p>功能：PvP 代打（不掉线方在服务端走 AI 代打），PvE 计入天梯时走服务端统一决策。客户端可做预演与动画保持流畅，</p><p><strong>最终 AI 行为、牌型、奖励、天梯以服务端结算为准。</strong></p>
   <p>每个技能配置 (进攻 o, 防御 d, 通用 u) 三维权重，根据当前局势加权评分。</p>
   <p><strong>局势因子（权重调整）：</strong></p>
   <table>
@@ -198,9 +199,6 @@
     </tbody>
   </table>
   <p>权重数值是相对关系，上线后根据数据调整。</p>
-
-  <p><strong>客户端 vs 服务端为什么不同：</strong>PvP 代打不需要展示给玩家看，没有动画时间限制，可以用更复杂的计算。但 PvE 跑服务端逻辑的话，玩家出牌后需等待网络响应，破坏流畅感。</p>
-  <div class="warn-box"><strong>⚠ PvE 计入天梯期间：</strong>AI 决策在服务端统一结算，客户端仅展示。避免不同设备同场对局 AI 行为不一致，维护天梯公信力。</div>
 
   <h3>4.3 随机因子</h3>
   <p>最终评分乘以 <strong>0.7-1.3</strong> 之间的随机系数。作用：①避免每次都选同一技能，玩家会觉得 AI 是固定脚本；②给低分技能偶尔出场机会，丰富对局多样性。</p>
