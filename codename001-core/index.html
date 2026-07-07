@@ -247,6 +247,12 @@
   <div class="nav-item" onclick="switchPage('cosmetic')">
     <span class="icon">👑</span><span class="label">外装系统</span>
   </div>
+  <div class="nav-item" onclick="switchPage('economy')">
+    <span class="icon">💰</span><span class="label">经济循环</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('mail')">
+    <span class="icon">✉️</span><span class="label">邮件系统</span>
+  </div>
   <div class="nav-divider"></div>
   <div class="nav-section">执行</div>
   <div class="nav-item" onclick="switchPage('spec')">
@@ -920,6 +926,70 @@
   <div class="card" style="text-align:center;padding:14px 20px;">
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版外装系统策划案 ▼</p>
     <iframe src="cosmetic/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
+  </div>
+</div>
+
+<!-- ==================== 经济循环 ==================== -->
+<div id="page-economy" class="page">
+  <div class="header-card" style="--accent:#ca8a04;">
+    <h1>代号 001 · 经济循环策划案</h1>
+    <div class="meta">v2.0 | 2026-07-07 | 设计文档</div>
+    <div class="desc">资源够用但不泛滥。免费玩家能玩下去、付费有获得感、金币钻石有区分。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>货币隔离</h2>
+    <p><strong>金币</strong>→角色升级（不缺但花不完），<strong>钻石</strong>→抽卡招募（永远不够用）。段位倍率只影响金币，钻石固定 1.0。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>每日收入</h2>
+    <p>活跃玩家 ~200-300💎 + ~360🪙。新手欢迎邮件送 18888🪙 + 1888💎。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>经济验算</h2>
+    <p>免费玩家月收入 ~8000💎，约 70 抽，期望 4 张 T0。但 T0 无初始库存，消耗快不敢频繁用。核心差距在库存深度不在有没有牌。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">四</span>当前问题</h2>
+    <div class="warn-box" style="font-size:12px;padding:8px 12px;"><strong>⚠ 金币溢出</strong> — 唯一消耗口（升级）成本低，活跃玩家必然溢出，需补消耗渠道。<br>
+    <strong>⚠ 碎片获取单一</strong> — 只有招募能获得，建议加任务/段位/连胜奖励。</div>
+  </div>
+
+  <div class="card" style="text-align:center;padding:14px 20px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版经济循环策划案 ▼</p>
+    <iframe src="economy/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
+  </div>
+</div>
+
+<!-- ==================== 邮件系统 ==================== -->
+<div id="page-mail" class="page">
+  <div class="header-card" style="--accent:#2563eb;">
+    <h1>代号 001 · 邮件系统策划案</h1>
+    <div class="meta">v2.0 | 2026-07-07 | 设计文档</div>
+    <div class="desc">新手欢迎信+初始资源、运营全服公告、附件发放。不做复杂收件箱管理。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>邮件类型</h2>
+    <p>系统自动（欢迎信）、全服运营（公告/补偿）、个人运营（定向奖励）。数据结构统一。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>流程</h2>
+    <p>登录拉取列表 → 红点提示未读 → 点击已读 → 有附件则领取（幂等防重）→ 钻石金币到账。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>现状</h2>
+    <p>发送/拉取/已读/领取/红点均已实现。缺 <strong>100 条上限</strong> 和 <strong>领取并发保护</strong>。</p>
+  </div>
+
+  <div class="card" style="text-align:center;padding:14px 20px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版邮件系统策划案 ▼</p>
+    <iframe src="mail/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
   </div>
 </div>
 

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代号001 · 邮件系统策划案 v2.0</title>
+<style>
+  :root { --bg: #f8f9fb; --surface: #ffffff; --border: #e4e7ed; --accent: #2563eb; --accent-soft: #dbeafe; --text: #1a1a2e; --text-secondary: #5a6072; --text-muted: #9098a8; --radius: 12px; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Helvetica Neue", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 40px 20px; }
+  .container { max-width: 960px; margin: 0 auto; }
+  .header { background: var(--surface); border-radius: var(--radius); padding: 36px 48px; margin-bottom: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); }
+  .header h1 { font-size: 26px; font-weight: 700; color: var(--text); }
+  .header .meta { display: flex; gap: 20px; margin-top: 10px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
+  .header .desc { margin-top: 14px; padding: 12px 16px; background: var(--accent-soft); border-radius: 8px; font-size: 13.5px; color: var(--text-secondary); border-left: 3px solid var(--accent); }
+  .section { background: var(--surface); border-radius: var(--radius); padding: 28px 44px; margin-bottom: 16px; border: 1px solid var(--border); }
+  .section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: flex; align-items: center; gap: 8px; }
+  .section h2 .num { background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: 5px; }
+  .section h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+  .section h3:first-of-type { margin-top: 0; }
+  .section p { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; }
+  .section ul, .section ol { margin: 6px 0 12px 18px; font-size: 14px; color: var(--text-secondary); }
+  .section li { margin-bottom: 3px; }
+  .section li strong { color: var(--text); }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 13px; border-radius: 8px; overflow: hidden; }
+  thead { background: var(--accent); color: #fff; }
+  th { padding: 6px 9px; text-align: left; font-weight: 600; font-size: 11.5px; }
+  td { padding: 6px 9px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; font-size: 12.5px; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
+  .table-wrap { overflow-x: auto; margin: 10px 0 16px; }
+  .table-wrap table { margin: 0; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+  .note-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 6px; font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+  .warn-box { background: #fef3f2; border-left: 3px solid #f04438; padding: 10px 14px; border-radius: 6px; font-size: 13px; color: #912018; margin-bottom: 12px; }
+  .code-block { background: #f4f5f7; padding: 10px 14px; border-radius: 6px; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 12.5px; line-height: 1.8; margin: 8px 0 12px; overflow-x: auto; white-space: pre; border: 1px solid var(--border); }
+  .mock { background: #f4f5f7; padding: 14px 18px; border-radius: 8px; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 13px; line-height: 1.6; margin: 8px 0 12px; border: 1px solid var(--border); white-space: pre; overflow-x: auto; color: var(--text-secondary); }
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 6px; }
+  .t-done { color: #059669; font-weight: 600; }
+  .t-miss { color: #f04438; font-weight: 600; }
+  @media (max-width: 720px) { body { padding: 16px 12px; } .header, .section { padding: 20px 18px; } td:first-child { white-space: normal; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>代号 001 · 邮件系统策划案</h1>
+  <div class="meta">
+    <span>📄 v2.0</span>
+    <span>📅 2026-07-07</span>
+    <span>🏷️ 设计文档</span>
+    <span>✉️ 邮件</span>
+  </div>
+  <div class="desc">
+    邮件系统解决三个场景：新手欢迎信+初始资源、运营全服公告/定向消息、附件发放。不做复杂收件箱管理。
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">一</span>邮件类型</h2>
+  <table>
+    <thead><tr><th>类型</th><th>发送方</th><th>触发</th><th>示例</th></tr></thead>
+    <tbody>
+      <tr><td>系统自动</td><td>程序自动</td><td>注册、后续系统事件</td><td>欢迎邮件</td></tr>
+      <tr><td>全服运营</td><td>管理员后台</td><td>手动发送</td><td>活动公告、补偿</td></tr>
+      <tr><td>个人运营</td><td>管理员后台</td><td>按 UID 发送</td><td>定向奖励、客服回复</td></tr>
+    </tbody>
+  </table>
+  <p>三种邮件在数据结构上没有区别——都是一个 mailItem 对象。区别只在发送方式。</p>
+
+  <h3>1.1 欢迎邮件</h3>
+  <div class="code-block">标题：🎉 欢迎加入代号 001
+正文：欢迎来到代号 001—— 一款策略与运气并重的扑克对决游戏！
+      🎁 附上新手礼包，助你开局顺利。
+      💡 点击主页左上角头像可以修改你的游戏昵称。
+      快去功能牌仓库装备好你的牌组，开始第一场对战吧！
+附件：18888🪙 + 1888💎</div>
+  <p>1888💎 可发一次十连 + 几次单抽，帮新手建初始牌池。18888🪙 保证新手期不缺升级资源。开局冗余保证新手头几天不因资源不足弃游。</p>
+</div>
+
+<div class="section">
+  <h2><span class="num">二</span>数据结构</h2>
+  <div class="code-block">{
+  "id": "k3x7v9_42",
+  "from": "system",
+  "title": "🎉 欢迎加入代号 001",
+  "body": "欢迎来到代号 001……",
+  "items": { "coins": 18888, "gems": 1888 },
+  "read": false,
+  "claimed": false,
+  "created_at": "2026-07-07 10:30:00"
+}</div>
+  <table>
+    <thead><tr><th>字段</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>id</td><td>唯一标识。全服邮件用 base36(时间戳)_用户ID</td></tr>
+      <tr><td>from</td><td>发件人标识。目前只有 system</td></tr>
+      <tr><td>body</td><td>支持 \n 换行，客户端渲染为 &lt;br&gt;</td></tr>
+      <tr><td>items</td><td>附件（可选）。有附件时显示领取按钮</td></tr>
+      <tr><td>read</td><td>是否已读</td></tr>
+      <tr><td>claimed</td><td>附件是否已领取</td></tr>
+      <tr><td>created_at</td><td>发送时间</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">三</span>玩家流程与 UI</h2>
+
+  <h3>3.1 操作流程</h3>
+  <div class="flow-chart" style="margin:8px 0 14px;padding:12px 16px;background:#fafbfc;border-radius:6px;border:1px solid var(--border);font-size:12.5px;color:var(--text-secondary);line-height:2;text-align:center;">
+    登录/回主页 → 拉取邮件列表 → 有未读→红点提示 → 点击邮件→展开正文 → 标记已读 → 有附件→领取→钻石金币到账
+  </div>
+
+  <h3>3.2 UI 布局</h3>
+  <div class="mock">┌─────────────────────────┐
+│  ✉️ 邮件            [关闭] │
+├─────────────────────────┤
+│  ┌───────────────────┐  │
+│  │ 📬 欢迎加入代号001  │  │  ← 未读（橙色标记）
+│  │ 2026-07-07         │  │
+│  │ ……正文……            │  │
+│  │ 💎 +1888  🪙 +18888 │  │
+│  │ [📦 领取奖励]        │  │  ← 有附件且未领取
+│  └───────────────────┘  │
+│  ┌───────────────────┐  │
+│  │ 📨 活动公告          │  │  ← 已读（灰色标记）
+│  │ [领取] → [已领取]    │  │
+│  └───────────────────┘  │
+└─────────────────────────┘</div>
+
+  <p><strong>红点：</strong>主页右下角邮件 FAB 图标显示未读数量。已读不显示红点。已领取不重复显示领取按钮。列表按创建时间降序排列。</p>
+</div>
+
+<div class="section">
+  <h2><span class="num">四</span>API 与存储</h2>
+  <table>
+    <thead><tr><th>接口</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>GET /api/auth/mail</td><td>拉取邮件列表</td></tr>
+      <tr><td>POST /api/auth/mail/read/:id</td><td>标记已读</td></tr>
+      <tr><td>POST /api/auth/mail/claim/:id</td><td>领取附件（幂等，防重）</td></tr>
+      <tr><td>POST /api/auth/admin/mail</td><td>全服邮件发送</td></tr>
+      <tr><td>POST /api/auth/admin/mail/uid/:uid</td><td>个人邮件发送</td></tr>
+    </tbody>
+  </table>
+  <p>每次进入主页/切换页面时拉取，不设定时轮询。领取操作幂等，第二次请求不重复发资源。</p>
+
+  <h3>4.1 存储限制</h3>
+  <p>当前邮件直接存在用户 mail 数组中，无数量上限。建议兜底：</p>
+  <ul>
+    <li>邮件总数上限 100 条</li>
+    <li>超出时删除最早已读且已领取的邮件</li>
+    <li>未读/未领取邮件不被自动删除</li>
+  </ul>
+  <p style="font-size:12.5px;color:var(--text-muted);">（当前未实现此限制。）</p>
+</div>
+
+<div class="section">
+  <h2><span class="num">五</span>现状</h2>
+  <table>
+    <thead><tr><th>功能</th><th>现状</th></tr></thead>
+    <tbody>
+      <tr><td>全服/个人邮件发送 API</td><td><span class="t-done">✅ 已实现</span></td></tr>
+      <tr><td>邮件列表拉取 / 标记已读 / 附件领取</td><td><span class="t-done">✅ 已实现</span></td></tr>
+      <tr><td>欢迎邮件自动发送 / 红点提示</td><td><span class="t-done">✅ 已实现</span></td></tr>
+      <tr><td>邮件数量上限控制（100条）</td><td><span class="t-miss">❌ 未实现</span></td></tr>
+      <tr><td>附件领取并发保护</td><td><span class="t-miss">❌ 未实现（当前简单的 _claiming 标记可能有竞争）</span></td></tr>
+    </tbody>
+  </table>
+  <hr>
+  <div class="note-box"><strong>🔗 关联系统：</strong>邮件是经济系统的辅助通道——通过邮件发放钻石/金币，不走直接修改数据库。欢迎邮件同时关联商店（初始钻石用于抽卡）和角色（初始角色配置）。</div>
+</div>
+
+</div>
+</body>
+</html>
