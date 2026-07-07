@@ -257,11 +257,7 @@
   <div class="nav-item" onclick="switchPage('shop')">
     <span class="icon">🏪</span><span class="label">商店与经济</span>
   </div>
-  <div class="nav-divider"></div>
-  <div class="nav-section">参考</div>
-  <div class="nav-item" onclick="switchPage('audit')">
-    <span class="icon">📋</span><span class="label">审计记录</span>
-  </div>
+  <!-- audit record removed per user request -->
 </nav>
 
 <!-- ===== Main Content ===== -->
@@ -709,78 +705,6 @@
       </tbody>
     </table>
     <div class="note-box"><strong>🔗 跨系统：</strong>商店提供功能牌抽卡（支持对战消耗）和角色招募（支持角色收集）；任务/签到/宝箱/邮件提供金币与钻石来源。</div>
-  </div>
-</div>
-
-<!-- ==================== 审计记录 ==================== -->
-<div id="page-audit" class="page">
-  <div class="header-card" style="--accent:#6b7280;">
-    <h1>一致性审计记录</h1>
-    <div class="meta">优化过程记录 · 非最终游戏规则</div>
-    <div class="desc">以下为本次一致性优化过程中发现的口径冲突及处理结论。原始文档已有此章节，此处集中保留供回溯参考，各系统 HTML 中不再重复。</div>
-  </div>
-
-  <div class="card">
-    <p style="font-size:13px;">本次优化重点不是大改数值，而是统一正式口径、删除无关内容、明确跨系统边界，集中约束容易冲突的规则。</p>
-    <div class="audit-grid">
-      <div class="item">
-        <div class="label">非正式内容</div>
-        <div class="desc">各文档存在非正式对照、背景说明等。</div>
-        <div class="risk">→ 已删除或改写为正式规则。</div>
-      </div>
-      <div class="item">
-        <div class="label">底部导航口径</div>
-        <div class="desc">主页/对战/排行/天梯混用。</div>
-        <div class="risk">→ 统一为商店/功能牌/对战/角色/排行；天梯归入"排行"。</div>
-      </div>
-      <div class="item">
-        <div class="label">开始对战</div>
-        <div class="desc">模式选择页 vs 直接匹配双口径。</div>
-        <div class="risk">→ 统一为点击后直接匹配，不先进模式选择。</div>
-      </div>
-      <div class="item">
-        <div class="label">功能牌配置</div>
-        <div class="desc">默认牌兜底 vs 必须配置双口径。</div>
-        <div class="risk">→ 统一为必须配置 2 张，不配置不进匹配。</div>
-      </div>
-      <div class="item">
-        <div class="label">PvE 是否计天梯</div>
-        <div class="desc">AI 兜底是否计入段位。</div>
-        <div class="risk">→ 首发计入，后续可拆分练习与正式。</div>
-      </div>
-      <div class="item">
-        <div class="label">PvP 公平性</div>
-        <div class="desc">角色加成/段位倍率被误读为影响战斗。</div>
-        <div class="risk">→ 角色被动不影响 PvP；段位倍率只影响结算奖励。</div>
-      </div>
-      <div class="item">
-        <div class="label">宝箱来源</div>
-        <div class="desc">对战奖励与商店宝箱冲突。</div>
-        <div class="risk">→ PvP 首发不发宝箱进度；PvE 胜+2，平/负+1。</div>
-      </div>
-      <div class="item">
-        <div class="label">赛季/通行证</div>
-        <div class="desc">天梯和商店可能提前引入。</div>
-        <div class="risk">→ 首发不做赛季重置/通行证/限时礼包/活动商店。</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2><span class="num">附</span>待确认事项</h2>
-    <table>
-      <thead><tr><th>事项</th><th>当前建议</th></tr></thead>
-      <tbody>
-        <tr><td>PvE 长期是否计天梯</td><td>首发计入；PvP 在线稳定后可拆分 AI 练习与正式天梯。</td></tr>
-        <tr><td>段位倍率作用范围</td><td>仅作用于对战基础金币/钻石，不影响任务/签到/邮件/宝箱/角色加成。</td></tr>
-        <tr><td>宝箱是否加入 PvP</td><td>首发不加，后续可做 PvP 胜场或段位宝箱。</td></tr>
-        <tr><td>外装系统首发范围</td><td>称号/头像框可先规划，不做首发 P0。</td></tr>
-      </tbody>
-    </table>
-
-    <div class="warn-box">
-      <strong>⚠ 审计发现：</strong>文档中"金币"和"钻石"的用途描述有轻微不一致——1.3 说"金币用于角色升级"，3.6 又给出金币奖励。实际钻石也可用于角色招募（6.4-6.5）。聚合页中已统一为：<strong>钻石是对战+日常+抽卡共用货币，金币是角色升级专用货币</strong>。
-    </div>
   </div>
 </div>
 
