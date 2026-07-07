@@ -68,10 +68,11 @@
   <h2><span class="num">一</span>系统定位</h2>
   <p>对战系统承接主页主按钮，完成匹配、出牌、小局与整场结算。</p>
   <ul>
-    <li><strong>入口：</strong>主页"开始对战"点击后进入；对局中隐藏底部导航。</li>
+    <li><strong>入口：</strong>玩家只看到"开始对战"，系统自动匹配真人，无人时自动转入人机兜底，玩家无感。</li>
     <li><strong>输出：</strong>胜负、奖励、任务进度、天梯变化、角色加成展示。</li>
-    <li><strong>前置条件：</strong>必须配置 2 张功能牌且库存足够；未配置时阻断并引导。</li>
+    <li><strong>前置条件：</strong>必须配置 2 张功能牌且库存足够。</li>
   </ul>
+  <p style="font-size:12.5px;color:var(--text-muted);">📌 系统需记录对手类型（真人/人机），用于排行榜、反刷和运营分析。</p>
 </div>
 
 <div class="section">
@@ -79,9 +80,9 @@
   <table>
     <thead><tr><th>模式</th><th>对手</th><th>入口</th><th>奖励 / 天梯</th><th>定位</th></tr></thead>
     <tbody>
-      <tr><td>PvP 天梯匹配</td><td>真人</td><td>开始对战后优先匹配</td><td>正式奖励 + 天梯变化</td><td>核心竞争模式</td></tr>
-      <tr><td>AI 对战</td><td>AI</td><td>PvP 超时兜底</td><td>正式奖励 + 可计入基础天梯</td><td>保证随时可玩</td></tr>
-      <tr><td>教学</td><td>AI / 固定流程</td><td>新号引导或教学入口</td><td>无正式奖励，不计天梯</td><td>理解规则与功能牌</td></tr>
+      <tr><td>PvP 天梯匹配</td><td>真人</td><td>开始对战自动匹配</td><td>正式奖励 + 天梯变化</td><td>核心竞争模式</td></tr>
+      <tr><td>人机兜底</td><td>AI</td><td>系统匹配不到真人时自动分配</td><td>正式奖励 + 可计入基础天梯</td><td>保证随时可玩，玩家视觉无感</td></tr>
+      <tr><td>教学</td><td>AI / 固定流程</td><td>新号引导入口</td><td>无正式奖励，不计天梯</td><td>理解规则与功能牌</td></tr>
     </tbody>
   </table>
 </div>
@@ -110,7 +111,7 @@
 <div class="section">
   <h2><span class="num">四</span>发起匹配流程</h2>
   <div class="flow-chart">
-    点击开始对战 <span class="arrow">→</span> 校验配置和库存 <span class="arrow">→</span> 进入匹配界面 <span class="arrow">→</span> 优先 PvP <span class="arrow">→</span> 超时进 AI <span class="arrow">→</span> 创建成功扣除库存
+    点击开始对战 <span class="arrow">→</span> 校验配置和库存 <span class="arrow">→</span> 进入匹配界面 <span class="arrow">→</span> 自动匹配真人 <span class="arrow">→</span> 无人则转人机兜底 <span class="arrow">→</span> 创建成功，服务端扣除库存
   </div>
   <table>
     <thead><tr><th>检查项</th><th>规则</th><th>不满足处理</th></tr></thead>
@@ -128,7 +129,7 @@
     <thead><tr><th>规则</th><th>说明</th></tr></thead>
     <tbody>
       <tr><td>带入数量</td><td>每场正式对战带入 2 张功能牌。</td></tr>
-      <tr><td>库存消耗</td><td><strong>以服务端结算为准。</strong>对战创建成功时各扣 1 张；取消/教学/未创建不扣。</td></tr>
+      <tr><td>库存消耗</td><td>由服务端在对局创建成功时扣除。结算结果中返回本场功能牌消耗状态。若未产生有效结算且非玩家主动投降/离场/恶意断线，则返还或补偿。</td></tr>
       <tr><td>异常返还</td><td>对局未产生有效结算且非玩家主动投降/离场/恶意断线时，返还已扣功能牌或发等价补偿。</td></tr>
       <tr><td>使用次数</td><td>每回合最多使用 2 张；每张牌每场只能使用 1 次。</td></tr>
       <tr><td>跨小局状态</td><td>小局切换时重置"每回合使用次数"，不重置已用功能牌。</td></tr>
@@ -139,7 +140,8 @@
 
 <div class="section">
   <h2><span class="num">六</span>结算与奖励</h2>
-  <p>结算向天梯、经济、任务和角色系统输出统一结果。所有正式奖励、段位变化、任务进度和胜负统计均以结算结果为准。<strong>段位倍率只作用于对战基础金币和钻石</strong>，不影响其他奖励。</p>
+  <p><strong>以服务端结算为唯一权威。</strong>结算向天梯、经济、任务和角色系统输出统一结果。每场输出：胜负、对手类型（真人/人机）、是否计入天梯、金币/钻石/宝箱变化、段位/星数/积分变化、连胜及保护标记、任务进度、角色加成、功能牌消耗结果。</p>
+  <p>段位倍率目前同时影响金币和钻石。<span style="color:#f04438;">⚠ 建议收紧：</span>金币吃完整倍率，钻石倍率压低或固定，避免高段位玩家资源滚雪球。</p>
   <div class="table-wrap">
   <table>
     <thead><tr><th>结果</th><th>金币</th><th>钻石</th><th>宝箱进度</th></tr></thead>
