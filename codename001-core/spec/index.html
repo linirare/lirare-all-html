@@ -206,14 +206,14 @@
     <tbody>
       <tr><td>对战结果</td><td></td><td></td></tr>
       <tr><td style="padding-left:18px;">settlement_id</td><td>string</td><td>结算唯一ID，用于对账和客服查证</td></tr>
-      <tr><td style="padding-left:18px;">result</td><td>win/lose</td><td>本场最终胜负</td></tr>
+      <tr><td style="padding-left:18px;">result</td><td>win/lose</td><td>本场最终胜负（5局3胜必分胜负，不产出平局）</td></tr>
       <tr><td style="padding-left:18px;">match_origin</td><td>string</td><td>真人匹配 / 人机兜底 / 教学</td></tr>
       <tr><td style="padding-left:18px;">opponent_type</td><td>string</td><td>真人 / AI</td></tr>
       <tr><td style="padding-left:18px;">fallback_reason</td><td>string|null</td><td>匹配超时 / 对手创建前掉线 / 系统兜底 / null（真人匹配成功）</td></tr>
       <tr><td style="padding-left:18px;">is_ranked</td><td>bool</td><td>是否计入天梯</td></tr>
       <tr><td>奖励变化</td><td></td><td></td></tr>
       <tr><td style="padding-left:18px;">gold_change</td><td>int</td><td>金币变化量（金币段位倍率）</td></tr>
-      <tr><td style="padding-left:18px;">diamond_change</td><td>int</td><td>钻石变化量（钻石段位倍率，首发固定或低倍率）</td></tr>
+      <tr><td style="padding-left:18px;">diamond_change</td><td>int</td><td>钻石变化量，首发不吃段位倍率（固定 1.0）</td></tr>
       <tr><td>宝箱</td><td></td><td></td></tr>
       <tr><td style="padding-left:18px;">chest_before</td><td>int</td><td>宝箱变化前进度</td></tr>
       <tr><td style="padding-left:18px;">chest_delta</td><td>int</td><td>本场宝箱进度变化量</td></tr>
