@@ -217,7 +217,7 @@
 <nav class="sidebar">
   <div class="brand">
     代号 001
-    <small>全系统策划案 v1.0</small>
+    <small>全系统策划案 v1.0 · 摘要版</small>
   </div>
   <div class="nav-section">系统</div>
   <div class="nav-item active" onclick="switchPage('home')">
@@ -360,15 +360,18 @@
 
   <div class="card">
     <h2><span class="num">六</span>红点规则与刷新</h2>
-    <p><strong>通用逻辑：</strong>有未读 / 可领 / 可升级 → 亮红点；查看或操作后消失。覆盖：功能牌、任务/奖励、聊天、邮件、角色、商店/礼包、排行、运营入口。</p>
+    <p><strong>红点规则：</strong>仅以下场景强提示红点：<strong>可领取、未读、新解锁、可升级</strong>。不强提示排行变化、运营入口、礼包推荐、功能牌库存不足（库存不足由开战时阻断引导，不做红点）。</p>
+    <p>覆盖位置：功能牌（可升级/新获得）、任务/奖励（可领取）、聊天（未读）、邮件（未读/附件未领）、角色（可升级/新解锁）、商店（可领取/宝箱满）。</p>
     <p style="font-size:12.5px;color:var(--text-muted);">注：任务/奖励入口暂由结算页和弹窗承接，主页模块表中未单独列出。</p>
-    <p><strong>刷新时机：</strong></p>
+    <p><strong>刷新时机（事件驱动，不设定时轮询）：</strong></p>
     <ul>
       <li><strong>首次进入主页</strong> → 全量刷新资源、身份、功能牌、红点状态。</li>
       <li><strong>对战结算返回</strong> → 刷新资源、段位、奖励、宝箱、功能牌状态。</li>
       <li><strong>商店/功能牌/角色返回</strong> → 刷新资源、上阵配置、对应入口红点。</li>
-      <li><strong>定时刷新</strong> → 仅聊天/邮件/倒计时。</li>
+      <li><strong>聊天、邮件、公告、倒计时</strong> → 由服务端推送、前台恢复检测或低频轮询更新，不设全局定时轮询。</li>
     </ul>
+
+    <div class="note-box" style="font-size:12.5px;margin-top:8px;"><strong>修改说明：</strong>去掉了原"定时刷新"，改为纯事件驱动+服务端推送。资源/段位/任务等只在关键事件触发时刷新。</div>
   </div>
 
   <div class="card">
@@ -410,7 +413,7 @@
   <div class="card">
     <h2><span class="num">一</span>系统定位</h2>
     <ul>
-      <li><strong>入口：</strong>主页"开始对战"点击后进入；对局中隐藏底部导航。</li>
+      <li><strong>入口：</strong>玩家只看到"开始对战"，系统自动匹配，超时自动分配人机，玩家无感。</li>
       <li><strong>输出：</strong>胜负、奖励、任务进度、天梯变化、角色加成展示。</li>
       <li><strong>前置条件：</strong>必须配置 2 张功能牌且库存足够。</li>
     </ul>
@@ -421,11 +424,12 @@
     <table>
       <thead><tr><th>模式</th><th>对手</th><th>入口</th><th>奖励/天梯</th><th>定位</th></tr></thead>
       <tbody>
-        <tr><td>PvP 天梯匹配</td><td>真人</td><td>开始对战后优先匹配</td><td>正式奖励 + 天梯变化</td><td>核心竞争模式</td></tr>
-        <tr><td>AI 对战</td><td>AI</td><td>PvP 超时兜底</td><td>正式奖励 + 可计入基础天梯</td><td>保证随时可玩</td></tr>
-        <tr><td>教学</td><td>AI/固定流程</td><td>新号引导或教学入口</td><td>无正式奖励，不计天梯</td><td>理解规则与功能牌</td></tr>
+        <tr><td>PvP 天梯匹配</td><td>真人</td><td>开始对战自动匹配</td><td>正式奖励 + 天梯变化</td><td>核心竞争模式</td></tr>
+        <tr><td>人机兜底<br><span style="font-size:11px;color:var(--text-muted);">PvP 超时自动转入</span></td><td>AI</td><td>PvP 超时自动转入</td><td>正式奖励 + 可计入基础天梯</td><td>保证随时可玩</td></tr>
+        <tr><td>教学</td><td>AI/固定流程</td><td>新号引导入口</td><td>无奖励，不计天梯</td><td>理解规则</td></tr>
       </tbody>
     </table>
+    <p style="font-size:12px;color:var(--text-muted);">📌 系统需记录对手类型（真人/人机），用于后续排行、反刷和运营分析。</p>
   </div>
 
   <div class="card">
@@ -460,7 +464,8 @@
       <thead><tr><th>规则</th><th>说明</th></tr></thead>
       <tbody>
         <tr><td>带入数量</td><td>每场 2 张。</td></tr>
-        <tr><td>库存消耗</td><td>对战创建成功时各扣 1 张；取消/教学/未创建不扣。</td></tr>
+        <tr><td>库存消耗</td><td><strong>以服务端结算为准。</strong>对战创建成功时各扣 1 张；取消/教学/未创建不扣。</td></tr>
+        <tr><td>异常返还</td><td>对局未产生有效结算且非玩家主动投降/离场/恶意断线时，返还已扣功能牌或发等价补偿。</td></tr>
         <tr><td>使用次数</td><td>每回合最多用 2 张；每张牌每场只能用 1 次。</td></tr>
         <tr><td>跨小局</td><td>重置回合次数，不重置已用功能牌。</td></tr>
       </tbody>
@@ -469,12 +474,14 @@
 
   <div class="card">
     <h2><span class="num">六</span>结算与奖励</h2>
+    <p><strong>以服务端结算为唯一权威。</strong>客户端只展示结果，不计算段位、奖励、库存。</p>
+    <p>每场结算输出：胜负、对手类型（真人/人机）、是否计入天梯、金币/钻石/宝箱变化、段位/星数/积分变化、连胜及保护标记、任务进度、角色加成、功能牌消耗结果。</p>
     <p>段位倍率仅作用于对战基础金币/钻石，不影响其他奖励。</p>
     <div class="table-wrap">
     <table>
       <thead><tr><th>结果</th><th>金币</th><th>钻石</th><th>宝箱进度</th></tr></thead>
       <tbody>
-        <tr><td>PvP 胜利</td><td>200 × 倍率</td><td>50 × 倍率</td><td>首发不积累</td></tr>
+        <tr><td>PvP 胜利</td><td>200 × 倍率</td><td>50 × 倍率<span style="font-size:11px;color:var(--text-muted);">⚠</span></td><td>首发不积累</td></tr>
         <tr><td>PvP 失败</td><td>80 × 倍率</td><td>20 × 倍率</td><td>首发不积累</td></tr>
         <tr><td>AI 胜利</td><td>200 × 倍率</td><td>50 × 倍率</td><td>+2</td></tr>
         <tr><td>AI 平局</td><td>120 × 倍率</td><td>25 × 倍率</td><td>+1</td></tr>
@@ -482,6 +489,7 @@
         <tr><td>教学</td><td>无</td><td>无</td><td>无</td></tr>
       </tbody>
     </table>
+    <p style="font-size:12px;color:var(--text-muted);">⚠ 高段位钻石倍率过高会导致强玩家抽卡更快、资源滚雪球。建议段位倍率主要影响金币，钻石倍率压低或固定。</p>
     </div>
   </div>
 
@@ -538,6 +546,7 @@
 
   <div class="card">
     <h2><span class="num">三</span>升降段与保护</h2>
+    <p><strong>小段顺序：</strong>Ⅲ → Ⅱ → Ⅰ → 升大段。示例：青铜Ⅲ 2/3星胜利 → 青铜Ⅱ 0/3星。</p>
     <ul>
       <li>满星胜利 → 晋级下一段，星数重置为 0。</li>
       <li>白银+ 在 0 星失败 → 降小段；大段最低小段无保护则降大段。</li>
@@ -571,6 +580,7 @@
   <div class="card">
     <h2><span class="num">五</span>排行页</h2>
     <p>归属底部"排行"入口。排序：大段 → 小段 → 星数/积分 → 胜率/总胜场。不建议首发强红点。</p>
+    <p><strong>后台口径：</strong>至少保留综合天梯、PvP 胜率、人机局占比三个维度。首发页面可只展示综合榜，数据口径先埋好。</p>
     <table>
       <thead><tr><th>输出</th><th>使用方</th><th>用途</th></tr></thead>
       <tbody>
@@ -720,6 +730,18 @@
       </tbody>
     </table>
     <div class="note-box"><strong>🔗 跨系统：</strong>商店提供功能牌抽卡（支持对战消耗）和角色招募（支持角色收集）；任务/签到/宝箱/邮件提供金币与钻石来源。</div>
+  </div>
+  <div class="card">
+    <h2><span class="num">六</span>经济日收益测算（参考）</h2>
+    <table>
+      <thead><tr><th>玩家类型</th><th>每日对战</th><th>钻石收入</th><th>功能牌消耗</th><th>抽卡频率</th></tr></thead>
+      <tbody>
+        <tr><td>轻度（每日任务）</td><td>3 场 PvE</td><td>~70💎 任务 + 签到 + 宝箱</td><td>6 张/天</td><td>约 3 天一次十连</td></tr>
+        <tr><td>中度（任务+额外）</td><td>6-8 场混打</td><td>~150💎</td><td>12-16 张/天</td><td>约 1-2 天一次十连</td></tr>
+        <tr><td>重度（高活跃）</td><td>15+ 场</td><td>~300💎</td><td>30+ 张/天</td><td>每天可十连</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--text-muted);">📌 参考值，具体数值需上线后验证。钻石产出过高会导致抽卡系统失控，关注重度玩家日收益是否超标。</p>
   </div>
   <div class="card" style="text-align:center;padding:14px 20px;">
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版商店经济策划案 ▼</p>
