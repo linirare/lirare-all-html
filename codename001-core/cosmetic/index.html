@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代号001 · 外装系统策划案 v2.0</title>
+<style>
+  :root { --bg: #f8f9fb; --surface: #ffffff; --border: #e4e7ed; --accent: #d946ef; --accent-soft: #fae8ff; --text: #1a1a2e; --text-secondary: #5a6072; --text-muted: #9098a8; --radius: 12px; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Helvetica Neue", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 40px 20px; }
+  .container { max-width: 920px; margin: 0 auto; }
+  .header { background: var(--surface); border-radius: var(--radius); padding: 36px 48px; margin-bottom: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); }
+  .header h1 { font-size: 26px; font-weight: 700; color: var(--text); }
+  .header .meta { display: flex; gap: 20px; margin-top: 10px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
+  .header .desc { margin-top: 14px; padding: 12px 16px; background: var(--accent-soft); border-radius: 8px; font-size: 13.5px; color: var(--text-secondary); border-left: 3px solid var(--accent); }
+  .section { background: var(--surface); border-radius: var(--radius); padding: 28px 44px; margin-bottom: 16px; border: 1px solid var(--border); }
+  .section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: flex; align-items: center; gap: 8px; }
+  .section h2 .num { background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: 5px; }
+  .section h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+  .section h3:first-of-type { margin-top: 0; }
+  .section p { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; }
+  .section ul, .section ol { margin: 6px 0 12px 18px; font-size: 14px; color: var(--text-secondary); }
+  .section li { margin-bottom: 3px; }
+  .section li strong { color: var(--text); }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 13px; border-radius: 8px; overflow: hidden; }
+  thead { background: var(--accent); color: #fff; }
+  th { padding: 6px 9px; text-align: left; font-weight: 600; font-size: 11.5px; }
+  td { padding: 6px 9px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; font-size: 12.5px; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
+  .table-wrap { overflow-x: auto; margin: 10px 0 16px; }
+  .table-wrap table { margin: 0; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+  .note-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 6px; font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+  .warn-box { background: #fef3f2; border-left: 3px solid #f04438; padding: 10px 14px; border-radius: 6px; font-size: 13px; color: #912018; margin-bottom: 12px; }
+  .mock { background: #f4f5f7; padding: 14px 18px; border-radius: 8px; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 13px; line-height: 1.8; margin: 8px 0 12px; border: 1px solid var(--border); white-space: pre; overflow-x: auto; color: var(--text-secondary); }
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 6px; }
+  .t-done { color: #059669; font-weight: 600; }
+  .t-miss { color: #f04438; font-weight: 600; }
+  @media (max-width: 720px) { body { padding: 16px 12px; } .header, .section { padding: 20px 18px; } td:first-child { white-space: normal; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>代号 001 · 外装系统策划案</h1>
+  <div class="meta">
+    <span>📄 v2.0</span>
+    <span>📅 2026-07-07</span>
+    <span>🏷️ 设计文档 / 规划中</span>
+    <span>👑 外装</span>
+  </div>
+  <div class="desc">
+    外装系统包括称号和头像框，是玩家长期目标和成就感的视觉载体。解锁条件全部基于对战成就和段位——不做付费点，打了就有。目前代码已丢失，需重新实现。
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">一</span>设计原则</h2>
+  <ul>
+    <li><strong>不做付费点（至少首发不做）</strong>——解锁条件全部基于对局成就和段位。用钱买就没有炫耀价值。</li>
+    <li><strong>自动解锁，不需要主动领取</strong>——条件满足即获得，外装本身不维护独立进度数据。</li>
+    <li><strong>数据源全部来自成就统计系统</strong>——总场次、连胜、胜率、段位、收集率。</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2><span class="num">二</span>称号</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>名称</th><th>解锁条件</th><th>设计理由</th></tr></thead>
+    <tbody>
+      <tr><td>初来乍到</td><td>默认解锁</td><td>保证称号位不为空</td></tr>
+      <tr><td>百战勇士</td><td>总场次 ≥ 100</td><td>证明玩家已经玩了足够多的对局</td></tr>
+      <tr><td>沙场老兵</td><td>总场次 ≥ 500</td><td>更高层级的场次荣誉</td></tr>
+      <tr><td>天选之人</td><td>连胜 ≥ 10</td><td>运气和实力的综合证明</td></tr>
+      <tr><td>神枪手</td><td>胜率 ≥ 65%（≥50场）</td><td>高胜率的含金量证明</td></tr>
+      <tr><td>钻石VIP</td><td>段位达到铂金</td><td>高段位荣誉</td></tr>
+      <tr><td>最强王者</td><td>段位达到传奇</td><td>顶级段位荣誉</td></tr>
+      <tr><td>收藏家</td><td>拥有全部 22 张功能牌</td><td>全收集成就</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">三</span>头像框</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>名称</th><th>解锁条件</th></tr></thead>
+    <tbody>
+      <tr><td>经典款</td><td>默认解锁</td></tr>
+      <tr><td>金色年华</td><td>总场次 ≥ 200</td></tr>
+      <tr><td>钻石边框</td><td>段位达到铂金</td></tr>
+      <tr><td>热火</td><td>连胜 ≥ 8</td></tr>
+      <tr><td>王者之冠</td><td>段位达到传奇</td></tr>
+      <tr><td>星光</td><td>拥有全部角色</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">四</span>解锁时机与条件</h2>
+  <table>
+    <thead><tr><th>触发时机</th><th>检查内容</th></tr></thead>
+    <tbody>
+      <tr><td>对局结算后</td><td>总场次、连胜、胜率类称号/头像框</td></tr>
+      <tr><td>升段时</td><td>段位类称号/头像框</td></tr>
+      <tr><td>抽卡获得新牌时</td><td>收藏家称号</td></tr>
+      <tr><td>获得新角色时</td><td>星光头像框</td></tr>
+      <tr><td>登录时</td><td>全部检查一次（兜底）</td></tr>
+    </tbody>
+  </table>
+  <p><strong>条件计算方式：</strong></p>
+  <ul>
+    <li>总场次 ≥ 100/500 → <code>game_data.total</code></li>
+    <li>连胜 ≥ 10/8 → <code>game_data.maxStreak</code></li>
+    <li>胜率 ≥ 65%（≥50场）→ <code>wins/total ≥ 0.65 && total ≥ 50</code></li>
+    <li>段位达铂金/传奇 → <code>rankIdx ≥ 4 / ≥ 6</code></li>
+    <li>拥有全部功能牌 → 22 张技能库存均 &gt; 0</li>
+    <li>拥有全部角色 → 4 个角色全部解锁</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2><span class="num">五</span>展示位置</h2>
+  <table>
+    <thead><tr><th>位置</th><th>展示内容</th><th>优先级</th></tr></thead>
+    <tbody>
+      <tr><td>排行榜条目</td><td>称号 + 头像框</td><td><span class="tag t0">P1</span></td></tr>
+      <tr><td>个人信息/用户菜单</td><td>称号 + 头像框 + 段位徽章</td><td><span class="tag t0">P1</span></td></tr>
+      <tr><td>对局中对手信息条</td><td>称号（可选）</td><td>P2</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">六</span>选择界面</h2>
+  <div class="mock">┌─────────────────────────┐
+│  选择外观                  │
+├─────────────────────────┤
+│  当前装备预览               │
+│  [称号] + [头像框] 组合     │
+├─────────────────────────┤
+│  📛 称号                   │
+│  [已选] [百战勇士] [沙场]   │
+│  [暗]天选之人 (未解锁)      │
+├─────────────────────────┤
+│  🖼️ 头像框                 │
+│  [已选] [金色年华] [热火]   │
+│  [暗]王者之冠 (未解锁)      │
+└─────────────────────────┘</div>
+  <p>未解锁项目显示为灰色，可查看解锁条件。已解锁项目点击即可应用。数据存储在 <code>state.cosmetic = { title, frame }</code>，跨设备同步。</p>
+</div>
+
+<div class="section">
+  <h2><span class="num">七</span>现状</h2>
+  <table>
+    <thead><tr><th>功能</th><th>现状</th></tr></thead>
+    <tbody>
+      <tr><td>称号/头像框列表定义</td><td><span class="t-miss">❌ 代码丢失</span></td></tr>
+      <tr><td>解锁判定逻辑</td><td><span class="t-miss">❌ 代码丢失</span></td></tr>
+      <tr><td>外装选择界面</td><td><span class="t-miss">❌ 代码丢失</span></td></tr>
+      <tr><td>排行榜展示外装</td><td><span class="t-miss">❌ 代码丢失</span></td></tr>
+      <tr><td>对局中展示外装</td><td><span class="t-miss">❌ 代码丢失</span></td></tr>
+    </tbody>
+  </table>
+  <div class="warn-box">
+    <strong>⚠ 代码状态：</strong>整套外装系统在实现后被丢失（可能因文件覆盖或分支切换），需重新编写。但策划定义完整，可基于本文档直接重建。
+  </div>
+  <hr>
+  <div class="note-box"><strong>🔗 关联系统：</strong>外装数据源全部来自成就统计系统（总场次/连胜/胜率/段位/收集率）。外装本身不维护独立进度数据。</div>
+</div>
+
+</div>
+</body>
+</html>

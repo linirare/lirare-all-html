@@ -241,6 +241,12 @@
   <div class="nav-item" onclick="switchPage('cards')">
     <span class="icon">🃏</span><span class="label">功能牌</span>
   </div>
+  <div class="nav-item" onclick="switchPage('achieve')">
+    <span class="icon">📊</span><span class="label">成就统计</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('cosmetic')">
+    <span class="icon">👑</span><span class="label">外装系统</span>
+  </div>
   <div class="nav-divider"></div>
   <div class="nav-section">执行</div>
   <div class="nav-item" onclick="switchPage('spec')">
@@ -852,6 +858,68 @@
   <div class="card" style="text-align:center;padding:14px 20px;">
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版功能牌策划案 ▼</p>
     <iframe src="cards/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
+  </div>
+</div>
+
+<!-- ==================== 成就统计 ==================== -->
+<div id="page-achieve" class="page">
+  <div class="header-card" style="--accent:#0d9488;">
+    <h1>代号 001 · 成就&统计策划案</h1>
+    <div class="meta">v2.0 | 2026-07-07 | 设计文档</div>
+    <div class="desc">成就系统是 retrospective 的成就感，不是 meta 任务列表。展示数据，不给进度条和奖励引导。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>定位</h2>
+    <p>与每日任务的区别：每日任务是"明天刷新你要做"，成就是"你自己打出来的记录，随时回顾"。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>追踪数据</h2>
+    <p><strong>对战统计：</strong>总场次、胜场、连胜、最大连胜、段位、星数/积分</p>
+    <p><strong>牌型记录：</strong>10 种牌型各自出现次数（handCounts 数组）</p>
+    <p><strong>功能牌统计：</strong>每张功能牌独立使用次数（skills[id].uses）</p>
+    <div class="warn-box" style="font-size:12px;padding:8px 12px;">⚠ 排行榜和个人页数据源不同，存在不一致风险，需统一</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>成就页</h2>
+    <p>模态弹窗，展示总览 + 牌型记录 + 功能牌使用。没有进度条、没有奖励引导——纯展示。</p>
+  </div>
+
+  <div class="card" style="text-align:center;padding:14px 20px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版成就统计策划案 ▼</p>
+    <iframe src="achieve/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
+  </div>
+</div>
+
+<!-- ==================== 外装系统 ==================== -->
+<div id="page-cosmetic" class="page">
+  <div class="header-card" style="--accent:#d946ef;">
+    <h1>代号 001 · 外装系统策划案</h1>
+    <div class="meta">v2.0 | 2026-07-07 | 设计文档 / 规划中</div>
+    <div class="desc">称号 + 头像框，解锁条件全部基于成就和段位，不做付费点。代码已丢失，需重新实现。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>称号（8 个）</h2>
+    <p>初来乍到（默认）· 百战勇士（100场）· 沙场老兵（500场）· 天选之人（10连胜）· 神枪手（65%胜率）· 钻石VIP（铂金）· 最强王者（传奇）· 收藏家（全功能牌）</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>头像框（6 个）</h2>
+    <p>经典款（默认）· 金色年华（200场）· 钻石边框（铂金）· 热火（8连胜）· 王者之冠（传奇）· 星光（全角色）</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>解锁与展示</h2>
+    <p>对局结算/升段/抽卡/登录时自动检查条件，满足即解锁。展示在排行榜、个人信息、对局中。</p>
+    <div class="warn-box" style="font-size:12px;padding:8px 12px;">⚠ 代码已丢失，需重新编写，策划定义完整可直接用</div>
+  </div>
+
+  <div class="card" style="text-align:center;padding:14px 20px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版外装系统策划案 ▼</p>
+    <iframe src="cosmetic/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
   </div>
 </div>
 
