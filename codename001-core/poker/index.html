@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代号001 · 牌型系统策划案 v1.0</title>
+<style>
+  :root { --bg: #f8f9fb; --surface: #ffffff; --border: #e4e7ed; --accent: #dc2626; --accent-soft: #fee2e2; --text: #1a1a2e; --text-secondary: #5a6072; --text-muted: #9098a8; --radius: 12px; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Helvetica Neue", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 40px 20px; }
+  .container { max-width: 960px; margin: 0 auto; }
+  .header { background: var(--surface); border-radius: var(--radius); padding: 36px 48px; margin-bottom: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); }
+  .header h1 { font-size: 26px; font-weight: 700; color: var(--text); }
+  .header .meta { display: flex; gap: 20px; margin-top: 10px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
+  .header .desc { margin-top: 14px; padding: 12px 16px; background: var(--accent-soft); border-radius: 8px; font-size: 13.5px; color: var(--text-secondary); border-left: 3px solid var(--accent); }
+  .section { background: var(--surface); border-radius: var(--radius); padding: 28px 44px; margin-bottom: 16px; border: 1px solid var(--border); }
+  .section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: flex; align-items: center; gap: 8px; }
+  .section h2 .num { background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: 5px; }
+  .section h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+  .section h3:first-of-type { margin-top: 0; }
+  .section p { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; }
+  .section ul, .section ol { margin: 6px 0 12px 18px; font-size: 14px; color: var(--text-secondary); }
+  .section li { margin-bottom: 3px; }
+  .section li strong { color: var(--text); }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 13px; border-radius: 8px; overflow: hidden; }
+  thead { background: var(--accent); color: #fff; }
+  th { padding: 6px 9px; text-align: left; font-weight: 600; font-size: 11.5px; }
+  td { padding: 6px 9px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; font-size: 12.5px; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
+  .table-wrap { overflow-x: auto; margin: 10px 0 16px; }
+  .table-wrap table { margin: 0; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+  .note-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 6px; font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+  .code-block { background: #f4f5f7; padding: 10px 14px; border-radius: 6px; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 12.5px; line-height: 1.8; margin: 8px 0 12px; overflow-x: auto; white-space: pre; border: 1px solid var(--border); }
+  .tree { background: #f4f5f7; padding: 12px 16px; border-radius: 6px; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 12.5px; line-height: 2; margin: 8px 0 12px; border: 1px solid var(--border); white-space: pre; overflow-x: auto; color: var(--text-secondary); }
+  @media (max-width: 720px) { body { padding: 16px 12px; } .header, .section { padding: 20px 18px; } td:first-child { white-space: normal; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>代号 001 · 牌型系统策划案</h1>
+  <div class="meta">
+    <span>📄 v1.0</span>
+    <span>📅 2026-07-07</span>
+    <span>🏷️ 核心机制</span>
+    <span>🃏 牌型</span>
+  </div>
+  <div class="desc">
+    标准 52 张扑克牌，10 种牌型，评分向量比较，不考虑花色。这是对战系统最底层的规则，所有出牌、技能、结算都以此为基础。
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="num">一</span>牌组基础</h2>
+  <table>
+    <thead><tr><th>维度</th><th>规格</th></tr></thead>
+    <tbody>
+      <tr><td>花色</td><td>♠黑桃 ♥红心 ♦方块 ♣梅花，4 种无大小区分</td></tr>
+      <tr><td>点数</td><td>2~A，13 个等级。A=14 最大，2=2 最小。顺子 A-2-3-4-5 中 A 视作 1</td></tr>
+      <tr><td>总张数</td><td>4 × 13 = 52 张，无大小王</td></tr>
+      <tr><td>Joker</td><td>无原生 Joker。功能牌"5-Joker"可在第 5 回合产生百搭牌</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="num">二</span>10 种牌型</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>等级</th><th>牌型</th><th>英文</th><th>条件</th><th>比较规则</th></tr></thead>
+    <tbody>
+      <tr><td>9</td><td>皇家同花顺</td><td>Royal Flush</td><td>同花色 + 连续 + A 最大</td><td>所有皇家同花顺相等 → 平局</td></tr>
+      <tr><td>8</td><td>同花顺</td><td>Straight Flush</td><td>同花色 + 连续，非皇家</td><td>比顺子最大点数，相同则平局</td></tr>
+      <tr><td>7</td><td>四条</td><td>Four of a Kind</td><td>4 张同点 + 1 张踢脚</td><td>先比四条点数，再比踢脚牌</td></tr>
+      <tr><td>6</td><td>葫芦</td><td>Full House</td><td>3 张同点 + 2 张同点</td><td>先比三条点数，再比对子点数</td></tr>
+      <tr><td>5</td><td>同花</td><td>Flush</td><td>5 张同花色，不连续</td><td>从大到小逐张比 5 张点数</td></tr>
+      <tr><td>4</td><td>顺子</td><td>Straight</td><td>5 张连续，花色≥2种</td><td>比顺子最大点数，A-2-3-4-5 最小</td></tr>
+      <tr><td>3</td><td>三条</td><td>Three of a Kind</td><td>3 张同点 + 2 张不同</td><td>先比三条点数，再比剩余两张</td></tr>
+      <tr><td>2</td><td>两对</td><td>Two Pair</td><td>2 组对子 + 1 张踢脚</td><td>先比高对，再比低对，再比踢脚</td></tr>
+      <tr><td>1</td><td>一对</td><td>One Pair</td><td>1 组对子 + 3 张</td><td>先比对子，再逐张比剩余 3 张</td></tr>
+      <tr><td>0</td><td>高牌</td><td>High Card</td><td>以上都不满足</td><td>从大到小逐张比 5 张点数</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>评分向量</h3>
+  <p>每种牌型映射为评分向量 <code>[牌型等级, 主比较值, 次比较值, ...]</code>，逐位比较，第一位不同即决定胜负。</p>
+  <div class="code-block">皇家同花顺: [9, 14]
+同花顺: [8, straightHigh]
+四条: [7, 四条点数, 踢脚牌]
+葫芦: [6, 三条点数, 对子点数]
+同花: [5, r1, r2, r3, r4, r5]    // 5 张点数降序
+顺子: [4, straightHigh]
+三条: [3, 三条点数, 踢脚1, 踢脚2]
+两对: [2, 高对, 低对, 踢脚]
+一对: [1, 对子, 踢1, 踢2, 踢3]
+高牌: [0, r1, r2, r3, r4, r5]</div>
+  <p><strong>一律不考虑花色。</strong>花色相同时出同花的概率已反映在牌型等级中。</p>
+</div>
+
+<div class="section">
+  <h2><span class="num">三</span>牌型判定树</h2>
+  <div class="tree">5 张同花色？
+  是 → 5 张连续？
+        是 + A 最大 → 皇家同花顺 (9)
+        是 + A 非最大 → 同花顺 (8)
+        否 → 同花 (5)
+  否 → 5 张连续？
+        是 → 顺子 (4)
+        否 → 看点数分布
+              4 张同点 → 四条 (7)
+              3+2 → 葫芦 (6)
+              3+1+1 → 三条 (3)
+              2+2+1 → 两对 (2)
+              2+1+1+1 → 一对 (1)
+              全不同 → 高牌 (0)</div>
+
+  <h3>平局条件</h3>
+  <p>双方评分向量完全相等 → 平局。PvE 平局无胜负加减，PvP 平局不计入连胜/连败，双方得少量参与奖励。</p>
+</div>
+
+<div class="section">
+  <h2><span class="num">四</span>与游戏机制交互</h2>
+
+  <h3>4.1 选牌组合</h3>
+  <p>玩家从手牌中选 N 张，与 3 张公共牌组合。从 N+3 张中<strong>自动选取最优 5 张</strong>，玩家"选"的牌不一定是最终使用的牌。</p>
+
+  <h3>4.2 功能牌干预</h3>
+  <table>
+    <thead><tr><th>功能牌</th><th>影响</th></tr></thead>
+    <tbody>
+      <tr><td>幸运日（lucky）</td><td>本回合出顺子时按同花顺判定（cat 8）</td></tr>
+      <tr><td>加一减一（plusminus）</td><td>改变一张牌点数 ±1，可能改变顺子/牌型</td></tr>
+      <tr><td>5-Joker（fivejoker）</td><td>第 5 回合产生 Joker，可作为任意点数花色百搭</td></tr>
+    </tbody>
+  </table>
+  <p>Joker 判定：尝试所有点数+花色组合，选取能形成的最优牌型。</p>
+
+  <h3>4.3 成就系统</h3>
+  <p>每小局结算时，最优牌型的 cat（9-0）在对应 handCounts 索引 +1，用于成就页展示。</p>
+  <hr>
+  <div class="note-box"><strong>🔗 关联系统：</strong>牌型系统是对战系统的底层规则，所有出牌、技能、结算都以此为基础。成就统计系统记录 10 种牌型的出现次数。功能牌列表中的 lucky、plusminus、fivejoker 会干预牌型判定。</div>
+</div>
+
+</div>
+</body>
+</html>

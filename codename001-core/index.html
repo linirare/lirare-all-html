@@ -241,6 +241,9 @@
   <div class="nav-item" onclick="switchPage('cards')">
     <span class="icon">🃏</span><span class="label">功能牌</span>
   </div>
+  <div class="nav-item" onclick="switchPage('poker')">
+    <span class="icon">🃏</span><span class="label">牌型系统</span>
+  </div>
   <div class="nav-item" onclick="switchPage('achieve')">
     <span class="icon">📊</span><span class="label">成就统计</span>
   </div>
@@ -863,6 +866,36 @@
   <div class="card" style="text-align:center;padding:14px 20px;">
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版功能牌策划案 ▼</p>
     <iframe src="cards/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
+  </div>
+</div>
+
+<!-- ==================== 牌型系统 ==================== -->
+<div id="page-poker" class="page">
+  <div class="header-card" style="--accent:#dc2626;">
+    <h1>代号 001 · 牌型系统</h1>
+    <div class="meta">v1.0 | 2026-07-07 | 核心机制</div>
+    <div class="desc">52 张标准扑克牌，10 种牌型，评分向量比较。对战系统最底层的规则，所有出牌和结算以此为基础。</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">一</span>牌组</h2>
+    <p>52 张，4 花色（无大小区分），点数 2~A（A=14 最大，A-2-3-4-5 中=1）。无原生 Joker。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">二</span>10 种牌型</h2>
+    <p>9 皇家同花顺 → 8 同花顺 → 7 四条 → 6 葫芦 → 5 同花 → 4 顺子 → 3 三条 → 2 两对 → 1 一对 → 0 高牌</p>
+    <p>比较用评分向量 <code>[等级, 主比较值, 次比较值, ...]</code>，逐位比较。不考虑花色。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">三</span>平局</h2>
+    <p>评分向量完全相等即平局。PvE 平局无胜负，PvP 平局不计连胜/连败。</p>
+  </div>
+
+  <div class="card" style="text-align:center;padding:14px 20px;">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">▼ 完整版牌型系统策划案 ▼</p>
+    <iframe src="poker/" style="width:100%;height:700px;border:1px solid var(--border);border-radius:6px;background:#fff;"></iframe>
   </div>
 </div>
 
