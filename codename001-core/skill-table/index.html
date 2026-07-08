@@ -2,89 +2,126 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>代号001 · 技能配表</title>
+<title>代号001 · 技能效果配表</title>
 <style>
-  body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:1400px; margin:20px auto; padding:20px; background:#f5f6f8; color:#1a1a2e; }
-  h1 { font-size:18px; margin-bottom:4px; }
-  .sub { color:#9098a8; font-size:12px; margin-bottom:16px; }
-  table { width:100%; border-collapse:collapse; font-size:12px; background:#fff; margin-bottom:24px; }
-  th { background:#1a1a2e; color:#fff; padding:5px 6px; text-align:center; font-size:11px; }
-  td { padding:5px 6px; border:1px solid #e4e7ed; text-align:center; }
-  td.left { text-align:left; }
+  body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:1200px; margin:20px auto; padding:20px; background:#f5f6f8; color:#1a1a2e; }
+  h1 { font-size:18px; margin:28px 0 4px; }
+  h2 { font-size:15px; margin:0 0 4px; color:#dc2626; }
+  .sub { color:#9098a8; font-size:12px; margin-bottom:14px; }
+  table { width:100%; border-collapse:collapse; font-size:12.5px; background:#fff; margin-bottom:20px; }
+  th { background:#1a1a2e; color:#fff; padding:6px 8px; text-align:center; font-size:11px; }
+  td { padding:5px 8px; border:1px solid #e4e7ed; text-align:center; }
+  td.l { text-align:left; }
   tr:nth-child(even) td { background:#fafbfc; }
-  .header-desc td { background:#dbeafe; font-size:10px; color:#1e40af; text-align:left; padding:4px 6px; }
+  .hd td { background:#dbeafe; font-size:10px; color:#1e40af; text-align:left; padding:4px 8px; }
+  .sec td { background:#fef3f2; font-weight:700; font-size:12px; }
   .t0 td { background:#fef9c3; }
   .t1 td { background:#f3e8ff; }
   .t2 td { background:#dbeafe; }
   .t3 td { background:#f2f4f7; }
-  .note { font-size:12px; color:#9098a8; margin-top:8px; }
-  .legend { font-size:11px; color:#666; margin-bottom:8px; }
-  .legend span { padding:1px 8px; border-radius:3px; margin-right:8px; }
+  .note { font-size:12px; color:#9098a8; margin:6px 0 20px; }
+  .legend { font-size:11px; color:#666; margin-bottom:10px; }
+  .legend s { color:#f04438; }
+  .legend b { color:#059669; }
 </style>
 </head>
 <body>
 
-<h1>代号001 · 技能配表（Skill）</h1>
-<p class="sub">22 张功能牌 → 效果ID映射。T=效果触发概率(万分比)，C=效果配置ID，V=效果值，X=目标(0=自己 1=对手)，B=分支效果</p>
-<p class="legend">
-  <span style="background:#fef9c3;">T0</span>
-  <span style="background:#f3e8ff;">T1</span>
-  <span style="background:#dbeafe;">T2</span>
-  <span style="background:#f2f4f7;">T3</span>
-</p>
+<h1>代号001 · 技能效果配置表</h1>
+<p class="sub">研发用。表1定义效果，表2定义技能→效果映射。两组配合即启用全部22张功能牌。</p>
+
+<!-- ============ TABLE 1 ============ -->
+<h2>表1：S_Effect（效果定义）</h2>
+<p class="sub">22种效果归入10大类（effectId 1-10），研发实现10个处理器即可。<br>
+<span class="legend"><s>valueType=0 固定值、=1 百分比、=2 不需要值、=-1 无值</s></span></p>
 
 <table>
-  <tr>
-    <th>A: ID</th><th>B: name</th>
-    <th>T: effectChances</th><th>U: effectConfigs</th><th>V: effectValues</th><th>W: effectValues2</th><th>X: effectTargets</th>
-    <th>Y: branchChances</th><th>Z: branchConfigs</th><th>分支说明</th>
-  </tr>
-  <tr class="header-desc">
-    <td>int</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td></td>
-  </tr>
-  <tr class="header-desc">
-    <td>技能ID</td><td>名称/多语言Key</td>
-    <td>触发概率(万分比)<br>10000=100%</td>
-    <td>效果配置ID<br>对应S_Effect.ID</td>
-    <td>效果值1<br>抽牌数/弃牌数/点数变化</td>
-    <td>效果值2<br>-1=无</td>
-    <td>目标<br>0=自己 1=对手</td>
-    <td>分支概率</td><td>分支效果ID</td><td>分支条件说明</td>
-  </tr>
+  <tr><th>ID</th><th>desc</th><th>effectId</th><th>effectObjId</th><th>valueType</th></tr>
+  <tr class="hd"><td>int</td><td>string</td><td>int</td><td>int</td><td>int</td></tr>
+  <tr class="hd"><td>效果ID</td><td>说明</td><td>效果父类<br>1=抽牌 2=复制 3=偷取<br>4=转化 5=弃牌 6=改点<br>7=调出牌数 8=牌型升格<br>9=查看 10=交换</td><td>效果子类</td><td>值类型</td></tr>
 
-  <!-- T0 -->
-  <tr class="t0"><td>2001</td><td class="left">Skill_5Joker</td><td>10000</td><td>1</td><td>1</td><td>-1</td><td>0</td><td>10000</td><td>5</td><td class="left">1-4回合→抽1；第5回合→生Joker</td></tr>
-  <tr class="t0"><td>2002</td><td class="left">Skill_Magician</td><td>10000</td><td>6</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">复制自己1张手牌</td></tr>
-  <tr class="t0"><td>2003</td><td class="left">Skill_Thief</td><td>10000</td><td>9</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">随机偷对手1张</td></tr>
-  <tr class="t0"><td>2004</td><td class="left">Skill_Fate</td><td>10000</td><td>10</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">弃1→获同花色A</td></tr>
-  <tr class="t0"><td>2005</td><td class="left">Skill_Hacker</td><td>10000</td><td>7</td><td>-1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">看对手手牌→选1复制</td></tr>
+  <tr class="sec"><td colspan="5">抽牌（effectId=1）</td></tr>
+  <tr><td>1</td><td class="l">牌堆抽牌</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>2</td><td class="l">抽2选1(余1回牌堆底)</td><td>1</td><td>2</td><td>0</td></tr>
+  <tr><td>3</td><td class="l">指定牌池随机抽(A/K/Q)</td><td>1</td><td>3</td><td>0</td></tr>
+  <tr><td>4</td><td class="l">弃牌堆回收</td><td>1</td><td>4</td><td>0</td></tr>
+  <tr><td>5</td><td class="l">生成Joker百搭</td><td>1</td><td>5</td><td>2</td></tr>
 
-  <!-- T1 -->
-  <tr class="t1"><td>2101</td><td class="left">Skill_Lucky</td><td>10000</td><td>19</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">顺子→按同花顺判定</td></tr>
-  <tr class="t1"><td>2102</td><td class="left">Skill_Destroyer</td><td>10000</td><td>12</td><td>2</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">弃对手2张(直接移出)</td></tr>
-  <tr class="t1"><td>2103</td><td class="left">Skill_Glove</td><td>10000</td><td>8</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">复制1张公共牌</td></tr>
-  <tr class="t1"><td>2104</td><td class="left">Skill_Burst</td><td>10000</td><td>15</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">本回合多打1张</td></tr>
-  <tr class="t1"><td>2105</td><td class="left">Skill_God</td><td>10000</td><td>3</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">随机A/K/Q抽1</td></tr>
+  <tr class="sec"><td colspan="5">复制（effectId=2）</td></tr>
+  <tr><td>6</td><td class="l">复制自己手牌</td><td>2</td><td>1</td><td>2</td></tr>
+  <tr><td>7</td><td class="l">复制对手手牌(先看后选)</td><td>2</td><td>2</td><td>2</td></tr>
+  <tr><td>8</td><td class="l">复制公共牌</td><td>2</td><td>3</td><td>2</td></tr>
 
-  <!-- T2 -->
-  <tr class="t2"><td>2201</td><td class="left">Skill_PlusMinus</td><td>10000</td><td>14</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">点数±1</td></tr>
-  <tr class="t2"><td>2202</td><td class="left">Skill_Intel</td><td>10000</td><td>2</td><td>2</td><td>1</td><td>0</td><td>-1</td><td>-1</td><td class="left">抽2选1，余1回牌堆底</td></tr>
-  <tr class="t2"><td>2203</td><td class="left">Skill_Inspect</td><td>10000</td><td>21</td><td>-1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">看对手全部手牌</td></tr>
-  <tr class="t2"><td>2204</td><td class="left">Skill_Recycle</td><td>10000</td><td>4</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">弃牌堆回收1张</td></tr>
-  <tr class="t2"><td>2205</td><td class="left">Skill_Lock</td><td>10000</td><td>16</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">对手少打1张</td></tr>
-  <tr class="t2"><td>2206</td><td class="left">Skill_Gambler</td><td>6000</td><td>1</td><td>3</td><td>-1</td><td>0</td><td>4000</td><td>13</td><td class="left">60%抽3；40%自弃1</td></tr>
-  <tr class="t2"><td>2207</td><td class="left">Skill_FlushBeliever</td><td>10000</td><td>20</td><td>2</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">同花→下回合抽2</td></tr>
-  <tr class="t2"><td>2208</td><td class="left">Skill_Delay</td><td>10000</td><td>18</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">对手下回合少补1张</td></tr>
-  <tr class="t2"><td>2209</td><td class="left">Skill_Rogue</td><td>10000</td><td>11</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">弃对手1张(进弃牌堆)</td></tr>
+  <tr class="sec"><td colspan="5">偷取（effectId=3）</td></tr>
+  <tr><td>9</td><td class="l">随机偷对手1张</td><td>3</td><td>1</td><td>0</td></tr>
 
-  <!-- T3 -->
-  <tr class="t3"><td>2301</td><td class="left">Skill_Shuffler</td><td>10000</td><td>1</td><td>2</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">弃1抽2</td></tr>
-  <tr class="t3"><td>2302</td><td class="left">Skill_Swapper</td><td>10000</td><td>22</td><td>-1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">自选1↔对手随机1互换</td></tr>
-  <tr class="t3"><td>2303</td><td class="left">Skill_Charge</td><td>10000</td><td>17</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">本回少打1→下回多打1</td></tr>
+  <tr class="sec"><td colspan="5">转化（effectId=4）</td></tr>
+  <tr><td>10</td><td class="l">弃1→获同花色A</td><td>4</td><td>1</td><td>2</td></tr>
+
+  <tr class="sec"><td colspan="5">弃牌（effectId=5）</td></tr>
+  <tr><td>11</td><td class="l">弃对手1张(进弃牌堆可回收)</td><td>5</td><td>1</td><td>0</td></tr>
+  <tr><td>12</td><td class="l">弃对手2张(直接移出不可回收)</td><td>5</td><td>2</td><td>0</td></tr>
+  <tr><td>13</td><td class="l">自弃1张</td><td>5</td><td>3</td><td>0</td></tr>
+
+  <tr class="sec"><td colspan="5">改点（effectId=6）</td></tr>
+  <tr><td>14</td><td class="l">手牌点数±1</td><td>6</td><td>1</td><td>0</td></tr>
+
+  <tr class="sec"><td colspan="5">调出牌数（effectId=7）</td></tr>
+  <tr><td>15</td><td class="l">自己本回合多打1张</td><td>7</td><td>1</td><td>0</td></tr>
+  <tr><td>16</td><td class="l">对手本回合少打1张</td><td>7</td><td>2</td><td>0</td></tr>
+  <tr><td>17</td><td class="l">本回少打1→下回多打1</td><td>7</td><td>3</td><td>0</td></tr>
+  <tr><td>18</td><td class="l">对手下回合少补1张</td><td>7</td><td>4</td><td>0</td></tr>
+
+  <tr class="sec"><td colspan="5">牌型升格（effectId=8）</td></tr>
+  <tr><td>19</td><td class="l">顺子→按同花顺判定</td><td>8</td><td>1</td><td>2</td></tr>
+  <tr><td>20</td><td class="l">本回合同花→下回合抽2张</td><td>8</td><td>2</td><td>0</td></tr>
+
+  <tr class="sec"><td colspan="5">查看（effectId=9）</td></tr>
+  <tr><td>21</td><td class="l">查看对手全部手牌</td><td>9</td><td>1</td><td>2</td></tr>
+
+  <tr class="sec"><td colspan="5">交换（effectId=10）</td></tr>
+  <tr><td>22</td><td class="l">自选1↔对手随机1互换</td><td>10</td><td>1</td><td>2</td></tr>
 </table>
 
-<p class="sub">
-  22 张牌的技能配表。效果ID(列U)对应 S_Effect 表的 ID 列。幸运赌徒(ID=2206)是唯一有分支概率的牌：60%触发抽3张(效果ID=1)，40%触发自弃1张(效果ID=13)。
+<!-- ============ TABLE 2 ============ -->
+<h2>表2：Skill（技能→效果映射）</h2>
+<p class="sub">22张牌各指向表1的效果ID。研发导入保持10列结构，不用的列填-1。</p>
+<p class="sub legend"><s>S/W/Y/Z</s> 四列占位全-1（仅幸运赌徒用到Y/Z） &nbsp;|&nbsp; <b>实际生效 A/B/T/U/V/X</b></p>
+
+<table>
+  <tr><th>A: ID</th><th>B: name</th><th>S</th><th>T: 概率</th><th>U: 效果ID</th><th>V: 效果值</th><th>W</th><th>X: 目标</th><th>Y</th><th>Z</th><th>备注</th></tr>
+  <tr class="hd"><td>int</td><td>string</td><td>int</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td></td></tr>
+
+  <tr class="t0"><td>2001</td><td class="l">5-Joker</td><td>-1</td><td>10000</td><td>1</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">1-4回抽1；5回生Joker（不同回合走不同效果）</td></tr>
+  <tr class="t0"><td>2002</td><td class="l">魔术师</td><td>-1</td><td>10000</td><td>6</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">复制自己1张手牌</td></tr>
+  <tr class="t0"><td>2003</td><td class="l">神偷</td><td>-1</td><td>10000</td><td>9</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="l">偷对手1张(随机)</td></tr>
+  <tr class="t0"><td>2004</td><td class="l">命运一击</td><td>-1</td><td>10000</td><td>10</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">弃1→同花色A</td></tr>
+  <tr class="t0"><td>2005</td><td class="l">黑客</td><td>-1</td><td>10000</td><td>7</td><td>-1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="l">先看对手手牌→选1复制</td></tr>
+
+  <tr class="t1"><td>2101</td><td class="l">幸运日</td><td>-1</td><td>10000</td><td>19</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">条件：出顺子→按同花顺(cat8)判</td></tr>
+  <tr class="t1"><td>2102</td><td class="l">破坏专家</td><td>-1</td><td>10000</td><td>12</td><td>2</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="l">弃对手2张(直接移出不可回收)</td></tr>
+  <tr class="t1"><td>2103</td><td class="l">白手套</td><td>-1</td><td>10000</td><td>8</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">复制1张公共牌</td></tr>
+  <tr class="t1"><td>2104</td><td class="l">提前爆发</td><td>-1</td><td>10000</td><td>15</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">本回合多打1张</td></tr>
+  <tr class="t1"><td>2105</td><td class="l">赌神</td><td>-1</td><td>10000</td><td>3</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">A/K/Q随机1张</td></tr>
+
+  <tr class="t2"><td>2201</td><td class="l">加一减一</td><td>-1</td><td>10000</td><td>14</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">点数±1(A/2边界无效)</td></tr>
+  <tr class="t2"><td>2202</td><td class="l">情报员</td><td>-1</td><td>10000</td><td>2</td><td>2</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">抽2选1留</td></tr>
+  <tr class="t2"><td>2203</td><td class="l">我要验牌</td><td>-1</td><td>10000</td><td>21</td><td>-1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="l">看对手手牌(仅客户端渲染)</td></tr>
+  <tr class="t2"><td>2204</td><td class="l">回收</td><td>-1</td><td>10000</td><td>4</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">弃牌堆取回1张</td></tr>
+  <tr class="t2"><td>2205</td><td class="l">封锁</td><td>-1</td><td>10000</td><td>16</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="l">对手少打1张(最低3)</td></tr>
+  <tr class="t2"><td>2206</td><td class="l">幸运赌徒</td><td>-1</td><td>6000</td><td>1</td><td>3</td><td>-1</td><td>0</td><td>4000</td><td>13</td><td class="l"><b>唯一分支：</b>60%抽3张 / 40%自弃1张</td></tr>
+  <tr class="t2"><td>2207</td><td class="l">同花信徒</td><td>-1</td><td>10000</td><td>20</td><td>2</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">条件：出同花→下回合抽2</td></tr>
+  <tr class="t2"><td>2208</td><td class="l">拖延</td><td>-1</td><td>10000</td><td>18</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="l">对手下回合少补1张</td></tr>
+  <tr class="t2"><td>2209</td><td class="l">扰乱</td><td>-1</td><td>10000</td><td>11</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="l">弃对手1张(进弃牌堆)</td></tr>
+
+  <tr class="t3"><td>2301</td><td class="l">洗牌师</td><td>-1</td><td>10000</td><td>1</td><td>2</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">弃1抽2</td></tr>
+  <tr class="t3"><td>2302</td><td class="l">交换师</td><td>-1</td><td>10000</td><td>22</td><td>-1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="l">自选1↔对手随机1互换</td></tr>
+  <tr class="t3"><td>2303</td><td class="l">蓄力</td><td>-1</td><td>10000</td><td>17</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="l">本回少打1→下回多打1</td></tr>
+</table>
+
+<p class="note">
+  <b>给研发：</b>两张xlsx导入 → 10个effect处理器 → 22张牌全活。T=万分比概率(10000=100%)，X=目标(0=自己 1=对手)，V=效果参数(抽几张/弃几张/改几点)。<br>
+  单另需处理：5-Joker按回合走不同效果，幸运日/同花信徒/蓄力/拖延有延时效果需跨回合记录。
 </p>
 
 </body>
