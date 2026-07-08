@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>不一样三国 2.0 周赛攻略</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #fff;
+    color: #222;
+    line-height: 1.8;
+    padding: 30px;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 32px; color: #c0392b; padding: 30px 0 6px; letter-spacing: 4px; }
+  .sub { text-align: center; color: #666; font-size: 15px; margin-bottom: 30px; }
+  h2 {
+    font-size: 24px; color: #c0392b; margin: 32px 0 14px;
+    border-bottom: 2px solid #ddd; padding-bottom: 8px;
+  }
+  h3 { font-size: 20px; color: #e67e22; margin: 24px 0 12px; }
+  .tip {
+    background: #fff9e6; border-left: 4px solid #f1c40f;
+    padding: 14px 18px; margin: 14px 0; border-radius: 4px;
+    font-size: 15px; color: #444;
+  }
+  .warn {
+    background: #fff0ed; border-left: 4px solid #e74c3c;
+    padding: 14px 18px; margin: 14px 0; border-radius: 4px;
+    font-size: 15px; color: #c0392b;
+  }
+  .score-box {
+    background: #fef9e7; border: 2px solid #f1c40f; border-radius: 10px;
+    padding: 18px; margin: 14px 0; text-align: center;
+  }
+  .score-box .big { font-size: 22px; color: #c0392b; font-weight: bold; }
+  .score-box .small { font-size: 14px; color: #777; margin-top: 4px; }
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 3px;
+    font-size: 13px; margin: 1px;
+  }
+  .badge-phys { background: #e8e0d0; color: #555; }
+  .badge-fire { background: #fde8d0; color: #d35400; }
+  .badge-ice { background: #d6eaf8; color: #2980b9; }
+  .badge-thunder { background: #fef9e0; color: #d4ac0d; }
+  .badge-poison { background: #d5f5e3; color: #27ae60; }
+  .badge-lg { font-size: 14px; padding: 3px 12px; }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 10px 0 18px;
+    font-size: 15px;
+  }
+  th, td { padding: 8px 10px; text-align: left; border: 1px solid #ddd; }
+  th { background: #f5f5f5; color: #333; font-weight: 600; }
+  td { background: #fff; }
+
+  ul { padding-left: 24px; font-size: 15px; }
+  li { margin: 5px 0; }
+
+  .hero-priority {
+    display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0;
+  }
+  .hero-card {
+    background: #fff; border: 1px solid #ddd; border-radius: 6px;
+    padding: 10px 14px; min-width: 120px; flex: 1;
+  }
+  .hero-card .h-name { font-size: 17px; font-weight: bold; }
+  .hero-card .h-name.t0 { color: #c0392b; }
+  .hero-card .h-name.t1 { color: #e67e22; }
+  .hero-card .h-name.t2 { color: #777; }
+  .hero-card .h-why { font-size: 13px; color: #666; margin-top: 2px; }
+
+  .flow-step {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin: 14px 0; padding: 14px 18px;
+    background: #fafafa; border-radius: 6px; border-left: 3px solid #c0392b;
+  }
+  .flow-step .num {
+    width: 28px; height: 28px; min-width: 28px;
+    background: #c0392b; color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: bold;
+  }
+  .flow-step .body { font-size: 15px; }
+
+  .lv-row {
+    display: flex; align-items: stretch;
+    border-bottom: 1px solid #eee; font-size: 14px;
+    transition: background 0.15s;
+  }
+  .lv-row:hover { background: #fafafa; }
+  .lv-row.boss-row { background: #fef0f0; }
+  .lv-row.boss-row:hover { background: #fde0e0; }
+  .lv-num {
+    width: 36px; min-width: 36px;
+    display: flex; align-items: center; justify-content: center;
+    color: #aaa; font-size: 12px;
+  }
+  .lv-main {
+    flex: 1; padding: 8px 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  }
+  .lv-name { font-size: 15px; font-weight: bold; min-width: 70px; }
+  .lv-chapter { font-size: 13px; color: #666; min-width: 80px; }
+  .lv-elems { display: flex; gap: 3px; flex-wrap: wrap; align-items: center; }
+  .lv-formation {
+    font-size: 14px; color: #444;
+    background: #fafafa; border-radius: 3px; padding: 3px 10px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 360px;
+  }
+  .lv-formation .core { color: #c0392b; font-weight: bold; }
+  .lv-formation .dps { color: #d35400; }
+  .lv-formation .tank-c { color: #2980b9; }
+  .lv-rules { font-size: 12px; color: #888; display: flex; gap: 3px; margin-left: auto; padding-right: 8px; }
+  .lv-rules span { background: #f0f0f0; padding: 2px 6px; border-radius: 2px; }
+  .tier-tag { font-size: 12px; padding: 2px 6px; border-radius: 2px; }
+  .tier-easy { background: #d6eaf8; color: #2980b9; }
+  .tier-med { background: #fef9e7; color: #d4ac0d; }
+  .tier-hard { background: #fdebd0; color: #d35400; }
+  .tier-hell { background: #fadbd8; color: #c0392b; }
+
+  @media (max-width: 700px) {
+    .lv-formation { white-space: normal; max-width: 100%; font-size: 12px; }
+    .lv-rules { display: none; }
+    .lv-chapter { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>⚔️ 不一样三国 2.0 周赛攻略</h1>
+<p class="sub">v4.12.2 · 第2949期周赛 · 数据来自游戏内实时拉取</p>
+
+<div class="warn">
+  <strong>⚠️ 每周一换图</strong> — 每州的章节/克制/规则每周全部重排。下面的数据是<strong>本期</strong>的，下周一就变了。
+</div>
+
+<!-- ====== 先搞懂在玩啥 ====== -->
+<h2>一、这游戏怎么玩</h2>
+<div class="flow-step">
+  <span class="num">1</span>
+  <div class="body">标题画面点空白处 → <strong>讨贼地图</strong>（16州从南到北排列，逐州解锁）</div>
+</div>
+<div class="flow-step">
+  <span class="num">2</span>
+  <div class="body">点任意已解锁的州 → 弹出详情：<strong>抗2系 + 怕1系</strong>，还有推荐战力和奖励</div>
+</div>
+<div class="flow-step">
+  <span class="num">3</span>
+  <div class="body">点"进军" → 塔防开打。胜利1星 + 城墙无伤1星 + 无人阵亡1星</div>
+</div>
+<div class="flow-step">
+  <span class="num">4</span>
+  <div class="body">通关后选<strong>无尽模式继续撑</strong> → 这才是冲分关键！</div>
+</div>
+
+<!-- ====== 计分公式 ====== -->
+<h2>二、分数公式</h2>
+<div class="score-box">
+  <div class="big">一州得分 = 100 × 1.2<sup>k</sup> × 星级 × (1 + 0.25 × 无尽波数)</div>
+  <div class="small">k=州序号(0~15)，无尽每撑1波=+25% &nbsp;|&nbsp; 总分=16州之和 &nbsp;|&nbsp; 周一清零</div>
+</div>
+
+<div class="tip">
+  <strong>无尽比3星重要</strong>：3星只比1星多50%加成，无尽撑4波就+100%了。先1星通关进无尽，能撑多少撑多少。
+</div>
+
+<!-- ====== 本周16州阵容表（核心） ====== -->
+<h2>三、本期周赛 · 16州逐关阵容</h2>
+<p style="font-size:14px; color:#666; margin-bottom:10px;">
+  每关固定 <strong>曹仁(前排)+华佗(中排)</strong>，按怕系补剩余4个。👑=BOSS关
+</p>
+<div id="week-table"></div>
+
+<!-- ====== 核心原则 ====== -->
+<h2>四、核心原则</h2>
+<ul>
+  <li><strong>每关抗2系+怕1系固定</strong>，打之前一定要看详情窗</li>
+  <li><strong>绝对不用被抗的系输出</strong>，伤害打折扣</li>
+  <li><strong>曹仁+华佗每关必上</strong>，坦克和治疗职能不受属性克制影响</li>
+  <li><strong>输出位按怕系换</strong>：怕什么上什么系</li>
+  <li><strong>1星通关后进无尽</strong>，比追求3星重要得多</li>
+  <li><strong>每周克制全变</strong>，上周的队伍不一定能用</li>
+</ul>
+
+<!-- ====== 养将优先级 ====== -->
+<h2>五、养将优先级</h2>
+<div class="tip">资源有限，先养T0 → T1 → T2，目标是每系至少有一个能打的输出。你全英雄已解锁，缺的是升星。</div>
+<div class="hero-priority" id="hero-priority-container"></div>
+
+<!-- ====== 5系阵容模板 ====== -->
+<h2>六、5系完整阵容参考</h2>
+<table>
+  <tr><th>怕系</th><th>6人阵</th><th>站位</th><th>主C</th></tr>
+  <tr><td><span class="badge badge-phys badge-lg">⚔️物理</span></td><td>曹仁+周泰+华佗+吕布+关羽+黄忠</td><td>前曹仁+周泰 中华佗+吕布 后关羽+黄忠</td><td>吕布</td></tr>
+  <tr><td><span class="badge badge-fire badge-lg">🔥火</span></td><td>曹仁+周泰+华佗+陆逊+周瑜+姜维</td><td>前曹仁+周泰 中华佗+陆逊+周瑜 后姜维</td><td>陆逊</td></tr>
+  <tr><td><span class="badge badge-ice badge-lg">❄️冰</span></td><td>曹仁+周泰+华佗+赵云+张辽+大乔</td><td>前曹仁+周泰+赵云 中华佗+张辽 后大乔</td><td>赵云</td></tr>
+  <tr><td><span class="badge badge-thunder badge-lg">⚡雷</span></td><td>曹仁+周泰+华佗+太史慈+张飞+马超</td><td>前曹仁+周泰+张飞 中华佗+马超 后太史慈</td><td>太史慈</td></tr>
+  <tr><td><span class="badge badge-poison badge-lg">☠️毒</span></td><td>曹仁+兀突骨+华佗+夏侯渊+魏延+黄忠</td><td>前曹仁+兀突骨 中华佗+夏侯渊+魏延 后黄忠</td><td>夏侯渊</td></tr>
+</table>
+
+<div class="tip">
+  <strong>无尽通用骨架</strong>：曹仁+周泰(前) + 华佗(中) + 黄忠(后) + 按怕系上输出<br>
+  兵法：城防加固3→军屯3→犒赏3→缮城3→坚盾3→对应兵种3<br>
+  遗物S级：连环铠(城墙少扣血) 七星灯(城墙回血)
+</div>
+
+<!-- ====== 设计分析 ====== -->
+<h2>七、设计思路分析</h2>
+
+<div class="tip">
+  以下不从技术角度分析，而是从<strong>游戏策划的设计意图</strong>出发，看每个系统为什么这么设计、它们之间怎么咬合。
+</div>
+
+<h3>1. 核心循环：周赛制解决了什么？</h3>
+<p>
+  传统塔防通关即结束，玩家流失快。这里用<strong>周赛代替主线关卡</strong>是一个聪明的设计决策：
+</p>
+<ul>
+  <li><strong>每周重置制造「紧迫感」</strong>——周一刷新，周日结算，玩家每周都有"必须打一次"的理由</li>
+  <li><strong>全服同一道题</strong>——排名本质是"同一道题谁解得好"，而不是"谁氪得多"，天然形成社区讨论氛围</li>
+  <li><strong>分数段奖励</strong>（不是排名奖励）——80%玩家能拿到大部分奖励，不挫败非核心玩家</li>
+  <li><strong>追赶机制</strong>——上周没打这周重新开始，没有"错过就永久落后"的压力</li>
+</ul>
+
+<h3>2. 克制矩阵：为什么是"抗2怕1"而不是"克制循环"？</h3>
+<p>
+  常见的五行设计是"生克循环"（A克B、B克C），这里却用了<strong>每关抗2种属性、怕1种属性</strong>的三元组设计。这比传统克制更精妙：
+</p>
+<ul>
+  <li><strong>强制广度培养</strong>——你至少需要有3~4系的输出将才能覆盖16关，不能只练一队</li>
+  <li><strong>抗2怕1不是随机而是配对</strong>——比如怕火的关卡同时抗冰雷，意思是"冰雷队高手也别想一招鲜"</li>
+  <li><strong>每周洗牌</strong>——同样的"怕火"这周在第3关，下周可能在第11关；你的阵容顺序和发力点每周要重新规划</li>
+  <li><strong>徐庶作为破局点</strong>——设计者特意留了一个"卸掉敌人抗性"的武将（徐庶），作为练度不够时的策略出口：打不过？上徐庶强行绕过克制</li>
+</ul>
+
+<h3>3. 关卡规则：不让站位变成固定公式</h3>
+<p>
+  如果只是抗性换阵，打几次就会形成"第X关放XX就行了"的固定流程。关卡规则<strong>从8个维度打乱站位</strong>：
+</p>
+<ul>
+  <li><strong>急行军</strong> → 前排必须上坦，否则开局就被冲垮</li>
+  <li><strong>烟瘴</strong> → 弓兵报废，逼你换近战输出，而不是"后排黄忠永远安全"</li>
+  <li><strong>泥沼</strong> → 骑兵冲不起来，姜维/马超这种依赖冲撞的将废一半</li>
+  <li><strong>连弩贼</strong> → 后排脆皮会被点杀，站位要更分散</li>
+  <li><strong>双贼首</strong> → 两个Boss而不是一个，单坦扛不住，需要副坦</li>
+  <li><strong>城防失修</strong> → 城墙回血没了，无尽模式撑波数更难</li>
+</ul>
+<p>
+  这些规则本质上是在<strong>强制你调整阵型站位</strong>，而不是"同个阵容换个属性就上"。这是这游戏策略深度的主要来源。
+</p>
+
+<h3>4. 三选一肉鸽：为什么同个州打两次体验不同</h3>
+<p>
+  每波后的随机三选一（武将/升级/遗物）承担了三个设计目标：
+</p>
+<ul>
+  <li><strong>降低上手门槛</strong>——你不需要预配一套完整阵容，边打边补，从"0"开始而不是从"完美"开始</li>
+  <li><strong>制造"胡了"的高光时刻</strong>——连续刷到同系遗物时数值爆炸的快感，是固定阵容给不了的</li>
+  <li><strong>弥补练度不足</strong>——低级将遇到好的遗物组合也能C，运气可以部分替代养成</li>
+</ul>
+
+<h3>5. 主公制：为什么是5个而不是1个？</h3>
+<p>
+  主公不是单纯的"主角"，它是<strong>每局第一个战略决策</strong>：
+</p>
+<ul>
+  <li>曹操（压制光环）→ 适合高练度玩家冲分，追求极限DPS</li>
+  <li>刘备（每波回血）→ 适合新手或城墙脆弱的关卡，增加容错</li>
+  <li>孙权（水战）→ 特殊地形对策，但泛用性低</li>
+  <li>袁绍（波次成长）→ 赌自己能打到高波数，上限高但前期弱</li>
+  <li>刘表（城墙强化）→ 防守型，配合"城防失修"类规则有奇效</li>
+</ul>
+<p>
+  <strong>设计亮点</strong>：主公不是"哪个最强"，而是看题面选人。本周急行军多选刘备，连弩贼多选刘表——这是第一层策略选择，放在进军前让你每局都要动脑。
+</p>
+
+<h3>6. 羁绊系统：数值之外的情感价值</h3>
+<p>
+  五虎上将+25%攻、桃园结义+20%防、金兰谱×1.5倍——从纯数值角度看这些加成不算高，但它的设计意图不在数值而在<strong>引导组队方向</strong>：
+</p>
+<ul>
+  <li>让历史组合有实际意义，不是"五虎上将"只是五个独立的强将</li>
+  <li>当你凑出五虎上将或桃园结义时，获得的<strong>情感满足</strong>（"我的阵容有故事"）远超那25%数值</li>
+  <li>深度玩家可以追求特定羁绊（如金兰谱的1.5倍伤害），这是给核心玩家留的钻研空间</li>
+</ul>
+
+<h3>7. 地形系统：为什么同一个州上次能打这次翻车？</h3>
+<p>
+  地形（虎牢/赤壁/官渡/长坂等）绑定了五行环境效果：火系在赤壁+50%伤害，冰系在赤壁减速。它的作用：
+</p>
+<ul>
+  <li><strong>同一周赛的不同州，地形可能不同</strong>——你以为第5关怕火所以上火队，结果地形是赤壁沼泽火队被减速，逼你重新思考</li>
+  <li><strong>下周同个州地形也会变</strong>——避免"记住公式就行了"的机械化打法</li>
+  <li>地形效果加入了<strong>第五层变量</strong>（要素：抗性×怕系×规则×地形×主公），让每周16关几乎不可能有标准答案</li>
+</ul>
+
+<h3>8. 成长系统的节奏控制</h3>
+<ul>
+  <li><strong>英雄30级 + 转生</strong>：一个英雄约23周全满，转生后攻血×1.4 —— 这意味着你<strong>不能同时练所有人</strong>，必须做取舍。这迫使玩家建立自己的"核心池"而不是全都要</li>
+  <li><strong>12项兵法5级</strong>：约19周全满——但实际不会全满，因为不同流派优先级不同。这是变相的"天赋树"，引导玩家走特定流派</li>
+  <li><strong>等级×遗物×羁绊的乘法效应</strong>：单个系统的加成不夸张，但三者叠加时数值爆炸。高手和新手的差距不仅在于练度，更在于<strong>能否让三个系统互相放大</strong></li>
+</ul>
+
+<h3>9. 无尽模式：一关两吃的设计</h3>
+<p>
+  通关后可以选择继续撑波数（无尽模式），这是一个成本极低但收益极高的设计：
+</p>
+<ul>
+  <li><strong>对于新手</strong>：1星就能进无尽，拿个基础分走人——"打不过也能有收获"</li>
+  <li><strong>对于高手</strong>：每多撑1波+25%分，这意味着冲榜的核心不是"能不能通关"而是"通关后能撑多少波"</li>
+  <li><strong>同一关两种目标</strong>：新手的目标是"通关"，高手的目的是"在通关阵容基础上为无尽优化"，同一个关卡内容服务两类玩家</li>
+  <li><strong>城建兵法的战略地位</strong>：城防加固/缮城/犒赏等平时不显眼的兵法在无尽模式成为核心——这种"不同模式需求不同"的设计延伸了build深度</li>
+</ul>
+
+<h3>10. 整体设计评价</h3>
+
+<p><strong>优势总结</strong></p>
+<ul>
+  <li><strong>变量系统配合默契</strong>：抗性×怕系×规则×地形×主公×三选一×羁绊——7层变量互相影响，且每个变量都在改变策略而不是堆数值</li>
+  <li><strong>每周重洗牌防止固化</strong>：不像传统手游"打通就长草"，周赛制+随机要素让游戏常玩常新</li>
+  <li><strong>低门槛高天花板</strong>：1星就能进无尽（门槛极低），但冲顶需要精通7层变量和最优羁绊组合（天花板很高）</li>
+  <li><strong>没有"一套通解"</strong>：克制的三元组设计+8种规则+地形，使得"万能阵容"不存在，强制多样性</li>
+  <li><strong>养成取舍造就个人风格</strong>：资源有限→不能全练→每个人的英雄池不同→打法和流派自然分化</li>
+</ul>
+
+<p><strong>设计上的硬伤</strong></p>
+<ul>
+  <li><strong>零新手引导（最大问题）</strong>：7层变量相互影响是这个游戏最大的优点，但也是最大的门槛。新玩家打开游戏看到的只有"点击空白处出征"，没有任何系统介绍。策划似乎假设所有玩家都会去看源码——这显然不合理</li>
+  <li><strong>战斗中无参考面板</strong>：开始打之后，你看不到克制表、看不到羁绊列表、看不到遗物图鉴——除了记住或者切出去查，没有任何办法。这打断了游戏节奏</li>
+  <li><strong>三选一不暂停</strong>：选卡时敌人继续动，这既不是"硬核"也不是"策略"，单纯是UI交互的缺失。选卡应该是纯策略决策，不该被操作速度影响</li>
+  <li><strong>无战斗复盘</strong>：没有DPS统计、没有承伤统计、没有回放——你无法知道"刚才为什么输了"或者"哪个武将拖后腿了"。这在策略游戏里是致命缺失</li>
+  <li><strong>无社交层</strong>：不能看好友阵容、不能分享通关配置、不能看高手回放——这意味着策略学习只能靠自己试错</li>
+  <li><strong>操作不可逆</strong>：选错主公要打完一整局才发现不行；选错了遗物不能后悔。这惩罚的是"尝试"而不是"失误"，不鼓励探索</li>
+  <li><strong>无难度标记</strong>：16州只显示"敌血×2.8"这样的原始数值，没有直观的"推荐练度"——新手不知道从哪打起</li>
+</ul>
+
+<h3>一句话总结</h3>
+<div class="tip">
+  <strong>这是一款被零引导拖累的优秀策略塔防</strong>。它的7层变量系统（抗性×怕系×规则×地形×主公×三选一×羁绊）互相咬合得非常好，几乎没有废设计——每个系统都在"迫使玩家做出有意义的战略选择"，而不是单纯增加数值。<br><br>
+  最大的矛盾在于：<strong>游戏最大的优点（复杂度）恰恰是其最大的门槛（没有引导）</strong>。如果加上新手教程、战斗中参考面板、和战后复盘统计，这游戏的深度可以直接对标商业独立游戏。目前的状态更像是"一个优秀策划用最低成本验证玩法可行性的原型"。
+</div>
+
+<hr>
+<p style="text-align:center;color:#999;font-size:13px;">
+  注：本期数据通过游戏内API实时拉取。每周一换图后此表需重新生成。
+</p>
+
+</div>
+
+<script>
+// ==================== 固定数据 ====================
+const STATE_NAMES = ["交州", "益州", "扬州", "荆州", "凉州", "徐州", "豫州", "兖州",
+  "青州", "司隶", "雍州", "并州", "幽州", "常山", "巨鹿", "广宗"];
+const CHAPTERS = [
+  { name: '蛾贼初起', icon: '🌾', color: '#6fd44e' },
+  { name: '颍川烽火', icon: '🔥', color: '#e8a84a' },
+  { name: '汝南剿匪', icon: '🏹', color: '#e8c86a' },
+  { name: '广宗鏖兵', icon: '⚔️', color: '#ff8a5a' },
+  { name: '曲阳血战', icon: '🌀', color: '#c96aff' },
+  { name: '冀州决战', icon: '⚡', color: '#ff5a3a' },
+  { name: '余孽复燃', icon: '💀', color: '#8fb8e8' },
+  { name: '修罗炼狱', icon: '🔮', color: '#ff4a8a' },
+];
+const ELEM = { phys:'⚔️物理', fire:'🔥火', ice:'❄️冰', thunder:'⚡雷', poison:'☠️毒' };
+const ELEM_CLS = { phys:'badge-phys', fire:'badge-fire', ice:'badge-ice', thunder:'badge-thunder', poison:'badge-poison' };
+const RULE_NAMES = { twinBoss:'双贼首', rush:'急行军', ruin:'城防失修', rich:'缴获丰厚', rocks:'乱石密布', elite:'精锐云集', smoke:'烟瘴', mud:'泥沼', crossbow:'连弩贼' };
+const TIERS = [
+  { k: [0,1,2,3], label: '新手', cls: 'tier-easy' },
+  { k: [4,5,6,7], label: '进阶', cls: 'tier-med' },
+  { k: [8,9,10,11], label: '困难', cls: 'tier-hard' },
+  { k: [12,13,14,15], label: '地狱', cls: 'tier-hell' },
+];
+
+// 完整阵容模板（按怕系）: [坦克, 输出1, 输出2, 灵活位]
+const FORM = {
+  phys: ['周泰', '吕布', '关羽', '黄忠'],
+  fire: ['周泰', '陆逊', '周瑜', '姜维'],
+  ice:  ['周泰', '赵云', '张辽', '大乔'],
+  thunder: ['周泰', '太史慈', '张飞', '马超'],
+  poison: ['兀突骨', '夏侯渊', '魏延', '黄忠'],
+};
+
+// ==================== 本周数据（第2949期，从游戏实时读取） ====================
+const WEEK_SLOTS = [
+  {k:0, ch:7, resist:["fire","ice"], weak:"thunder", rules:[]},
+  {k:1, ch:7, resist:["fire","phys"], weak:"poison", rules:[]},
+  {k:2, ch:1, resist:["fire","thunder"], weak:"ice", rules:["rush"]},
+  {k:3, ch:1, resist:["fire","poison"], weak:"phys", rules:["elite"]},
+  {k:4, ch:6, resist:["ice","thunder"], weak:"fire", rules:["smoke"]},
+  {k:5, ch:6, resist:["ice","poison"], weak:"phys", rules:["ruin"]},
+  {k:6, ch:4, resist:["thunder","poison"], weak:"fire", rules:["rocks"]},
+  {k:7, ch:4, resist:["thunder","poison"], weak:"fire", rules:["mud"]},
+  {k:8, ch:5, resist:["thunder","ice"], weak:"phys", rules:["rush"]},
+  {k:9, ch:5, resist:["thunder","fire"], weak:"poison", rules:["crossbow","ruin"]},
+  {k:10, ch:3, resist:["phys","fire"], weak:"ice", rules:["twinBoss"]},
+  {k:11, ch:3, resist:["phys","fire"], weak:"thunder", rules:["crossbow","mud"]},
+  {k:12, ch:2, resist:["poison","ice"], weak:"thunder", rules:["rocks"]},
+  {k:13, ch:2, resist:["poison","phys"], weak:"thunder", rules:["rush","rocks"]},
+  {k:14, ch:0, resist:["poison","fire"], weak:"phys", rules:["mud","ruin"]},
+  {k:15, ch:0, resist:["poison","fire"], weak:"phys", rules:["twinBoss","smoke"]},
+];
+
+// ==================== 养将渲染 ====================
+const HERO_PRIORITY = [
+  { name: '曹仁', tier: 't0', why: '每关必上，核心坦克，dmg=0但反伤' },
+  { name: '华佗', tier: 't0', why: '每关必上，唯一治疗，一圈奶12%+持续回' },
+  { name: '周泰', tier: 't1', why: '第2坦克，4系通用，自带免死一次' },
+  { name: '吕布', tier: 't1', why: '物理主C，一发85+溅射40，最高单体爆发' },
+  { name: '陆逊', tier: 't1', why: '火系主C，点火+firebrand核心机制' },
+  { name: '赵云', tier: 't1', why: '冰系主C，一枪穿俩，能打能抗' },
+  { name: '太史慈', tier: 't1', why: '雷系主C，两箭齐发+弹射=打4个' },
+  { name: '夏侯渊', tier: 't1', why: '毒系主C，0.2秒/箭极速+弹3个，持续DPS最高' },
+  { name: '黄忠', tier: 't1', why: '全屏射手，物理+毒通用兜底' },
+  { name: '张飞', tier: 't1.5', why: '雷系副C，溅射58范围大，能当半前排' },
+  { name: '关羽', tier: 't1.5', why: '物理副C，冲锋伤害46，清兵快' },
+  { name: '马超', tier: 't1.5', why: '雷系副C，出手飞快(0.4s)，单挑dps高' },
+  { name: '徐庶', tier: 't1.5', why: '一圈卸掉敌人抗性！高难关奇兵' },
+  { name: '兀突骨', tier: 't2', why: '毒系专属坦克，hp420+毒光环' },
+  { name: '周瑜', tier: 't2', why: '火系副C，burn强化灼烧' },
+  { name: '姜维', tier: 't2', why: '火系骑兵，边冲边点火' },
+  { name: '张辽', tier: 't2', why: '冰系副C，冲得勤快' },
+  { name: '魏延', tier: 't2', why: '毒系副C，毒枪捅穿' },
+  { name: '大乔', tier: 't2', why: '冰系控制，一圈冻慢敌人' },
+  { name: '鲁肃', tier: 't2', why: '辅助，一圈+25%攻击光环' },
+  { name: '小乔', tier: 't2', why: '辅助，一圈+22%速度光环' },
+  { name: '貂蝉', tier: 't2', why: '冰系备选，射中减速' },
+];
+
+(function() {
+  const c = document.getElementById('hero-priority-container');
+  let h = '';
+  HERO_PRIORITY.forEach(x => {
+    h += '<div class="hero-card"><div class="h-name ' + x.tier + '">' + x.name + '</div><div class="h-why">' + x.why + '</div></div>';
+  });
+  c.innerHTML = h;
+})();
+
+// ==================== 本周阵容渲染 ====================
+(function() {
+  const container = document.getElementById('week-table');
+  let html = '';
+
+  for (let k = 0; k < 16; k++) {
+    const s = WEEK_SLOTS[k];
+    const ch = CHAPTERS[s.ch];
+    const isBoss = k % 2 === 1;
+    const form = FORM[s.weak];
+    const tierInfo = TIERS.find(t => t.k.includes(k));
+
+    let cls = 'lv-row';
+    if (isBoss) cls += ' boss-row';
+
+    html += '<div class="' + cls + '">';
+    html += '<span class="lv-num">#' + k + '</span>';
+    html += '<div class="lv-main">';
+
+    // 州名 + 章节
+    html += '<span class="lv-name">' + (isBoss ? '👑 ' : '') + STATE_NAMES[k] + '</span>';
+    html += '<span class="lv-chapter">' + ch.icon + ch.name + '</span>';
+    html += '<span class="tier-tag ' + tierInfo.cls + '">' + tierInfo.label + '</span>';
+
+    // 抗性 ✗
+    html += '<span class="lv-elems">';
+    s.resist.forEach(r => {
+      html += '<span class="badge ' + ELEM_CLS[r] + '" style="opacity:0.5">✗' + ELEM[r] + '</span> ';
+    });
+    html += '</span>';
+
+    // 弱点 ✓
+    html += '<span class="lv-elems">';
+    html += '<span class="badge ' + ELEM_CLS[s.weak] + '" style="font-weight:bold;border:1px solid currentColor">' + ELEM[s.weak] + '</span> ';
+    html += '</span>';
+
+    // 阵容
+    html += '<span class="lv-formation">';
+    html += '<span class="core">曹仁</span> + <span class="tank-c">' + form[0] + '</span> + <span class="core">华佗</span> + <span class="dps">' + form[1] + '</span> + ' + form[2] + ' + ' + form[3];
+    html += '</span>';
+
+    // 特殊规则
+    if (s.rules.length) {
+      html += '<span class="lv-rules">' + s.rules.map(r => '<span>' + (RULE_NAMES[r] || r) + '</span>').join('') + '</span>';
+    }
+
+    html += '</div></div>';
+  }
+
+  container.innerHTML = html;
+})();
+</script>
+
+</body>
+</html>
