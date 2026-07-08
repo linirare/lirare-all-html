@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>代号001 · 技能配表</title>
+<style>
+  body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:1400px; margin:20px auto; padding:20px; background:#f5f6f8; color:#1a1a2e; }
+  h1 { font-size:18px; margin-bottom:4px; }
+  .sub { color:#9098a8; font-size:12px; margin-bottom:16px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; background:#fff; margin-bottom:24px; }
+  th { background:#1a1a2e; color:#fff; padding:5px 6px; text-align:center; font-size:11px; }
+  td { padding:5px 6px; border:1px solid #e4e7ed; text-align:center; }
+  td.left { text-align:left; }
+  tr:nth-child(even) td { background:#fafbfc; }
+  .header-desc td { background:#dbeafe; font-size:10px; color:#1e40af; text-align:left; padding:4px 6px; }
+  .t0 td { background:#fef9c3; }
+  .t1 td { background:#f3e8ff; }
+  .t2 td { background:#dbeafe; }
+  .t3 td { background:#f2f4f7; }
+  .note { font-size:12px; color:#9098a8; margin-top:8px; }
+  .legend { font-size:11px; color:#666; margin-bottom:8px; }
+  .legend span { padding:1px 8px; border-radius:3px; margin-right:8px; }
+</style>
+</head>
+<body>
+
+<h1>代号001 · 技能配表（Skill）</h1>
+<p class="sub">22 张功能牌 → 效果ID映射。T=效果触发概率(万分比)，C=效果配置ID，V=效果值，X=目标(0=自己 1=对手)，B=分支效果</p>
+<p class="legend">
+  <span style="background:#fef9c3;">T0</span>
+  <span style="background:#f3e8ff;">T1</span>
+  <span style="background:#dbeafe;">T2</span>
+  <span style="background:#f2f4f7;">T3</span>
+</p>
+
+<table>
+  <tr>
+    <th>A: ID</th><th>B: name</th>
+    <th>T: effectChances</th><th>U: effectConfigs</th><th>V: effectValues</th><th>W: effectValues2</th><th>X: effectTargets</th>
+    <th>Y: branchChances</th><th>Z: branchConfigs</th><th>分支说明</th>
+  </tr>
+  <tr class="header-desc">
+    <td>int</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td>string</td><td></td>
+  </tr>
+  <tr class="header-desc">
+    <td>技能ID</td><td>名称/多语言Key</td>
+    <td>触发概率(万分比)<br>10000=100%</td>
+    <td>效果配置ID<br>对应S_Effect.ID</td>
+    <td>效果值1<br>抽牌数/弃牌数/点数变化</td>
+    <td>效果值2<br>-1=无</td>
+    <td>目标<br>0=自己 1=对手</td>
+    <td>分支概率</td><td>分支效果ID</td><td>分支条件说明</td>
+  </tr>
+
+  <!-- T0 -->
+  <tr class="t0"><td>2001</td><td class="left">Skill_5Joker</td><td>10000</td><td>1</td><td>1</td><td>-1</td><td>0</td><td>10000</td><td>5</td><td class="left">1-4回合→抽1；第5回合→生Joker</td></tr>
+  <tr class="t0"><td>2002</td><td class="left">Skill_Magician</td><td>10000</td><td>6</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">复制自己1张手牌</td></tr>
+  <tr class="t0"><td>2003</td><td class="left">Skill_Thief</td><td>10000</td><td>9</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">随机偷对手1张</td></tr>
+  <tr class="t0"><td>2004</td><td class="left">Skill_Fate</td><td>10000</td><td>10</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">弃1→获同花色A</td></tr>
+  <tr class="t0"><td>2005</td><td class="left">Skill_Hacker</td><td>10000</td><td>7</td><td>-1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">看对手手牌→选1复制</td></tr>
+
+  <!-- T1 -->
+  <tr class="t1"><td>2101</td><td class="left">Skill_Lucky</td><td>10000</td><td>19</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">顺子→按同花顺判定</td></tr>
+  <tr class="t1"><td>2102</td><td class="left">Skill_Destroyer</td><td>10000</td><td>12</td><td>2</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">弃对手2张(直接移出)</td></tr>
+  <tr class="t1"><td>2103</td><td class="left">Skill_Glove</td><td>10000</td><td>8</td><td>-1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">复制1张公共牌</td></tr>
+  <tr class="t1"><td>2104</td><td class="left">Skill_Burst</td><td>10000</td><td>15</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">本回合多打1张</td></tr>
+  <tr class="t1"><td>2105</td><td class="left">Skill_God</td><td>10000</td><td>3</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">随机A/K/Q抽1</td></tr>
+
+  <!-- T2 -->
+  <tr class="t2"><td>2201</td><td class="left">Skill_PlusMinus</td><td>10000</td><td>14</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">点数±1</td></tr>
+  <tr class="t2"><td>2202</td><td class="left">Skill_Intel</td><td>10000</td><td>2</td><td>2</td><td>1</td><td>0</td><td>-1</td><td>-1</td><td class="left">抽2选1，余1回牌堆底</td></tr>
+  <tr class="t2"><td>2203</td><td class="left">Skill_Inspect</td><td>10000</td><td>21</td><td>-1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">看对手全部手牌</td></tr>
+  <tr class="t2"><td>2204</td><td class="left">Skill_Recycle</td><td>10000</td><td>4</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">弃牌堆回收1张</td></tr>
+  <tr class="t2"><td>2205</td><td class="left">Skill_Lock</td><td>10000</td><td>16</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">对手少打1张</td></tr>
+  <tr class="t2"><td>2206</td><td class="left">Skill_Gambler</td><td>6000</td><td>1</td><td>3</td><td>-1</td><td>0</td><td>4000</td><td>13</td><td class="left">60%抽3；40%自弃1</td></tr>
+  <tr class="t2"><td>2207</td><td class="left">Skill_FlushBeliever</td><td>10000</td><td>20</td><td>2</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">同花→下回合抽2</td></tr>
+  <tr class="t2"><td>2208</td><td class="left">Skill_Delay</td><td>10000</td><td>18</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">对手下回合少补1张</td></tr>
+  <tr class="t2"><td>2209</td><td class="left">Skill_Rogue</td><td>10000</td><td>11</td><td>1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">弃对手1张(进弃牌堆)</td></tr>
+
+  <!-- T3 -->
+  <tr class="t3"><td>2301</td><td class="left">Skill_Shuffler</td><td>10000</td><td>1</td><td>2</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">弃1抽2</td></tr>
+  <tr class="t3"><td>2302</td><td class="left">Skill_Swapper</td><td>10000</td><td>22</td><td>-1</td><td>-1</td><td>1</td><td>-1</td><td>-1</td><td class="left">自选1↔对手随机1互换</td></tr>
+  <tr class="t3"><td>2303</td><td class="left">Skill_Charge</td><td>10000</td><td>17</td><td>1</td><td>-1</td><td>0</td><td>-1</td><td>-1</td><td class="left">本回少打1→下回多打1</td></tr>
+</table>
+
+<p class="sub">
+  22 张牌的技能配表。效果ID(列U)对应 S_Effect 表的 ID 列。幸运赌徒(ID=2206)是唯一有分支概率的牌：60%触发抽3张(效果ID=1)，40%触发自弃1张(效果ID=13)。
+</p>
+
+</body>
+</html>
