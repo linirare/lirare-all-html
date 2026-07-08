@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>代号001 · 技能效果配表</title>
+<style>
+  body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:1200px; margin:20px auto; padding:20px; background:#f5f6f8; color:#1a1a2e; }
+  h1 { font-size:18px; margin-bottom:4px; }
+  .sub { color:#9098a8; font-size:12px; margin-bottom:16px; }
+  table { width:100%; border-collapse:collapse; font-size:12.5px; background:#fff; margin-bottom:24px; }
+  th { background:#1a1a2e; color:#fff; padding:6px 8px; text-align:center; font-size:12px; }
+  td { padding:6px 8px; border:1px solid #e4e7ed; text-align:center; }
+  td.left { text-align:left; }
+  tr:nth-child(even) td { background:#fafbfc; }
+  .header-desc td { background:#dbeafe; font-size:11px; color:#1e40af; text-align:left; padding:4px 8px; }
+  .section { font-weight:700; background:#fef3f2; }
+  .note { font-size:12px; color:#9098a8; margin-top:8px; }
+</style>
+</head>
+<body>
+
+<h1>代号001 · 技能效果配表（S_Effect）</h1>
+<p class="sub">对应研发 S_Effect 表结构：ID / desc / effectId / effectObjId / valueType</p>
+
+<table>
+  <tr>
+    <th>ID</th><th>desc</th><th>effectId</th><th>effectObjId</th><th>valueType</th>
+  </tr>
+  <tr class="header-desc">
+    <td>int</td><td>string</td><td>int</td><td>int</td><td>int</td>
+  </tr>
+  <tr class="header-desc">
+    <td>效果ID</td>
+    <td>说明</td>
+    <td>效果的父类<br>1=抽牌 2=复制 3=偷取 4=转化<br>5=弃对手牌 6=改点数 7=调出牌数<br>8=牌型升格 9=查看手牌 10=交换</td>
+    <td>效果的子类<br>具体参数编号<br>-1=无子类</td>
+    <td>值类型<br>0=固定值 1=百分比 2=不需要值<br>-1=无值</td>
+  </tr>
+  <!-- 抽牌类 effectId=1 -->
+  <tr class="section"><td colspan="5">抽牌类（effectId=1）</td></tr>
+  <tr><td>1</td><td class="left">从牌堆抽牌</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>2</td><td class="left">抽牌并选1张(看2选1)</td><td>1</td><td>2</td><td>0</td></tr>
+  <tr><td>3</td><td class="left">从指定牌池随机抽</td><td>1</td><td>3</td><td>0</td></tr>
+  <tr><td>4</td><td class="left">从弃牌堆回收</td><td>1</td><td>4</td><td>0</td></tr>
+  <tr><td>5</td><td class="left">生成Joker百搭牌</td><td>1</td><td>5</td><td>2</td></tr>
+  <!-- 复制类 effectId=2 -->
+  <tr class="section"><td colspan="5">复制类（effectId=2）</td></tr>
+  <tr><td>6</td><td class="left">复制自己手牌</td><td>2</td><td>1</td><td>2</td></tr>
+  <tr><td>7</td><td class="left">复制对手手牌(先看后选)</td><td>2</td><td>2</td><td>2</td></tr>
+  <tr><td>8</td><td class="left">复制公共牌</td><td>2</td><td>3</td><td>2</td></tr>
+  <!-- 偷取类 effectId=3 -->
+  <tr class="section"><td colspan="5">偷取类（effectId=3）</td></tr>
+  <tr><td>9</td><td class="left">随机偷对手1张</td><td>3</td><td>1</td><td>0</td></tr>
+  <!-- 转化类 effectId=4 -->
+  <tr class="section"><td colspan="5">转化类（effectId=4）</td></tr>
+  <tr><td>10</td><td class="left">弃1张→获同花色A</td><td>4</td><td>1</td><td>2</td></tr>
+  <!-- 弃对手牌类 effectId=5 -->
+  <tr class="section"><td colspan="5">弃对手牌类（effectId=5）</td></tr>
+  <tr><td>11</td><td class="left">随机弃对手1张(进弃牌堆)</td><td>5</td><td>1</td><td>0</td></tr>
+  <tr><td>12</td><td class="left">随机弃对手2张(直接移出)</td><td>5</td><td>2</td><td>0</td></tr>
+  <tr><td>13</td><td class="left">随机弃自己1张</td><td>5</td><td>3</td><td>0</td></tr>
+  <!-- 改点数类 effectId=6 -->
+  <tr class="section"><td colspan="5">改点数类（effectId=6）</td></tr>
+  <tr><td>14</td><td class="left">手牌点数+1或-1</td><td>6</td><td>1</td><td>0</td></tr>
+  <!-- 调出牌数类 effectId=7 -->
+  <tr class="section"><td colspan="5">调出牌数类（effectId=7）</td></tr>
+  <tr><td>15</td><td class="left">自己本回合多打1张</td><td>7</td><td>1</td><td>0</td></tr>
+  <tr><td>16</td><td class="left">对手本回合少打1张</td><td>7</td><td>2</td><td>0</td></tr>
+  <tr><td>17</td><td class="left">本回合少打1→下回合多打1</td><td>7</td><td>3</td><td>0</td></tr>
+  <tr><td>18</td><td class="left">对手下回合少补1张</td><td>7</td><td>4</td><td>0</td></tr>
+  <!-- 牌型升格类 effectId=8 -->
+  <tr class="section"><td colspan="5">牌型升格类（effectId=8）</td></tr>
+  <tr><td>19</td><td class="left">顺子→按同花顺判定</td><td>8</td><td>1</td><td>2</td></tr>
+  <tr><td>20</td><td class="left">本回合同花→下回合抽2张</td><td>8</td><td>2</td><td>0</td></tr>
+  <!-- 查看类 effectId=9 -->
+  <tr class="section"><td colspan="5">查看类（effectId=9）</td></tr>
+  <tr><td>21</td><td class="left">查看对手全部手牌</td><td>9</td><td>1</td><td>2</td></tr>
+  <!-- 交换类 effectId=10 -->
+  <tr class="section"><td colspan="5">交换类（effectId=10）</td></tr>
+  <tr><td>22</td><td class="left">自选1张↔对手随机1张互换</td><td>10</td><td>1</td><td>2</td></tr>
+</table>
+
+<p class="sub">22 种效果，归入 10 大类（effectId 1-10）。研发据此实现 10 个效果处理器，技能配表按效果 ID 组合调用。</p>
+
+</body>
+</html>
