@@ -54,6 +54,33 @@
     color: var(--text-muted);
     margin-top: 2px;
   }
+  .demo-links {
+    padding: 6px 14px 10px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 6px;
+  }
+  .demo-btn {
+    display: block;
+    padding: 6px 10px;
+    margin: 4px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    background: #dc2626;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.15s;
+  }
+  .demo-btn:hover { background: #b91c1c; }
+  .demo-btn.admin { background: #4a6cf7; }
+  .demo-btn.admin:hover { background: #3b5de7; }
+  .demo-info {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 2px;
+  }
   .nav-item {
     display: flex;
     align-items: center;
@@ -218,6 +245,11 @@
   <div class="brand">
     代号 001
     <small>全系统策划案 v1.0 · 摘要版</small>
+  </div>
+  <div class="demo-links">
+    <a href="https://poker.lirare.xyz" target="_blank" class="demo-btn">🎮 体验 Demo</a>
+    <a href="https://poker.lirare.xyz/admin" target="_blank" class="demo-btn admin">⚙️ 管理后台</a>
+    <div class="demo-info">admin / admin123</div>
   </div>
   <div class="nav-section">系统</div>
   <div class="nav-item active" onclick="switchPage('home')">
