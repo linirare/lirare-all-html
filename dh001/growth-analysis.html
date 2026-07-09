@@ -12,224 +12,148 @@
   th { background:#1a1a2e; color:#fff; padding:7px 10px; text-align:left; font-size:12px; }
   td { padding:7px 10px; border-bottom:1px solid #e4e7ed; }
   tr:nth-child(even) td { background:#fafbfc; }
+  .exists td { background:#f0fdf4; }
+  .new td { background:#fef3c7; }
   .warn { background:#fef3f2; border-left:3px solid #f04438; padding:10px 14px; margin:10px 0; font-size:13px; }
   .ok { background:#ecfdf3; border-left:3px solid #059669; padding:10px 14px; margin:10px 0; font-size:13px; }
   ul { margin:4px 0 10px 16px; font-size:13px; }
   li { margin-bottom:3px; }
-  .tag { display:inline-block; padding:1px 8px; border-radius:10px; font-size:11px; font-weight:700; }
-  .red { background:#fee2e2; color:#dc2626; }
-  .yellow { background:#fef3c7; color:#b45309; }
-  .green { background:#d1fae5; color:#059669; }
+  .tag { display:inline-block; padding:1px 7px; border-radius:3px; font-size:10px; font-weight:700; margin-right:4px; }
+  .t-ok { background:#d1fae5; color:#059669; }
+  .t-new { background:#fef3c7; color:#b45309; }
   p { margin:6px 0; font-size:13px; }
 </style>
 </head>
 <body>
 
-<h1>代号001 · 玩家成长曲线与留存设计</h1>
+<h1>代号001 · 玩家成长曲线与留存分析</h1>
+<p>标注：<span class="tag t-ok">已有</span> 策划案已设计 &nbsp; <span class="tag t-new">新建议</span> 本文新提出的内容</p>
 
 <!-- ============ 1 ============ -->
 <h1>一、0氪玩家段位成长推算</h1>
-<p>前提：每天2小时 ≈ 40场。早期AI匹配多（胜率60-70%），后期PvP增多（胜率趋近50%）。</p>
+<p>条件：每天2小时≈40场。早期人机兜底多(胜率偏高)，后期PvP增多(趋近50%)。段位倍率仅影响金币(钻石固定)。</p>
 
 <table>
-  <tr><th>时间</th><th>累计场次</th><th>段位</th><th>推算逻辑</th></tr>
+  <tr><th>时间</th><th>累计场次</th><th>当前段位</th><th>推算</th></tr>
   <tr>
-    <td>D1</td><td>40场</td><td><strong>白银Ⅱ</strong></td>
-    <td>3场新手保护→青铜(不掉星,9场打完)→剩余28场在白银。白银胜率~55%=净+2.8星=白银Ⅲ→白银Ⅱ。</td>
+    <td>D1</td><td>40</td><td><strong>白银Ⅱ</strong></td>
+    <td>3场新手→青铜Ⅲ(不掉星,9胜过青铜=~12场)。剩25场白银,胜率~55%=净+2.5星≈白银Ⅱ。</td>
   </tr>
   <tr>
-    <td>D2</td><td>80场</td><td><strong>黄金Ⅲ</strong></td>
-    <td>白银剩6星(白银Ⅱ→黄金)→约12场打完。进入黄金，4星制+3连胜额外星，28场胜率53%=净+3.4星≈黄金Ⅲ。</td>
+    <td>D2</td><td>80</td><td><strong>黄金Ⅲ</strong></td>
+    <td>白银剩余~7星→约14场进黄金。黄金4星制+有连胜奖励,26场净+4星=黄金Ⅲ。</td>
   </tr>
   <tr>
-    <td>D3</td><td>120场</td><td><strong>黄金Ⅰ</strong></td>
-    <td>黄金3小段×4星=12净胜。40场胜率52%=净+1.6星。D3结束时黄金Ⅰ或刚进铂金。</td>
+    <td>D3</td><td>120</td><td><strong>黄金Ⅰ</strong></td>
+    <td>黄金4×3=12星。连胜奖励加速,40场净+8星=黄金Ⅰ(差4星进铂金)。</td>
   </tr>
   <tr>
-    <td>D5</td><td>200场</td><td><strong>铂金Ⅱ</strong></td>
-    <td>铂金4星制无连胜奖励,胜率回到50%。净胜难度加大，2天80场≈净+6星=爬1.5小段。</td>
+    <td>D5</td><td>200</td><td><strong>铂金Ⅱ</strong></td>
+    <td>铂金4星制<strong>无连胜奖励</strong>,胜率52%=40场净+1.6星。两天净+3星≈铂金Ⅱ。</td>
   </tr>
   <tr>
-    <td>D7</td><td>280场</td><td><strong>铂金Ⅰ</strong></td>
-    <td>铂金最后一段。满星晋级大师需要净胜4场。7天积累足够。</td>
+    <td>D7</td><td>280</td><td><strong>铂金Ⅰ</strong></td>
+    <td>到铂金Ⅰ共12净胜。一周积累够。</td>
   </tr>
   <tr>
-    <td>D10</td><td>400场</td><td><strong>大师 1200分</strong></td>
-    <td>大师1000起。胜+25分,负-15分。50%胜率下40场=净+200分。</td>
+    <td>D10</td><td>400</td><td><strong>大师 1200分</strong></td>
+    <td>大师1000起,+25/-15。50%胜率40场=净+200分。</td>
   </tr>
   <tr>
-    <td>D14</td><td>560场</td><td><strong>大师 1600分</strong></td>
-    <td>4天大师净+400分→1600。传奇1500分门槛在D12-13左右。</td>
+    <td>D14</td><td>560</td><td><strong>传奇</strong></td>
+    <td>大师1500→传奇。额外需要净+20场(~500分),50%胜率约3-4天。D12-13可达。</td>
   </tr>
 </table>
 
-<div class="ok"><strong>结论：</strong>0氪玩家2周打到传奇是可行的。关键瓶颈不在段位机制，在功能牌库存——打到铂金后T3牌消耗殆尽，败方每场扣2张，必须靠每日福利(24张T3)和钻石抽卡维持。</div>
+<div class="ok">0氪玩家2周打到传奇可行。段位结构(7段×星数制→积分制过渡)本身支撑2周成长。瓶颈在功能牌库存——铂金后每天只净亏6张牌(D3后T0/T1用得越多越缺)。</div>
 
 <!-- ============ 2 ============ -->
 <h1>二、玩家疲惫期分析</h1>
 
 <table>
-  <tr><th>阶段</th><th>段位</th><th>疲惫原因</th><th>严重度</th></tr>
+  <tr><th>阶段</th><th>段位</th><th>问题</th><th>程度</th></tr>
   <tr>
-    <td>第1-2天</td><td>青铜→白银</td>
-    <td>新手保护期太短。3场后直接进青铜,没有"我在进步"的引导。操作重复度高。</td>
-    <td><span class="tag yellow">中</span></td>
+    <td>D1-D2</td><td>青铜→白银</td>
+    <td>操作单调(选牌+偶尔用技能)。新手3场后直接进循环,没有教学深度。</td>
+    <td>中</td>
   </tr>
   <tr>
-    <td>第3-5天</td><td>黄金</td>
-    <td><strong>功能牌疲劳。</strong>22张牌看过很多遍了。T3重复抽到,没有新鲜感。T0/T1难抽到,抽到也不敢用(怕输扣库存)。十连没保底,可能全T3。</td>
-    <td><span class="tag red">高</span></td>
+    <td>D3-D5</td><td>黄金</td>
+    <td><strong>功能牌疲劳。</strong>22张牌看过很多遍。十连还没保底,可能全T3。T0/T1不敢常用(败方扣库存)。每日福利只补T3不补高品质牌。</td>
+    <td><span style="color:#dc2626;font-weight:700;">高</span></td>
   </tr>
   <tr>
-    <td>第5-7天</td><td>铂金</td>
-    <td><strong>进度停滞感。</strong>4星制无连胜,一胜一负原地踏步。PvP比例上升,输给真人比输给AI更挫败。宝箱每天5个上限,开到重复T3体验极差。</td>
-    <td><span class="tag red">高</span></td>
+    <td>D5-D7</td><td>铂金</td>
+    <td><strong>晋升减速。</strong>4星制无连胜,一胜一负原地踏步。PvP比例上升,连败挫败感强。宝箱日限5个,T3重复率高。</td>
+    <td><span style="color:#dc2626;font-weight:700;">高</span></td>
   </tr>
   <tr>
-    <td>第7-10天</td><td>铂金Ⅰ→大师</td>
-    <td><strong>晋升焦虑。</strong>差几颗星升大师但反复掉星。保护机制用完后的挫败。经济上功能牌库存紧张,败方扣牌心理压力大。</td>
-    <td><span class="tag red">高</span></td>
+    <td>D7-D10</td><td>铂金Ⅰ→大师</td>
+    <td><strong>晋升焦虑。</strong>差几颗星来回掉。保护用完后的挫败。功能牌库存耗尽焦虑。</td>
+    <td>高</td>
   </tr>
   <tr>
-    <td>第10-14天</td><td>大师+</td>
-    <td><strong>目标缺失。</strong>达到传奇后没有更高追求。积分数字不如星数直观。没有赛季重置,缺少重新挑战的动力。</td>
-    <td><span class="tag yellow">中</span></td>
+    <td>D10-D14</td><td>大师→传奇</td>
+    <td><strong>目标缺失。</strong>积分数字不如星数直观,没有赛季重置。成就/外装已基本解锁完。</td>
+    <td>中</td>
   </tr>
 </table>
 
 <!-- ============ 3 ============ -->
 <h1>三、段位机制增强方案</h1>
 
-<h3>3.1 新鲜感注入点</h3>
+<h3>已有设计（不需要加）</h3>
 <table>
-  <tr><th>节点</th><th>触发什么</th><th>持续多久</th></tr>
-  <tr>
-    <td>升入白银</td>
-    <td>解锁<strong>连胜奖励</strong>机制 + 解锁<strong>新AI难度档</strong>（对手变聪明，有新鲜感）</td>
-    <td>永久</td>
-  </tr>
-  <tr>
-    <td>升入黄金</td>
-    <td>解锁<strong>3连胜额外+1星</strong> + 新增<strong>升段宝箱</strong>（升段时送一张随机T2+牌）</td>
-    <td>永久</td>
-  </tr>
-  <tr>
-    <td>升入铂金</td>
-    <td>解锁<strong>钻石VIP称号</strong> + PvP对局额外+5钻石（激励真人匹配）</td>
-    <td>永久</td>
-  </tr>
-  <tr>
-    <td>升入大师</td>
-    <td>解锁<strong>积分制排名</strong> + 排行榜展示 + 解锁<strong>限定头像框</strong></td>
-    <td>永久</td>
-  </tr>
-  <tr>
-    <td>升入传奇</td>
-    <td><strong>传奇专属称号</strong> + 每周传奇排名奖励（钻石+限定牌）</td>
-    <td>每周刷新</td>
-  </tr>
+  <tr class="exists"><td>大段保护</td><td>刚升入白银/黄金/铂金时1次保护</td></tr>
+  <tr class="exists"><td>连胜奖励</td><td>黄金3连胜额外+1星</td></tr>
+  <tr class="exists"><td>段位称号+头像框</td><td>外装系统：钻石VIP(铂金)、最强王者(传奇)、钻石边框/王者之冠</td></tr>
+  <tr class="exists"><td>排行榜</td><td>大师+积分排行</td></tr>
 </table>
 
-<h3>3.2 玩法变异</h3>
+<h3>新建议（解决疲劳点）</h3>
 <table>
-  <tr><th>段位</th><th>新增玩法</th><th>设计目的</th></tr>
-  <tr>
-    <td>黄金+</td>
-    <td><strong>每周挑战局</strong>：限时48小时的特殊规则（如"只用T3牌""禁用抽牌技能"），完成获额外奖励</td>
-    <td>打破功能牌疲劳，强制尝试不同组合</td>
-  </tr>
-  <tr>
-    <td>铂金+</td>
-    <td><strong>复仇局</strong>：刚输掉的对手出现在列表里，胜率加权额外+2星</td>
-    <td>把挫败转化为动力</td>
-  </tr>
-  <tr>
-    <td>大师+</td>
-    <td><strong>段位赌注局</strong>：自愿模式下押注额外±5分，输赢翻倍</td>
-    <td>积分数字游戏化</td>
-  </tr>
+  <tr class="new"><td><strong>升段宝箱</strong></td><td>每次升大段(青铜→白银/白银→黄金/…)赠送一张随机T2+功能牌。7个大段=7张免费中高品质牌。直接缓解"抽不到好牌"的疲劳。</td></tr>
+  <tr class="new"><td><strong>每周挑战局</strong></td><td>黄金+解锁。每周一个限时48h特殊规则(如"禁用抽牌技能""只能用T3牌""牌型翻倍加分")。完成获额外钻石+随机T1牌。打破功能牌疲劳。</td></tr>
+  <tr class="new"><td><strong>复仇局</strong></td><td>铂金+解锁。刚输掉的真人对手出现在"复仇"列表里,胜出额外+1星。把挫败转化为动力。</td></tr>
+  <tr class="new"><td><strong>段位赌注</strong></td><td>大师+解锁。自愿模式下押注额外±5积分,输赢翻倍。让积分数字有博弈感。</td></tr>
 </table>
 
 <!-- ============ 4 ============ -->
-<h1>四、次日登录 & 碎片化时间钩子</h1>
+<h1>四、次日登录 + 碎片化时间钩子</h1>
 
-<h3>4.1 次日登录钩子（D2 retention）</h3>
+<h3>已有设计（不需要加）</h3>
 <table>
-  <tr><th>钩子</th><th>触发时机</th><th>具体内容</th></tr>
-  <tr>
-    <td>连胜延续</td>
-    <td>D1结束时如果连胜中</td>
-    <td>push通知："你的3连胜还在！今天登录保住连胜，额外+1星奖励等你"</td>
-  </tr>
-  <tr>
-    <td>段位保护提醒</td>
-    <td>D1结束时如果0星</td>
-    <td>"你刚升入新段位，今天登录有1次保护机会，输了不掉星"</td>
-  </tr>
-  <tr>
-    <td>宝箱待开</td>
-    <td>D1结束时宝箱满进度</td>
-    <td>"你的宝箱已经满了！登录即可开启领取"</td>
-  </tr>
-  <tr>
-    <td>每日福利</td>
-    <td>每日首次登录</td>
-    <td>"今日T3牌已补充：每种+3张" + 签到钻石</td>
-  </tr>
-  <tr>
-    <td>升段进度提醒</td>
-    <td>离线前距离升段≤2星</td>
-    <td>"你离黄金只差2颗星了！今天来冲一下"</td>
-  </tr>
+  <tr class="exists"><td>每日福利</td><td>每日登录T3各+3张</td></tr>
+  <tr class="exists"><td>每日签到</td><td>钻石,代号Q绑定加成</td></tr>
+  <tr class="exists"><td>每日任务</td><td>3场对战/5次技能/赢6小局/顺子+</td></tr>
+  <tr class="exists"><td>宝箱</td><td>PvE积累,日限5个</td></tr>
+  <tr class="exists"><td>世界聊天</td><td>大厅频道,已设计</td></tr>
 </table>
 
-<h3>4.2 碎片化时间钩子（5-15分钟短会话）</h3>
+<h3>新建议</h3>
 <table>
-  <tr><th>场景</th><th>时长</th><th>做什么</th><th>奖励</th></tr>
-  <tr>
-    <td>通勤/排队</td>
-    <td>3分钟</td>
-    <td>打1场AI对战（人机兜底，快速匹配）</td>
-    <td>正常对战奖励</td>
-  </tr>
-  <tr>
-    <td>午休</td>
-    <td>10分钟</td>
-    <td>完成2-3场对战 + 开1个宝箱</td>
-    <td>每日任务进度(1/3场)</td>
-  </tr>
-  <tr>
-    <td>睡前</td>
-    <td>5分钟</td>
-    <td>签到 + 抽1次卡 + 检查宝箱/邮件 + 领每日福利</td>
-    <td>签到钻石 + T3补充 + 抽卡</td>
-  </tr>
-  <tr>
-    <td><strong>新增：快速对决</strong></td>
-    <td>2分钟</td>
-    <td>单局制（非5局3胜）1局定胜负，只能用T3牌</td>
-    <td>快速奖励（少量钻石+金币）</td>
-  </tr>
+  <tr class="new"><td><strong>D2推送钩子</strong></td>
+    <td>D1结束时检查状态并推送：①如果连胜中→"你的X连胜还在！今天登录保住连胜,额外+1星" ②如果距升段≤2星→"你离黄金只差2星,今天来冲" ③如果宝箱满→"宝箱已满,登录开启"</td></tr>
+  <tr class="new"><td><strong>快速对决</strong></td>
+    <td>2分钟模式：单局定胜负(非5局3胜),只用T3牌,不计天梯,不扣库存。匹配AI。奖励少量钻石+金币。通勤/排队场景3分钟一局。</td></tr>
+  <tr class="new"><td><strong>好友挑战</strong></td>
+    <td>邀请好友对战,不计天梯,不扣库存。赢了有面子,输了没损失。社交驱动留存。</td></tr>
+  <tr class="new"><td><strong>世界频道系统消息</strong></td>
+    <td>"XX升到了黄金！""XX抽到了5-Joker(T0)！"——制造社区热闹感,让离线玩家产生"我也去玩一把"的冲动。</td></tr>
+  <tr class="new"><td><strong>传奇周排名奖励</strong></td>
+    <td>每周一结算传奇段位排名,Top玩家获钻石+限定头像框。给大师+段位持续的目标。</td></tr>
 </table>
 
-<h3>4.3 社交钩子</h3>
+<h3>各时间段适配</h3>
 <table>
-  <tr><th>钩子</th><th>内容</th></tr>
-  <tr>
-    <td>世界频道活跃</td>
-    <td>系统定时发送"XX刚刚升到了黄金！""XX抽到了5-Joker(T0)！"——制造社区热闹感</td>
-  </tr>
-  <tr>
-    <td>好友挑战</td>
-    <td>可以邀请好友对战(不计天梯,不扣库存)。赢了有面子,输了没损失</td>
-  </tr>
-  <tr>
-    <td>排行榜周更</td>
-    <td>每周一刷新传奇排名,上榜玩家获额外钻石。给大师+段位玩家持续的目标</td>
-  </tr>
+  <tr><th>场景</th><th>时长</th><th>做什么</th><th>涉及系统</th></tr>
+  <tr><td>通勤/排队</td><td>2-3分钟</td><td>1场快速对决 或 1场人机对战</td><td>快速对决(新) / 人机兜底(已有)</td></tr>
+  <tr><td>午休</td><td>10分钟</td><td>3场对战 + 开宝箱 + 领每日福利</td><td>对战+宝箱+福利(已有)</td></tr>
+  <tr><td>睡前</td><td>5分钟</td><td>签到+抽1次卡+领福利+检查邮件</td><td>签到+商店+邮件(已有)</td></tr>
+  <tr><td>周末</td><td>1-2小时</td><td>冲段位 + 每周挑战局 + 好友对战</td><td>天梯+每周挑战(新)+好友(新)</td></tr>
 </table>
 
-<div class="ok" style="margin-top:24px;"><strong>优先级建议：</strong>P0=每日福利+宝箱提醒(D2留存的基础)。P1=升段宝箱+每周挑战局(解决黄金-铂金疲惫)。P2=好友挑战+快速对决(解决碎片化时间)。P3=段位赌注局+复仇局(大师+长期留存)。</div>
+<div class="ok" style="margin-top:24px;"><strong>优先级：</strong>P0=推送钩子(D2留存基础,技术成本最低)。P1=升段宝箱+每周挑战局(解决黄金-铂金核心疲劳)。P2=快速对决+好友挑战+世界频道消息(碎片化时间和社交留存)。P3=复仇局+段位赌注+周排名(大师+长期留存)。</div>
 
 </body>
 </html>
