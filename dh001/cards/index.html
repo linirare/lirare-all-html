@@ -190,7 +190,7 @@
   <table>
     <thead><tr><th>方式</th><th>消耗</th><th>说明</th></tr></thead>
     <tbody>
-      <tr><td>钻石抽卡</td><td>单抽 100💎 / 十连 1,000💎</td><td>T0 6% · T1 17% · T2 32% · T3 45%</td></tr>
+      <tr><td>钻石抽卡</td><td>单抽 100💎 / 十连 1,000💎</td><td>T0 6% · T1 17% · T2 32% · T3 45%。十连保底 1 张 T0。</td></tr>
       <tr><td>初始赠送</td><td>免费</td><td>新号所有 T3 各 5 张</td></tr>
       <tr><td>后续规划</td><td>—</td><td>任务奖励、活动赠送等（待设计）</td></tr>
     </tbody>
@@ -201,9 +201,7 @@
 3. 从该 Tier 牌池随机选一张
 4. 该牌库存 +1</div>
 
-  <div class="warn-box" style="font-size:12.5px;">
-    <strong>⚠ 十连保底缺失：</strong>十连目前是单抽重复 10 次，无保底机制。玩家花 1000💎 可能全拿 T3，体验极差。<strong>建议优先实现"十连至少保底 1 张 T2+"</strong>（P0）。
-  </div>
+<!-- 十连保底已决策 -->
 
   <div class="note-box" style="font-size:12.5px;">
     <strong>💡 货币竞争：</strong>功能牌抽卡和角色招募都耗 100💎/抽，同一货币竞争没有引导。建议：功能牌抽卡是日常主消耗（每日收入≈1抽），角色招募可考虑用作中期目标累积。
@@ -641,7 +639,7 @@ function CardExecutor(ctx):
   <table>
     <thead><tr><th>项目</th><th>说明</th></tr></thead>
     <tbody>
-      <tr><td>十连保底</td><td>至少 1 张 T2+，提升抽卡吸引力（P0）</td></tr>
+      <tr><td>十连保底 T0</td><td>十连必出 1 张 T0，提升抽卡吸引力（P0·已决策）</td></tr>
       <tr><td>重复牌碎片/分解</td><td>解决库存溢出，增加资源回收路径</td></tr>
       <tr><td>新功能牌设计</td><td>建议至少补一张增幅牌，降低 lucky 单点风险</td></tr>
       <tr><td>赛季限时牌</td><td>赛季限定卡，过期不入常规卡池</td></tr>
