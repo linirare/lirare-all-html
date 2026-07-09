@@ -311,41 +311,98 @@
 
 <!-- ==================== 产品介绍 ==================== -->
 <div id="page-intro" class="page">
-  <div style="background:linear-gradient(135deg,#1a1a2e,#2d1a3e);border-radius:12px;padding:36px 40px;margin-bottom:20px;color:#fff;border:1px solid #4a3a5e;">
-    <div style="font-size:11px;color:#a78bfa;letter-spacing:1px;margin-bottom:8px;">轻扑克竞技 · 策略卡牌</div>
-    <div style="font-size:26px;font-weight:800;margin-bottom:8px;">代号 001</div>
-    <div style="font-size:16px;color:#a78bfa;font-weight:500;margin-bottom:16px;">5局越打越大，2张王牌定生死</div>
-    <p style="font-size:13px;color:#a1a1aa;max-width:640px;line-height:1.8;">一副扑克牌。3张固定的公共牌。每局出牌数从3张递增到5张。带上你仅有的2张功能牌——它们是改变牌局命运的唯一筹码。赢了牌不烧，输了牌扣掉。这是扑克，但不是你认识的扑克。</p>
-  </div>
-
-  <div class="card" style="text-align:center;margin-bottom:20px;">
-    <div style="font-size:20px;font-weight:700;margin-bottom:20px;color:var(--text);">5局牌局，越打越大 · <span style="color:#7c3aed;">2张王牌，一次定胜负</span></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 16px;">
-        <div style="font-size:36px;margin-bottom:8px;">📐</div>
-        <div style="font-weight:700;color:#7c3aed;margin-bottom:6px;">出牌数递增</div>
-        <div style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">第1-3局只出3张，第4局4张，第5局5张全押。越到后面赌注越高——没有任何扑克游戏能给你这种压迫感。</div>
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 16px;">
-        <div style="font-size:36px;margin-bottom:8px;">🃏</div>
-        <div style="font-weight:700;color:#7c3aed;margin-bottom:6px;">2张王牌，各用1次</div>
-        <div style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">不是每回合甩技能。整场比赛你只有两次机会改变牌局命运——选在哪回合用，是最大的决策。</div>
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 16px;">
-        <div style="font-size:36px;margin-bottom:8px;">⚡</div>
-        <div style="font-weight:700;color:#7c3aed;margin-bottom:6px;">胜退败扣</div>
-        <div style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">赢了牌不烧，输了牌扣掉。顶级牌不是抽来收藏的——只要一直赢，就能一直用下去。</div>
+  <!-- Hero -->
+  <div style="background:linear-gradient(160deg,#0f0f23 0%,#1a1040 40%,#0f0f23 100%);border-radius:14px;padding:50px 48px 44px;margin-bottom:28px;text-align:center;color:#fff;border:1px solid rgba(120,80,200,.2);position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-40px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(168,85,247,.15),transparent 70%);border-radius:50%;pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-30px;left:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(192,132,252,.1),transparent 70%);border-radius:50%;pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;">
+      <div style="display:inline-block;background:rgba(168,85,247,.15);color:#c084fc;padding:5px 18px;border-radius:20px;font-size:12px;letter-spacing:1.5px;margin-bottom:18px;">CASUAL COMPETITIVE · POKER STRATEGY</div>
+      <div style="font-size:44px;font-weight:900;letter-spacing:-1px;margin-bottom:10px;">代号 001</div>
+      <div style="font-size:22px;color:#a78bfa;font-weight:600;margin-bottom:20px;">一副牌 · 3张公共牌 · 5局递增 · 2张王牌定生死</div>
+      <div style="max-width:580px;margin:0 auto;font-size:14px;color:#a1a1aa;line-height:1.9;">
+        不是德州扑克。不是斗地主。带上你仅有的2张功能牌，在5局牌局里决定哪回合亮出底牌。赢了牌不烧，输了牌扣掉——每局对战都在赌库存、赌战术、赌运气。
       </div>
     </div>
   </div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
-    <div class="card"><div style="font-weight:700;margin-bottom:4px;">🎯 一键匹配，不选模式</div><div style="font-size:12px;color:var(--text-muted);">点"开始对战"直接开打。系统自动匹配真人，15秒无人自动转AI兜底。真人还是AI？不需要知道。</div></div>
-    <div class="card"><div style="font-weight:700;margin-bottom:4px;">🃏 22张功能牌，10种战术</div><div style="font-size:12px;color:var(--text-muted);">偷牌、复制、破坏、封锁、点数修改、牌型升格。每张牌都是一个战术变量。</div></div>
-    <div class="card"><div style="font-weight:700;margin-bottom:4px;">🏆 7段天梯</div><div style="font-size:12px;color:var(--text-muted);">青铜不掉星→白银初竞技→黄金3连胜加速→铂金修罗场→大师积分制→传奇荣耀。</div></div>
-    <div class="card"><div style="font-weight:700;margin-bottom:4px;">👤 4个角色</div><div style="font-size:12px;color:var(--text-muted);">街头牌手A、牌馆少女Q、寻宝猎人J、地下传奇K。角色加成仅限AI局，PvP绝对公平。</div></div>
-    <div class="card"><div style="font-weight:700;margin-bottom:4px;">📦 宝箱系统</div><div style="font-size:12px;color:var(--text-muted);">对战即积进度，赢+2输+1。55%出2张T3，10%惊喜出T1。每日5箱。</div></div>
-    <div class="card"><div style="font-weight:700;margin-bottom:4px;">💰 十连必出T0</div><div style="font-size:12px;color:var(--text-muted);">1000钻石十连抽，至少1张T0。赢了不烧牌，T0一直陪着你打。</div></div>
+  <!-- 核心三张牌 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:28px;">
+    <div style="background:#fff;border:1px solid #e4e7ed;border-radius:14px;padding:28px 22px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04);">
+      <div style="font-size:42px;margin-bottom:14px;">📐</div>
+      <div style="font-size:17px;font-weight:800;color:#1a1a2e;margin-bottom:8px;">出牌数递增</div>
+      <div style="font-size:13px;color:#666;line-height:1.7;">
+        <div style="margin-bottom:6px;"><b>第1-3局</b> 出 3 张</div>
+        <div style="margin-bottom:6px;"><b>第4局</b> 出 4 张</div>
+        <div style="margin-bottom:6px;"><b>第5局</b> 出 5 张</div>
+        <div style="margin-top:12px;color:#7c3aed;font-weight:600;">最后一把全押</div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid #e4e7ed;border-radius:14px;padding:28px 22px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04);">
+      <div style="font-size:42px;margin-bottom:14px;">🃏</div>
+      <div style="font-size:17px;font-weight:800;color:#1a1a2e;margin-bottom:8px;">2张王牌 · 各用1次</div>
+      <div style="font-size:13px;color:#666;line-height:1.7;">
+        整场比赛只有<b>两次</b>机会改变命运。<br><br>
+        第1局就用完 = 后面4局裸奔。<br>
+        憋到第5局 = 万一第3局就输了。<br><br>
+        <div style="color:#7c3aed;font-weight:600;">选时机 = 最大的决策。</div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid #e4e7ed;border-radius:14px;padding:28px 22px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04);">
+      <div style="font-size:42px;margin-bottom:14px;">⚡</div>
+      <div style="font-size:17px;font-weight:800;color:#1a1a2e;margin-bottom:8px;">胜退败扣</div>
+      <div style="font-size:13px;color:#666;line-height:1.7;">
+        赢了 → 牌还在，下次接着用。<br>
+        输了 → 牌烧掉，库存-2。<br><br>
+        T0神偷不是抽来收藏的——<br>是只要一直赢就能一直用的。<br><br>
+        <div style="color:#dc2626;font-weight:600;">输的不是星，是库存。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 游戏流程 -->
+  <div style="background:#fff;border:1px solid #e4e7ed;border-radius:12px;padding:28px 32px;margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:800;color:#1a1a2e;margin-bottom:20px;">📋 一局游戏怎么打</div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:#666;line-height:1.8;">
+      <span style="background:#f0fdf4;padding:6px 14px;border-radius:8px;font-weight:600;color:#059669;">装备2张牌</span>
+      <span style="color:#ccc;">→</span>
+      <span style="background:#eff6ff;padding:6px 14px;border-radius:8px;font-weight:600;color:#2563eb;">点开始对战</span>
+      <span style="color:#ccc;">→</span>
+      <span style="background:#eff6ff;padding:6px 14px;border-radius:8px;font-weight:600;color:#2563eb;">自动匹配</span>
+      <span style="color:#ccc;">→</span>
+      <span style="background:#fef3c7;padding:6px 14px;border-radius:8px;font-weight:600;color:#b45309;">5局对战</span>
+      <span style="color:#ccc;">→</span>
+      <span style="background:#fef3f2;padding:6px 14px;border-radius:8px;font-weight:600;color:#dc2626;">结算(胜退败扣)</span>
+    </div>
+    <div style="margin-top:16px;padding:12px 16px;background:#fafbfc;border-radius:8px;font-size:12px;color:#9098a8;line-height:1.7;">
+      每回合选N张牌打出（N=3/3/3/4/5）→ 你的牌+3张公共牌自动取最优5张 → 比牌型大小 → 输方扣血 → 先赢3局者胜。<br>
+      任何时间点可使用1张功能牌（每张只能整场用1次）。15秒未匹配真人自动转AI。
+    </div>
+  </div>
+
+  <!-- 关键数字 -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;">
+    <div style="background:#fff;border:1px solid #e4e7ed;border-radius:10px;padding:20px 16px;text-align:center;">
+      <div style="font-size:28px;font-weight:900;color:#7c3aed;">22</div>
+      <div style="font-size:11px;color:#9098a8;margin-top:4px;">功能牌 · 10种战术</div>
+    </div>
+    <div style="background:#fff;border:1px solid #e4e7ed;border-radius:10px;padding:20px 16px;text-align:center;">
+      <div style="font-size:28px;font-weight:900;color:#7c3aed;">5</div>
+      <div style="font-size:11px;color:#9098a8;margin-top:4px;">小局 · 3胜制</div>
+    </div>
+    <div style="background:#fff;border:1px solid #e4e7ed;border-radius:10px;padding:20px 16px;text-align:center;">
+      <div style="font-size:28px;font-weight:900;color:#7c3aed;">7</div>
+      <div style="font-size:11px;color:#9098a8;margin-top:4px;">段位 · 青铜→传奇</div>
+    </div>
+    <div style="background:#fff;border:1px solid #e4e7ed;border-radius:10px;padding:20px 16px;text-align:center;">
+      <div style="font-size:28px;font-weight:900;color:#7c3aed;">52</div>
+      <div style="font-size:11px;color:#9098a8;margin-top:4px;">张扑克 · 标准牌组</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="text-align:center;padding:20px 0 10px;">
+    <a href="https://poker.lirare.xyz" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;padding:14px 40px;border-radius:30px;font-size:15px;font-weight:700;text-decoration:none;">🎮 体验 Demo</a>
+    <div style="margin-top:12px;font-size:12px;color:#9098a8;">poker.lirare.xyz</div>
   </div>
 </div>
 
