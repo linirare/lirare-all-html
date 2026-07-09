@@ -102,6 +102,25 @@
 一对: [1, 对子, 踢1, 踢2, 踢3]
 高牌: [0, r1, r2, r3, r4, r5]</div>
   <p><strong>所有比较位相同则按花色定胜负：</strong>♠ > ♥ > ♦ > ♣。</p>
+
+  <h3>玩家视角（游戏内表达）</h3>
+  <p>研发用评分向量；玩家只需要记住这几句话：</p>
+  <table>
+    <thead><tr><th>牌型</th><th>游戏内一句话</th></tr></thead>
+    <tbody>
+      <tr><td>皇家同花顺</td><td>同花色 A-K-Q-J-10，天胡。</td></tr>
+      <tr><td>同花顺</td><td>同花色连续 5 张。</td></tr>
+      <tr><td>四条</td><td>4 张一样的，配任意一张。</td></tr>
+      <tr><td>葫芦</td><td>3 张一样 + 2 张一样。</td></tr>
+      <tr><td>同花</td><td>5 张同花色，不连续也行。</td></tr>
+      <tr><td>顺子</td><td>5 张连续点数，花色不限。</td></tr>
+      <tr><td>三条</td><td>3 张一样，配两张不同的。</td></tr>
+      <tr><td>两对</td><td>两组对子 + 一张废牌。</td></tr>
+      <tr><td>一对</td><td>一对 + 三张不同的。</td></tr>
+      <tr><td>高牌</td><td>没啥组合，就看最大那张。</td></tr>
+    </tbody>
+  </table>
+  <p>核心规则：<strong>你出的牌 + 公共牌，系统自动取最强 5 张。</strong>不用手动拼。</p>
 </div>
 
 <div class="section">
