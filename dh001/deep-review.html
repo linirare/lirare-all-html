@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>代号001 · 策划案深度审视</title>
+<style>
+  body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:1000px; margin:20px auto; padding:20px; background:#f5f6f8; color:#1a1a2e; line-height:1.8; }
+  h1 { font-size:20px; border-left:4px solid #dc2626; padding-left:12px; margin:36px 0 16px; }
+  .p { margin:6px 0 14px; font-size:13.5px; }
+  .issue { background:#fff; border:1px solid #e4e7ed; border-radius:8px; padding:14px 18px; margin:12px 0; }
+  .issue h2 { font-size:15px; margin:0 0 6px; color:#dc2626; }
+  .issue .tag { display:inline-block; padding:1px 8px; border-radius:3px; font-size:10px; font-weight:700; margin-right:6px; }
+  .sev { background:#fee2e2; color:#dc2626; }
+  .r { background:#fef3c7; color:#b45309; }
+  .quote { background:#f1f5f9; padding:8px 14px; border-radius:4px; font-size:12.5px; color:#64748b; margin:8px 0; border-left:3px solid #94a3b8; }
+</style>
+</head>
+<body>
+
+<h1 style="border-left-color:#1a1a2e;">代号001 · 策划案深度审视</h1>
+<p class="p">不是审计，是个人判断。有些设计相互打架，有些东西做了等于没做，有些更危险——做错了比没做还糟。</p>
+
+<!-- 1 -->
+<div class="issue">
+  <h2><span class="tag sev">致命</span> 1. 铂金段 = 付费墙，但付费口是封死的</h2>
+  <p class="p">数学上，铂金是无氪玩家的悬崖。<strong>净胜 0.04 星/场，理论 300 场爬完。</strong>每天 2 小时 = 40 场，需要 7.5 天单独爬铂金。这意味着 D4 进铂金后，玩家连续一周都在同一个段位的三小段里反复摩擦。</p>
+  <p class="p">这种"突然变慢"在其它游戏里是刻意设计的——让你受挫，然后付费买加速。但代号001首发不做钻石充值。所以<strong>你设计了付费墙，但墙后面没有门。</strong>玩家挫败后没有出口，唯一的选择是离开。</p>
+  <div class="quote">铂金：4星制，胜+1/败-1，无连胜奖励。→ 天梯策划案</div>
+  <div class="quote">首发不做钻石充值入口。→ 经济循环 6.4</div>
+  <p class="p"><strong>两条规则放在一起 = 你设计了一个无法解决的挫败。</strong>要么给铂金加连胜奖励(或其它加速机制)，要么开钻石充值。二选一，不能两个都不做。</p>
+</div>
+
+<!-- 2 -->
+<div class="issue">
+  <h2><span class="tag sev">致命</span> 2. 胜退败扣 = 强者愈强，弱者退游</h2>
+  <p class="p">赢家不消耗库存，输家扣 2 张牌。这意味着：</p>
+  <p class="p">
+    胜率 60% 的玩家 → 每天 40 场 × 40%输率 = 16 场输 → 消耗 32 张牌。每日福利补 24 张 T3。净亏 8 张。<br>
+    胜率 40% 的玩家 → 每天 40 场 × 60%输率 = 24 场输 → 消耗 48 张牌。净亏 24 张。
+  </p>
+  <p class="p"><strong>胜率越低的人，牌消耗越快，越打不起，胜率进一步降低 → 死循环。</strong>这是经典的富者愈富机制。问题不在于"鼓励赢"——问题在于惩罚输太狠。败方扣牌的设计会让低胜率玩家在 3-5 天内把 T3 库存烧光，然后就打不起了，最终不玩了。</p>
+  <div class="quote">功能牌带入规则：创建时暂扣，结算时胜方退还、败方扣除。→ 功能牌 4.1</div>
+  <p class="p"><strong>败方扣牌量应该降低(比如只扣 1 张)，或者给败方一个保底机制。</strong>你不是在惩罚"不努力"，你是在惩罚"运气不好"。</p>
+</div>
+
+<!-- 3 -->
+<div class="issue">
+  <h2><span class="tag r">严重</span> 3. AI 设计过度工程化，玩家永远感知不到</h2>
+  <p class="p">AI 系统用了四因子叠加(段位加成/技能品质/胜率校准/随机因子)、三维评分、动态调节…这是一个学术级别的 AI 设计。但玩家根本不关心 AI 怎么决策的。</p>
+  <p class="p">玩家感知到的是三件事：①AI 出牌快不快(流畅度) ②AI 有没有犯明显错误(可信度) ③AI 有没有让我赢合适比例(公平感)。你说的四因子、权重视觉、冷却期——玩家一概不知，也不想知道。</p>
+  <div class="quote">AI 难度 = 段位加成 + 技能品质校正 + 胜率锚定 + 随机因子。四因子叠加，不同响应速度配合。→ AI人机 第二章</div>
+  <p class="p"><strong>把 AI 复杂度砍半——保留胜率锚定(核心)和技能品质校正(跟牌相关)，删掉段位加成和冷却期(它们做的是同一件事)。</strong>让 AI 文档瘦身，让开发省力，玩家不会感觉到任何差异。</p>
+</div>
+
+<!-- 4 -->
+<div class="issue">
+  <h2><span class="tag r">严重</span> 4. 宝箱机制跟游戏哲学对撞</h2>
+  <p class="p">整个策划案反复强调：PvP 和 PvE 对玩家来说是同一件事——点击"开始对战"，不选模式，系统自动匹配，人机兜底无感。</p>
+  <p class="p">但宝箱只给人机兜底积累，PvP 不给。这意味着玩家实际上被差异化对待了——打了一局 PvP，赢了输了宝箱都不动。玩家迟早会发现"为什么有时候打对战宝箱涨了，有时候不涨？"</p>
+  <div class="quote">PvP 胜利/失败：宝箱不积累。人机兜底胜利：+2，失败：+1。→ 对战 第六章</div>
+  <p class="p"><strong>要么把宝箱设计成所有对战都积累(这样就跟 PvP/PvE 无感一致)，要么承认 PvP 和 PvE 就是不同的——就别再说"玩家无感"。</strong>现在的设计是精神分裂——嘴上说一样，数据上不一样。</p>
+</div>
+
+<!-- 5 -->
+<div class="issue">
+  <h2><span class="tag r">严重</span> 5. 十连没保底 = 第一波差评炸弹</h2>
+  <p class="p">抽卡是游戏的核心付费点，十连 1000 钻攒 3 天。如果十连开了 10 张 T3——这在 45% 概率下完全可能(概率 ≈ 0.45¹⁰ ≈ 0.03%, 不常见但会发生)——这个玩家的反应不是"再试一次"，而是"上 TapTap 打一星"。</p>
+  <p class="p">策划案自己标注了"⚠ 十连保底缺失(P0)"——但 P0 应该是"上线前不改就别上线"，不是"备注一下以后改"。</p>
+  <div class="quote">⚠ 十连保底缺失：十连目前是单抽重复 10 次，无保底机制。→ 功能牌 第五章</div>
+  <p class="p"><strong>上线前必须实现十连至少保底 1 张 T2+。</strong>这不是锦上添花，这是防差评底线。</p>
+</div>
+
+<!-- 6 -->
+<div class="issue">
+  <h2><span class="tag r">严重</span> 6. 功能牌消耗 = 最有趣的部分玩家不敢碰</h2>
+  <p class="p">22 张牌是游戏的策略核心——不同组合产生不同战术。但消耗品设计让玩家把好牌锁在仓库里：抽到 T0 神偷？存着。抽到 T1 破坏专家？存着。日常带着两张 T3 牌出门——跟第一天新手局一模一样。</p>
+  <p class="p">这等于说"我们花最多精力设计的东西，玩家出于理性选择不去使用"。这是行为经济学上的死结：<strong>损失厌恶(Loss Aversion)让玩家宁愿用弱牌也不愿冒风险用好牌。</strong></p>
+  <p class="p"><strong>至少让败方只消耗 1 张，或者让 T0/T1 牌有"使用后不消耗"的保底次数。</strong>否则最精彩的策略系统形同虚设。</p>
+</div>
+
+<!-- 7 -->
+<div class="issue">
+  <h2>7. 段位复杂度跟"休闲竞技"定位冲突</h2>
+  <p class="p">策划案自述定位是"休闲竞技卡牌对战"。但段位系统有 7 个大段、多层小段、星级制→积分制过渡、连胜奖励、大段保护、升降段规则。这比大多数非休闲游戏都复杂。</p>
+  <p class="p">休闲玩家打开段位页面看到 7 层结构会直接关掉。竞技玩家会问"为什么没有 MMR 隐藏分"。你两边的期待都没有满足。</p>
+  <p class="p"><strong>要么简化段位(5段就够了,砍掉传奇,大师=顶端)，要么别叫"休闲竞技"——叫"竞技卡牌"。</strong>把自己的定位搞清楚，段位系统跟着定位走。</p>
+</div>
+
+<!-- 8 -->
+<div class="issue">
+  <h2>8. 外装 = 画了饼没买面粉</h2>
+  <p class="p">外装系统设计了 8 个称号 + 6 个头像框，解锁条件清晰，展示位置明确。然后:</p>
+  <div class="quote">称号/头像框列表定义: 代码丢失。解锁判定逻辑: 代码丢失。外装选择界面: 代码丢失。→ 外装 第七章</div>
+  <p class="p">这不是"代码丢失"——这是根本没写过。一个纯成就驱动的外观系统，连一行代码都没有。它跟成就系统的数据已经联通了(总场次/连胜/段位/收集率都在成就系统里)，但前端展示为零。</p>
+  <p class="p"><strong>要么把它标为 P2(上线后第一版迭代)，要么承认首发不做，把它从聚合页拿掉免得研发以为要做。</strong>现在这样挂着，研发会问"这个外观系统到底做不做"——答案是没人知道。</p>
+</div>
+
+<!-- 9 -->
+<div class="issue">
+  <h2>9. 一半系统"做了"，一半系统"设计好了"</h2>
+  <p class="p">这不是策划案的问题，是项目状态的问题。对战/天梯/商店/AI/功能牌/成就/邮件——代码有(至少部分有)。角色/外装/宝箱日常/聊天——只有策划案没有代码。经济循环/研发执行规格/牌型系统——纯文档。</p>
+  <p class="p">研发拿到策划案后会问的第一个问题是"哪些是做过的？哪些是新加的？"——当前文档没有区分。把"已有代码待评估"和"全新开发"混在一起，研发拆任务时会被误导。</p>
+  <p class="p"><strong>在聚合页加一个简单的状态标记(✅已有 / 🔨开发中 / 📋待开发)，让研发一目了然哪些系统可以直接对齐代码。</strong></p>
+</div>
+
+<div style="margin-top:32px;padding:16px 20px;background:#1a1a2e;color:#fff;border-radius:8px;font-size:13px;line-height:1.8;">
+  <strong>总结：</strong>策划案在方向层面已经成熟，但有几个设计互搏需要在上线前解决：①铂金付费墙+无付费口 ②胜退败扣的死亡螺旋 ③宝箱差异化跟PvP/PvE无感矛盾 ④十连没保底。这四个不改，上线第一周就会出问题。其余是优化，可以迭代。
+</div>
+
+</body>
+</html>
