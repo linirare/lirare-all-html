@@ -349,7 +349,7 @@
       </div>
       <div style="padding:10px 14px;background:#fafbfc;">
         <div style="font-weight:600;font-size:12.5px;">🚀 首发克制</div>
-        <div style="font-size:12px;color:var(--text-secondary);">社交/运营入口首发只开放聊天；赛季/通行证/公会/强运营活动全部后续扩展。</div>
+        <div style="font-size:12px;color:var(--text-secondary);">社交主路径首发开放聊天+好友；邮件/公告/设置/客服收纳为轻量系统入口。每日任务/签到/宝箱首发可做。赛季/通行证/公会/限时礼包后续扩展。</div>
       </div>
     </div>
   </div>
@@ -421,7 +421,7 @@
   <div class="card">
     <h2><span class="num">六</span>红点规则与刷新</h2>
     <p><strong>红点规则：</strong>仅以下场景强提示红点：<strong>可领取、未读、新解锁、可升级</strong>。不强提示排行变化、运营入口、礼包推荐、功能牌库存不足（库存不足由开战时阻断引导，不做红点）。</p>
-    <p>覆盖位置：功能牌（新获得、可配置）、任务/奖励（可领取）、聊天（未读）、邮件（未读/附件未领）、角色（可升级/新解锁）、商店（可领取/宝箱满）。</p>
+    <p>覆盖位置：功能牌（新获得、可配置）、任务/奖励（可领取）、聊天（未读）、邮件（未读/附件未领）、角色（可升级/新解锁）、宝箱（可领取）、签到（可领取）。</p>
     <p style="font-size:12.5px;color:var(--text-muted);">注：任务/奖励入口暂由结算页和弹窗承接，主页模块表中未单独列出。</p>
     <p><strong>刷新时机（事件驱动，不设定时轮询）：</strong></p>
     <ul>
@@ -783,7 +783,7 @@
     <table>
       <thead><tr><th>场景</th><th>红点位置</th></tr></thead>
       <tbody>
-        <tr><td>任务/宝箱/签到可领</td><td>商店入口 → 对应子入口</td></tr>
+        <tr><td>任务/宝箱/签到可领</td><td>对应各自入口（主页日常任务条/宝箱/签到）</td></tr>
         <tr><td>邮件未读</td><td>邮件入口</td></tr>
         <tr><td>功能牌不足</td><td>不开商店强红点，开战时阻断引导</td></tr>
         <tr><td>角色可升级</td><td>角色入口（不归商店）</td></tr>
@@ -902,7 +902,7 @@
 
   <div class="card">
     <h2><span class="num">四</span>AI 联动</h2>
-    <p>AI 根据<strong>段位+当前装备牌</strong>双重调整难度。段位是基线(越高对手越强)，装备牌是修正(带T0→对手进一步变强，换回T3→对手相对变弱)。</p>
+    <p>AI 以<strong>段位和近期胜率</strong>为主要调档依据，功能牌品质仅做轻微修正（不作为主要调档因素）。抽到强牌应该带来爽感，AI 不会因此大幅变难抵消正反馈。</p>
   </div>
 
   <div class="card" style="text-align:center;padding:14px 20px;">
@@ -932,7 +932,7 @@
 
   <div class="card">
     <h2><span class="num">三</span>平局</h2>
-    <p>评分向量完全相等即单局打平，不改变比分。</p>
+    <p>牌型评分向量比较 → 逐位比较 → 所有位相同则比花色(♠>♥>♦>♣) → 花色也相同则单局打平（单副牌中不会发生）。</p>
   </div>
 
   <div class="card" style="text-align:center;padding:14px 20px;">
