@@ -71,33 +71,31 @@ function update(dt) {
 
   state.time += dt;
 
-  // Player passive regen：+1/5s，无上限
   if (!state._spTimer) state._spTimer = 0;
   state._spTimer += dt;
-  if (state._spTimer >= SP_PASSIVE) {
+  if (state._spTimer >= SP_PASSIVE && state.sp < getSpRecoverCap(meta)) {
     state._spTimer -= SP_PASSIVE;
-    state.sp += 1;
+    state.sp = Math.min(state.sp + 1, getSpMax(meta));
     addFx(42, LAYOUT.fieldY + LAYOUT.fieldH - 46, '+1果汁', THEME.gold, 11);
   }
 
-  // Enemy passive regen：双方对称
-  state.enemySpTimer += dt;
-  if (state.enemySpTimer >= SP_PASSIVE) {
-    state.enemySpTimer -= SP_PASSIVE;
-    state.enemySp += 1;
-  }
+  // 玩家不再自动补球：空格由玩家点击消耗果汁主动召唤。
 
-  // 敌方 SP 经济：不再计时器刷球，改为 SP 消耗
-  if (state.phase === 'playing' && (state._enemyReinforcePause || 0) <= 0) {
-    state.enemySpCheckTimer = (state.enemySpCheckTimer || SP_PASSIVE) + dt;
-    if (state.enemySpCheckTimer >= 4.0) {
-      state.enemySpCheckTimer = 0;
+  // 敌方自动补充水果营：PVE 压力仍由关卡节奏控制。
+  state.enemyBallTimer += dt;
+  const enemyBallInterval = state.levelConfig?.enemySpawnInterval || BALL_SPAWN_INTERVAL;
+  if (state.enemyBallTimer >= enemyBallInterval) {
+    state.enemyBallTimer -= enemyBallInterval;
+    const added = autoSpawnBall(state.enemySlots, 1, true);
+    if (!added) state.enemyOverflow++;
+    if (state.enemyOverflow > 0) {
       const empties = emptySlots(state.enemySlots);
-      if (empties.length > 0 && state.enemySp >= state.enemySummonCostCounter) {
-        state.enemySp -= state.enemySummonCostCounter;
-        state.enemySummonCostCounter++;
-        const pos = empties[Math.floor(Math.random() * empties.length)];
-        state.enemySlots[pos[0]][pos[1]] = createBall(randomEnemyType(), 1);
+      let placed = 0;
+      while (state.enemyOverflow > 0 && placed < empties.length) {
+        const [r, c] = empties[placed];
+        state.enemySlots[r][c] = createBall(randomEnemyType(), 1);
+        state.enemyOverflow--;
+        placed++;
       }
     }
   }
@@ -215,20 +213,6 @@ function onGameOver(win) {
     `;
     playSfx('win');
     if (state.currentLevel >= meta.highestLevel) meta.highestLevel = state.currentLevel + 1;
-    /* Item 6: unlock next stage */
-    if (!state.endless && typeof STAGES !== 'undefined') {
-      const nextId = state.currentLevel + 1;
-      if (!meta.unlockedStages) meta.unlockedStages = [];
-      if (nextId <= STAGES.length && !meta.unlockedStages.includes(nextId)) meta.unlockedStages.push(nextId);
-    }
-    /* Item 4: gem rewards */
-    if (!state.endless) {
-      const prevStars = meta.stars[state.currentLevel] || 0;
-      if (prevStars === 0 || (prevStars < stars && stars >= prevStars)) {
-        meta.gems = (meta.gems || 0) + (prevStars === 0 ? 5 : 2);
-      }
-      if (stars >= 3) meta.gems = (meta.gems || 0) + 3;
-    }
     nextBtn.classList.remove('hide');
   } else {
     title.textContent = '💀 果堡失守';

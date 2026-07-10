@@ -1,5 +1,5 @@
 /* ============================================================
-   水果突击 · Fruit Assault —— AI 对手（强化版）
+   合成塔防 · PvE —— AI 对手（强化版）
    ============================================================ */
 
 const AI_MERGE_INTERVAL = 5.6; // AI 基础合成间隔，随关卡缓慢加速
@@ -24,8 +24,10 @@ function aiAnalyzePlayer() {
 
   if (!maxType) return null;
 
-  // 返回职责克制品类
-  return bestCounterForEnemy(maxType);
+  // 返回克制品类（克制链：弓→枪→刀→盾→弓）
+  // 如果玩家最多是弓，AI优先合枪（弓→枪）
+  const counterMap = { bow: 'spear', spear: 'sword', sword: 'shield', shield: 'bow' };
+  return counterMap[maxType];
 }
 
 /* ——— AI 合成策略：优先克制品类，其次最高级对子 ——— */
@@ -92,8 +94,7 @@ function updateAI(dt) {
   if (state.phase !== 'playing') return;
 
   aiTimer += dt;
-  const stg = (typeof STAGES !== 'undefined' && STAGES[state.currentLevel - 1]) ? STAGES[state.currentLevel - 1] : null;
-	  const interval = stg ? Math.max(3.5, 6.0 - stg.enemyLv * 0.5) : Math.max(3.8, AI_MERGE_INTERVAL - state.currentLevel * 0.08);
+  const interval = Math.max(3.8, AI_MERGE_INTERVAL - state.currentLevel * 0.08);
   if (aiTimer >= interval) {
     aiTimer -= interval;
     aiMerge();

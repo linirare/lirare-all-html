@@ -26,19 +26,20 @@ const BOARD_W = COLS * CELL + (COLS - 1) * GAP;
 const BOARD_H = ROWS * CELL + (ROWS - 1) * GAP;
 const BOARD_X = (W - BOARD_W) / 2;
 
-/* ——— Y 坐标布局 ——— */
-const FIELD_H = 260;
-const PLAYER_BOARD_SHIFT = 40;
+/* ——— Y 坐标布局：v51 五段式网格 ——— */
+const TOP_H = 42;
+const FIELD_H = 254;
 const LAYOUT = {
   enemyInfoY:  6,
-  enemyBoardY: 24,
-  enemyWallY:  24 + BOARD_H + 10,
-  wallH: 22,
-  fieldY:      24 + BOARD_H + 10 + 22 + 8,
+  enemyBoardY: TOP_H,
+  enemyWallY:  TOP_H + BOARD_H + 8,
+  wallH: 20,
+  fieldY:      TOP_H + BOARD_H + 8 + 20 + 10,
   fieldH: FIELD_H,
-  playerWallY: 24 + BOARD_H + 10 + 22 + 8 + FIELD_H + 8,
-  playerBoardY:24 + BOARD_H + 10 + 22 + 8 + FIELD_H + 8 + 22 + 10 + PLAYER_BOARD_SHIFT,
-  bottomY:     24 + BOARD_H + 10 + 22 + 8 + FIELD_H + 8 + 22 + 10 + PLAYER_BOARD_SHIFT + BOARD_H + 4,
+  playerWallY: TOP_H + BOARD_H + 8 + 20 + 10 + FIELD_H + 12,
+  operationY:  TOP_H + BOARD_H + 8 + 20 + 10 + FIELD_H + 12 + 28,
+  playerBoardY:TOP_H + BOARD_H + 8 + 20 + 10 + FIELD_H + 12 + 20 + 50,
+  bottomY:     TOP_H + BOARD_H + 8 + 20 + 10 + FIELD_H + 12 + 20 + 50 + BOARD_H + 8,
 };
 
 /* ——— 13 个水果球：局内只从5个上阵水果中随机召唤 ——— */
@@ -119,6 +120,7 @@ function shouldForceNewDefaultDeck(deck) {
   return !sig
     || sig === OLD_DEFAULT_DECK.join('|')
     || sig === ['grape_archer','banana_raider','pineapple_lancer','watermelon_guard'].join('|')
+    || sig === ['watermelon_guard','grape_archer','orange_cannon','peach_medic','kiwi_wildcard'].join('|');
 }
 function normalizeDeck(deck) {
   const result = shouldForceNewDefaultDeck(deck) ? DEFAULT_DECK.slice() : normalizeDeckNoFill(deck);
@@ -133,6 +135,22 @@ function activeDeck() {
 const ROLE_COUNTER_DMG = 1.35;
 const ROLE_SOFT_COUNTER_DMG = 1.22;
 const ROLE_WEAK_DMG = 0.85;
+const COUNTER_DMG = ROLE_COUNTER_DMG;
+const COUNTER = {
+  grape_archer: 'front',
+  blueberry_sniper: 'back',
+  banana_raider: 'back',
+  lemon_assassin: 'support',
+  pineapple_lancer: 'rush',
+  watermelon_guard: 'back',
+  coconut_guard: 'back',
+  orange_cannon: 'tank',
+  pumpkin_roller: 'tank',
+  pear_frost: 'rush',
+  peach_medic: '',
+  kiwi_wildcard: '',
+  passion_copy: '',
+};
 function roleCounterMultiplier(sourceType, targetType) {
   const source = TYPES[sourceType] || {};
   const target = TYPES[targetType] || {};
@@ -171,34 +189,6 @@ function bestCounterForEnemy(enemyType, pool = null) {
 }
 
 const LEVEL_MUL = [0, 1.0, 1.45, 2.05, 2.8, 3.75, 4.9, 6.2];
-
-/* ——— 按角色独立成长曲线（Item 5: 英雄差异化） ——— */
-const ROLE_GROWTH = {
-  tank:    { atk: [0,1.0,1.3,1.7,2.2,2.8,3.5,4.3], hp: [0,1.0,1.6,2.5,3.8,5.5,7.5,10.0] },
-  back:    { atk: [0,1.0,1.6,2.5,3.8,5.5,7.5,10.0], hp: [0,1.0,1.2,1.5,1.9,2.4,3.0,3.7] },
-  rush:    { atk: [0,1.0,1.5,2.2,3.2,4.5,6.2,8.5], hp: [0,1.0,1.3,1.7,2.2,2.8,3.5,4.3] },
-  front:   { atk: [0,1.0,1.4,1.9,2.6,3.5,4.6,6.0], hp: [0,1.0,1.5,2.2,3.2,4.5,6.2,8.5] },
-  siege:   { atk: [0,1.0,1.5,2.2,3.2,4.5,6.2,8.5], hp: [0,1.0,1.3,1.7,2.2,2.8,3.5,4.3] },
-  control: { atk: [0,1.0,1.4,1.9,2.6,3.5,4.6,6.0], hp: [0,1.0,1.3,1.7,2.2,2.8,3.5,4.3] },
-  support: { atk: [0,1.0,1.3,1.7,2.2,2.8,3.5,4.3], hp: [0,1.0,1.4,1.9,2.6,3.5,4.6,6.0] },
-  merge:   { atk: [0,1.0,1.0,1.0,1.0,1.0,1.0,1.0], hp: [0,1.0,1.0,1.0,1.0,1.0,1.0,1.0] },
-};
-const FRUIT_SCALE = {
-  watermelon_guard: { atk: 0.85, hp: 1.15 },
-  coconut_guard:    { atk: 0.80, hp: 1.20 },
-  grape_archer:     { atk: 1.15, hp: 0.85 },
-  blueberry_sniper: { atk: 1.20, hp: 0.80 },
-  banana_raider:    { atk: 1.05, hp: 0.90 },
-  lemon_assassin:   { atk: 1.10, hp: 0.85 },
-  pineapple_lancer: { atk: 0.95, hp: 1.05 },
-  orange_cannon:    { atk: 0.90, hp: 1.10 },
-  pumpkin_roller:   { atk: 1.00, hp: 1.00 },
-  pear_frost:       { atk: 0.95, hp: 1.00 },
-  peach_medic:      { atk: 0.75, hp: 1.05 },
-  kiwi_wildcard:    { atk: 0.50, hp: 0.50 },
-  passion_copy:     { atk: 0.50, hp: 0.50 },
-};
-
 const MAX_LEVEL = 7;
 const BASE_WALL_HP = 72;
 const SIEGE_SLOTS_PER_LANE = 3;
@@ -208,12 +198,10 @@ const SPAWN_COOLDOWNS = [0, 5.6, 4.9, 4.25, 3.65, 3.15, 2.7, 2.35];
 const OVERFLOW_MAX = 10;
 const MAX_SOLDIERS = 24;
 const SP_MAX = 18;
-const SP_PASSIVE = 5.0;
+const SP_PASSIVE = 3.0;
 
 function upgradeCost(lv) { return 10 + lv * 8; }
-function startingLvCost(lv) { return 30 + lv * 30; }
 function stageReward(k) { return k * 8 + 18; }
-const STARTING_LV_MAX = 4;
 const UPGRADE_MAX = 20;
 const WALL_UPGRADE_MAX = 10;
 const SP_UPGRADE_MAX = 10;
@@ -227,30 +215,6 @@ for (const id of UNIT_POOL) {
 }
 TECH_MILESTONES.wall = { title: '果堡加固', at: 5, desc: '降低被偷家失败概率。' };
 TECH_MILESTONES.sp = { title: '果汁号角', at: 5, desc: '开局果汁能量和上限提升。' };
-
-/* ——— 固定关卡数据（Item 6: 固定PVE难度） ——— */
-const STAGES = [
-  { id:1,  name:'果园初战',     enemyLv:1.0, wallHp:22, spawnInterval:4.5, reward:18,  boss:false },
-  { id:2,  name:'腐坏小队',     enemyLv:1.2, wallHp:28, spawnInterval:4.2, reward:24,  boss:false },
-  { id:3,  name:'果林遭遇战',   enemyLv:1.4, wallHp:34, spawnInterval:3.9, reward:30,  boss:false },
-  { id:4,  name:'青苹果前哨',   enemyLv:1.7, wallHp:40, spawnInterval:3.7, reward:36,  boss:false },
-  { id:5,  name:'青苹果堡垒',   enemyLv:2.0, wallHp:60, spawnInterval:3.5, reward:52,  boss:true  },
-  { id:6,  name:'腐化蔓生',     enemyLv:2.2, wallHp:56, spawnInterval:3.6, reward:48,  boss:false },
-  { id:7,  name:'酸液河谷',     enemyLv:2.4, wallHp:64, spawnInterval:3.4, reward:54,  boss:false },
-  { id:8,  name:'巨果压境',     enemyLv:2.6, wallHp:72, spawnInterval:3.3, reward:60,  boss:false },
-  { id:9,  name:'毒藤阵地',     enemyLv:2.8, wallHp:80, spawnInterval:3.2, reward:66,  boss:false },
-  { id:10, name:'甘蔗堡垒',     enemyLv:3.1, wallHp:110, spawnInterval:3.0, reward:90, boss:true  },
-  { id:11, name:'果核深巷',     enemyLv:3.3, wallHp:100, spawnInterval:3.1, reward:78, boss:false },
-  { id:12, name:'枯萎庭院',     enemyLv:3.5, wallHp:112, spawnInterval:3.0, reward:84, boss:false },
-  { id:13, name:'腐败长廊',     enemyLv:3.7, wallHp:126, spawnInterval:2.9, reward:90, boss:false },
-  { id:14, name:'黑莓深渊',     enemyLv:3.9, wallHp:140, spawnInterval:2.8, reward:96, boss:false },
-  { id:15, name:'腐烂果王',     enemyLv:4.2, wallHp:190, spawnInterval:2.6, reward:128, boss:true  },
-  { id:16, name:'朽木废墟',     enemyLv:4.3, wallHp:180, spawnInterval:2.7, reward:110, boss:false },
-  { id:17, name:'败果坟场',     enemyLv:4.5, wallHp:210, spawnInterval:2.6, reward:120, boss:false },
-  { id:18, name:'脓汁沼泽',     enemyLv:4.7, wallHp:240, spawnInterval:2.5, reward:130, boss:false },
-  { id:19, name:'果核王座',     enemyLv:4.9, wallHp:280, spawnInterval:2.4, reward:140, boss:false },
-  { id:20, name:'最终果堡',     enemyLv:5.0, wallHp:420, spawnInterval:2.2, reward:198, boss:true  },
-];
 
 function generateLevel(k) {
   const boss = k > 0 && k % 5 === 0;

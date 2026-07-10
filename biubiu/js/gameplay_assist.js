@@ -92,7 +92,8 @@ function enemyTypeOnLane(lane) {
 }
 
 function counterTypeFor(enemyType) {
-  return bestCounterForEnemy(enemyType) || '';
+  for (const [type, target] of Object.entries(COUNTER)) if (target === enemyType) return type;
+  return '';
 }
 
 function findBestCounterBall(type) {
@@ -136,7 +137,7 @@ function updateMercyJuice(dt) {
   const wallRatio = state.playerWallHp / Math.max(1, state.playerWallMax);
   const danger = findDangerLane();
   if (wallRatio < 0.38 && state.sp < 2 && danger) {
-    state.sp += 1;
+    state.sp = Math.min(state.sp + 1, getSpMax(meta));
     a.mercyCd = 14;
     addFx(W / 2, LAYOUT.playerWallY - 26, '危急果汁 +1', THEME.gold, 13);
     setAssistTip('危急果汁已补充', '双击高等级水果营救线', 'danger', danger.lane, '');

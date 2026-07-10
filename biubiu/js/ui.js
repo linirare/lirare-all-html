@@ -142,23 +142,6 @@ function loadMeta() {
       meta.stars = saved.stars || {};
       meta.deck = normalizeDeck(saved.deck || saved.activeDeck || DEFAULT_DECK);
       meta.unlocked = Array.isArray(saved.unlocked) && saved.unlocked.length ? saved.unlocked.map(normalizeTypeId).filter(id => TYPES[id]) : UNIT_POOL.slice();
-      /* 加载/迁移起始等级 */
-      meta.startingLvs = saved.startingLvs || {};
-      if (Object.keys(meta.startingLvs).length === 0 && Object.keys(meta.upgrades).length > 0) {
-        for (const id of UNIT_POOL) {
-          const atkLv = meta.upgrades[id + '_atk'] || 0;
-          const hpLv = meta.upgrades[id + '_hp'] || 0;
-          if (atkLv + hpLv > 0) {
-            meta.startingLvs[id] = Math.min(1 + Math.floor((atkLv + hpLv) / 6), STARTING_LV_MAX);
-          }
-        }
-      }
-      meta.gems = saved.gems || 0;
-      meta.fragments = saved.fragments || {};
-      meta.unlockedStages = saved.unlockedStages || [];
-      if (meta.unlockedStages.length === 0) {
-        for (let i = 1; i <= (meta.highestLevel || 1); i++) meta.unlockedStages.push(i);
-      }
     } else {
       meta.deck = normalizeDeck(DEFAULT_DECK);
       meta.unlocked = UNIT_POOL.slice();
@@ -169,31 +152,6 @@ function loadMeta() {
   }
   refreshGold();
 }
-function startStage(id) {
-  meta.deck = normalizeDeck(meta.deck);
-  saveMeta();
-  document.getElementById('menuPanel').classList.add('hide');
-  if (typeof initLevel === 'function') initLevel(id);
-}
-
-function renderStageSelect() {
-  const grid = document.getElementById('stageGrid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  for (let i = 0; i < STAGES.length; i++) {
-    const s = STAGES[i];
-    const unlocked = meta.unlockedStages && meta.unlockedStages.includes(s.id);
-    const stars = (meta.stars && meta.stars[s.id]) || 0;
-    const card = document.createElement('div');
-    card.className = 'stage-card' + (unlocked ? '' : ' locked');
-    card.innerHTML = '<div class="stage-card-num">' + (unlocked ? s.id : '🔒') + '</div><div class="stage-card-name">' + s.name + '</div><div class="stage-card-stars">' + '⭐'.repeat(stars) + '☆'.repeat(3 - stars) + '</div>';
-    if (unlocked) {
-      card.addEventListener('click', function() { startStage(s.id); });
-    }
-    grid.appendChild(card);
-  }
-}
-
 function refreshGold() {
   const g = meta.gold || 0;
   const menuEl = document.getElementById('menuGold');
@@ -210,16 +168,10 @@ function refreshGold() {
 document.addEventListener('DOMContentLoaded', () => {
   loadMeta();
   document.getElementById('btnStart').addEventListener('click', () => {
-    const grid = document.getElementById('stageGrid');
-    if (!grid) return;
-    if (grid.classList.contains('hide')) {
-      renderStageSelect();
-      grid.classList.remove('hide');
-      document.getElementById('btnStart').textContent = '收起关卡';
-    } else {
-      grid.classList.add('hide');
-      document.getElementById('btnStart').textContent = '选择关卡';
-    }
+    meta.deck = normalizeDeck(meta.deck);
+    saveMeta();
+    document.getElementById('menuPanel').classList.add('hide');
+    initLevel(meta.highestLevel || 1);
   });
   document.getElementById('btnUpgrade').addEventListener('click', () => {
     refreshGold();
@@ -237,7 +189,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('btnNext').addEventListener('click', () => { document.getElementById('resultPanel').classList.add('hide'); initLevel(state.currentLevel + 1); });
 
-const resetBtn = document.getElementById('btnReset');
+  const simBtn = document.getElementById('btnSim');
+  if (simBtn) {
+    simBtn.addEventListener('click', () => {
+      const panel = document.getElementById('simPanel');
+      const result = document.getElementById('simResult');
+      panel.classList.remove('hide');
+      if (typeof renderBalanceSim === 'function') renderBalanceSim(20, 80);
+      else result.innerHTML = '模拟器未加载。';
+    });
+  }
+  const simClose = document.getElementById('btnSimClose');
+  if (simClose) simClose.addEventListener('click', () => document.getElementById('simPanel').classList.add('hide'));
+
+  const resetBtn = document.getElementById('btnReset');
   let resetTimer = null;
   const resetStart = (e) => {
     if (e) e.preventDefault();

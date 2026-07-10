@@ -1,5 +1,5 @@
 /* ============================================================
-   水果突击 · Fruit Assault —— Canvas 渲染
+   合成塔防 · PvE —— Canvas 渲染
    ============================================================ */
 
 /* ——— 工具 ——— */
@@ -502,7 +502,7 @@ function drawInfo() {
     ctx.font = '11px sans-serif';
     ctx.fillText(state.levelConfig.desc, 12, LAYOUT.enemyInfoY + 28);
   } else {
-    ctx.fillText('水果突击', 12, LAYOUT.enemyInfoY + 13);
+    ctx.fillText('合成塔防', 12, LAYOUT.enemyInfoY + 13);
   }
 }
 
@@ -520,17 +520,11 @@ function drawHUD() {
   ctx.textAlign = 'right';
   ctx.fillStyle = THEME.textDim;
   ctx.fillText(`⏱ ${elapsed}s`, W - 12, LAYOUT.enemyInfoY + 13);
-  // SP 与消耗显示
+  // SP 显示
   ctx.font = 'bold 13px sans-serif';
   ctx.textAlign = 'left';
   ctx.fillStyle = state.sp > 0 ? THEME.gold : '#5a4a3a';
   ctx.fillText(`⚡ ${state.sp}`, 12, LAYOUT.enemyInfoY + 13);
-  ctx.font = '11px sans-serif';
-  ctx.fillStyle = THEME.info;
-  ctx.fillText(`💰 ${state.summonCostCounter}`, 68, LAYOUT.enemyInfoY + 13);
-  ctx.textAlign = 'right';
-  ctx.fillStyle = THEME.textDim;
-  ctx.fillText(`敌⚡${state.enemySp}`, W - 12, LAYOUT.enemyInfoY + 13);
 
   // 兵数对比比例条
   const barW = 80, barH = 6;

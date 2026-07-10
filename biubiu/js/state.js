@@ -13,17 +13,13 @@ function createBall(typeId, level = 1) {
 function createSoldier(typeId, level, atkMul = 1, hpMul = 1) {
   const id = normalizeTypeId(typeId);
   const t = TYPES[id] || TYPES[DEFAULT_DECK[0]];
-  const role = t.role || 'tank';
-  const g = (typeof ROLE_GROWTH !== 'undefined' ? ROLE_GROWTH : null)?.[role] || { atk: [0,1], hp: [0,1] };
-  const scale = (typeof FRUIT_SCALE !== 'undefined' ? FRUIT_SCALE : null)?.[id] || { atk: 1.0, hp: 1.0 };
-  const roleAtkMul = g.atk[level] || 1;
-  const roleHpMul = g.hp[level] || 1;
-  const hp = Math.round(t.hp * roleHpMul * scale.hp * hpMul);
+  const mul = LEVEL_MUL[level] || 1;
+  const hp = Math.round(t.hp * mul * hpMul);
   return {
     type: id,
     level,
     id: Math.random().toString(36).slice(2),
-    atk: Math.round(t.atk * roleAtkMul * scale.atk * atkMul),
+    atk: Math.round(t.atk * mul * atkMul),
     hp,
     maxHp: hp,
     shield: 0,
@@ -77,10 +73,6 @@ function createState() {
     enemySlots:  Array.from({ length: ROWS }, () => Array(COLS).fill(null)),
     overflowQueue: [],
     enemyOverflow: 0,
-    summonCostCounter: 1,
-    enemySp: 12,
-    enemySummonCostCounter: 1,
-    enemySpTimer: 0,
     playerWallHp: BASE_WALL_HP,
     playerWallMax: BASE_WALL_HP,
     enemyWallHp: BASE_WALL_HP,
@@ -126,10 +118,6 @@ function createState() {
 }
 
 /* ——— 永久升级（局外 Meta） ——— */
-function getStartingLv(meta, typeId) {
-  return meta.startingLvs?.[normalizeTypeId(typeId)] || 1;
-}
-
 function createMeta() {
   return {
     gold: 0,
@@ -141,10 +129,6 @@ function createMeta() {
     stars: {},
     deck: DEFAULT_DECK.slice(),
     unlocked: BASIC_UNLOCKED.slice(),
-    startingLvs: {},
-    gems: 0,
-    fragments: {},
-    unlockedStages: [1],
   };
 }
 

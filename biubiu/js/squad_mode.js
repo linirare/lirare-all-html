@@ -97,7 +97,7 @@ function reinforceSquad(target, ball, center, forced = false) {
   return target;
 }
 function refundSquadCost(side) {
-  if (side === 'player') state.sp += 1;
+  if (side === 'player') state.sp = Math.min(getSpMax(meta), state.sp + 1);
 }
 function setNextSquadTimer(ball) {
   ball.spawnTimer = Math.max(ball.spawnTimer || 0, squadInterval(ball.level));

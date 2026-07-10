@@ -117,25 +117,18 @@ function tryMerge(slots, fromR, fromC, toR, toC) {
   if (!src || !dst) return null;
   src.type = normalizeTypeId(src.type);
   dst.type = normalizeTypeId(dst.type);
-  if (src.level !== dst.level) {
+  if (src.level !== dst.level || src.level >= MAX_LEVEL) {
     slots[fromR][fromC] = dst;
     slots[toR][toC] = src;
     return { merged: false, swap: true };
   }
 
-  // 百香果复制：不升 level，允许满级操作
+  // 百香果复制：拖到同星目标上，原位变成目标水果，不消耗目标，专门养核心。
   if (isCopyBall(src) && !isMergeSupport(dst)) {
     src.type = dst.type;
     src.bounce = 1;
     src.spawnTimer = Math.max(0.2, src.spawnTimer * 0.25);
     return { merged: false, copied: true, type: dst.type, level: src.level, fromR, fromC, toR, toC };
-  }
-
-  // 合成类操作受 MAX_LEVEL 阻挡
-  if (src.level >= MAX_LEVEL) {
-    slots[fromR][fromC] = dst;
-    slots[toR][toC] = src;
-    return { merged: false, swap: true };
   }
 
   // 奇异果万能：任意同星合成成目标水果 +1。
@@ -175,8 +168,7 @@ function tryMove(slots, fromR, fromC, toR, toC) {
 
 function initLevel(k) {
   meta.deck = normalizeDeck(meta.deck);
-  const stage = (typeof STAGES !== 'undefined' && STAGES[k-1]) ? STAGES[k-1] : null;
-  const lv = stage || generateLevel(k);
+  const lv = generateLevel(k);
   state.currentLevel = k;
   state.levelConfig = lv;
   state.playerSlots = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
@@ -194,13 +186,10 @@ function initLevel(k) {
   state.enemyWallMax = lv.enemyWallHp;
   state.playerSoldiers = [];
   state.enemySoldiers = [];
-  state.summonCostCounter = 1;
-  state.enemySp = Math.min(10 + state.currentLevel, 30);
-  state.enemySummonCostCounter = 1;
-  state.enemySpTimer = 0;
-  state.enemySpCheckTimer = 0;
-  state.ballTimer = 0;
-  state.enemyBallTimer = 0;
+  state.overflowQueue = [];
+  state.enemyOverflow = 0;
+  state.ballTimer = 1.9;
+  state.enemyBallTimer = 0.2;
   state.playerSpawnTimer = 0;
   state.enemySpawnTimer = 0;
   state.kills = 0;

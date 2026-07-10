@@ -35,7 +35,7 @@ function ensureDeckPanelDom() {
   panel.innerHTML = `
     <div class="panel-inner wide tech-panel">
       <h2>🍉 水果编队</h2>
-      <p class="sub">从13个水果球里选择5个上阵。局内只会刷这5种。</p>
+      <p class="sub">从12个水果球里选择5个上阵。局内只会刷这5种。</p>
       <div id="deckSelected" class="deck-selected"></div>
       <div id="deckList" class="deck-list"></div>
       <button id="btnDeckClose" class="btn-secondary">保存并返回</button>

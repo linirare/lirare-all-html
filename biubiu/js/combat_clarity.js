@@ -155,12 +155,9 @@ function patchFxDensity() {
     const now = state?.time || 0;
     const str = String(text || '');
     const isLowValueDamage = /^-\d+$/.test(str) && Number(str.slice(1)) < 12;
-    if (isLowValueDamage) {
-      if (now - lastTinyFxTime < 0.18) return null;
-      lastTinyFxTime = now;
-      return oldAddFx(x, y, text, color, Math.min(size, 13), Math.min(life, 0.78));
-    }
-    return oldAddFx(x, y, text, color, size, life);
+    if (isLowValueDamage && now - lastTinyFxTime < 0.18) return null;
+    if (isLowValueDamage) lastTinyFxTime = now;
+    return oldAddFx(x, y, text, color, Math.min(size, 13), Math.min(life, 0.78));
   };
   addFx._combatClarityPatched = true;
 }

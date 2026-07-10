@@ -1,5 +1,5 @@
 /* ============================================================
-   水果突击 · Fruit Assault —— 爽感层 / Juice Layer
+   合成攻城 · Merge Siege —— 爽感层 / Juice Layer
    目标：强化 build-up、攻击命中、攻城、连击、震屏和反馈密度。
    Loaded last. Wraps selected functions safely.
    ============================================================ */
@@ -159,7 +159,7 @@ function patchAttackJuice() {
         addSlash(s.x, s.y, target.x, target.y, color, 0.18, s.level >= 3 ? 7 : 5);
         addSparkBurst(mx, my, color, 7 + Math.min(8, s.level * 2), 62 + s.level * 8, 3);
       }
-      if (roleCounterMultiplier(s.type, target.type) > 1) {
+      if (target.type === COUNTER[s.type]) {
         addShockwave(target.x, target.y, THEME.gold, 22 + s.level * 3, 0.28, 3);
         addJuiceText(target.x, target.y - 28, '克制!', THEME.gold, 15 + s.level, 0.55);
         punch(0.32 + s.level * 0.04, 0.026);

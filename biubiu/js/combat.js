@@ -1,5 +1,5 @@
 /* ============================================================
-   水果突击 · Fruit Assault —— 战斗系统
+   合成攻城 · Merge Siege —— 战斗系统
    设计目标：五路战线推进 + 前后排 + 锁敌 + 攻城位。
    关键规则：未走出己方城墙的兵处于保护区，不可索敌/不可被攻击。
    ============================================================ */
@@ -151,6 +151,7 @@ function findTarget(s, enemies) {
     if (d <= TARGET_STICK_RANGE || s.type === 'bow') return sticky;
   }
 
+  const counterType = COUNTER[s.type];
   let best = null;
   let bestScore = Infinity;
 
@@ -169,7 +170,7 @@ function findTarget(s, enemies) {
     let score = Math.abs(dy) + laneGap * 0.85 + dist * 0.22;
     if (!sameLane) score += 58;
     if (!forward && dist > 52) score += 180;
-    if (roleCounterMultiplier(s.type, e.type) >= 1.3) score -= 85;
+    if (e.type === counterType) score -= 85;
     if (s.type === 'bow' && sameLane) score -= 24;
     if (s.target && e.id === s.target) score -= 36;
 
@@ -305,7 +306,7 @@ function killSoldier(target, killerSide, killerAtk, killerType) {
   addFx(target.x, target.y - 7, '击破', '#ff8a68', 11);
 
   if (killerSide === 'player') {
-    state.sp += 1;
+    state.sp = Math.min(state.sp + 1, getSpMax(meta));
     state.kills++;
     if (killerAtk > state.maxSoldierAtk) {
       state.maxSoldierAtk = killerAtk;
@@ -335,9 +336,8 @@ function attackTarget(s, target) {
   if (s.atkTimer > 0) return;
 
   let dmg = s.atk;
-  const counterMul = roleCounterMultiplier(s.type, target.type);
-  const counterHit = counterMul > 1;
-  if (counterHit) dmg = Math.round(dmg * counterMul);
+  const counterHit = target.type === COUNTER[s.type];
+  if (counterHit) dmg = Math.round(dmg * COUNTER_DMG);
   s.atkTimer = s.speed;
 
   if (s.type === 'bow') {
@@ -541,7 +541,8 @@ function dominantEnemyType(lane) {
 }
 
 function counterForEnemy(enemyType) {
-  return bestCounterForEnemy(enemyType);
+  for (const [type, target] of Object.entries(COUNTER)) if (target === enemyType) return type;
+  return null;
 }
 
 function buildBattleReport(win) {

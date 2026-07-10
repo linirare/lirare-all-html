@@ -62,20 +62,31 @@ function patchKillRewardV15() {
     state.rings.push({ x: target.x, y: target.y, r: 4, life: 0.22, maxLife: 0.22, color: '#ff4a3a' });
     addFx(target.x, target.y - 7, '击破', '#ff8a68', 10);
 
-    const spGain = target.level || 1;
     if (killerSide === 'player') {
       state.kills++;
-      state.sp += spGain;
-      addFx(target.x, target.y - 22, `+${spGain}果汁`, THEME.gold, 10);
+      state.killSpProgress = (state.killSpProgress || 0) + 1;
+      state.killSpCd = Math.max(0, state.killSpCd || 0);
+      if (state.killSpProgress >= 4 && state.killSpCd <= 0 && state.sp < getSpRecoverCap(meta)) {
+        state.killSpProgress = 0;
+        state.killSpCd = 3.0;
+        state.sp = Math.min(state.sp + 1, getSpRecoverCap(meta), getSpMax(meta));
+        addFx(target.x, target.y - 22, '+1果汁', THEME.gold, 10);
+      }
       if (killerAtk > state.maxSoldierAtk) {
         state.maxSoldierAtk = killerAtk;
         state.maxSoldierType = killerType;
       }
-    } else if (killerSide === 'enemy') {
-      state.enemySp += spGain;
     }
   };
   killSoldier._balanceV15Patched = true;
+
+  if (typeof update !== 'function' || update._killSpCdV15Patched) return;
+  const oldUpdate = update;
+  update = function updateKillSpCdV15(dt) {
+    oldUpdate(dt);
+    if (state && state.killSpCd > 0) state.killSpCd = Math.max(0, state.killSpCd - dt * (state.speed || 1));
+  };
+  update._killSpCdV15Patched = true;
 }
 
 function patchRoleTargetingV15() {

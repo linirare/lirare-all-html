@@ -157,9 +157,8 @@ function patchFruitAttackTarget() {
     if (s.atkTimer > 0) return;
 
     let dmg = s.atk;
-    const counterMul = roleCounterMultiplier(s.type, target.type);
-    const counterHit = counterMul > 1;
-    if (counterHit) dmg = Math.round(dmg * counterMul);
+    const counterHit = target.type === COUNTER[s.type] || (COUNTER[s.type] === 'wall' && false);
+    if (counterHit) dmg = Math.round(dmg * COUNTER_DMG);
     s.atkTimer = s.speed;
 
     if (fruitIsBackline(s) && s.type !== 'peach_medic') {
