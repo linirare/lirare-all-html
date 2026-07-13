@@ -2,137 +2,108 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>代号001 · 段位玩法分层设计</title>
+<title>代号001 · 段位玩法分层设计（精简版）</title>
 <style>
-  body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:1000px; margin:20px auto; padding:20px; background:#f5f6f8; color:#1a1a2e; line-height:1.8; }
+  body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:900px; margin:20px auto; padding:20px; background:#f5f6f8; color:#1a1a2e; line-height:1.8; font-size:13.5px; }
   h1 { font-size:20px; border-left:5px solid #dc2626; padding-left:12px; margin:36px 0 16px; }
   .tier { background:#fff; border:1px solid #e4e7ed; border-radius:12px; padding:20px 24px; margin:12px 0; border-top:4px solid; }
-  .tier h2 { font-size:16px; margin:0 0 8px; display:flex; align-items:center; gap:10px; }
+  .tier h2 { font-size:16px; margin:0 0 4px; }
   .tier .sub { font-size:12px; color:#9098a8; margin-bottom:12px; }
-  .tier .rule { padding:10px 14px; margin:6px 0; background:#fafbfc; border-radius:8px; font-size:13px; border-left:3px solid #e4e7ed; }
-  .tier .rule b { color:#1a1a2e; }
-  .tier .rule .tag { display:inline-block; padding:1px 7px; border-radius:3px; font-size:10px; font-weight:700; margin-left:6px; }
-  .tag-new { background:#dc2626; color:#fff; }
-  .tag-keep { background:#059669; color:#fff; }
-  .tier .why { font-size:12px; color:#059669; margin-top:10px; padding:8px 12px; background:#f0fdf4; border-radius:6px; }
+  .tier .main { background:#fef3f2; border-left:4px solid #dc2626; padding:12px 16px; border-radius:6px; margin:8px 0; }
+  .tier .main b { color:#dc2626; font-size:14px; }
+  .tier .main p { margin:4px 0 0; color:#666; font-size:12.5px; }
+  .tier .keep { font-size:12px; color:#999; }
+  .tip { background:#f0fdf4; padding:8px 14px; border-radius:6px; font-size:12px; color:#059669; margin-top:10px; }
   .t0 { border-top-color:#cd853f; }
   .t1 { border-top-color:#a0a0a0; }
   .t2 { border-top-color:#b8860b; }
   .t3 { border-top-color:#7c3aed; }
   .t4 { border-top-color:#dc2626; }
   .t5 { border-top-color:#f59e0b; }
-  .summary { margin-top:40px; }
 </style>
 </head>
 <body>
 
-<h1 style="border-left-color:#1a1a2e;">代号001 · 段位玩法分层设计</h1>
-<p style="font-size:13px;color:#9098a8;">
-  原则：① 升段 = 新规则解锁，升段有期待 ② 规则累积不替换，学会的不会忘 
-  ③ 低段学基础，中段加深度，高段加压力 ④ 不变 52 张牌/3 公共牌/5 局 3 胜/2 张各用 1 次的核心
-</p>
+<h1 style="border-left-color:#1a1a2e;">代号001 · 段位玩法分层（精简）</h1>
+<p style="font-size:12px;color:#9098a8;">原则：<b>升一段，学一件事。</b>每段核心变化不超过 2 条，旧规则到了新段位自动演化掉。</p>
 
-<!-- 基础 -->
+<!-- 新手 -->
 <div class="tier t0">
-  <h2>🏠 新手局 · 第 1-3 场</h2>
-  <div class="sub">3 场人机保护局 → 自动进入青铜Ⅲ</div>
-  <div class="rule"><b>系统自动配发 2 张教学功能牌</b>，不消耗库存。<span class="tag tag-keep">已有</span></div>
-  <div class="rule"><b>BO3 加速</b>——3 局 2 胜而非 5 局 3 胜，更快结束更快学。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>不计天梯</b>，输了不扣星不掉牌。<span class="tag tag-keep">已有</span></div>
-  <div class="why">🎯 正反馈：第一场就能赢。学的是"选牌→比大小"而不是"配卡→管理库存"。</div>
+  <h2>🏠 新手 · 第 1-3 场</h2>
+  <div class="sub">3 场保护→青铜Ⅲ</div>
+  <div class="main"><b>BO3 加速</b>——3 局 2 胜。一局 2 分钟，快速体验完整循环。<p>出了新手局恢复正常 5 局 3 胜。</p></div>
+  <div class="tip">🎯 要学的事：选牌→比大小。不用管功能牌配装。</div>
 </div>
 
 <!-- 青铜 -->
 <div class="tier t1">
   <h2>🥉 青铜</h2>
-  <div class="sub">3 小段 × 3 星 · 失败不掉星</div>
-  <div class="rule"><b>牌堆顶预知</b>——补牌前看到牌堆顶的牌（双方各看到一张）。你知道下回合可能拿到什么。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>选牌上限制</b>——前两回合只能选刚好 N 张，不可多选再取消。培养"想清楚再出手"。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>花色每日加成</b>——每天随机一个王者花色，含该花色的牌型等级 +1。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>渐进配置</b>——第 2-3 场引导手动选牌，允许系统推荐。<span class="tag tag-keep">已有</span></div>
-  <div class="why">🎯 正反馈：预知+花色加成让新手更容易打出大牌型。选牌上限制帮新手决策。</div>
+  <div class="sub">3 小段×3 星 · 失败不掉星</div>
+  <div class="main"><b>牌堆顶预知</b>——补牌前看到自己和对手各一张即将抽到的牌。<p>你知道下回合大概率拿到什么——功能牌用不用？基于已知信息决定。</p></div>
+  <div class="main"><b>每日花色加成</b>——每天一个花色视为"王牌花色"，含该花色的牌型+1级。<p>今天♠日→带♠多的手牌价值高。明天♥日→meta 翻转。每天登录看今天是哪色。</p></div>
+  <div class="tip">🎯 要学的事：预知信息+功能牌时机的入门决策。花色日让每天有新鲜感。</div>
 </div>
 
 <!-- 白银 -->
 <div class="tier t2">
   <h2>🥈 白银</h2>
-  <div class="sub">3 小段 × 3 星 · 失败 -1 星 · 大段保护 1 次</div>
-  <div class="rule"><b>第 1 回合 9 张手牌</b>——更多起手选择，更快进入状态。第 1 回合后恢复 7 张。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>点数当日加成</b>——每天随机一个幸运点数，含该点数的牌视为 +2。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>对子今日王牌</b>——每天随机一个点数，该点数的对子在当天按两对判定。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b style="color:#666;">保留：</b>牌堆顶预知、选牌上限制、花色加成</div>
-  <div class="why">🎯 正反馈：手牌多=选择多=容易打出想要的牌型。点数加成+对子王牌让每日 meta 都不一样——今天 7 是王牌，明天 J 是王牌。每天打开游戏看看今天是哪张牌。</div>
+  <div class="sub">3 小段×3 星 · 失败-1星 · 大段保护</div>
+  <div class="main"><b>第 1 局手牌 9 张</b>——起手多 2 张，更多选择空间。<p>第1局后恢复正常。这条规则到了黄金段会被收紧。</p></div>
+  <div class="keep">花色加成保留（日夜循环）。</div>
+  <div class="tip">🎯 要学的事：手牌多=容错高=可以更大胆用技能。建立"装备→选牌→用技能"的肌肉记忆。</div>
 </div>
 
 <!-- 黄金 -->
 <div class="tier t3">
   <h2>🥇 黄金</h2>
-  <div class="sub">3 小段 × 4 星 · 3 连胜额外 +1 星 · 大段保护 1 次</div>
-  <div class="rule"><b>公共牌逐步揭示</b>——第 1 局只翻 1 张→第 2 局翻第 2 张→第 3 局翻完。前两局信息不全。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>技能连锁</b>——同一回合使用 2 张功能牌，第二张效果 +50%。打 combo 有加倍回报。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>连败补牌</b>——连输 2 回合，下回合手牌上限临时变 9 张（8 张选 N 张）。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>每日牌型聚焦</b>——轮流"顺子日/同花日/对子日"，对应牌型判定 +1 级。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>指定回合双倍</b>——开局随机一个回合标记为双倍回合（双方可见）→该回合输赢翻倍。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>连续两场同牌 +10%</b>——连续两场带同一张功能牌，效果 +10%。专精有回报。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b style="color:#666;">升级：</b>花色加成→每日牌型聚焦；点数加成+对子王牌→每日牌型聚焦。不再需要三条加成规则，合并为一条。</div>
-  <div class="why">🎯 正反馈：黄金是"策略觉醒"段位。公共牌逐步揭示让你学信息博弈。技能连锁让你感受 combo。每日牌型聚焦统一了三个加成规则——今天顺子日，我带幸运日（顺子→同花顺）+5-Joker（百搭顺子）——策略开始成体系了。</div>
+  <div class="sub">3 小段×4 星 · 3连胜+1星 · 大段保护</div>
+  <div class="main"><b>公共牌逐步揭示</b>——第1局只翻1张公共牌，第2局翻第2张，第3局翻完。<p>前两局信息不全。你对未知的公共牌赌不赌技能？这是低段没有的博弈。</p></div>
+  <div class="main"><b>技能连锁</b>——同一回合用 2 张技能→第二张效果 +50%。<p>8 张涉及"数量"的牌受益。打 combo 有加倍回报。</p></div>
+  <div class="keep">花色加成演化→每日牌型聚焦（顺子日/同花日/对子日轮换，3天一个循环）。<br>手牌 9 张收紧→8 张。</div>
+  <div class="tip">🎯 要学的事：信息缺口下的决策 + combo 节奏。黄金是"从乱打到有体系"的分水岭。</div>
 </div>
 
 <!-- 铂金 -->
 <div class="tier t4">
   <h2>💎 铂金</h2>
-  <div class="sub">3 小段 × 4 星 · 无连胜奖励 · 大段保护 1 次</div>
-  <div class="rule"><b>带入 3 张，选 2 张用</b>——带入 3 张功能牌，整场仍只能用 2 张。多一张是备选。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>功能牌部分可见</b>——开局双方看到对手 3 张中的 2 张（随机）。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>残局换公共牌</b>——任一方 HP 降到 1 时，公共牌中一张被替换。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>手牌上限递减</b>——1-2 局 8 张→3-4 局 7 张→5 局 6 张。越打越紧。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>倒计时缩短</b>——选牌从 30s 缩到 20s。反应窗口变小。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>技能反制</b>——对手用技能时，你有同大类→可选"反制"，双方各交牌效果归零。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>技能读心</b>——第 4 回合结束猜对方下回合会不会用技能，猜对 +10 钻。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b style="color:#666;">升级：</b>第 1 回合 9 张→手牌递减（前期多一张但后期更紧）。连败补牌→无（铂金不怜悯）。连续两场同牌加成保留。</div>
-  <div class="why">🎯 正反馈：铂金是"高压竞技"。带 3 选 2+部分可见→你知道对手有什么牌，对手也知道你有什么——但都有隐藏。残局换牌打破定势。倒计时+反制+读心→心理博弈全面升级。</div>
+  <div class="sub">3 小段×4 星 · 无连胜奖励 · 大段保护</div>
+  <div class="main"><b>技能反制</b>——对手用技能→你有同大类→可选反制，双方各烧牌效果归零。<p>5大类（抽牌/干扰/增强/修改/探测）。3秒反制窗口。心理博弈升级。</p></div>
+  <div class="main"><b>残局换公共牌</b>——任一方 HP=1 时，一张公共牌被随机替换。<p>已经算好的组合可能崩塌，也可能给你惊喜。只触发一次。</p></div>
+  <div class="keep">公共牌逐步揭示保留。技能连锁保留。牌型聚焦日保留。<br>手牌 8 张→第 5 局收紧为 6 张。倒计时缩到 20s。</div>
+  <div class="tip">🎯 要学的事：对手的技能不再是单向威胁——你可以反制。残局换牌意味着不能"第1局算好整场"。</div>
 </div>
 
 <!-- 大师 -->
 <div class="tier t5">
   <h2>👑 大师</h2>
-  <div class="sub">1000 分起 · 胜 +25 负 -15 · 1500→传奇</div>
-  <div class="rule"><b>技能窗口限制</b>——只能在第 2-4 回合使用技能。首尾回合禁用。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>公共牌轮换</b>——每回合结束弃掉最左公共牌，补新牌。公共牌是流动的。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>第 5 回合双方手牌公开</b>——最后一把没有秘密，纯心理博弈。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>连携保护</b>——同一回合打 2 张 combo→第二张不可被反制。combo 有保障。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>未用技能不消耗</b>——比赛结束时如果带来了功能牌但没用→不消耗。奖励克制。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>赛点压迫</b>——对方赛点时你手牌上限-1（6 张选 N 张）。真实压力。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b style="color:#666;">升级：</b>带 3 选 2 保留。功能牌部分可见保留。手牌递减保留。反制+读心保留。每日牌型聚焦→保留但不强化。</div>
-  <div class="why">🎯 正反馈：大师是"巅峰对决"。窗口限制让你必须在中间三回合押注技能。公共牌轮换意味着每回合要重新评估。第 5 局明牌——最后一把没有藏招。未用技能不消耗奖励你"能赢不用技能"的高超决策。</div>
+  <div class="sub">1000分起 · +25/-15 · 1500→传奇</div>
+  <div class="main"><b>公共牌轮换</b>——每回合结束弃掉最左公共牌，补一张新的。<p>公共牌是流动窗口，不在是固定3张。需要每回合重算最优组合。</p></div>
+  <div class="main"><b>第 5 局明牌</b>——最后一把双方手牌全部公开。没有秘密，纯心理博弈。<p>技能在第5局已禁用（只能第2-4局用）。</p></div>
+  <div class="keep">全部铂金规则保留。第 5 局技能禁用+手牌全明。</div>
+  <div class="tip">🎯 要学的事：轮换公共牌意味着长期规划失效。明牌第5局是巅峰博弈——你知道对手的一切但你不能用技能。</div>
 </div>
 
 <!-- 传奇 -->
 <div class="tier" style="border-top-color:#f59e0b;">
   <h2>🏆 传奇</h2>
-  <div class="sub">1500 分+ · 按积分排行 · 首发不降段</div>
-  <div class="rule"><b>殊死一搏</b>——双方比分 2:2 进入第 5 回合时，N=10（手牌全出）。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>断连胜狙击</b>——有人连胜 5 场触发全服通知→任何人可选狙击（终结者 +2 星）。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b>周排名结算</b>——每周一结算传奇积分排名，Top 玩家获限定头像框+钻石。<span class="tag tag-new">新</span></div>
-  <div class="rule"><b style="color:#666;">保留：</b>所有大师段位规则。</div>
-  <div class="why">🎯 正反馈：传奇是"荣誉与社会"。殊死一搏让胶着局有史诗感。断连胜狙击让社区有事件。周排名给持续目标。</div>
+  <div class="sub">1500分+ · 积分排行 · 不降段</div>
+  <div class="main"><b>殊死一搏</b>——双方 2:2 进第 5 局时，N=10（手牌全出）。<p>最后一把亮出家底。没有选择余地，系统算谁更强。</p></div>
+  <div class="keep">全大师规则保留。</div>
+  <div class="tip">🎯 传奇是对决的顶点。殊死一搏让 2:2 胶着局变成史诗事件。</div>
 </div>
 
 <!-- 总览 -->
-<div class="summary" style="background:#fff;border:1px solid #e4e7ed;border-radius:12px;padding:24px;margin-top:24px;">
-  <h2 style="font-size:16px;margin-bottom:16px;">📊 总览：7 段位 × 30+ 条规则</h2>
-  <table style="width:100%;border-collapse:collapse;font-size:12px;">
-    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:8px;font-weight:700;">新手</td><td style="padding:8px;color:#666;">BO3 加速、自动配发技能牌</td></tr>
-    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:8px;font-weight:700;">青铜</td><td style="padding:8px;color:#666;">预知牌堆顶、选牌上限制、花色加成</td></tr>
-    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:8px;font-weight:700;">白银</td><td style="padding:8px;color:#666;">手牌 9 张、点数加成、对子王牌</td></tr>
-    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:8px;font-weight:700;">黄金</td><td style="padding:8px;color:#666;">公共牌逐步揭示、技能连锁、连败补牌、牌型聚焦日、双倍回合、同牌加成</td></tr>
-    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:8px;font-weight:700;">铂金</td><td style="padding:8px;color:#666;">带 3 选 2、部分可见、残局换牌、手牌递减、倒计时缩、反制、读心</td></tr>
-    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:8px;font-weight:700;">大师</td><td style="padding:8px;color:#666;">技能窗口限制、公共牌轮换、手牌公开、连携保护、未用不消耗、赛点压迫</td></tr>
-    <tr><td style="padding:8px;font-weight:700;">传奇</td><td style="padding:8px;color:#666;">殊死一搏(N=10)、断连胜狙击、周排名</td></tr>
+<div style="background:#fff;border:1px solid #e4e7ed;border-radius:12px;padding:20px 24px;margin-top:24px;font-size:12px;line-height:1.8;">
+  <table style="width:100%;border-collapse:collapse;">
+    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:6px;font-weight:700;width:60px;">新手</td><td style="padding:6px;">BO3 加速</td><td style="padding:6px;width:80px;text-align:right;color:#999;">1 条</td></tr>
+    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:6px;font-weight:700;">青铜</td><td style="padding:6px;">预知牌堆顶 + 花色日</td><td style="padding:6px;text-align:right;color:#999;">2 条</td></tr>
+    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:6px;font-weight:700;">白银</td><td style="padding:6px;">起手 9 张</td><td style="padding:6px;text-align:right;color:#999;">+1 条</td></tr>
+    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:6px;font-weight:700;">黄金</td><td style="padding:6px;">公共牌逐步揭示 + 技能连锁</td><td style="padding:6px;text-align:right;color:#999;">+2 条</td></tr>
+    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:6px;font-weight:700;">铂金</td><td style="padding:6px;">技能反制 + 残局换公共牌</td><td style="padding:6px;text-align:right;color:#999;">+2 条</td></tr>
+    <tr style="border-bottom:1px solid #e4e7ed;"><td style="padding:6px;font-weight:700;">大师</td><td style="padding:6px;">公共牌轮换 + 第 5 局明牌</td><td style="padding:6px;text-align:right;color:#999;">+2 条</td></tr>
+    <tr><td style="padding:6px;font-weight:700;">传奇</td><td style="padding:6px;">殊死一搏</td><td style="padding:6px;text-align:right;color:#999;">+1 条</td></tr>
   </table>
-  <p style="font-size:12px;color:#9098a8;margin-top:16px;">
-    升段 = <strong>新规则解锁</strong> = 新体验。每个段位解开 2-6 条新规则，已有的规则保留不替换。玩家从青铜爬到传奇，体验到的是一个逐渐复杂、逐渐有深度的游戏。
-  </p>
+  <p style="color:#999;margin-top:10px;">合计 11 条核心变化，分布在 7 个段位。玩家从青铜到传奇，每升一段学 1-2 个新东西。</p>
 </div>
 
 </body>
