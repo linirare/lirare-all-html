@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>代号001 · 段位对局内玩法变异（第三批）</title>
+<title>代号001 · 段位对局内玩法变异（以功能牌为中心）</title>
 <style>
   body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:900px; margin:20px auto; padding:20px; background:#f5f6f8; color:#1a1a2e; line-height:1.8; }
   h1 { font-size:18px; border-left:4px solid #dc2626; padding-left:10px; margin:32px 0 12px; }
@@ -15,96 +15,106 @@
   .platinum { background:#e5e4e222; color:#666; }
   .master { background:#7c3aed22; color:#7c3aed; }
   .legend { background:#dc262622; color:#dc2626; }
+  .note { font-size:12px; color:#9098a8; margin:4px 0 16px; }
 </style>
 </head>
 <body>
 
-<h1 style="border-left-color:#1a1a2e;">段位内对局玩法变异 · 第三批</h1>
-<p style="font-size:12px;color:#9098a8;margin-bottom:20px;">以下全部是<strong>对局内规则变化</strong>——不同段位，同一局游戏里的规则不同</p>
+<h1 style="border-left-color:#1a1a2e;">段位内对局玩法变异</h1>
+<p style="font-size:12px;color:#9098a8;">前提：5局/3张公共牌/出牌递增/带2张各用1次。以下变化都以功能牌为核心，不冲突、不绕过。</p>
 
 <!-- ===== 1 ===== -->
-<h1>一、回合内节奏变异</h1>
+<h1>一、功能牌数量与使用规则微调</h1>
+<p class="note">核心还是"带入2张"，但边界条件随段位变化</p>
 
-<div class="idea"><b>倒计时递减</b> <span class="rank-tag platinum">铂金+</span>
-  <p>选牌倒计时随段位缩短。白银30s→黄金25s→铂金20s→大师15s。同一局游戏体验不变，但段位越高反应窗口越小。</p>
+<div class="idea"><b>带入3张，仍用2次</b> <span class="rank-tag platinum">铂金+</span>
+  <p>带入3张功能牌——但整场仍然只能使用其中2张。多一张是备选，不是多用一次。你可以在对局过程中根据局势决定"放弃哪张"。库存仍扣3张，胜退败扣规则不变。</p>
 </div>
-<div class="idea"><b>先手轮转</b> <span class="rank-tag gold">黄金+</span>
-  <p>不是每回合固定顺序——第1回合A先手→第2回合B先手→轮流。先手有信息优势（先看到对手出牌再调整？不对…先手是先去选牌先去出牌）。轮流制打破固定节奏。</p>
+<div class="idea"><b>技能使用窗口限制</b> <span class="rank-tag master">大师+</span>
+  <p>不是任意回合都能用——第1回合禁用技能、第5回合禁用技能。只能在第2-4回合用。你必须在中间三回合里押注两次机会，首尾不能投机。</p>
 </div>
-<div class="idea"><b>同步出牌</b> <span class="rank-tag master">大师+</span>
-  <p>双方同时选牌→同时确认→同时揭示。不知道对方出了什么——纯博弈。只在第5回合生效。最后一把谁也不敢大意。</p>
+<div class="idea"><b>技能连锁</b> <span class="rank-tag gold">黄金+</span>
+  <p>同一回合连续使用2张功能牌时，第二张的效果+50%（如神偷偷1张→实际偷1.5张=有可能偷2张，概率50%）。鼓励combo，而且是用两张牌的代价换的。</p>
 </div>
-<div class="idea"><b>回合间隙快闪</b> <span class="rank-tag platinum">铂金+</span>
-  <p>每回合结束后→3秒内展示一个"间隙事件"：①双方各抽1张（牌堆够的话）②双方各弃1张（手牌多于N张时）③无事件。随机出现。</p>
+<div class="idea"><b>功能牌可见</b> <span class="rank-tag platinum">铂金+</span>
+  <p>开局时双方互相看到对手带了三张中的两张（随机显示，第三张隐藏）。你知道对手有神偷，但不知道他第三张是什么——可能更强也可能更弱。</p>
 </div>
 
 <!-- ===== 2 ===== -->
-<h1>二、信息暴露博弈</h1>
+<h1>二、公共牌与功能牌联动</h1>
+<p class="note">公共牌变化 → 影响你"用不用技能、什么时候用"的决策</p>
 
-<div class="idea"><b>强制亮底牌</b> <span class="rank-tag gold">黄金+</span>
-  <p>每局确认出牌前，系统随机选一张你的手牌亮给对手看（公开信息）。你知道对手知道你有一张什么牌——下回合你要不要用这张牌？</p>
+<div class="idea"><b>公共牌逐步揭示</b> <span class="rank-tag gold">黄金+</span>
+  <p>第1局只翻1张公共牌→第2局翻第2张→第3局翻完。信息是逐步给全的。你有功能牌——前两局信息不全的时候用还是不用？用了可能浪费，不用可能输掉前两局。</p>
 </div>
-<div class="idea"><b>对手手牌预测</b> <span class="rank-tag platinum">铂金+</span>
-  <p>每回合出牌前可选"预测"——猜对手手牌中对子的数量（0/1/2/3对）。猜对了本回合+10钻石。猜错了没惩罚。纯自愿，增加一层次要博弈。</p>
+<div class="idea"><b>公共牌轮换</b> <span class="rank-tag master">大师+</span>
+  <p>每回合结束后，最左边的公共牌被弃掉，从牌堆补一张新的放最右边。公共牌是流动的。你带了黑客（复制公共牌）——但这张公共牌下回合就没了。现在复制还是等更好的？</p>
 </div>
-<div class="idea"><b>看牌代价</b> <span class="rank-tag platinum">铂金+</span>
-  <p>可以用"放弃使用技能"来换取"看对手随机一张手牌"。信息不是免费的——你交出了技能使用的机会。</p>
-</div>
-<div class="idea"><b>第3回合展示最弱牌</b> <span class="rank-tag master">大师+</span>
-  <p>第3回合开始前，双方各展示手牌中点数最低的一张给对方看。你知道对手最弱的是什么——对手也知道你的。信息对称了，但牌局还剩2回合。</p>
+<div class="idea"><b>残局换牌</b> <span class="rank-tag platinum">铂金+</span>
+  <p>任一方HP降到1时，公共牌更新一张。带了白手套（复制公共牌）的人——残局换牌可能给你一张极品。但你得活到残局。</p>
 </div>
 
 <!-- ===== 3 ===== -->
-<h1>三、残局机制</h1>
+<h1>三、手牌变化 → 影响技能决策</h1>
+<p class="note">手牌变了，技能的相对价值就变了</p>
 
-<div class="idea"><b>绝境翻盘加成</b> <span class="rank-tag gold">黄金+</span>
-  <p>HP 1:2落后时→本回合手牌上限+1，技能使用后不消耗该回合的使用次数（本回合可再用第二张）。给绝境一点点翻盘杠杆。</p>
+<div class="idea"><b>第1回合多2张手牌</b> <span class="rank-tag silver">白银+</span>
+  <p>第1回合手牌9张（不是7张）。你有更多牌可选。带了神偷的人——对手手牌也多了，偷到好牌的概率也高了。带了破坏专家的人——对手牌多，弃2张的冲击力相对减弱。</p>
 </div>
-<div class="idea"><b>赛点压迫</b> <span class="rank-tag master">大师+</span>
-  <p>对方赛点（对手再赢一局就胜）→你本回合手牌上限-1（6张选N张）。真实压力——信息少了，决策更难。</p>
+<div class="idea"><b>手牌上限递减</b> <span class="rank-tag platinum">铂金+</span>
+  <p>第1-2回合手牌8张→3-4回合7张→5回合6张。越往后手牌越紧，技能牌"抽牌"类（5-Joker/赌神/情报员/洗牌师）的价值在后半段暴涨。</p>
 </div>
-<div class="idea"><b>残局更换公共牌</b> <span class="rank-tag platinum">铂金+</span>
-  <p>HP为1时（自己或对手任一）→公共牌中最左边那张被替换为牌堆顶一张新牌。残局时牌面突变——已经算好的组合全部重算。</p>
-</div>
-<div class="idea"><b>殊死一搏</b> <span class="rank-tag legend">传奇</span>
-  <p>双方HP均为1时（2:2进入第5回合）→第五回合的N值翻倍（N=10而不是5）。最后一把是真正的"亮出家底"——手牌全出。</p>
+<div class="idea"><b>连败手牌保护</b> <span class="rank-tag gold">黄金+</span>
+  <p>连输2回合后，下回合补牌时多补2张（手牌上限临时变9张）。你有更多牌，对手的破坏专家炸2张的伤害降低。给连败方一个战术缓冲。</p>
 </div>
 
 <!-- ===== 4 ===== -->
-<h1>四、牌局结构变异</h1>
+<h1>四、牌型判定微调 → 改变哪些技能更强</h1>
+<p class="note">牌型权重变了，某些技能牌的相对强度就变了</p>
 
-<div class="idea"><b>小局赌注递增</b> <span class="rank-tag platinum">铂金+</span>
-  <p>不是每小局输赢一样——第1-2局输赢±0.5星（积累到整数结算），第3-5局±1星。前两局你赌得小，后三局赌真章。</p>
+<div class="idea"><b>顺子日</b> <span class="rank-tag silver">白银+</span>
+  <p>顺子判定+1级。带了幸运日（顺子→同花顺判定）的人今天起飞——顺子本身已经+1级，幸运日再升→顺子直接变同花顺。但对手也知道今天顺子强——他们也会往顺子方向组牌。</p>
 </div>
-<div class="idea"><b>指定回合双倍</b> <span class="rank-tag gold">黄金+</span>
-  <p>开局系统随机指定一个回合为"双倍回合"（双方可见）——该回合输赢翻倍影响最终星数。不是全局双倍——是一个特定回合。双方都会在那回合押重注。</p>
+<div class="idea"><b>同花日</b> <span class="rank-tag gold">黄金+</span>
+  <p>同花判定+1级。带了同花信徒（同花→下回合抽2张）的人今天双重收益。带白手套（复制公共牌同花色）的人——复制同花色公共牌的价值翻倍。</p>
 </div>
-<div class="idea"><b>手牌公开博弈</b> <span class="rank-tag master">大师+</span>
-  <p>第5回合双方手牌完全公开——双方都知道对手的全部手牌。没有隐藏信息的最后一回合——纯心理博弈。</p>
+<div class="idea"><b>对子日</b> <span class="rank-tag silver">白银+</span>
+  <p>对子判定+1级。带加一减一（点数±1凑对子）的人——今天你的±1更容易凑成有效组合。改点数的技能在特定日子更强。</p>
 </div>
-<div class="idea"><b>强制裸奔回合</b> <span class="rank-tag gold">黄金+</span>
-  <p>系统随机指定一个回合——该回合禁用技能。双方都知道这个回合不能用技能——在该回合之前用完还是留到之后？</p>
+<div class="idea"><b>轮子顺（A-2-3-4-5）特殊判定</b> <span class="rank-tag gold">黄金+</span>
+  <p>轮子顺在黄金段按同花顺级别判定。Joker（5-Joker百搭牌）配合A-2-3-4-5时价值暴涨——百搭成同花色的轮子顺。</p>
 </div>
 
 <!-- ===== 5 ===== -->
-<h1>五、牌堆交互</h1>
+<h1>五、段位解锁技能交互</h1>
+<p class="note">不新增牌，但已有牌之间的交互规则随段位变化</p>
 
-<div class="idea"><b>牌堆顶预知</b> <span class="rank-tag silver">白银+</span>
-  <p>补牌前显示牌堆顶的一张牌（共两张，各显示一张）。你知道自己下回合会拿到什么——但对手也知道你会拿到什么。</p>
+<div class="idea"><b>技能反制</b> <span class="rank-tag platinum">铂金+</span>
+  <p>对手用技能时→你如果有同大类技能→可以选择"反制"：双方各消耗该牌，效果取消。神偷偷牌→对手用神偷反制→双方牌都烧了，什么都没发生。只在该段位有此交互。</p>
 </div>
-<div class="idea"><b>跳牌</b> <span class="rank-tag platinum">铂金+</span>
-  <p>选牌阶段可以选择"跳牌"——跳过牌堆顶1张，拿第2张。整场只能用1次。你觉得顶牌不好→跳。跳错了后果自负。</p>
+<div class="idea"><b>连携保护</b> <span class="rank-tag master">大师+</span>
+  <p>同一回合使用2张牌→第二张不可被反制。你用2张牌的代价换来了反制免疫。combo有保障。</p>
 </div>
-<div class="idea"><b>牌堆末尾可见</b> <span class="rank-tag master">大师+</span>
-  <p>双方都能看到牌堆最底部的那张牌。那张牌迟早会到某人手里——但什么时候？会不会被技能抽走？</p>
+
+<!-- ===== 6 ===== -->
+<h1>六、结算博弈（功能牌驱动的心理战）</h1>
+
+<div class="idea"><b>技能读心</b> <span class="rank-tag platinum">铂金+</span>
+  <p>第4回合结束时，双方可以猜测对方下一回合会不会用技能。猜对→+10钻。猜错→无惩罚。带了功能牌是优势——但优势还包括"对手猜你会不会用"。</p>
+</div>
+<div class="idea"><b>未使用的技能牌有残值</b> <span class="rank-tag master">大师+</span>
+  <p>如果比赛结束时你带了功能牌但没用（赢了或输了都没用）→那两张牌不消耗。你有技能但选择不用——这个克制行为被奖励。</p>
+</div>
+<div class="idea"><b>同一张牌连续两场使用</b> <span class="rank-tag gold">黄金+</span>
+  <p>连续两场带同一张功能牌出战→该牌的效果+10%（如神偷偷牌时额外看对手1张手牌作为选项）。鼓励专精某张牌，形成个人风格。</p>
 </div>
 
 <div style="margin-top:40px;padding:16px 20px;background:#1a1a2e;color:#fff;border-radius:8px;font-size:12px;line-height:1.8;">
-  白银——先适应小变异：牌堆顶预知<br>
-  黄金——开始有博弈感：强制亮底牌、双倍回合、强制裸奔回合、绝境翻盘、先手轮转<br>
-  铂金——竞技深度：倒计时递减、小局赌注递增、换公共牌、看牌代价、跳牌、预测<br>
-  大师——硬核：同步出牌、手牌公开博弈、赛点压迫、残局甩公共牌<br>
-  传奇——巅峰：殊死一搏（2:2进5局时N=10）
+  <strong>这次全部围绕功能牌设计</strong>——不是"加一个规则取代功能牌"，而是"功能牌在这个规则下怎么用更精妙"。<br><br>
+  白银：手牌多/牌型日——功能牌的价值在学习中。<br>
+  黄金：技能连锁/连败保护/牌型日/连续使用加成——开始有策略纵深。<br>
+  铂金：带3选2/部分可见/残局换牌/技能反制/读心/手牌递减——竞技感。<br>
+  大师：窗口限制/公共牌轮换/连携保护/未用技能不消耗——硬核心理博弈。
 </div>
 
 </body>
