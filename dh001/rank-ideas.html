@@ -9,8 +9,6 @@
   .idea { background:#fff; border:1px solid #e4e7ed; border-radius:8px; padding:12px 16px; margin:6px 0; font-size:13px; }
   .idea b { color:#7c3aed; }
   .idea p { margin:0; color:#666; font-size:12px; }
-  .mine { background:#fef3c7; }
-  .new { background:#fff; }
   .rank-tag { display:inline-block; padding:1px 8px; border-radius:3px; font-size:10px; font-weight:700; margin-right:4px; }
   .bronze { background:#cd853f22; color:#cd853f; }
   .silver { background:#c0c0c022; color:#888; }
@@ -18,167 +16,154 @@
   .platinum { background:#e5e4e222; color:#666; }
   .master { background:#7c3aed22; color:#7c3aed; }
   .legend { background:#dc262622; color:#dc2626; }
+  .all { background:#e4e7ed; color:#666; }
 </style>
 </head>
 <body>
 
 <h1>段位差异化玩法脑暴</h1>
-<p style="font-size:12px;color:#9098a8;margin-bottom:20px;">
-  <span class="mine" style="padding:2px 8px;border-radius:3px;font-size:11px;">你的点子</span>
-  <span class="new" style="padding:2px 8px;border-radius:3px;font-size:11px;border:1px solid #e4e7ed;">我补的</span>
-</p>
+<p style="font-size:12px;color:#9098a8;">以下为补充方案，不含你提过的13条初始点子</p>
 
 <!-- ===== 1 ===== -->
 <h1>一、公共牌变异</h1>
 
-<div class="idea mine"><b>公告牌增到4张</b> <span class="rank-tag gold">黄金+</span>
-  <p>公共牌从3张变4张→组合从N+3变N+4→最优5张的选择更多→同花/顺子概率上升→牌局更大。</p>
-</div>
-<div class="idea mine"><b>盖牌：随机一张公共牌暗置</b> <span class="rank-tag platinum">铂金+</span>
-  <p>3张公共牌中随机1张不可见。双方都不知道那张牌是什么→选牌和技能使用时必须考虑未知变量。</p>
-</div>
-<div class="idea mine"><b>第一张公共牌可变色</b> <span class="rank-tag gold">黄金+</span>
-  <p>开局第一张公共牌的花色由玩家选择（双方各自选自己的视角）。同一张牌两个玩家看到不同花色→同花判定各自独立。</p>
-</div>
-<div class="idea mine"><b>流浪公共牌</b> <span class="rank-tag platinum">铂金+</span>
-  <p>指定回合（如第3回合开始前）随机换掉一张公共牌→从牌堆抽新牌替换。整场只触发一次。</p>
-</div>
-<div class="idea mine"><b>部分回合公共牌失效</b> <span class="rank-tag master">大师+</span>
-  <p>第4回合，中间那张公共牌作废→只能用2张公共牌+N张手牌取最优5张。选择更少，更难打出大牌型。</p>
-</div>
-
-<div class="idea new"><b>公共牌池二选一</b> <span class="rank-tag platinum">铂金+</span>
+<div class="idea"><b>公共牌池二选一</b> <span class="rank-tag platinum">铂金+</span>
   <p>开局发两组各3张公共牌（A组/B组）。第1回合结束后双方投票选一组——少数服从多数，平票随机。心理博弈前置到选牌之前。</p>
 </div>
-<div class="idea new"><b>逐步揭示公共牌</b> <span class="rank-tag silver">白银+</span>
-  <p>3张公共牌不一次性翻。第1局只揭示1张→第2局揭示第2张→第3局揭示全部。越往后信息越多，前面的出牌决策有"信息差"。</p>
+<div class="idea"><b>逐步揭示公共牌</b> <span class="rank-tag silver">白银+</span>
+  <p>3张公共牌不一次翻完。第1局只揭示1张→第2局揭示第2张→第3局揭示全部。越往后信息越多，前面的决策有"信息差"，逼玩家前两局靠直觉。</p>
 </div>
-<div class="idea new"><b>公共牌轮换制</b> <span class="rank-tag master">大师+</span>
-  <p>每回合结束后，弃掉最左边那张公共牌，从牌堆补一张新的放在最右边。公共牌不再是"固定3张"而是"流动窗口"。</p>
+<div class="idea"><b>公共牌轮换制</b> <span class="rank-tag master">大师+</span>
+  <p>每回合结束后，弃掉最左边那张公共牌，从牌堆补一张新的放在最右边。公共牌不再是"固定3张"而是"流动窗口"。每回合都要重新评估局势。</p>
 </div>
-<div class="idea new"><b>公共牌可置换</b> <span class="rank-tag platinum">铂金+</span>
-  <p>每场比赛有一次机会：用手牌中任意一张，换掉一张公共牌。换掉的那张公共牌进弃牌堆。只能用1次，全场公用次数。</p>
+<div class="idea"><b>公共牌可置换</b> <span class="rank-tag platinum">铂金+</span>
+  <p>每场比赛有一次机会：用手牌中任意一张，换掉一张公共牌。全场共用这一次机会，谁先用谁先得。换掉的那张公共牌进弃牌堆。</p>
+</div>
+<div class="idea"><b>双份公共牌</b> <span class="rank-tag master">大师+</span>
+  <p>双方各自有独立的一组公共牌（各3张，不共享）。你不知道对手的公共牌是什么——只能靠对手出牌反向推测。信息战拉满。</p>
+</div>
+<div class="idea"><b>开局盲猜公共牌</b> <span class="rank-tag gold">黄金+</span>
+  <p>发牌后、翻公共牌前，双方盲猜公共牌的花色或点数范围。猜对的一方第1回合多打1张。让运气因素有技巧性介入。</p>
 </div>
 
 <!-- ===== 2 ===== -->
 <h1>二、手牌与出牌变异</h1>
 
-<div class="idea mine"><b>第一回合额外摸2张</b> <span class="rank-tag silver">白银+</span>
-  <p>第1回合开局手牌9张（而非7张）。更多的起手选择→更快进入状态。第1回合结束后恢复7张上限。</p>
+<div class="idea"><b>手牌明暗混合</b> <span class="rank-tag platinum">铂金+</span>
+  <p>7张手牌中随机2张是对自己"明牌"（自己看到确切牌面），其余5张正常。有信息优势的两张牌成为决策核心。</p>
 </div>
-<div class="idea mine"><b>幸运数字-当Joker或±1牌</b> <span class="rank-tag gold">黄金+</span>
-  <p>每场随机一个"幸运点数"（如7）。手牌中那个点数的牌，可选择当作Joker使用（百搭任意），或当作±1改一张相邻牌。</p>
+<div class="idea"><b>手牌上限波动</b> <span class="rank-tag gold">黄金+</span>
+  <p>每回合手牌上限变化：第1-2局8张→第3-4局7张→第5局6张。越往后手牌越紧，决策压力递增。</p>
 </div>
-<div class="idea mine"><b>皇家晚宴-JQKA全体+1</b> <span class="rank-tag platinum">铂金+</span>
-  <p>本场中，J/Q/K/A的点数各+1（J=12, Q=13, K=14, A=15）→高牌的优势更大，皇家同花顺更难被普通同花顺打平。</p>
+<div class="idea"><b>出牌数序列随机化</b> <span class="rank-tag master">大师+</span>
+  <p>不再是固定的3/3/3/4/5——每场随机打乱序列（如变成4/3/5/3/3）。双方知道序列但需适应新节奏，考验临场应变。</p>
 </div>
-
-<div class="idea new"><b>手牌明暗混合</b> <span class="rank-tag platinum">铂金+</span>
-  <p>7张手牌中随机2张是对自己"明牌"（对手不可见，但自己知道）。其余5张正常。打明牌有信息优势。</p>
+<div class="idea"><b>选牌上限制</b> <span class="rank-tag silver">白银+</span>
+  <p>第1-2回合只能选刚好N张→不能多选再取消。第3回合以后恢复正常。让新手前两回合节奏更快，同时培养"想清楚再出手"的习惯。</p>
 </div>
-<div class="idea new"><b>手牌上限波动</b> <span class="rank-tag gold">黄金+</span>
-  <p>每回合手牌上限不是固定7张——第1-2局上限8张，第3-4局上限7张，第5局上限6张。越往后牌越紧，决策越难。</p>
+<div class="idea"><b>连败补牌</b> <span class="rank-tag gold">黄金+</span>
+  <p>连输2回合后，下回合手牌上限+1（变为8张选N张）。轻微的连败补偿，给翻盘增加一点概率。</p>
 </div>
-<div class="idea new"><b>出牌数序列随机化</b> <span class="rank-tag master">大师+</span>
-  <p>不再是固定的3/3/3/4/5——每场随机打乱这个序列（如变成4/3/5/3/3），双方知道序列但需适应新节奏。</p>
-</div>
-<div class="idea new"><b>选牌上限制</b> <span class="rank-tag silver">白银+</span>
-  <p>第1-2回合只能选刚好N张→不能多选再取消。第3回合以后恢复正常随意选。让新手前两回合节奏更快。</p>
-</div>
-<div class="idea new"><b>连败补牌</b> <span class="rank-tag gold">黄金+</span>
-  <p>连输2回合后，下回合手牌上限+1（八张选N张）。连败方有轻微信息优势来翻盘。</p>
+<div class="idea"><b>偷看对手选牌</b> <span class="rank-tag platinum">铂金+</span>
+  <p>对手先确认选牌后，你可以选择"偷看"对手选的一张牌（随机显示其中1张）。用掉就没了，整场只能用1次。信息是要代价的。</p>
 </div>
 
 <!-- ===== 3 ===== -->
 <h1>三、技能变异</h1>
 
-<div class="idea mine"><b>Ban技能</b> <span class="rank-tag platinum">铂金+</span>
-  <p>对战前双方各自Ban掉对方1张功能牌→被Ban的牌本场不可用。双方各带2张→各Ban1张→各有1张可用+1张被禁。</p>
+<div class="idea"><b>段位解锁专属技能牌</b> <span class="rank-tag master">大师+</span>
+  <p>每个段位解锁一张该段位专属的功能牌——仅在当前段位可用，升降段后失效。如大师专属"时间逆转"——回到上一回合的手牌状态。</p>
 </div>
-<div class="idea mine"><b>极速模式-技能限时10s</b> <span class="rank-tag gold">黄金+</span>
-  <p>技能使用倒计时从25s缩到10s。来不及想的就必须凭直觉出。快节奏高压局。</p>
+<div class="idea"><b>技能CD制</b> <span class="rank-tag gold">黄金+</span>
+  <p>每张技能用完后不永久失效→进入冷却1回合→可再次使用。整场最多用2次。从"一锤子买卖"变成"有节奏地用两次"，策略维度翻倍。</p>
 </div>
-<div class="idea mine"><b>局部技能强化-黑客多复制一张</b> <span class="rank-tag platinum">铂金+</span>
-  <p>指定段位，特定技能牌的数值被buff。如铂金段黑客复制2张（原1张），大师段破坏专家弃3张（原2张）。段位越高牌越强→鼓励冲段。</p>
+<div class="idea"><b>共享技能池</b> <span class="rank-tag master">大师+</span>
+  <p>双方各带2张→Ban完后公开剩余牌→双方都知道对手带了什么。没有藏招的空间，纯策略博弈。</p>
 </div>
-
-<div class="idea new"><b>段位解锁专属牌</b> <span class="rank-tag master">大师+</span>
-  <p>每个段位解锁一张该段位专属的功能牌。仅在当前段位可用，升段/降段后失效。如钻石专属"时间逆转"——回到上一回合的手牌状态。</p>
+<div class="idea"><b>技能反制</b> <span class="rank-tag platinum">铂金+</span>
+  <p>当对手使用技能时，如果你有同类型技能→可以立即反制：抵消对方技能并消耗自己那张牌。双方都交一张牌，效果归零。心理博弈升级。</p>
 </div>
-<div class="idea new"><b>技能CD制</b> <span class="rank-tag gold">黄金+</span>
-  <p>每张技能牌用完后不永久失效——进入冷却。冷却1回合后可再次使用。整场最多用2次。从"用1次"变成"有节奏地用2次"。</p>
-</div>
-<div class="idea new"><b>共享技能</b> <span class="rank-tag master">大师+</span>
-  <p>双方的功能牌在Ban完之后公开→双方都知道对手剩什么牌。不能藏招，纯策略博弈。</p>
-</div>
-<div class="idea new"><b>随机技能</b> <span class="rank-tag bronze">青铜+</span>
-  <p>新手局：不自己选牌→系统随机配2张T3牌→玩家只需要学"什么时候用"，不需要学"带什么"。降低新手认知负荷。</p>
+<div class="idea"><b>技能连携</b> <span class="rank-tag gold">黄金+</span>
+  <p>同一回合使用2张同类型技能（如抽牌+抽牌、破坏+破坏）→效果翻倍：抽4张而不是各抽2张。打出combo有额外正反馈。</p>
 </div>
 
 <!-- ===== 4 ===== -->
-<h1>四、结算与加注</h1>
+<h1>四、结算与竞技变异</h1>
 
-<div class="idea mine"><b>结算前加注</b> <span class="rank-tag platinum">铂金+</span>
-  <p>第5回合出牌前，双方可以"加注"——押上额外1星。赢了+2星，输了-2星。不敢加的可以pass（正常±1星）。赌徒的天梯。</p>
+<div class="idea"><b>完胜奖励</b> <span class="rank-tag gold">黄金+</span>
+  <p>3-0碾压对手→额外+1星+50钻石。鼓励追求碾压而非苟胜。</p>
 </div>
-<div class="idea mine"><b>某种牌型在这个分数段最大</b> <span class="rank-tag master">大师+</span>
-  <p>大师段——顺子牌型额外+0.5分、同花额外+1分。某项牌型被"buff"→玩家会倾向于组这种牌型，当前meta会变化。</p>
+<div class="idea"><b>皇家天胡</b> <span class="rank-tag legend">全段</span>
+  <p>任何段位打出皇家同花顺→全服广播+直接+2星+100钻石+专属称号"被眷顾的人"。极低概率彩蛋，制造社区传播话题。</p>
 </div>
-
-<div class="idea new"><b>完胜奖励</b> <span class="rank-tag gold">黄金+</span>
-  <p>3-0碾压对手，额外+1星。鼓励追求碾压而非苟胜。</p>
+<div class="idea"><b>败方MVP</b> <span class="rank-tag platinum">铂金+</span>
+  <p>2-3惜败但打出了全场最高牌型或最大逆转→输方不掉星。"你输了，但打得漂亮"——降低惜败挫败感。</p>
 </div>
-<div class="idea new"><b>皇家同花顺天胡</b> <span class="rank-tag legend">全段</span>
-  <p>任何段位打出皇家同花顺→全场特效+直接+2星+全服广播+100钻石。极低概率极高回报的彩蛋机制。</p>
+<div class="idea"><b>压哨翻盘奖励</b> <span class="rank-tag gold">黄金+</span>
+  <p>HP落后(1:2)逆转取胜→额外+1星+20钻石。大逆转值得被奖励。</p>
 </div>
-<div class="idea new"><b>败方MVP</b> <span class="rank-tag platinum">铂金+</span>
-  <p>2-3惜败但打出精彩操作（如第5局打出最高牌型）→输方不掉星。"你输了但打得漂亮"。</p>
+<div class="idea"><b>连续碾压惩罚</b> <span class="rank-tag master">大师+</span>
+  <p>连续3场3-0碾压对手→系统标记"炸鱼嫌疑"→匹配倾向给你分更强的对手。高手不应该长期待在鱼塘。</p>
 </div>
 
 <!-- ===== 5 ===== -->
 <h1>五、牌型变异</h1>
 
-<div class="idea new"><b>反向同花顺（轮子顺）上位</b> <span class="rank-tag gold">黄金+</span>
-  <p>A-2-3-4-5（轮子顺）在黄金段被视为同花等级，排名高于普通顺子。一个段位给一种"彩蛋牌型"加权。</p>
+<div class="idea"><b>轮子顺上位</b> <span class="rank-tag gold">黄金+</span>
+  <p>A-2-3-4-5在黄金段被视为同花等级（高于普通顺子）。一个段位给一种彩蛋牌型加权，让玩家主动组冷门牌型。</p>
 </div>
-<div class="idea new"><b>三带二上位</b> <span class="rank-tag platinum">铂金+</span>
-  <p>三条+任意两张（非葫芦，因为对子不是三条）→在该段位按葫芦判定。让"伪葫芦"有意外之喜。</p>
+<div class="idea"><b>三带二上位</b> <span class="rank-tag platinum">铂金+</span>
+  <p>三条+任意两张（不含对子，不算葫芦）→在铂金段按葫芦判定。意外惊喜。</p>
 </div>
-<div class="idea new"><b>花色当日加成</b> <span class="rank-tag silver">白银+</span>
-  <p>每天随机一个"王者花色"。同花色中包含该花色的，牌型+1级（如两对该花色=三条级）。每天meta不同。</p>
+<div class="idea"><b>花色当日加成</b> <span class="rank-tag silver">白银+</span>
+  <p>每天随机一个"王者花色"。包含该花色的牌型等级+1（如红心两对→红心三条级）。每天meta不同，鼓励玩家根据花色调整策略。</p>
+</div>
+<div class="idea"><b>点数当日加成</b> <span class="rank-tag silver">白银+</span>
+  <p>每天随机一个"幸运点数"。手牌中包含该点数的牌→该牌视为+2（如幸运点数7→手牌中的7当9用）。每天重新洗牌meta。</p>
 </div>
 
 <!-- ===== 6 ===== -->
 <h1>六、赛制变异</h1>
 
-<div class="idea new"><b>BO5→BO3加速</b> <span class="rank-tag bronze">青铜+</span>
-  <p>新手局从5局3胜缩到3局2胜→更快结束，更快结算，更快学。正式段位恢复5局3胜。</p>
+<div class="idea"><b>无技能纯牌局日</b> <span class="rank-tag silver">白银+</span>
+  <p>每周指定一天——禁用所有功能牌，纯靠出牌决策。检验真实牌技。</p>
 </div>
-<div class="idea new"><b>无技能纯牌局</b> <span class="rank-tag silver">白银+</span>
-  <p>指定一天——禁用技能牌，纯靠出牌决策。考验牌型判断基本功。不再有技能牌的随机性。</p>
+<div class="idea"><b>三人混战天梯</b> <span class="rank-tag legend">传奇</span>
+  <p>传奇专属：三人同台→每人出N张→牌型排第1/2/3名→第1名+2星第2名不掉第3名-2星。三人的心理博弈完全不同——你不仅要赢一个人，还要防止第三名偷鸡。</p>
 </div>
-<div class="idea new"><b>三人混战天梯</b> <span class="rank-tag legend">传奇</span>
-  <p>传奇专属：三人同台→每人出N张→牌型排1/2/3名→第1+2星第2不掉第3-2星。三人残局的心理博弈完全不同。</p>
+<div class="idea"><b>车轮战</b> <span class="rank-tag master">大师+</span>
+  <p>一人连战3个对手（同一手牌不变）。连胜3场→+5星；赢2输1→+1星；输2场以上→-2星。考验同一手牌的持续决策能力。</p>
 </div>
-<div class="idea new"><b>盲选模式</b> <span class="rank-tag master">大师+</span>
-  <p>看不到公共牌→只能根据自己的手牌判断→确认后翻开公共牌。靠读牌和经验，不靠算力。</p>
+<div class="idea"><b>抢七赛制</b> <span class="rank-tag platinum">铂金+</span>
+  <p>不是5局3胜→7局4胜，但每局只打3张牌（不是3/3/3/4/5）。节奏更快但总时长相近，更多小局=更多逆转机会。</p>
+</div>
+<div class="idea"><b>限时天梯</b> <span class="rank-tag master">大师+</span>
+  <p>周末限时开放的独立天梯——所有人从0开始爬，48小时后结算。赛季浓缩版，活跃度爆发点。</p>
 </div>
 
 <!-- ===== 7 ===== -->
 <h1>七、事件驱动</h1>
 
-<div class="idea new"><b>每日天梯突变</b> <span class="rank-tag gold">黄金+</span>
-  <p>每天一个"突变"（上述任意规则之一），当天天梯进入突变模式。变异每天轮换——今天公共牌4张，明天Ban技能，后天皇家晚宴。每天都有理由上线看看今天什么规则。</p>
+<div class="idea"><b>每日天梯突变</b> <span class="rank-tag gold">黄金+</span>
+  <p>每天自动轮换一种变异规则（从上述方案中随机抽）。今天公共牌4张，明天Ban技能，后天点数额外加成。每天上线都有"今天什么规则"的新鲜感。</p>
 </div>
-<div class="idea new"><b>突变投票</b> <span class="rank-tag platinum">铂金+</span>
-  <p>铂金+玩家每天可投票选择明天的突变规则。前一天的胜方有加权票。高段位玩家影响全服meta。</p>
+<div class="idea"><b>突变投票</b> <span class="rank-tag platinum">铂金+</span>
+  <p>铂金+玩家可投票选择明天的突变规则。前一天的胜方有加权票。高段位玩家影响全服meta，有参与感。</p>
+</div>
+<div class="idea"><b>连胜BUFF叠加</b> <span class="rank-tag gold">黄金+</span>
+  <p>每多连胜1场，获得一个"buff"——连2胜→手牌上限+1；连3胜→额外+1星；连5胜→技能牌使用后冷却1回合可再用。连胜越长越强，但也越怕断。</p>
+</div>
+<div class="idea"><b>断连胜狙击</b> <span class="rank-tag master">大师+</span>
+  <p>当有人连胜5场以上→全服通知→任何玩家可以选择"狙击"——匹配到这位连胜玩家。狙击成功（终结连胜）→+2星+50钻。让连胜有代价。</p>
 </div>
 
 <div style="margin-top:40px;padding:16px 20px;background:#1a1a2e;color:#fff;border-radius:8px;font-size:12px;line-height:1.8;">
-  <strong>建议分层：</strong><br>
-  青铜→白银：新手友好（BO3加速、随机技能、每日花色加成）——学会基础<br>
-  黄金→铂金：策略深化（公共牌增到4张、幸运数字、Ban技能、技能CD、每日突变）——策略觉醒<br>
-  大师→传奇：硬核竞技（公共牌失效、轮换公共牌、结算加注、盲选、三人混战）——巅峰对决
+  <strong>建议分层落地：</strong><br>
+  白银——花色/点数每日加成、无技能纯牌局日、选牌上限制。让新手感受"规则在变"<br>
+  黄金——连败补牌、技能连携、完胜奖励、每日突变。策略开始有深度<br>
+  铂金——公共牌二选一、共用置换、偷看对手选牌、技能反制、抢七赛制。竞技感拉满<br>
+  大师——轮换公共牌、双份公共牌、盲选、专属技能牌、限时天梯、三人混战、车轮战。硬核竞技<br>
+  传奇——三人混战、断连胜狙击。社交和社区驱动
 </div>
 
 </body>
