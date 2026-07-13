@@ -2,13 +2,14 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>代号001 · 段位玩法脑暴</title>
+<title>代号001 · 段位玩法脑暴（筛选版）</title>
 <style>
   body { font-family: "PingFang SC","Noto Sans SC",sans-serif; max-width:1100px; margin:20px auto; padding:20px; background:#f5f6f8; color:#1a1a2e; line-height:1.8; }
   h1 { font-size:18px; border-left:4px solid #7c3aed; padding-left:10px; margin:32px 0 12px; }
+  h2 { font-size:14px; color:#7c3aed; margin:20px 0 8px; }
   .idea { background:#fff; border:1px solid #e4e7ed; border-radius:8px; padding:12px 16px; margin:6px 0; font-size:13px; }
   .idea b { color:#7c3aed; }
-  .idea p { margin:0; color:#666; font-size:12px; }
+  .idea p { margin:0 0 0 12px; color:#666; font-size:12px; border-left:2px solid #e4e7ed; padding-left:8px; }
   .rank-tag { display:inline-block; padding:1px 8px; border-radius:3px; font-size:10px; font-weight:700; margin-right:4px; }
   .bronze { background:#cd853f22; color:#cd853f; }
   .silver { background:#c0c0c022; color:#888; }
@@ -17,153 +18,213 @@
   .master { background:#7c3aed22; color:#7c3aed; }
   .legend { background:#dc262622; color:#dc2626; }
   .all { background:#e4e7ed; color:#666; }
+  .rejected { text-decoration:line-through; color:#ccc; background:#fafbfc; }
+  .rejected p { color:#ccc; }
+  .rejected b { color:#ccc; }
+  .new { border-left:3px solid #059669; }
 </style>
 </head>
 <body>
 
-<h1>段位差异化玩法脑暴</h1>
-<p style="font-size:12px;color:#9098a8;">以下为补充方案，不含你提过的13条初始点子</p>
+<h1>段位差异化玩法脑暴 · 筛选版</h1>
+<p style="font-size:12px;color:#9098a8;margin-bottom:4px;">
+  <span style="color:#059669;">▍</span> 本次新增 &nbsp;
+  <span style="text-decoration:line-through;color:#ccc;">剔除的</span> — 改变核心机制/5局3胜/52张牌/出牌数序列等基础逻辑的
+</p>
 
 <!-- ===== 1 ===== -->
 <h1>一、公共牌变异</h1>
 
-<div class="idea"><b>公共牌池二选一</b> <span class="rank-tag platinum">铂金+</span>
-  <p>开局发两组各3张公共牌（A组/B组）。第1回合结束后双方投票选一组——少数服从多数，平票随机。心理博弈前置到选牌之前。</p>
+<div class="idea"><b>公共牌二选一</b> <span class="rank-tag platinum">铂金+</span>
+  <p>开局发两组各3张公共牌（A组/B组）。第1回合结束后双方投票选一组——少数服从多数，平票随机。</p>
 </div>
 <div class="idea"><b>逐步揭示公共牌</b> <span class="rank-tag silver">白银+</span>
-  <p>3张公共牌不一次翻完。第1局只揭示1张→第2局揭示第2张→第3局揭示全部。越往后信息越多，前面的决策有"信息差"，逼玩家前两局靠直觉。</p>
+  <p>3张公共牌不一次翻完。第1局只揭示1张→第2局揭示第2张→第3局揭示全部。信息不对称逼玩家前两局靠直觉。</p>
 </div>
 <div class="idea"><b>公共牌轮换制</b> <span class="rank-tag master">大师+</span>
-  <p>每回合结束后，弃掉最左边那张公共牌，从牌堆补一张新的放在最右边。公共牌不再是"固定3张"而是"流动窗口"。每回合都要重新评估局势。</p>
+  <p>每回合结束后弃掉最左边那张公共牌，从牌堆补一张新的放最右边。公共牌是"流动窗口"而非固定3张。</p>
 </div>
 <div class="idea"><b>公共牌可置换</b> <span class="rank-tag platinum">铂金+</span>
-  <p>每场比赛有一次机会：用手牌中任意一张，换掉一张公共牌。全场共用这一次机会，谁先用谁先得。换掉的那张公共牌进弃牌堆。</p>
-</div>
-<div class="idea"><b>双份公共牌</b> <span class="rank-tag master">大师+</span>
-  <p>双方各自有独立的一组公共牌（各3张，不共享）。你不知道对手的公共牌是什么——只能靠对手出牌反向推测。信息战拉满。</p>
+  <p>每场一次机会：手牌换公共牌。先到先得。被换掉的公共牌进弃牌堆。</p>
 </div>
 <div class="idea"><b>开局盲猜公共牌</b> <span class="rank-tag gold">黄金+</span>
-  <p>发牌后、翻公共牌前，双方盲猜公共牌的花色或点数范围。猜对的一方第1回合多打1张。让运气因素有技巧性介入。</p>
+  <p>翻公共牌前双方盲猜花色范围——猜对的一方第1回合多打1张。</p>
+</div>
+<div class="idea new"><b>公共牌冻结</b> <span class="rank-tag platinum">铂金+</span>
+  <p>指定回合某张公共牌"冻结"——该牌仍参与牌型组合，但点数视为-2（或花色降级）。冻结哪张由上一回合输方选择。</p>
+</div>
+<div class="idea new"><b>公共牌镜像</b> <span class="rank-tag master">大师+</span>
+  <p>第3回合结束时，输方可以选择"镜像"一张公共牌——从牌堆抽一张同点数不同花色的牌，替换原牌。</p>
+</div>
+
+<h2>剔除的</h2>
+<div class="idea rejected"><b>双份公共牌</b> <span class="rank-tag">—</span>
+  <p>双方各自独立公共牌→改变"公共信息"这一核心假设，本质不是同一局游戏了</p>
 </div>
 
 <!-- ===== 2 ===== -->
 <h1>二、手牌与出牌变异</h1>
 
 <div class="idea"><b>手牌明暗混合</b> <span class="rank-tag platinum">铂金+</span>
-  <p>7张手牌中随机2张是对自己"明牌"（自己看到确切牌面），其余5张正常。有信息优势的两张牌成为决策核心。</p>
+  <p>7张手牌中随机2张对玩家自己是明牌（确切知道牌面），其余正常。</p>
 </div>
 <div class="idea"><b>手牌上限波动</b> <span class="rank-tag gold">黄金+</span>
-  <p>每回合手牌上限变化：第1-2局8张→第3-4局7张→第5局6张。越往后手牌越紧，决策压力递增。</p>
-</div>
-<div class="idea"><b>出牌数序列随机化</b> <span class="rank-tag master">大师+</span>
-  <p>不再是固定的3/3/3/4/5——每场随机打乱序列（如变成4/3/5/3/3）。双方知道序列但需适应新节奏，考验临场应变。</p>
+  <p>第1-2局上限8张→第3-4局7张→第5局6张。越往后越紧。</p>
 </div>
 <div class="idea"><b>选牌上限制</b> <span class="rank-tag silver">白银+</span>
-  <p>第1-2回合只能选刚好N张→不能多选再取消。第3回合以后恢复正常。让新手前两回合节奏更快，同时培养"想清楚再出手"的习惯。</p>
+  <p>前两回合只能选刚好N张（不可多选再取消）。培养"想清楚再出手"。</p>
 </div>
 <div class="idea"><b>连败补牌</b> <span class="rank-tag gold">黄金+</span>
-  <p>连输2回合后，下回合手牌上限+1（变为8张选N张）。轻微的连败补偿，给翻盘增加一点概率。</p>
+  <p>连输2回合→下回合手牌上限+1。轻微连败补偿。</p>
 </div>
 <div class="idea"><b>偷看对手选牌</b> <span class="rank-tag platinum">铂金+</span>
-  <p>对手先确认选牌后，你可以选择"偷看"对手选的一张牌（随机显示其中1张）。用掉就没了，整场只能用1次。信息是要代价的。</p>
+  <p>对手先确认后，可选"偷看"对手选的一张牌。整场1次。</p>
+</div>
+<div class="idea new"><b>手牌标记</b> <span class="rank-tag gold">黄金+</span>
+  <p>开局手牌中最高点数的牌有一个"标记"——对方知道你有这张牌，但不知道它具体是哪张。信息不对称的起点。</p>
+</div>
+<div class="idea new"><b>换牌窗口</b> <span class="rank-tag silver">白银+</span>
+  <p>第1回合开始前，可以选择弃掉手牌中任意张→从牌堆补同样张数。只有第1回合前有这么一次机会。</p>
+</div>
+
+<h2>剔除的</h2>
+<div class="idea rejected"><b>出牌数序列随机化</b> <span class="rank-tag">—</span>
+  <p>3/3/3/4/5是核心递增节奏，随机化破坏游戏节奏感</p>
 </div>
 
 <!-- ===== 3 ===== -->
 <h1>三、技能变异</h1>
 
-<div class="idea"><b>段位解锁专属技能牌</b> <span class="rank-tag master">大师+</span>
-  <p>每个段位解锁一张该段位专属的功能牌——仅在当前段位可用，升降段后失效。如大师专属"时间逆转"——回到上一回合的手牌状态。</p>
-</div>
-<div class="idea"><b>技能CD制</b> <span class="rank-tag gold">黄金+</span>
-  <p>每张技能用完后不永久失效→进入冷却1回合→可再次使用。整场最多用2次。从"一锤子买卖"变成"有节奏地用两次"，策略维度翻倍。</p>
-</div>
-<div class="idea"><b>共享技能池</b> <span class="rank-tag master">大师+</span>
-  <p>双方各带2张→Ban完后公开剩余牌→双方都知道对手带了什么。没有藏招的空间，纯策略博弈。</p>
+<div class="idea"><b>技能连携</b> <span class="rank-tag gold">黄金+</span>
+  <p>同一回合使用2张同类型技能→效果翻倍。打出combo有额外正反馈。</p>
 </div>
 <div class="idea"><b>技能反制</b> <span class="rank-tag platinum">铂金+</span>
-  <p>当对手使用技能时，如果你有同类型技能→可以立即反制：抵消对方技能并消耗自己那张牌。双方都交一张牌，效果归零。心理博弈升级。</p>
+  <p>对手用技能时，你有同类型→可以反制：双方各交一张牌效果归零。</p>
 </div>
-<div class="idea"><b>技能连携</b> <span class="rank-tag gold">黄金+</span>
-  <p>同一回合使用2张同类型技能（如抽牌+抽牌、破坏+破坏）→效果翻倍：抽4张而不是各抽2张。打出combo有额外正反馈。</p>
+<div class="idea"><b>共享技能池</b> <span class="rank-tag master">大师+</span>
+  <p>双方带牌→Ban完后公开剩余牌。没有藏招，纯策略博弈。</p>
+</div>
+<div class="idea new"><b>技能展示</b> <span class="rank-tag platinum">铂金+</span>
+  <p>开局时双方互相看到对手带了什么牌（但不知道用哪张）。知道对手有T0但不清楚会用在哪回合。</p>
+</div>
+<div class="idea new"><b>弱势技能Buff</b> <span class="rank-tag gold">黄金+</span>
+  <p>带T3牌对战→每张T3牌在用时多一个随机小buff（如额外看对手随机1张牌）。让弱牌也有战术价值。</p>
+</div>
+
+<h2>剔除的</h2>
+<div class="idea rejected"><b>技能CD制</b> <span class="rank-tag">—</span>
+  <p>每张用一次是核心设计决策，改成CD制改变了整个策略博弈模型</p>
+</div>
+<div class="idea rejected"><b>段位专属技能牌</b> <span class="rank-tag">—</span>
+  <p>牌随段位变化→抽卡系统需要配合→库存管理全乱→改动面太大</p>
 </div>
 
 <!-- ===== 4 ===== -->
-<h1>四、结算与竞技变异</h1>
+<h1>四、段位运营</h1>
 
 <div class="idea"><b>完胜奖励</b> <span class="rank-tag gold">黄金+</span>
-  <p>3-0碾压对手→额外+1星+50钻石。鼓励追求碾压而非苟胜。</p>
+  <p>3-0碾压→额外+1星。</p>
 </div>
-<div class="idea"><b>皇家天胡</b> <span class="rank-tag legend">全段</span>
-  <p>任何段位打出皇家同花顺→全服广播+直接+2星+100钻石+专属称号"被眷顾的人"。极低概率彩蛋，制造社区传播话题。</p>
+<div class="idea"><b>皇家天胡</b> <span class="rank-tag all">全段</span>
+  <p>打出皇家同花顺→全服广播+2星+100钻+专属称号。彩蛋。</p>
 </div>
 <div class="idea"><b>败方MVP</b> <span class="rank-tag platinum">铂金+</span>
-  <p>2-3惜败但打出了全场最高牌型或最大逆转→输方不掉星。"你输了，但打得漂亮"——降低惜败挫败感。</p>
+  <p>2-3惜败但打出全场最高牌型→不掉星。</p>
 </div>
-<div class="idea"><b>压哨翻盘奖励</b> <span class="rank-tag gold">黄金+</span>
-  <p>HP落后(1:2)逆转取胜→额外+1星+20钻石。大逆转值得被奖励。</p>
+<div class="idea"><b>压哨翻盘</b> <span class="rank-tag gold">黄金+</span>
+  <p>1-2落后逆转取胜→额外+1星。</p>
 </div>
 <div class="idea"><b>连续碾压惩罚</b> <span class="rank-tag master">大师+</span>
-  <p>连续3场3-0碾压对手→系统标记"炸鱼嫌疑"→匹配倾向给你分更强的对手。高手不应该长期待在鱼塘。</p>
+  <p>连续3场3-0→标记"炸鱼嫌疑"→匹配更难的对手。</p>
+</div>
+<div class="idea new"><b>首胜加成</b> <span class="rank-tag silver">白银+</span>
+  <p>每日首场胜利额外+1星。降低每日启动阻力。</p>
+</div>
+<div class="idea new"><b>满星溢出</b> <span class="rank-tag silver">白银+</span>
+  <p>满星胜利后溢出的星数带到下一小段（如白银Ⅰ3/3星再赢→直接黄金Ⅲ1/4星，而不是0星）。</p>
+</div>
+<div class="idea new"><b>周冲刺奖励</b> <span class="rank-tag gold">黄金+</span>
+  <p>每周日晚上——当天每场胜利额外+50%星数奖励。周末冲刺活跃度。</p>
+</div>
+<div class="idea new"><b>段位动态投屏</b> <span class="rank-tag master">大师+</span>
+  <p>主页"当前段位"显示你在好友中的排名和全服百分比。如"大师 · 好友第3 · 全服前5%"。</p>
+</div>
+<div class="idea new"><b>掉段继承</b> <span class="rank-tag silver">白银+</span>
+  <p>降段时不清零——继承1星到下一段。如铂金Ⅰ0/4星输→黄金Ⅰ1/4星。不会被"清零感"打击。</p>
 </div>
 
 <!-- ===== 5 ===== -->
 <h1>五、牌型变异</h1>
 
 <div class="idea"><b>轮子顺上位</b> <span class="rank-tag gold">黄金+</span>
-  <p>A-2-3-4-5在黄金段被视为同花等级（高于普通顺子）。一个段位给一种彩蛋牌型加权，让玩家主动组冷门牌型。</p>
+  <p>A-2-3-4-5在黄金段按同花等级判定。</p>
 </div>
 <div class="idea"><b>三带二上位</b> <span class="rank-tag platinum">铂金+</span>
-  <p>三条+任意两张（不含对子，不算葫芦）→在铂金段按葫芦判定。意外惊喜。</p>
+  <p>三条+任意两张→按葫芦判定。</p>
 </div>
 <div class="idea"><b>花色当日加成</b> <span class="rank-tag silver">白银+</span>
-  <p>每天随机一个"王者花色"。包含该花色的牌型等级+1（如红心两对→红心三条级）。每天meta不同，鼓励玩家根据花色调整策略。</p>
+  <p>每日随机一个王者花色，含该花色的牌型等级+1。</p>
 </div>
 <div class="idea"><b>点数当日加成</b> <span class="rank-tag silver">白银+</span>
-  <p>每天随机一个"幸运点数"。手牌中包含该点数的牌→该牌视为+2（如幸运点数7→手牌中的7当9用）。每天重新洗牌meta。</p>
+  <p>每日随机幸运点数，含该点数的牌视为+2。</p>
+</div>
+<div class="idea new"><b>对子当日王牌</b> <span class="rank-tag silver">白银+</span>
+  <p>每日随机一个点数——该点数组成的对子当日判定为两对级别。</p>
+</div>
+<div class="idea new"><b>同花日</b> <span class="rank-tag gold">黄金+</span>
+  <p>指定一天——同花牌型无条件升一级（同花→葫芦级）。鼓励追求同花色。</p>
 </div>
 
 <!-- ===== 6 ===== -->
 <h1>六、赛制变异</h1>
 
 <div class="idea"><b>无技能纯牌局日</b> <span class="rank-tag silver">白银+</span>
-  <p>每周指定一天——禁用所有功能牌，纯靠出牌决策。检验真实牌技。</p>
+  <p>每周指定一天禁用功能牌，纯出牌决策。</p>
 </div>
-<div class="idea"><b>三人混战天梯</b> <span class="rank-tag legend">传奇</span>
-  <p>传奇专属：三人同台→每人出N张→牌型排第1/2/3名→第1名+2星第2名不掉第3名-2星。三人的心理博弈完全不同——你不仅要赢一个人，还要防止第三名偷鸡。</p>
+
+<h2>剔除的</h2>
+<div class="idea rejected"><b>三人混战</b> <span class="rank-tag">—</span>
+  <p>从1v1改成3人→牌桌逻辑、结算逻辑、UI全部要重做</p>
 </div>
-<div class="idea"><b>车轮战</b> <span class="rank-tag master">大师+</span>
-  <p>一人连战3个对手（同一手牌不变）。连胜3场→+5星；赢2输1→+1星；输2场以上→-2星。考验同一手牌的持续决策能力。</p>
+<div class="idea rejected"><b>车轮战</b> <span class="rank-tag">—</span>
+  <p>一手牌连打3个对手→需要独立的赛制框架→和5局3胜核心循环冲突</p>
 </div>
-<div class="idea"><b>抢七赛制</b> <span class="rank-tag platinum">铂金+</span>
-  <p>不是5局3胜→7局4胜，但每局只打3张牌（不是3/3/3/4/5）。节奏更快但总时长相近，更多小局=更多逆转机会。</p>
+<div class="idea rejected"><b>抢七赛制</b> <span class="rank-tag">—</span>
+  <p>7局4胜改变了全局节奏和牌堆消耗模型</p>
 </div>
-<div class="idea"><b>限时天梯</b> <span class="rank-tag master">大师+</span>
-  <p>周末限时开放的独立天梯——所有人从0开始爬，48小时后结算。赛季浓缩版，活跃度爆发点。</p>
+<div class="idea rejected"><b>限时天梯</b> <span class="rank-tag">—</span>
+  <p>独立并行天梯→需要完整赛季系统→基础设施量级大</p>
 </div>
 
 <!-- ===== 7 ===== -->
-<h1>七、事件驱动</h1>
+<h1>七、事件与激励</h1>
 
 <div class="idea"><b>每日天梯突变</b> <span class="rank-tag gold">黄金+</span>
-  <p>每天自动轮换一种变异规则（从上述方案中随机抽）。今天公共牌4张，明天Ban技能，后天点数额外加成。每天上线都有"今天什么规则"的新鲜感。</p>
+  <p>每天自动轮换一种变异规则。上线有"今天什么规则"的新鲜感。</p>
 </div>
 <div class="idea"><b>突变投票</b> <span class="rank-tag platinum">铂金+</span>
-  <p>铂金+玩家可投票选择明天的突变规则。前一天的胜方有加权票。高段位玩家影响全服meta，有参与感。</p>
+  <p>铂金+玩家投票选明天突变规则。</p>
 </div>
-<div class="idea"><b>连胜BUFF叠加</b> <span class="rank-tag gold">黄金+</span>
-  <p>每多连胜1场，获得一个"buff"——连2胜→手牌上限+1；连3胜→额外+1星；连5胜→技能牌使用后冷却1回合可再用。连胜越长越强，但也越怕断。</p>
+<div class="idea"><b>连胜BUFF</b> <span class="rank-tag gold">黄金+</span>
+  <p>多连胜→手牌上限+1→额外+1星→技能保护。连胜越长越强。</p>
 </div>
 <div class="idea"><b>断连胜狙击</b> <span class="rank-tag master">大师+</span>
-  <p>当有人连胜5场以上→全服通知→任何玩家可以选择"狙击"——匹配到这位连胜玩家。狙击成功（终结连胜）→+2星+50钻。让连胜有代价。</p>
+  <p>有人连胜5场→全服通知→任何玩家可选狙击。成功→+2星。</p>
+</div>
+<div class="idea new"><b>回归保护</b> <span class="rank-tag silver">白银+</span>
+  <p>离线3天以上回归→前3场输了不掉星+额外50%经验。</p>
+</div>
+<div class="idea new"><b>连败梯度保护</b> <span class="rank-tag gold">黄金+</span>
+  <p>连败2场：宝箱进度+1。连败4场：下场输了不掉星。连败6场：下场赢了+2星。保护递增。</p>
+</div>
+<div class="idea new"><b>段位里程碑弹幕</b> <span class="rank-tag gold">黄金+</span>
+  <p>有人升黄金→普通弹幕。升大师→金色弹幕。升传奇→全屏特效+喇叭。让升段有社交价值。</p>
 </div>
 
 <div style="margin-top:40px;padding:16px 20px;background:#1a1a2e;color:#fff;border-radius:8px;font-size:12px;line-height:1.8;">
-  <strong>建议分层落地：</strong><br>
-  白银——花色/点数每日加成、无技能纯牌局日、选牌上限制。让新手感受"规则在变"<br>
-  黄金——连败补牌、技能连携、完胜奖励、每日突变。策略开始有深度<br>
-  铂金——公共牌二选一、共用置换、偷看对手选牌、技能反制、抢七赛制。竞技感拉满<br>
-  大师——轮换公共牌、双份公共牌、盲选、专属技能牌、限时天梯、三人混战、车轮战。硬核竞技<br>
-  传奇——三人混战、断连胜狙击。社交和社区驱动
+  <strong>保留 43 条 | 剔除 7 条（改变核心机制）</strong><br>
+  绿色左边框 = 本轮新增<br>
+  剔除原则：不改变5局3胜/52张牌/公共牌共享/出牌数递增/每张技能用1次这五个核心假设
 </div>
 
 </body>
