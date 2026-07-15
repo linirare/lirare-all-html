@@ -237,130 +237,41 @@ const q=String.fromCharCode(34);
 function readData(id){const head='<script id='+q+id+q+' type='+q+'application/json'+q+'>';const text=document.getElementById(id).textContent;return JSON.parse(text)}
 const records=readData('recordsData'),ops=readData('opsRawData'),byRecord=new Map(records.map(r=>[r.id,r])),byOps=new Map(ops.map(r=>[r.id,r]));
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-
 const syncIssues=[
-{priority:'P0',title:'护具、宝石与资质/势力榜竞争循环',problem:'平台运营反馈：护具囤积、宝石资质榜/势力榜换装、活动密集和资质产出提升，可能让资质榜和势力榜付费动力下降。',suggestion:'按开服阶段复盘护具开放、宝石换装、资质/势力榜结算链路及活动投放影响。',vipIds:['R29','R30','R34','R37','R53','R60'],opsIds:['A02','A04'],quoteIds:['R29','R30']},
-{priority:'P0',title:'匿名赛可识别、活动价值不清晰',problem:'玩家认为匿名赛仍可通过区服、上分数值和强化卷轴识别参与者；平台运营反馈外围入口可能反推身份，小号参与削弱匿名体验。',suggestion:'核对参与与收益；若保留则扩大覆盖范围并隐藏区服、分数、卷轴等识别信息；若活动价值不成立，可评估下线。',vipIds:['R4','R5','R167'],opsIds:['A05'],quoteIds:['R4','R167']},
-{priority:'P0',title:'福利小活动投放密度高、囤货与榜单消耗被稀释',problem:'平台运营反馈福利活动频繁、6+30道具囤货、资质产出提升和榜单资源使用变化，需复核活动投放对榜单竞争的影响。',suggestion:'结合活动频率、6+30囤货、资源产出、榜单参与及付费数据统一复盘。',vipIds:[],opsIds:['A03','A04','B01'],quoteIds:[]},
-{priority:'P0',title:'联动玩法复杂、充值后时间负担仍高',problem:'VIP玩家多次提到联动动画无法跳过、玩法复杂或难度偏高、双联动叠加疲劳，付费后仍需投入较多操作时间。',suggestion:'降低流程复杂度，避免双联动叠加；可付费内容不应额外放大操作与耗时负担。',vipIds:['R28','R35','R36','R38','R40','R48','R49','R74','R79','R80','R165'],opsIds:[],quoteIds:['R28','R48','R79','R165']},
-{priority:'P0',title:'H5与渠道安卓老区合区需求明确',problem:'老区玩家多次提到活跃玩家不足、榜单和宴会缺少参与者、竞争被头部区服集中；平台运营提出H5与渠道安卓的合区范围观察。',suggestion:'重点查看H5前1700区、渠道安卓前2800区的活跃、联盟、京城及榜单数据，评估合区节奏。',vipIds:['R7','R52','R57','R61','R62','R65','R66','R76','R82','R112','R113','R160'],opsIds:['A07'],quoteIds:['R7','R65','R76']},
-{priority:'P0',title:'古墓护宝需要跳过战斗动画',problem:'古墓护宝耗时、误触和重复战斗被玩家与平台运营同时提到；战斗动画等待是可直接感知的时间负担。',suggestion:'战斗画面提供跳过，减少无效等待时间。',vipIds:['R106','R116','R119','R145','R148'],opsIds:['B09'],quoteIds:['R116','R148']},
-{priority:'P1',title:'高耗时榜单建议集中安排在周末',problem:'玩家建议将僵尸围城、妖后、皇陵、大航海、京城榜等高耗时活动集中在周末，避免工作日日常时间冲突和连续疲劳。',suggestion:'高耗时榜单放周末；周中优先安排资质、势力、亲密等低耗时活动。',vipIds:['R128','R130'],opsIds:[],quoteIds:['R128','R130']},
-{priority:'P1',title:'VIP等级隐藏',problem:'有VIP玩家希望继续提升VIP等级，但不希望等级公开后带来社交压力。',suggestion:'提供VIP等级展示开关。',vipIds:['R3'],opsIds:[],quoteIds:['R3']},
-{priority:'P0',title:'头像与时装内容轮换不足',problem:'玩家持续提出特定皮肤返场、头像、称号和无属性外观需求，反映外观内容仍有稳定补充空间。',suggestion:'每50/100区阶段轮换1–2套头像或时装。',vipIds:['R20','R21','R27','R67','R102','R121','R140','R157','R173'],opsIds:[],quoteIds:['R20','R121','R173']}
+{priority:'P0',title:'护具、宝石与资质/势力榜竞争循环',note:'影响势力榜单',problem:'平台运营反馈提到：护具囤积、宝石在资质榜与势力榜之间换装，以及活动密集和资质产出提升，可能让资质榜和势力榜的付费动力下降。',suggestion:'按开服阶段复盘护具开放、宝石换装、资质/势力榜结算链路及活动投放影响。',vipIds:['R29','R30','R34','R37','R53','R60'],opsIds:['A02','A04'],quoteIds:['R29','R30'],supplements:['宝石次日穿戴及榜单换装链路，为本次平台运营补充；不计入原始19条平台运营记录。']},
+{priority:'P0',title:'匿名赛可识别、活动价值不清晰',note:'榜单存在价值过低',problem:'玩家认为匿名赛仍可通过区服、上分数值和强化卷轴识别参与者；平台运营也反馈外围入口可能反推身份，小号参与会削弱匿名体验。',suggestion:'核对参与与收益；若保留，扩大覆盖范围并隐藏区服、分数、卷轴等识别信息；若活动价值不成立，可评估下线。',vipIds:['R4','R5','R167'],opsIds:['A05'],quoteIds:['R4','R167'],supplements:['5区、10区范围内容易识别参与者，为本次平台运营补充；不计入原始19条平台运营记录。']},
+{priority:'P0',title:'福利小活动投放密度高、囤货与榜单消耗被稀释',note:'影响资质榜单',problem:'平台运营反馈提到福利活动频繁、6+30道具囤货、资质产出提升和榜单资源使用变化，需要一起复核活动投放对榜单竞争的影响。',suggestion:'结合活动频率、6+30囤货、资源产出、榜单参与及付费数据统一复盘。',vipIds:[],opsIds:['A03','A04','B01'],quoteIds:[],supplements:[]},
+{priority:'P0',title:'联动玩法复杂、充值后时间负担仍高',note:'玩家理解和时间成本上涨',problem:'VIP玩家多次提到联动动画无法跳过、玩法复杂或难度偏高、双联动叠加疲劳，以及付费后仍需要投入较多操作时间。',suggestion:'降低流程复杂度，避免双联动叠加；可付费内容不应额外放大操作与耗时负担。',vipIds:['R28','R35','R36','R38','R40','R48','R49','R74','R79','R80','R165'],opsIds:[],quoteIds:['R28','R48','R79','R165'],supplements:[]},
+{priority:'P0',title:'H5与渠道安卓老区合区需求明确',note:'老区用户留存',problem:'老区玩家多次提到活跃玩家不足、榜单和宴会缺少参与者、竞争被头部区服集中；平台运营也提出H5与渠道安卓的合区范围观察。',suggestion:'重点查看H5前1700区、渠道安卓前2800区的活跃、联盟、京城及榜单数据，评估合区节奏。',vipIds:['R7','R52','R57','R61','R62','R65','R66','R76','R82','R112','R113','R160'],opsIds:['A07'],quoteIds:['R7','R65','R76'],supplements:[]},
+{priority:'P0',title:'古墓护宝需要跳过战斗动画',note:'付费后时间成本还上涨',problem:'古墓护宝的耗时、误触和重复战斗被玩家与平台运营同时提到；战斗动画等待是可直接感知的时间负担。',suggestion:'战斗画面提供跳过，减少无效等待时间。',vipIds:['R106','R116','R119','R145','R148'],opsIds:['B09'],quoteIds:['R116','R148'],supplements:[]},
+{priority:'P1',title:'高耗时榜单建议集中安排在周末',note:'耗时的活动放周末',problem:'玩家建议将僵尸围城、妖后、皇陵、大航海、京城榜等高耗时活动集中在周末，避免与工作日的日常时间冲突和连续疲劳。',suggestion:'高耗时榜单放周末；周中优先安排资质、势力、亲密等低耗时活动。',vipIds:['R128','R130'],opsIds:[],quoteIds:['R128','R130'],supplements:[]},
+{priority:'P1',title:'VIP等级隐藏',note:'部分高V用户玩得差被嘲笑导致弃游',problem:'有VIP玩家希望继续提升VIP等级，但不希望等级公开后带来社交压力。',suggestion:'提供VIP等级展示开关。',vipIds:['R3'],opsIds:[],quoteIds:['R3'],supplements:[]},
+{priority:'P0',title:'头像与时装内容轮换不足',note:'玩家乐意付费的付费点',problem:'玩家持续提出特定皮肤返场、头像、称号和无属性外观需求，反映外观内容仍有稳定补充空间。',suggestion:'每50/100区阶段轮换1–2套头像或时装。',vipIds:['R20','R21','R27','R67','R102','R121','R140','R157','R173'],opsIds:[],quoteIds:['R20','R121','R173'],supplements:['每50/100区阶段轮换1–2套头像或时装内容，为本次平台运营补充；不计入原始19条平台运营记录。']}
 ];
-
 const main=document.getElementById('main');
-document.title='《极品芝麻官》VIP+平台运营建议反馈';
-document.querySelector('.brand span:last-child').textContent='VIP+平台运营建议反馈';
-document.querySelector('.nav').innerHTML="<a class='on' href='#home'>总览</a><a href='#overview'>数据概览</a><a href='#priority'>核心诉求</a><a href='#vip-tiers'>VIP分层</a><a href='#platforms'>平台差异</a><a href='#appendix'>原始反馈</a>";
-
-main.innerHTML="<section class='section sync-hero' id='home'><div class='inner sync-hero-grid sync-hero-single'><div style='max-width:920px'><p class='eyebrow'>2026年1月至7月7日 · 有效反馈172条</p><h1>VIP+平台运营<span>建议反馈</span></h1><p class='sync-lead' style='margin:0 0 18px;color:var(--muted);font-size:clamp(17px,1.8vw,21px);max-width:44em'>数据区间2026.01.03-2026.07.07，核心数据集中1-6月，7月仅4条少量补充</p><div class='sync-stats' style='grid-template-columns:repeat(4,1fr)'><div class='sync-stat'><strong>172</strong><span>有效反馈总量</span></div><div class='sync-stat'><strong>125</strong><span>V9-V11三档合计</span></div><div class='sync-stat'><strong>80%</strong><span>三大渠道占比</span></div><div class='sync-stat'><strong>77%</strong><span>优化建议类占比</span></div></div></div></div></section>"+
-
-"<section class='section sync-section' id='overview'><div class='inner'><div class='headblock'><p class='eyebrow'>Part 1</p><h2>数据整体概览</h2></div>"+
-"<div style='display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px'>"+
-"<article style='padding:18px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)'><h3 style='margin:0 0 10px;color:var(--red)'>VIP档位分布</h3><div class='bars'>"+
-"<div class='bar'><span>V9</span><span class='track'><span class='fill' style='width:100%'></span></span><b>57</b></div>"+
-"<div class='bar'><span>V10</span><span class='track'><span class='fill' style='width:72%'></span></span><b>41</b></div>"+
-"<div class='bar'><span>V11</span><span class='track'><span class='fill' style='width:47%'></span></span><b>27</b></div>"+
-"<div class='bar'><span>V12+</span><span class='track'><span class='fill' style='width:46%'></span></span><b>26</b></div>"+
-"</div><p style='margin:10px 0 0;color:var(--muted);font-size:12px'>V9-V11三档125条占72%；V12+高氪26条占15%</p></article>"+
-"<article style='padding:18px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)'><h3 style='margin:0 0 10px;color:var(--red)'>平台分布</h3><div class='bars'>"+
-"<div class='bar'><span>H5</span><span class='track'><span class='fill' style='width:100%'></span></span><b>57</b></div>"+
-"<div class='bar'><span>渠道安卓</span><span class='track'><span class='fill' style='width:81%'></span></span><b>46</b></div>"+
-"<div class='bar'><span>港澳台</span><span class='track'><span class='fill' style='width:61%'></span></span><b>35</b></div>"+
-"<div class='bar'><span>iOS</span><span class='track'><span class='fill' style='width:44%'></span></span><b>25</b></div>"+
-"</div><p style='margin:10px 0 0;color:var(--muted);font-size:12px'>三大渠道138条占80%；官方安卓7条</p></article>"+
-"<article style='padding:18px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)'><h3 style='margin:0 0 10px;color:var(--red)'>诉求类型</h3><div class='bars'>"+
-"<div class='bar'><span>优化建议</span><span class='track'><span class='fill' style='width:100%'></span></span><b>133</b></div>"+
-"<div class='bar'><span>充值消费</span><span class='track'><span class='fill' style='width:15%'></span></span><b>20</b></div>"+
-"<div class='bar'><span>吐槽投诉</span><span class='track'><span class='fill' style='width:10%'></span></span><b>13</b></div>"+
-"</div><p style='margin:10px 0 0;color:var(--muted);font-size:12px'>优化建议133条占77%，充值消费20条占12%</p></article>"+
-"</div>"+
-"<div style='padding:16px 18px;background:var(--soft);border-left:4px solid var(--red);border-radius:0 var(--r) var(--r) 0);color:#55272a;margin-bottom:18px'>"+
-"<b>补充数据依据：</b>反馈峰值5月（43条），核心诱因7.5版本护具机制、新版排行榜UI两大改动。港澳台2名高氪明确反馈榜单改版体验极差，出现V17玩家因榜单改版弃游案例。"+
-"</div></div></section>"+
-
-"<section class='section sync-section' id='priority'><div class='inner'><div class='headblock'><p class='eyebrow'>Part 2</p><h2>核心诉求分类与优先级</h2></div>"+
-
-"<div style='margin-bottom:28px;padding:22px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);border-top:6px solid var(--red)'><h3 style='margin:0 0 8px;font-size:24px;color:var(--red)'>第一高优：活动玩法与节奏 <span style='font-size:15px;color:var(--muted);font-weight:400'>61条 · 占总反馈42%</span></h3>"+
-"<p style='color:var(--muted);margin:0 0 14px'>活动玩法建议40条 + 活动安排21条，核心痛点：排期失衡、竞技机制不公平、联动活动体验差</p>"+
-"<div style='display:grid;grid-template-columns:repeat(3,1fr);gap:10px'>"+
-"<div style='padding:14px;background:var(--paper2);border-radius:10px'><b style='color:var(--red)'>活动频次失衡</b><p style='margin:6px 0 0;font-size:13px;color:var(--muted)'>亲密活动一周一开体感疲劳；红拂女半年未开，玩家囤积闲置道具。长期断档活动相关反馈14条。</p></div>"+
-"<div style='padding:14px;background:var(--paper2);border-radius:10px'><b style='color:var(--red)'>唐诡联动负面集中</b><p style='margin:6px 0 0;font-size:13px;color:var(--muted)'>开场动画无跳过、单局重复播放、难度偏高；玩家要求不要同期上线两款大型联动加重肝度。累计4条吐槽。</p></div>"+
-"<div style='padding:14px;background:var(--paper2);border-radius:10px'><b style='color:var(--red)'>匿名竞技机制缺陷</b><p style='margin:6px 0 0;font-size:13px;color:var(--muted)'>仅隐藏ID，区服/上分数据/卷轴用量全可见，小号恶意上分。玩家要求全维度匿名。3条反馈。</p></div>"+
-"</div></div>"+
-
-"<div style='margin-bottom:28px;padding:22px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);border-top:6px solid #a66a24'><h3 style='margin:0 0 8px;font-size:24px;color:#a66a24'>第二高优：系统养成与功能优化 <span style='font-size:15px;color:var(--muted);font-weight:400'>46条 · 占总反馈25%</span></h3>"+
-"<p style='color:var(--muted);margin:0 0 14px'>系统玩法建议37条 + 功能建议9条，核心痛点：养成上限不足资源溢出、护具机制负面、缺少批量减负</p>"+
-"<div style='display:grid;grid-template-columns:repeat(3,1fr);gap:10px'>"+
-"<div style='padding:14px;background:var(--paper2);border-radius:10px'><b style='color:#a66a24'>养成资源溢出</b><p style='margin:6px 0 0;font-size:13px;color:var(--muted)'>联盟太学等级上限低、贡献无消耗渠道；门客流放席位不足、乔装上限制无法适配6轮联动。累计6条。</p></div>"+
-"<div style='padding:14px;background:var(--paper2);border-radius:10px'><b style='color:#a66a24'>护具机制集中吐槽</b><p style='margin:6px 0 0;font-size:13px;color:var(--muted)'>卸下后180天冷却、冷却期无法强化、一键升级误勾选冷却护具。玩家要求缩短至30天。累计5条投诉。</p></div>"+
-"<div style='padding:14px;background:var(--paper2);border-radius:10px'><b style='color:#a66a24'>全场景减负需求</b><p style='margin:6px 0 0;font-size:13px;color:var(--muted)'>小师爷自动签到、宴会一键开席/吃席、限时奖励一键领取等批量功能诉求累计8条。</p></div>"+
-"</div></div>"+
-
-"<div style='margin-bottom:28px;padding:22px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);border-top:6px solid #5e5751'><h3 style='margin:0 0 8px;font-size:24px;color:#5e5751'>第三高优：老区生态与合区诉求 <span style='font-size:15px;color:var(--muted);font-weight:400'>11条 · 全平台覆盖</span></h3>"+
-"<p style='color:var(--muted);margin:0 0 14px'>核心痛点：老区在线活人稀少、活动缺少对战对手、削弱充值竞争动力</p>"+
-"<div style='padding:14px;background:var(--paper2);border-radius:10px'><p style='margin:0;font-size:13px;color:var(--muted)'>H5、渠道安卓多区间提合区需求，401-600区、491/494区等多年未合服务器反馈集中；区内活人不足导致盟战、宴会冲榜无法正常参与，多条反馈明确表示缺少竞争环境会减少充值。</p></div>"+
-"</div>"+
-
-"<div style='margin-bottom:28px;padding:22px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);border-top:6px solid #827970'><h3 style='margin:0 0 8px;font-size:24px;color:#827970'>第四类：付费与外观诉求 <span style='font-size:15px;color:var(--muted);font-weight:400'>28条 · 占总反馈16%</span></h3>"+
-"<p style='color:var(--muted);margin:0 0 14px'>皮肤类8条 + 充值消费相关20条，核心痛点：高V专属权益缺失、外观供给不均衡、道具文案与实际不符</p>"+
-"<div style='display:grid;grid-template-columns:repeat(3,1fr);gap:10px'>"+
-"<div style='padding:14px;background:var(--paper2);border-radius:10px'><b style='color:#827970'>VIP专属个性化</b><p style='margin:6px 0 0;font-size:13px;color:var(--muted)'>玩家希望隐藏VIP等级避免被嘲讽；官员解锁免费专属时装/称号提升身份感。3条。</p></div>"+
-"<div style='padding:14px;background:var(--paper2);border-radius:10px'><b style='color:#827970'>外观与联动失衡</b><p style='margin:6px 0 0;font-size:13px;color:var(--muted)'>女性联动门客偏多，女性玩家诉求新增男性明星联动；九龙、杨玉环、樊梨花等皮肤待返场。4条。</p></div>"+
-"<div style='padding:14px;background:var(--paper2);border-radius:10px'><b style='color:var(--red)'>付费&道具风险</b><p style='margin:6px 0 0;font-size:13px;color:var(--muted)'>及第丹文案不符、三星珍兽掉落偏低、联动礼包安卓定价偏高。<b>V12玩家因皮肤礼包配置不合理，扬言联合10名高V集体脱坑。</b></p></div>"+
-"</div></div>"+
-
-"</div></section>"+
-
-"<section class='section sync-section' id='vip-tiers'><div class='inner'><div class='headblock'><p class='eyebrow'>Part 3</p><h2>VIP分层差异化核心诉求</h2></div>"+
-"<div style='display:grid;grid-template-columns:repeat(3,1fr);gap:14px'>"+
-"<article style='padding:20px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);border-top:4px solid var(--red)'><h3 style='margin:0 0 6px'>V7-V9 <span style='font-size:14px;color:var(--muted);font-weight:400'>中坚活跃 · 77条</span></h3>"+
-"<p style='color:var(--muted);font-size:13px;margin:0 0 12px'>TOP诉求：活动减负、皮肤外观与活动返场、老区合区</p>"+
-"<p style='font-size:13px;color:var(--ink)'>中小R大量反馈古墓寻宝、僵尸围城操作繁琐，误触丢失古董、怪物数量不足。该档位对重复操作容忍度最低，是游戏活跃基本盘。</p></article>"+
-"<article style='padding:20px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);border-top:4px solid var(--amber)'><h3 style='margin:0 0 6px'>V10-V12 <span style='font-size:14px;color:var(--muted);font-weight:400'>核心付费 · 76条</span></h3>"+
-"<p style='color:var(--muted);font-size:13px;margin:0 0 12px'>TOP诉求：跨服匹配公平性、榜单竞争环境、养成数值优化</p>"+
-"<p style='font-size:13px;color:var(--ink)'>至尊赛匹配区间规则不一致，2401-2600匹配池200区，2601后仅100区，24大区垄断活动奖励。匹配不公反馈3条，直接影响核心付费玩家充值动力。</p></article>"+
-"<article style='padding:20px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);border-top:4px solid #5e5751)'><h3 style='margin:0 0 6px'>V13+ <span style='font-size:14px;color:var(--muted);font-weight:400'>头部高氪 · 19条</span></h3>"+
-"<p style='color:var(--muted);font-size:13px;margin:0 0 12px'>TOP诉求：排行榜UI展示、跨服赛事垄断、稀缺称号与外观投放</p>"+
-"<p style='font-size:13px;color:var(--ink)'>港澳台多名V13+集体要求恢复旧版排行榜布局；头部玩家对榜单平衡、专属稀缺道具敏感度极高，少量负面反馈易引发大额流失风险。</p></article>"+
-"</div></div></section>"+
-
-"<section class='section sync-section' id='platforms'><div class='inner'><div class='headblock'><p class='eyebrow'>Part 4</p><h2>平台差异化特征</h2></div>"+
-"<div style='display:grid;grid-template-columns:repeat(4,1fr);gap:12px'>"+
-"<div style='padding:17px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)'><b style='display:block;margin-bottom:4px'>H5平台</b><span style='display:block;font-size:28px;color:var(--red);font-weight:950'>57条</span><span style='color:var(--muted);font-size:12px'>全渠道最高</span><p style='margin:10px 0 0;font-size:13px;color:var(--muted)'>合区、匿名竞技、减负类反馈领先。中小R基数庞大，死区、竞技公平是核心矛盾。</p></div>"+
-"<div style='padding:17px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)'><b style='display:block;margin-bottom:4px'>渠道安卓</b><span style='display:block;font-size:28px;color:var(--red);font-weight:950'>46条</span><p style='margin:10px 0 0;font-size:13px;color:var(--muted)'>跨服匹配失衡、老区生态、领地玩法集中。核心付费玩家集中，非常看重跨服榜单竞争公平。</p></div>"+
-"<div style='padding:17px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)'><b style='display:block;margin-bottom:4px'>港澳台</b><span style='display:block;font-size:28px;color:var(--red);font-weight:950'>35条</span><p style='margin:10px 0 0;font-size:13px;color:var(--muted)'>新版排行榜UI、护具冷却机制反馈突出。多名高氪统一反馈界面改版体验差，存在高氪流失隐患。</p></div>"+
-"<div style='padding:17px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)'><b style='display:block;margin-bottom:4px'>iOS</b><span style='display:block;font-size:28px;color:var(--red);font-weight:950'>25条</span><p style='margin:10px 0 0;font-size:13px;color:var(--muted)'>皮肤外观、经典活动返场诉求占比更高。玩家对外观、长期活动迭代关注度强。</p></div>"+
-"</div></div></section>"+
-
-"<section class='section sync-archive' id='appendix'><div class='inner'><div class='headblock'><p class='eyebrow'>原始反馈与数据口径</p><h2>两类来源独立检索</h2><p>主讲未展开的反馈仍完整保留在这里；平台、VIP和P级关联均可筛选。</p></div><div class='sync-data-note'><b>统计口径：</b>172条VIP反馈和19条平台运营原始反馈独立统计。问题可引用同一条记录，因此问题数量不可相加得到总反馈量。7月仅4条，属于不完整月份。</div><details class='raw-panel'><summary>搜索与筛选172条VIP玩家原始反馈</summary><div class='filters'><input type='search' id='syncSearch' placeholder='搜索记录编号或原话'><select id='syncPlatform'><option value=''>全部平台</option></select><select id='syncVip'><option value=''>全部VIP</option></select><select id='syncPriority'><option value=''>全部P级</option><option value='none'>未纳入P级</option><option>P0</option><option>P1</option><option>P2</option></select></div><div class='raw-wrap'><table class='raw'><thead><tr><th>记录</th><th>日期</th><th>VIP</th><th>平台</th><th>P级</th><th>建议详情</th></tr></thead><tbody id='syncRawRows'></tbody></table></div><div class='pager'><span id='syncPageInfo'></span><div><button id='syncPrev'>上一页</button> <button id='syncNext'>下一页</button></div></div></details><details class='raw-panel ops-raw-panel' style='margin-top:16px'><summary>搜索与筛选19条平台运营原始反馈</summary><div class='filters'><input type='search' id='syncOpsSearch' placeholder='搜索原文或编号'><select id='syncOpsSource'><option value=''>全部来源</option></select><select id='syncOpsScope'><option value=''>全部范围</option></select><select id='syncOpsPriority'><option value=''>全部P级</option><option value='none'>未纳入P级</option><option>P0</option><option>P1</option></select></div><div class='raw-wrap'><table class='raw'><thead><tr><th>记录</th><th>来源</th><th>范围</th><th>P级</th><th>原始内容</th></tr></thead><tbody id='syncOpsRows'></tbody></table></div><div class='pager'><span id='syncOpsPageInfo'></span><div><button id='syncOpsPrev'>上一页</button> <button id='syncOpsNext'>下一页</button></div></div></details></div></section>";
-
-function pills(item){let out='';if(item.vipIds.length)out+="<span class='source-pill vip'>VIP玩家反馈 · "+item.vipIds.length+"条</span>";if(item.opsIds.length)out+="<span class='source-pill ops'>平台运营原始反馈 · "+item.opsIds.length+"条</span>";return out}
+document.title='《极品芝麻官》玩家与平台运营反馈同步报告';
+document.querySelector('.brand span:last-child').textContent='玩家反馈同步';
+document.querySelector('.nav').innerHTML="<a class='on' href='#home'>总览</a><a href='#p0'>P0</a><a href='#p1'>P1</a><a href='#appendix'>原始反馈</a>";
+main.innerHTML="<section class='section sync-hero' id='home'><div class='inner sync-hero-grid'><div><p class='eyebrow'>2026年1月至7月7日 · 玩家与平台运营反馈同步</p><h1>收到的反馈，<span>P级同步给研发</span></h1><p class='sync-lead'>主页面只列问题、来源和反馈中的建议；不再按体验、付费、机制或平台观察拆分章节。</p><div class='sync-note'>P级表示本次反馈同步的关注顺序，不代表研发已经确认排期或方案。</div><div class='btns'><a class='btn primary' href='#p0'>查看P0问题</a><a class='btn secondary' href='#appendix'>查看原始反馈</a></div><div class='sync-stats'><div class='sync-stat'><strong>172</strong><span>VIP玩家原始反馈</span></div><div class='sync-stat'><strong>19</strong><span>平台运营原始反馈</span></div><div class='sync-stat'><strong>10</strong><span>本次P级问题</span></div></div></div><aside class='sync-source-card'><p class='eyebrow'>同步口径</p><h3>来源独立，问题合并</h3><p>每个问题都标明来源。平台运营判断不会写成VIP玩家共识；玩家原话与平台运营原文均可在会后展开查看。</p><ul><li>VIP玩家反馈：172条，保留平台、VIP、日期与原话。</li><li>平台运营原始反馈：19条，保留A01–A07、B01–B12编号。</li><li>本次补充：单独标识，不计入上述两类原始记录。</li></ul></aside></div></section><section class='section sync-section' id='p0'><div class='inner'><div class='headblock'><p class='eyebrow'>平台运营&VIP用户反馈汇总</p><h2>7项需要优先看到的问题</h2><p>问题、来源、建议直接列出；展开后可查看原始记录和典型原话。</p></div><div class='sync-level-note'>重点同步的是反馈本身及其建议，不等同于研发已承诺处理。</div><div class='sync-list' id='p0List'></div></div></section><section class='section sync-section' id='p1'><div class='inner'><div class='headblock'><p class='eyebrow'>P1 · 建议纳入版本评估</p><h2>3项需要纳入版本评估的问题</h2><p>保留竞争公平、玩法机制与活动时间安排的具体反馈。</p></div><div class='sync-list' id='p1List'></div></div></section><section class='section sync-archive' id='appendix'><div class='inner'><div class='headblock'><p class='eyebrow'>原始反馈与数据口径</p><h2>两类来源独立检索</h2><p>主讲未展开的反馈仍完整保留在这里；平台、VIP和P级关联均可筛选。</p></div><div class='sync-data-note'><b>统计口径：</b>172条VIP反馈和19条平台运营原始反馈独立统计。问题可引用同一条记录，因此问题数量不可相加得到总反馈量。7月仅4条，属于不完整月份。<p>“宝石次日穿戴”“5区/10区可识别”“50/100区时装轮换”仅作为本次平台运营补充显示，不改变原始记录数量。</p></div><details class='raw-panel'><summary>搜索与筛选172条VIP玩家原始反馈</summary><div class='filters'><input type='search' id='syncSearch' placeholder='搜索记录编号、原话或主题'><select id='syncPlatform'><option value=''>全部平台</option></select><select id='syncVip'><option value=''>全部VIP</option></select><select id='syncPriority'><option value=''>全部P级关联</option><option value='P0'>P0</option><option value='P1'>P1</option><option value='P2'>P2</option><option value='none'>未纳入本次P级</option></select></div><div class='raw-wrap'><table class='raw'><thead><tr><th>记录</th><th>日期</th><th>VIP</th><th>平台</th><th>P级关联</th><th>建议详情</th></tr></thead><tbody id='syncRawRows'></tbody></table></div><div class='pager'><span id='syncPageInfo'></span><div><button id='syncPrev'>上一页</button> <button id='syncNext'>下一页</button></div></div></details><details class='raw-panel ops-raw-panel'><summary>搜索与筛选19条平台运营原始反馈</summary><div class='filters'><input type='search' id='syncOpsSearch' placeholder='搜索编号、范围或原始内容'><select id='syncOpsSource'><option value=''>全部来源</option></select><select id='syncOpsPriority'><option value=''>全部P级关联</option><option value='P0'>P0</option><option value='P1'>P1</option><option value='P2'>P2</option><option value='none'>未纳入本次P级</option></select><select id='syncOpsScope'><option value=''>全部平台/范围</option></select></div><div class='raw-wrap'><table class='raw'><thead><tr><th>记录</th><th>来源</th><th>平台/范围</th><th>P级关联</th><th>平台运营原始内容</th></tr></thead><tbody id='syncOpsRows'></tbody></table></div><div class='pager'><span id='syncOpsPageInfo'></span><div><button id='syncOpsPrev'>上一页</button> <button id='syncOpsNext'>下一页</button></div></div></details><div class='method'><article><h4>数据来源</h4><p>172条VIP原始明细是平台、VIP和原话的统计来源。</p></article><article><h4>平台运营来源</h4><p>19条原始记录独立保留，不计入VIP反馈总量。</p></article><article><h4>P级关联</h4><p>同一条记录可关联多个P级问题，不作互斥计数。</p></article><article><h4>未纳入问题</h4><p>未在主讲列出的反馈仍可在原始记录中搜索查看。</p></article></div></div></section>";
+function pills(item){let out='';if(item.vipIds.length)out+="<span class='source-pill vip'>VIP玩家反馈 · "+item.vipIds.length+"条</span>";if(item.opsIds.length)out+="<span class='source-pill ops'>平台运营原始反馈 · "+item.opsIds.length+"条</span>";if(item.supplements.length)out+="<span class='source-pill supplement'>本次平台运营补充</span>";return out}
 function quoteHtml(id){const r=byRecord.get(id);if(!r)return '';return "<blockquote class='sync-quote'><span>"+esc(r.id)+" · "+esc(r.platform)+" · "+esc(r.vip)+"</span>"+esc(r.detail)+"</blockquote>"}
 function opsHtml(id){const r=byOps.get(id);if(!r)return '';return "<blockquote class='sync-ops'><span>"+esc(r.id)+" · "+esc(r.source)+" · 范围："+esc(r.scope)+"</span>"+esc(r.text)+"</blockquote>"}
-
+function renderIssue(item,n){const allVip=item.vipIds.join('、')||'无',allOps=item.opsIds.join('、')||'无';let detail='';if(item.quoteIds.length)detail+="<h4>VIP玩家反馈节选</h4>"+item.quoteIds.map(quoteHtml).join('');if(item.opsIds.length)detail+="<h4>平台运营原始反馈</h4>"+item.opsIds.map(opsHtml).join('');if(item.supplements.length)detail+="<h4>本次平台运营补充</h4>"+item.supplements.map(function(x){return "<div class='sync-supplement'>"+esc(x)+"</div>"}).join('');detail+="<div class='sync-ids'>全部关联VIP记录："+esc(allVip)+"<br>平台运营原始记录："+esc(allOps)+"</div>";return "<details class='sync-item "+item.priority.toLowerCase()+"'><summary><span class='sync-index'>"+item.priority+"."+n+"</span><div><h3>"+esc(item.title)+(item.note?" <small>—— "+esc(item.note)+"</small>":"")+"</h3><p class='sync-summary-meta'>"+pills(item)+"</p></div><span class='sync-toggle'>＋</span></summary><div class='sync-body'><div class='sync-row'><strong>问题</strong><p>"+esc(item.problem)+"</p></div><div class='sync-row'><strong>反馈来源</strong><div class='source-badges'>"+pills(item)+"</div></div><div class='sync-row suggestion'><strong>建议</strong><p>"+esc(item.suggestion)+"</p></div><details class='sync-evidence'><summary>查看原始反馈与来源</summary><div class='sync-evidence-content'>"+detail+"</div></details></div></details>"}
+['P0','P1','P2'].forEach(function(level){const list=syncIssues.filter(function(x){return x.priority===level});document.getElementById(level.toLowerCase()+'List').innerHTML=list.map(function(x,i){return renderIssue(x,i+1)}).join('')});
 const levelsByRecord=new Map(records.map(function(r){return [r.id,[]]})),levelsByOps=new Map(ops.map(function(r){return [r.id,[]]})),titlesByRecord=new Map(records.map(function(r){return [r.id,[]]}));
 syncIssues.forEach(function(item){item.vipIds.forEach(function(id){if(levelsByRecord.has(id)){if(!levelsByRecord.get(id).includes(item.priority))levelsByRecord.get(id).push(item.priority);titlesByRecord.get(id).push(item.title)}});item.opsIds.forEach(function(id){if(levelsByOps.has(id)&&!levelsByOps.get(id).includes(item.priority))levelsByOps.get(id).push(item.priority)})});
-
 const platformSelect=document.getElementById('syncPlatform'),vipSelect=document.getElementById('syncVip'),opsSource=document.getElementById('syncOpsSource'),opsScope=document.getElementById('syncOpsScope');
 [...new Set(records.map(function(r){return r.platform}))].forEach(function(v){platformSelect.innerHTML+="<option value='"+esc(v)+"'>"+esc(v)+"</option>"});[...new Set(records.map(function(r){return r.vip}))].sort(function(a,b){return Number(a.slice(1))-Number(b.slice(1))}).forEach(function(v){vipSelect.innerHTML+="<option value='"+esc(v)+"'>"+esc(v)+"</option>"});[...new Set(ops.map(function(r){return r.source}))].forEach(function(v){opsSource.innerHTML+="<option value='"+esc(v)+"'>"+esc(v)+"</option>"});[...new Set(ops.map(function(r){return r.scope}))].forEach(function(v){opsScope.innerHTML+="<option value='"+esc(v)+"'>"+esc(v)+"</option>"});
-
 let page=1,opsPage=1;const pageSize=25,opsPageSize=12;
-function levelTags(levels){return levels.length?levels.map(function(v){return "<span class='tag "+v.toLowerCase()+"'>"+v+"</span>"}).join(''):'未纳入P级'}
+function levelTags(levels){return levels.length?levels.map(function(v){return "<span class='tag "+v.toLowerCase()+"'>"+v+"</span>"}).join(''):'未纳入本次P级'}
 function renderRaw(){const term=document.getElementById('syncSearch').value.trim().toLowerCase(),platform=platformSelect.value,vip=vipSelect.value,priority=document.getElementById('syncPriority').value;const rows=records.filter(function(r){const levels=levelsByRecord.get(r.id)||[],titles=titlesByRecord.get(r.id)||[];const levelOk=!priority||(priority==='none'?!levels.length:levels.includes(priority));const text=[r.id,r.detail,r.subcategory].concat(titles).join(' ').toLowerCase();return (!platform||r.platform===platform)&&(!vip||r.vip===vip)&&levelOk&&(!term||text.includes(term))});const pages=Math.max(1,Math.ceil(rows.length/pageSize));page=Math.min(page,pages);const show=rows.slice((page-1)*pageSize,page*pageSize);document.getElementById('syncRawRows').innerHTML=show.map(function(r){return "<tr><td><b>"+esc(r.id)+"</b></td><td>"+esc(r.date)+"</td><td>"+esc(r.vip)+"</td><td>"+esc(r.platform)+"</td><td>"+levelTags(levelsByRecord.get(r.id)||[])+"</td><td>"+esc(r.detail)+"</td></tr>"}).join('')||"<tr><td colspan='6'>没有符合条件的记录</td></tr>";document.getElementById('syncPageInfo').textContent='共'+rows.length+'条，第'+page+'/'+pages+'页';document.getElementById('syncPrev').disabled=page<=1;document.getElementById('syncNext').disabled=page>=pages}
 function renderOps(){const term=document.getElementById('syncOpsSearch').value.trim().toLowerCase(),source=opsSource.value,scope=opsScope.value,priority=document.getElementById('syncOpsPriority').value;const rows=ops.filter(function(r){const levels=levelsByOps.get(r.id)||[],levelOk=!priority||(priority==='none'?!levels.length:levels.includes(priority));const text=[r.id,r.source,r.scope,r.text].join(' ').toLowerCase();return(!source||r.source===source)&&(!scope||r.scope===scope)&&levelOk&&(!term||text.includes(term))});const pages=Math.max(1,Math.ceil(rows.length/opsPageSize));opsPage=Math.min(opsPage,pages);const show=rows.slice((opsPage-1)*opsPageSize,opsPage*opsPageSize);document.getElementById('syncOpsRows').innerHTML=show.map(function(r){return "<tr><td><b>"+esc(r.id)+"</b></td><td>"+esc(r.source)+"</td><td>"+esc(r.scope)+"</td><td>"+levelTags(levelsByOps.get(r.id)||[])+"</td><td>"+esc(r.text)+"</td></tr>"}).join('')||"<tr><td colspan='5'>没有符合条件的记录</td></tr>";document.getElementById('syncOpsPageInfo').textContent='共'+rows.length+'条，第'+opsPage+'/'+pages+'页';document.getElementById('syncOpsPrev').disabled=opsPage<=1;document.getElementById('syncOpsNext').disabled=opsPage>=pages}
-
 ['syncSearch','syncPlatform','syncVip','syncPriority'].forEach(function(id){document.getElementById(id).addEventListener(id==='syncSearch'?'input':'change',function(){page=1;renderRaw()})});['syncOpsSearch','syncOpsSource','syncOpsScope','syncOpsPriority'].forEach(function(id){document.getElementById(id).addEventListener(id==='syncOpsSearch'?'input':'change',function(){opsPage=1;renderOps()})});document.getElementById('syncPrev').addEventListener('click',function(){page=Math.max(1,page-1);renderRaw()});document.getElementById('syncNext').addEventListener('click',function(){opsPage++;renderRaw()});document.getElementById('syncOpsPrev').addEventListener('click',function(){opsPage=Math.max(1,opsPage-1);renderOps()});document.getElementById('syncOpsNext').addEventListener('click',function(){opsPage++;renderOps()});renderRaw();renderOps();
-
 const priorDetail=document.getElementById('detailBtn'),detailBtn=priorDetail.cloneNode(true);priorDetail.replaceWith(detailBtn);detailBtn.textContent='展开问题详情';detailBtn.setAttribute('aria-pressed','false');detailBtn.addEventListener('click',function(){const open=detailBtn.getAttribute('aria-pressed')!=='true';detailBtn.setAttribute('aria-pressed',String(open));detailBtn.textContent=open?'收起问题详情':'展开问题详情';document.querySelectorAll('details.sync-item').forEach(function(d){d.open=open})});
-
 const navLinks=[...document.querySelectorAll('.nav a')],sections=[...document.querySelectorAll('#main .section')];if('IntersectionObserver' in window){const observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting)navLinks.forEach(function(link){link.classList.toggle('on',link.getAttribute('href')==='#'+entry.target.id)})})},{rootMargin:'-25% 0px -65%'});sections.forEach(function(section){observer.observe(section)})}
 document.addEventListener('keydown',function(e){if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','SELECT','TEXTAREA','BUTTON'].includes(document.activeElement.tagName)||!['ArrowDown','ArrowRight','ArrowUp','ArrowLeft'].includes(e.key))return;const y=innerHeight/2;let i=sections.findIndex(function(section){const box=section.getBoundingClientRect();return box.top<=y&&box.bottom>y});i=Math.max(0,Math.min(sections.length-1,i+(['ArrowDown','ArrowRight'].includes(e.key)?1:-1)));sections[i].scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});e.preventDefault()});
 })();
 </script>
-
 
 <style id="pLevelRefineStyles">
 #home .sync-hero-grid.sync-hero-single{grid-template-columns:minmax(0,1fr)}
@@ -371,16 +282,52 @@ html,body{overflow-x:hidden}
 </style>
 <script id="pLevelRefineRenderer">
 (()=>{'use strict';
+const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const hero=document.querySelector('#home');
 if(hero){
   hero.querySelector('.eyebrow').textContent='20260715';
+  hero.querySelector('h1').textContent='VIP+平台运营建议反馈';
+  hero.querySelectorAll('.sync-lead,.sync-note,.sync-source-card').forEach(el=>el.remove());
   hero.querySelector('.sync-hero-grid').classList.add('sync-hero-single');
 }
 document.title='《极品芝麻官》VIP+平台运营建议反馈';
 const brand=document.querySelector('.brand span:last-child');if(brand)brand.textContent='VIP+平台运营建议反馈';
+[['p0',''],['p1','保留竞技体验和活动时间安排的具体反馈。'],['p2','']].forEach(([id,copy])=>{const head=document.querySelector('#'+id+' .headblock');if(!head)return;const h=head.querySelector('h2');if(h)h.remove();if(copy){const p=head.querySelector('p:not(.eyebrow)');if(p)p.textContent=copy;}});
+['p0','p1','p2'].forEach(id=>document.querySelectorAll('#'+id+' .sync-item').forEach((card,i)=>{const badge=card.querySelector('.sync-index');if(badge)badge.textContent=id.toUpperCase()+'.'+(i+1)}));
+
+const extraOps=[
+  {id:'C01',source:'平台运营反馈',scope:'本次补充',text:'宝石次日穿戴及资质榜、势力榜换装链路：资质榜下宝石后提升资质，势力榜再穿回宝石，可能直接影响势力榜竞争感受。'},
+  {id:'C02',source:'平台运营反馈',scope:'本次补充',text:'匿名赛在5区、10区等较小范围内仍可能通过区服、分数和外围入口识别参与者。'},
+  {id:'C03',source:'平台运营反馈',scope:'本次补充',text:'头像与时装可随50/100区阶段轮换1–2套，作为外观内容补充方向。'}
+];
+function cardByTitle(title){return [...document.querySelectorAll('.sync-item')].find(card=>{const h=card.querySelector('h3');return h&&h.textContent.trim()===title})}
+function mergePlatformSource(title,count,extra){const card=cardByTitle(title);if(!card)return;let ops=[...card.querySelectorAll('.source-pill.ops')];if(!ops.length){card.querySelectorAll('.sync-summary-meta,.source-badges').forEach(box=>{const pill=document.createElement('span');pill.className='source-pill ops';box.appendChild(pill)});ops=[...card.querySelectorAll('.source-pill.ops')];}
+  ops.forEach(p=>p.textContent='平台运营反馈 · '+count+'条');
+  card.querySelectorAll('.source-pill.supplement').forEach(p=>p.remove());
+  card.querySelectorAll('h4').forEach(h=>{if(h.textContent.includes('本次平台运营补充'))h.textContent='平台运营反馈'});
+  card.querySelectorAll('.sync-supplement').forEach(box=>{const quote=document.createElement('blockquote');quote.className='sync-ops';quote.innerHTML='<span>'+extra.id+' · 平台运营反馈 · 范围：'+esc(extra.scope)+'</span>'+esc(extra.text);box.replaceWith(quote)});
+  const ids=card.querySelector('.sync-ids');if(ids){const parts=ids.textContent.split(/\n/);const current=(parts[1]||'').replace(/^平台运营原始记录：/,'').trim();parts[1]='平台运营反馈：'+(current&&current!=='无'?current+'、':'')+extra.id;ids.textContent=parts.join('\n');}
+}
+mergePlatformSource('护具、宝石与资质/势力榜竞争循环',3,extraOps[0]);
+mergePlatformSource('匿名赛可识别、活动价值不清晰',2,extraOps[1]);
+mergePlatformSource('头像与时装内容轮换不足',1,extraOps[2]);
+
+const opsBase=JSON.parse(document.getElementById('opsRawData').textContent),allOps=opsBase.concat(extraOps),priorityByOps={A02:'P0',A03:'P0',A04:'P0',A05:'P0',A07:'P0',B01:'P0',B09:'P0',A06:'P1',C01:'P0',C02:'P0',C03:'P2'};
+document.querySelectorAll('.sync-stats .sync-stat')[1].innerHTML='<strong>'+allOps.length+'</strong><span>平台运营反馈</span>';
+document.querySelectorAll('.sync-stats .sync-stat')[2].innerHTML='<strong>'+document.querySelectorAll('.sync-item').length+'</strong><span>本次P级问题</span>';
+const dataNote=document.querySelector('.sync-data-note');if(dataNote)dataNote.innerHTML='<b>统计口径：</b>172条VIP反馈与'+allOps.length+'条平台运营反馈（含3条本次补充）独立统计。问题可引用同一条记录，因此问题数量不可相加得到总反馈量。7月仅4条，属于不完整月份。';
+const methods=document.querySelectorAll('#appendix .method article');if(methods[1])methods[1].querySelector('p').textContent=allOps.length+'条平台运营反馈统一保留，其中19条为既有原始记录，3条为本次补充。';
+const opsPanel=document.querySelector('details.ops-raw-panel');
+if(opsPanel){
+  opsPanel.innerHTML="<summary>搜索与筛选"+allOps.length+"条平台运营反馈</summary><div class='filters'><input type='search' id='mergedOpsSearch' placeholder='搜索编号、范围或原始内容'><select id='mergedOpsSource'><option value=''>全部来源</option></select><select id='mergedOpsPriority'><option value=''>全部P级关联</option><option value='P0'>P0</option><option value='P1'>P1</option><option value='P2'>P2</option><option value='none'>未纳入本次P级</option></select><select id='mergedOpsScope'><option value=''>全部平台/范围</option></select></div><div class='raw-wrap'><table class='raw'><thead><tr><th>记录</th><th>来源</th><th>平台/范围</th><th>P级关联</th><th>平台运营反馈内容</th></tr></thead><tbody id='mergedOpsRows'></tbody></table></div><div class='pager'><span id='mergedOpsPageInfo'></span><div><button id='mergedOpsPrev'>上一页</button> <button id='mergedOpsNext'>下一页</button></div></div>";
+  const search=opsPanel.querySelector('#mergedOpsSearch'),source=opsPanel.querySelector('#mergedOpsSource'),priority=opsPanel.querySelector('#mergedOpsPriority'),scope=opsPanel.querySelector('#mergedOpsScope'),rows=opsPanel.querySelector('#mergedOpsRows'),info=opsPanel.querySelector('#mergedOpsPageInfo'),prev=opsPanel.querySelector('#mergedOpsPrev'),next=opsPanel.querySelector('#mergedOpsNext');
+  function fill(select,items){[...new Set(items)].filter(Boolean).sort().forEach(v=>select.insertAdjacentHTML('beforeend','<option value="'+esc(v)+'">'+esc(v)+'</option>'))}
+  fill(source,allOps.map(x=>x.source));fill(scope,allOps.map(x=>x.scope));let page=1,perPage=10;
+  function render(){const key=search.value.trim().toLowerCase(),filtered=allOps.filter(x=>{const level=priorityByOps[x.id]||'none',hay=[x.id,x.source,x.scope,x.text].join(' ').toLowerCase();return (!key||hay.includes(key))&&(!source.value||x.source===source.value)&&(!scope.value||x.scope===scope.value)&&(!priority.value||level===priority.value)}),pages=Math.max(1,Math.ceil(filtered.length/perPage));if(page>pages)page=pages;const view=filtered.slice((page-1)*perPage,page*perPage);rows.innerHTML=view.length?view.map(x=>'<tr><td>'+esc(x.id)+'</td><td>'+esc(x.source)+'</td><td>'+esc(x.scope)+'</td><td>'+esc(priorityByOps[x.id]||'—')+'</td><td>'+esc(x.text)+'</td></tr>').join(''):'<tr><td colspan="5">没有符合条件的反馈</td></tr>';info.textContent='第 '+page+' / '+pages+' 页 · '+filtered.length+' 条';prev.disabled=page<=1;next.disabled=page>=pages;}
+  [search,source,priority,scope].forEach(el=>el.addEventListener('input',()=>{page=1;render()}));[source,priority,scope].forEach(el=>el.addEventListener('change',()=>{page=1;render()}));prev.addEventListener('click',()=>{page--;render()});next.addEventListener('click',()=>{page++;render()});render();
+}
 })();
 </script>
-
 <style id="vipInsightsStyles">
 .insight-panel{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:28px;box-shadow:var(--shadow)}
 .insight-panel[hidden]{display:none!important}.insight-panel h3{margin:0 0 7px;font-size:30px;line-height:1.25}.insight-panel .insight-subtitle{margin:0;color:var(--muted)}
