@@ -236,7 +236,7 @@ const detailBtn=document.getElementById('detailBtn');detailBtn.addEventListener(
 const q=String.fromCharCode(34);
 function readData(id){const head='<script id='+q+id+q+' type='+q+'application/json'+q+'>';const text=document.getElementById(id).textContent;return JSON.parse(text)}
 const records=readData('recordsData'),ops=readData('opsRawData'),byRecord=new Map(records.map(r=>[r.id,r])),byOps=new Map(ops.map(r=>[r.id,r]));
-function esc(v){return String(v==null?'':v).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]})}
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 
 const syncIssues=[
 {priority:'P0',title:'护具、宝石与资质/势力榜竞争循环',problem:'平台运营反馈：护具囤积、宝石资质榜/势力榜换装、活动密集和资质产出提升，可能让资质榜和势力榜付费动力下降。',suggestion:'按开服阶段复盘护具开放、宝石换装、资质/势力榜结算链路及活动投放影响。',vipIds:['R29','R30','R34','R37','R53','R60'],opsIds:['A02','A04'],quoteIds:['R29','R30']},
