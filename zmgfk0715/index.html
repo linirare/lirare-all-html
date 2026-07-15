@@ -677,19 +677,19 @@ function keywordBars(entries,max,label){
 // ── VIP × 话题交叉 ──
 const bands=['V7-V9','V10-V12','V13+'], bandLabel={V7:'V7-V9',V8:'V7-V9',V9:'V7-V9',V10:'V10-V12',V11:'V10-V12',V12:'V10-V12'};
 const bandThemes={};
-bands.forEach(b=>{bandThemes[b]={};top10.forEach(([t])=>bandThemes[b][t]=0);bandThemes[b].total=0});
+bands.forEach(b=>{bandThemes[b]={};topThemes.slice(0,8).forEach(([t])=>bandThemes[b][t]=0);bandThemes[b].total=0});
 records.forEach(r=>{
   const b=r.vipBand||bandLabel[r.vip]||'V10-V12';
   if(!bandThemes[b])return;
   bandThemes[b].total++;
   (r.themeTags||[]).forEach(t=>{if(bandThemes[b][t]!==undefined)bandThemes[b][t]++});
 });
-const top10=topThemes.slice(0,10).map(([t])=>t);
-const crossMax=Math.max(...bands.flatMap(b=>top10.map(t=>bandThemes[b][t]||0)),1);
+const top8=topThemes.slice(0,8).map(([t])=>t);
+const crossMax=Math.max(...bands.flatMap(b=>top8.map(t=>bandThemes[b][t]||0)),1);
 
 function vipCrossTable(){
   let h='<table><thead><tr><th>话题</th>'+bands.map(b=>`<th>${esc(b)}<br><small style="font-weight:400">${bandThemes[b].total}条</small></th>`).join('')+'</tr></thead><tbody>';
-  top10.forEach(t=>{
+  top8.forEach(t=>{
     h+='<tr><td style="font-weight:600">'+esc(t)+'</td>';
     bands.forEach(b=>{
       const v=bandThemes[b][t]||0, w=(v/crossMax*100).toFixed(0);
@@ -699,8 +699,6 @@ function vipCrossTable(){
   });
   return h+'</tbody></table>';
 }
-
-
 
 // ── 月度变化趋势 ──
 const firstHalf=records.filter(r=>r.month>='2026-01'&&r.month<='2026-03').length;
@@ -736,14 +734,17 @@ panel.innerHTML=
 <span><span style="display:inline-block;width:10px;height:10px;background:#4a7db5;border-radius:2px;margin-right:4px;vertical-align:middle"></span>功能建议</span>
 <span><span style="display:inline-block;width:10px;height:10px;background:#8a8279;border-radius:2px;margin-right:4px;vertical-align:middle"></span>其他</span>
 </div></div>
-<div class="kw-trend-note"><b>5月最高43条</b>，3月吐槽投诉7条是上半年最高（占当月21%，其他月均不到6%）；3月比2月翻倍（16→34），5月再涨26%（→43）；7月仅4条属不完整月份。</div>
+<div class="kw-trend-note"><b>5月是上半年高点（43条）</b>，体验建议单月32条；3月吐槽投诉7条为峰值，3-6月整体偏热，7月仅4条属不完整月份不做趋势判断。</div>
 </section>
 
-<section><h4>二、话题热度与月度变化</h4>
-<div class="kw-kw-card" style="max-width:100%"><h5>话题标签 Top 10</h5>${keywordBars(topThemes.slice(0,10),maxTheme,'theme')}</div>
+<section><h4>二、关键词频率</h4>
+<div class="kw-kw-grid">
+<div class="kw-kw-card"><h5>话题标签 Top 15</h5>${keywordBars(topThemes,maxTheme,'theme')}</div>
+<div class="kw-kw-card"><h5>分析标签 Top 12</h5>${keywordBars(topAnalysis,maxAnalysis,'analysis')}</div>
+</div>
 <div style="margin-top:14px;font-size:12px;color:var(--muted);line-height:1.7">
-<b>稳定话题：</b>活动相关、系统功能每月都上榜，是贯穿半年的核心方向。<br>
-<b>月度热点：</b>1月合区+皮肤需求突出，3月吐槽投诉集中爆发（护具+排行榜+唐诡），5月排期节奏成焦点，6月刷怪供给诉求升温。
+<b>高频话题前三：</b>活动相关、系统功能、其他——说明反馈集中在活动安排和系统玩法，散落的长尾话题也不少。<br>
+<b>分析标签：</b>建议诉求占绝对主导（建议诉求 + 功能建议），纯吐槽/抱怨占比低，说明大部分反馈是带有改进期待的。
 </div>
 </section>
 
