@@ -677,19 +677,19 @@ function keywordBars(entries,max,label){
 // ── VIP × 话题交叉 ──
 const bands=['V7-V9','V10-V12','V13+'], bandLabel={V7:'V7-V9',V8:'V7-V9',V9:'V7-V9',V10:'V10-V12',V11:'V10-V12',V12:'V10-V12'};
 const bandThemes={};
-bands.forEach(b=>{bandThemes[b]={};topThemes.slice(0,8).forEach(([t])=>bandThemes[b][t]=0);bandThemes[b].total=0});
+bands.forEach(b=>{bandThemes[b]={};top10.forEach(([t])=>bandThemes[b][t]=0);bandThemes[b].total=0});
 records.forEach(r=>{
   const b=r.vipBand||bandLabel[r.vip]||'V10-V12';
   if(!bandThemes[b])return;
   bandThemes[b].total++;
   (r.themeTags||[]).forEach(t=>{if(bandThemes[b][t]!==undefined)bandThemes[b][t]++});
 });
-const top8=topThemes.slice(0,8).map(([t])=>t);
-const crossMax=Math.max(...bands.flatMap(b=>top8.map(t=>bandThemes[b][t]||0)),1);
+const top10=topThemes.slice(0,10).map(([t])=>t);
+const crossMax=Math.max(...bands.flatMap(b=>top10.map(t=>bandThemes[b][t]||0)),1);
 
 function vipCrossTable(){
   let h='<table><thead><tr><th>话题</th>'+bands.map(b=>`<th>${esc(b)}<br><small style="font-weight:400">${bandThemes[b].total}条</small></th>`).join('')+'</tr></thead><tbody>';
-  top8.forEach(t=>{
+  top10.forEach(t=>{
     h+='<tr><td style="font-weight:600">'+esc(t)+'</td>';
     bands.forEach(b=>{
       const v=bandThemes[b][t]||0, w=(v/crossMax*100).toFixed(0);
@@ -700,23 +700,7 @@ function vipCrossTable(){
   return h+'</tbody></table>';
 }
 
-// ── 月度话题变化 ──
-const monthThemeTrend={};
-months.forEach(m=>{monthThemeTrend[m]=new Map()});
-records.forEach(r=>{(r.themeTags||[]).forEach(t=>{const mp=monthThemeTrend[r.month];if(mp)mp.set(t,(mp.get(t)||0)+1)})});
-function monthlyNewThemes(){
-  let h='<table style="width:100%;font-size:11px;border-collapse:collapse">';
-  h+='<thead><tr><th>月份</th><th>当月突增话题</th></tr></thead><tbody>';
-  months.forEach(m=>{
-    const mp=monthThemeTrend[m];
-    if(!mp||mp.size===0)return;
-    const sorted=[...mp.entries()].sort((a,b)=>b[1]-a[1]).slice(0,5);
-    const total=monthMap[m]?.total||1;
-    const labels=sorted.map(([t,v])=>esc(t)+' '+v+'条('+Math.round(v/total*100)+'%)').join(' · ');
-    h+='<tr><td style="padding:3px 6px;white-space:nowrap;font-weight:600">'+m.slice(5).replace(/^0/,'')+'月</td><td style="padding:3px 6px;color:var(--muted)">'+labels+'</td></tr>';
-  });
-  return h+'</tbody></table>';
-}
+
 
 // ── 月度变化趋势 ──
 const firstHalf=records.filter(r=>r.month>='2026-01'&&r.month<='2026-03').length;
@@ -756,10 +740,7 @@ panel.innerHTML=
 </section>
 
 <section><h4>二、话题热度与月度变化</h4>
-<div class="kw-kw-grid">
-<div class="kw-kw-card"><h5>话题标签 Top 10</h5>${keywordBars(topThemes.slice(0,10),maxTheme,'theme')}</div>
-<div class="kw-kw-card"><h5>月度新增话题动向</h5>${monthlyNewThemes()}</div>
-</div>
+<div class="kw-kw-card" style="max-width:100%"><h5>话题标签 Top 10</h5>${keywordBars(topThemes.slice(0,10),maxTheme,'theme')}</div>
 <div style="margin-top:14px;font-size:12px;color:var(--muted);line-height:1.7">
 <b>稳定话题：</b>活动相关、系统功能每月都上榜，是贯穿半年的核心方向。<br>
 <b>月度热点：</b>1月合区+皮肤需求突出，3月吐槽投诉集中爆发（护具+排行榜+唐诡），5月排期节奏成焦点，6月刷怪供给诉求升温。
