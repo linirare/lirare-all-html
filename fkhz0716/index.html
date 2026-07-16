@@ -668,8 +668,47 @@ panel.innerHTML=
 .unified-summary{margin-top:22px;padding:24px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)}.unified-summary h3{margin:24px 0 10px;color:var(--red);font-size:22px}.unified-summary h3:first-child{margin-top:0}.unified-summary h4{margin:16px 0 6px;font-size:16px;color:var(--ink)}.unified-summary p{margin:6px 0;color:#4f4843;font-size:14px;line-height:1.75}.unified-summary ol{margin:7px 0 12px;padding-left:22px;color:#4f4843;font-size:14px;line-height:1.75}.unified-summary table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}.unified-summary th,.unified-summary td{padding:10px 11px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}.unified-summary th{color:var(--red);background:var(--soft)}.unified-summary td:first-child{white-space:nowrap;font-weight:900}.unified-summary .summary-note{padding:12px 14px;background:#f8eddf;border-left:4px solid var(--amber);border-radius:0 9px 9px 0}
 @media(max-width:700px){.unified-summary{padding:17px}.unified-summary table{display:block;overflow:auto;white-space:normal}.unified-summary th,.unified-summary td{min-width:180px}}
 </style>
+
+<script id="monthlyBarRenderer">
+(()=>{
+  const grid = document.querySelector('.unified-grid');
+  if(!grid || document.getElementById('monthlyBarCard')) return;
+
+  // Count by month from recordsData
+  const dataEl = document.getElementById('recordsData');
+  if(!dataEl) return;
+  const records = JSON.parse(dataEl.textContent||'[]');
+  const months = ['2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07'];
+  const labels = ['1月','2月','3月','4月','5月','6月','7月'];
+  const counts = {};
+  months.forEach(m => counts[m]=0);
+  records.forEach(r => { if(counts[r.month] !== undefined) counts[r.month]++; });
+
+  const total = Object.values(counts).reduce((a,b)=>a+b,0);
+  const max = Math.max(...Object.values(counts), 1);
+
+  const bars = months.map((m,i) => {
+    const h = Math.round(counts[m]/max*100);
+    const peak = counts[m]===max && max>0;
+    return `<div class="month-col"><div class="month-area"><span class="month-value">${counts[m]}</span><div class="month-fill${peak?' peak':''}" style="height:${Math.max(8,h)}%"></div></div><span>${labels[i]}</span></div>`;
+  }).join('');
+
+  const card = document.createElement('article');
+  card.id = 'monthlyBarCard';
+  card.className = 'unified-card wide';
+  card.innerHTML = `<h3>1-7月反馈量趋势</h3><p>共${total}条，5月峰值${max}条</p><div class="month-chart" style="height:180px;display:flex;align-items:end;gap:14px;padding:12px 8px 0">${bars}</div>`;
+
+  // Add styles for the bar chart
+  const style = document.createElement('style');
+  style.textContent = `.month-chart .month-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:#6d6660;font-weight:700}.month-chart .month-area{position:relative;width:100%;height:100%;display:flex;align-items:end;justify-content:center}.month-chart .month-fill{width:min(52px,75%);min-height:6px;background:#8b2025;border-radius:7px 7px 0 0;transition:height .4s}.month-chart .month-fill.peak{background:linear-gradient(180deg,#c0392b,#8b2025);box-shadow:0 0 12px rgba(139,32,37,.3)}.month-chart .month-value{position:absolute;bottom:calc(100% + 2px);font-size:13px;font-weight:900;color:#8b2025}`;
+  document.head.appendChild(style);
+
+  grid.insertBefore(card, grid.firstChild);
+})();
+</script>
+
 <script id="unifiedSummaryRenderer">
-(()=>{const root=document.querySelector('#unifiedDashboard .inner');if(!root||document.getElementById('unifiedSummary'))return;const el=document.createElement('section');el.id='unifiedSummary';el.className='unified-summary';el.innerHTML=`<h3>一、数据整体概览</h3><p><b>有效反馈总量：</b>172 条，覆盖 2026 年 1 月 3 日 - 7 月 7 日，核心集中在 1-6 月，7 月仅少量数据</p><p><b>VIP 档位覆盖：</b>核心集中在 V9（57 条）、V10（41 条）、V11（27 条），三档合计占比 72%；V12 + 高氪用户合计 26 条，占比 15%</p><p><b>平台分布：</b>H5（57 条，33%）、渠道安卓（46 条，27%）、港澳台（35 条，20%）为三大核心反馈渠道，合计占比 80%；iOS（25 条）、官方安卓（7 条）</p><p><b>诉求性质：</b>80% 以上为优化建议类诉求（体验与建议 124 条、功能建议 9 条），纯吐槽投诉仅 13 条，充值消费相关诉求 20 条</p><h3>二、核心诉求分类与优先级</h3><h4>1. 第一高优：活动玩法与节奏（合计 72 条，占总反馈 42%）</h4><ol><li>核心痛点：希望少开高耗时活动；亲密、跨服活动连续开启，玩家疲劳。</li><li>活动玩法体验缺陷：匿名争霸赛机制不完善（小号囤道具恶意上分、匿名不彻底）、唐诡联动动画长 / 难度高、古墓护宝耗时久</li></ol><p><b>数据拆分：</b>活动玩法建议 43 条、活动安排 21 条</p><h4>2. 第二高优：系统养成与功能优化（合计 43 条，占总反馈 25%）</h4><ol><li>领地玩法可玩性不足、武将 / 门客养成相关优化、结拜徒弟位置过少、VIP 等级隐藏功能需求</li><li>全场景减负诉求：邮件 / 宴会 / 生娃 / 签到等批量操作、动画跳过、交互误触优化</li><li>养成资源与数值：联盟资源溢出、护具机制不合理（冷却周期长）</li></ol><p><b>数据拆分：</b>系统玩法建议 34 条、功能建议 9 条</p><h4>3. 第三高优：老区生态与合区诉求（11 条，全平台集中）</h4><ol><li>核心痛点：H5、渠道安卓大量老区活人稀少，宴会 / 联盟 / 跨服榜单无参与感，充值无竞争动力，401-600 区等区间合区需求强烈</li><li>关联影响：老区活跃度持续走低，直接导致中小 R、核心付费用户充值意愿下滑</li></ol><h4>4. 第四类：付费与外观诉求</h4><ol><li>核心痛点：皮肤 / 头像 / 称号供给不足、特定外观返场需求、VIP 权益优化、礼包 / 充值活动性价比问题</li><li>占比：皮肤类 8 条、充值消费相关 20 条，合计占比 16%</li></ol><h3>三、VIP 分层差异化核心诉求</h3><table><thead><tr><th>VIP档位</th><th>核心诉求 TOP3</th><th>诉求特征</th></tr></thead><tbody><tr><td>V7-V9（77条）</td><td>1. 活动难度与减负<br>2. 皮肤外观与活动返场<br>3. 合区与老区生态</td><td>对繁琐操作容忍度最低，关注日常体验、小额活动节奏、外观内容，是活跃用户基本盘</td></tr><tr><td>V10-V12（76条）</td><td>1. 跨服匹配公平性<br>2. 合区与榜单竞争<br>3. 系统养成数值优化</td><td>最看重充值性价比、跨服竞技公平、榜单竞争环境，是营收核心来源</td></tr><tr><td>V13+（19条）</td><td>1. 排行榜 UI 与高战体验<br>2. 跨服赛事垄断问题<br>3. 稀缺称号与外观动力</td><td>对匹配机制、榜单展示、高战门客使用场景敏感度极高，少量负面反馈即可引发大额流失</td></tr></tbody></table><h3>四、平台差异化特征</h3><ol><li><b>H5 平台：</b>合区、匿名竞技、减负反馈最多，中小 R 基数大，对老区死区、活动公平性诉求最强烈</li><li><b>渠道安卓：</b>跨服匹配失衡、老区生态、领地玩法问题突出，核心付费用户集中，对跨服竞技公平性需求高</li><li><b>港澳台平台：</b>排行榜 UI 改版、护具机制、高 V 流失问题集中，高氪用户反馈明确，改版适配需求强烈</li><li><b>iOS 平台：</b>皮肤外观、经典活动返场诉求更高，对外观内容、长期活动迭代需求明显</li></ol>`;root.appendChild(el)})();
+(()=>{const root=document.querySelector('#unifiedDashboard .inner');if(!root||document.getElementById('unifiedSummary'))return;const el=document.createElement('section');el.id='unifiedSummary';el.className='unified-summary';el.innerHTML=`<h3>一、数据整体概览</h3><p><b>有效反馈总量：</b>172条，数据区间2026年1-7月，核心集中在1-6月，7月仅4条少量补充反馈。</p><p><b>1. VIP档位分布</b><br>V9（57条）、V10（41条）、V11（27条），三档合计125条，占总反馈72%；V12及以上高氪用户合计26条，占总反馈15%。</p><p><b>2. 平台分布</b><br>H5（57条，33%）、渠道安卓（46条，27%）、港澳台（35条，20%）三大渠道合计138条，占总反馈80%；剩余为iOS（25条）、官方安卓（7条）。</p><p><b>3. 诉求类型划分</b><br>优化建议类占主体：体验与建议124条+功能建议9条，合计133条，占比77%；<br>充值消费相关诉求20条，占12%；<br>纯吐槽投诉13条，占8%。<br>反馈峰值出现在5月（43条），核心诱因是7.5版本护具机制、新版排行榜UI两大改动，港澳台渠道共2名高氪玩家明确提出榜单改版体验极差。</p><h3>二、核心诉求分类与优先级</h3><h4>第一高优：活动玩法与节奏（活动玩法建议40条+活动安排21条，合计61条，占总反馈42%）</h4><p><b>核心痛点：</b>活动排期失衡、竞技机制不公平、联动活动体验差</p><ol><li>活动频次失衡：多名玩家反馈亲密活动一周一开，体感疲劳；同时红拂女活动半年未开启，玩家囤积大量闲置道具，该类长期断档活动相关反馈共14条。</li><li>唐诡联动集中负面反馈（累计4条玩家吐槽）：活动开场动画无跳过按钮、单局重复播放，整体难度偏高；同时存在玩家明确要求不要同期上线两款大型联动，加重肝度。</li><li>匿名竞技机制缺陷（3条反馈）：匿名争霸仅隐藏玩家ID、区服，上分数据、强化卷轴使用量全部可见，小号囤道具恶意上分，匿名效果形同虚设，玩家要求全维度数据匿名。</li></ol><h4>第二高优：系统养成与功能优化（系统玩法建议37条+功能建议9条，合计46条，占总反馈25%）</h4><p><b>核心痛点：</b>养成系统上限不足资源溢出、7.5护具机制负面、重复操作缺少批量减负</p><ol><li>养成资源溢出高频反馈（累计6条）：联盟太学等级上限低、联盟贡献无消耗渠道；门客/红颜流放席位不足、门客乔装上限仅5次无法适配多轮联动。</li><li>护具机制集中吐槽（累计5条玩家投诉）：护具卸下存在180天冷却，冷却期间无法强化升级，一键升级功能会误勾选冷却护具，玩家普遍要求缩短冷却周期至30天。</li><li>全场景减负需求分散覆盖多条反馈：小师爷自动签到、宴会一键开席/一键吃席、限时奖励一键领取等批量功能诉求累计8条，均为高频重复诉求。</li></ol><h4>第三高优：老区生态与合区诉求（合区专项反馈11条，全平台覆盖）</h4><p><b>核心痛点：</b>老区在线活人稀少，活动缺少对战对手，削弱充值竞争动力</p><p>数据依据：H5、渠道安卓多区间玩家提合区需求，如401-600区、491/494区；区内活人不足导致盟战、宴会冲榜无法正常参与，多条反馈明确表示缺少竞争环境会减少充值。</p><h4>第四类：付费与外观诉求（皮肤类8条+充值消费相关20条，合计28条，占总反馈16%）</h4><p><b>核心痛点：</b>高V专属权益缺失、外观供给不均衡、道具文案与实际效果不符</p><ol><li>VIP专属个性化需求（3条）：玩家希望上线隐藏VIP等级功能，避免高充值等级被其他玩家嘲讽战力不匹配；领地官员解锁免费专属时装/称号提升身份感。</li><li>外观与联动（4条）：当前女性联动门客偏多，女性玩家诉求新增男性明星联动门客；需求九龙、杨玉环、樊梨花等多款皮肤返场、纳入特典。</li><li>付费及道具问题（多条付费相关反馈支撑）：三星珍兽高氪掉落概率偏低、联动礼包定价偏高等问题；其中1条高风险反馈：V12玩家因皮肤礼包配置不合理，扬言联合10名高V集体脱坑（原始内容-R186）。</li></ol><h3>三、VIP分层差异化核心诉求</h3><p><b>1. V7-V9（中坚活跃用户，合计77条反馈）</b><br>TOP诉求：活动减负、皮肤外观与活动返场、老区合区<br>主要问题：中小R大量反馈古墓寻宝、僵尸围城操作繁琐，误触丢失古董、怪物数量不足等问题。通过反馈观察，该档位玩家对重复操作容忍度最低。</p><p><b>2. V10-V12（核心付费用户，合计76条反馈）</b><br>TOP诉求：跨服匹配公平性、榜单竞争环境、养成数值优化<br>主要问题：至尊赛匹配区间规则不一致，2401-2600匹配池200区，2601后区间仅100区，24大区垄断活动奖励，相关匹配不公反馈共3条，影响核心付费玩家充值动力。</p><p><b>3. V13及以上头部高氪（合计19条反馈）</b><br>TOP诉求：排行榜UI展示、跨服赛事垄断、稀缺称号与外观投放<br>落地依据：港澳台V13+玩家要求恢复旧版排行榜布局；头部玩家对榜单平衡、专属稀缺道具敏感度极高。</p><h3>四、平台差异化特征</h3><ol><li><b>H5平台（57条反馈，反馈最多）：</b>合区、匿名竞技、减负类反馈数量遥遥领先，中小R基数庞大，死区、竞技公平是核心矛盾。</li><li><b>渠道安卓（46条反馈）：</b>跨服匹配失衡、老区生态、领地玩法相关反馈集中，非常看重跨服榜单竞争公平。</li><li><b>港澳台平台（35条反馈）：</b>新版排行榜UI、护具冷却机制反馈突出，多名高氪统一反馈界面改版体验差，存在高氪流失隐患。</li><li><b>iOS平台（25条反馈）：</b>皮肤外观、经典活动返场诉求占比更高，玩家对外观、长期活动迭代关注度强。</li></ol>`;root.appendChild(el)})();
 </script>
 <script id="partHeaderRenderer">
 (()=>{
