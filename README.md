@@ -20,6 +20,7 @@
 ├── yiqi-zhi-di-game-intro/ # 遗弃之地游戏介绍 → gh.lirare.xyz/yiqi-zhi-di-game-intro/
 ├── zhenghe-ppt/            # 整合 PPT → gh.lirare.xyz/zhenghe-ppt/
 ├── zhenxiesi-analysis/     # 真写死分析 → gh.lirare.xyz/zhenxiesi-analysis/
+├── dasheng-dianyao/        # 《大圣点妖》西游五行肉鸽 → gh.lirare.xyz/dasheng-dianyao/
 └── ...
 ```
 
