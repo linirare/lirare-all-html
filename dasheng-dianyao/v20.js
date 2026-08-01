@@ -1130,12 +1130,14 @@
     ids.forEach((id,i)=>{
       const e=state.enemies.find(x=>x.id===id&&x.alive);if(!e)return;
       const main=characters.find(c=>c.id===state.mainCharacter)||characters[0];
-      let from={x:state.masterX+(i%3-1)*12,y:660},color=elements[main.element].color;
+      const from={x:state.masterX+(i%3-1)*12,y:660};
       const shotElement=state.mainSchool?schoolMeta[state.mainSchool].element:main.element;
-      if(state.mainSchool==="monkey"){const origins=[90,130,170,220,260,300];from={x:origins[i%origins.length],y:674};color=C.purple}
-      if(state.mainSchool==="fire"){from={x:195,y:662};color=C.orange}
-      if(shotElement!=="neutral")color=elements[shotElement].color;
+      const color=shotElement!=="neutral"?elements[shotElement].color:elements[main.element].color;
       state.arcs.push({x1:from.x,y1:from.y,x2:e.x,y2:e.y,life:.31,delay:i*.04,color});
+      if(state.mainSchool==="monkey"){
+        const origins=[90,130,170,220,260,300];
+        state.arcs.push({x1:origins[i%origins.length],y1:674,x2:e.x,y2:e.y,life:.3,delay:i*.04+.06,color});
+      }
       let hit=1;
       const ownerPower=state.mainCharacter==="bajie"?level("bajiePower"):state.mainCharacter==="wujing"?level("wujingPower"):state.mainCharacter==="longma"?level("longmaPower"):0;
       if(state.mainSchool==="staff"&&i===chain-1)hit+=1+level("staffPower");
