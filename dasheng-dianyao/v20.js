@@ -27,6 +27,21 @@
   const growthDetail = document.querySelector("#growth-detail");
   const partnerList = document.querySelector("#partner-list");
   const W = 390, H = 760, lanes = [76, 195, 314];
+  function fit(){
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    const s = Math.min(window.innerWidth/W, window.innerHeight/H, 430/W, 820/H);
+    const dw = Math.max(1, Math.round(W*s)), dh = Math.max(1, Math.round(H*s));
+    document.querySelector("main").style.width = dw + "px";
+    document.querySelector("main").style.height = dh + "px";
+    canvas.width = Math.round(dw*dpr);
+    canvas.height = Math.round(dh*dpr);
+    canvas.style.width = dw + "px";
+    canvas.style.height = dh + "px";
+    ctx.setTransform(dw*dpr/W, 0, 0, dh*dpr/H, 0, 0);
+  }
+  window.addEventListener("resize", fit);
+  window.addEventListener("orientationchange", fit);
+  fit();
   const speed = Math.max(1, Math.min(6, Number(new URLSearchParams(location.search).get("speed")) || 1));
   const C = {
     gold:"#ffd15b", orange:"#ff8b46", red:"#ff5f70", jade:"#68e6bd",
