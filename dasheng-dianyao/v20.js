@@ -89,7 +89,7 @@
   const characterIds=["tang","wukong","longma","bajie","wujing"];
   const blankGrowth=()=>Object.fromEntries(characterIds.map(id=>[id,{attack:0,health:0}]));
   const defaultLineup=["tang","wukong","longma","bajie","wujing"];
-  const defaultMeta={scrolls:0,highest:0,selectedPage:1,mainCharacter:"tang",lineup:defaultLineup.slice(),growth:blankGrowth(),treasures:[]};
+  const defaultMeta={scrolls:0,highest:0,selectedPage:1,mainCharacter:"tang",lineup:defaultLineup.slice(),growth:blankGrowth(),treasures:[],wuxing:{pow:{fire:0,metal:0,wood:0,water:0,earth:0},total:0,tier:0}};
   let meta=loadMeta();
   function loadMeta(){
     try{
@@ -365,7 +365,8 @@
         <img src="${heroArtSources[c.id]}" alt=""><span>${open?c.name:`${c.unlock}难`}</span>
       </button>`;
     }).join("");
-    document.querySelector("#start").textContent=meta.highest>=start+8?"重闯本章 · 九难连战":"挑战本章 · 九难连战";
+    const nextStage=Math.min((meta.highest||0)+1,81);
+    document.querySelector("#start").textContent=meta.highest>=81?"圆满已达 · 再战第 81 难":`挑战第 ${nextStage}/81 难`;
     growthRoster.innerHTML=characters.map(c=>{
       const open=isUnlocked(c.id),el=elements[c.element];
       return `<button class="character-pill ${selectedGrowthId===c.id?"selected":""}" data-growth-character="${c.id}" style="--el:${el.color}" ${open?"":"disabled"}><img src="${heroArtSources[c.id]}" alt="">${open?c.name:"未解锁"}</button>`;
@@ -511,22 +512,23 @@
 
   function reset(){
     nextId=1;
-    const page=Math.min(meta.selectedPage||1,unlockedPages()),pageStart=(page-1)*9+1,pageEnd=pageStart+8;
+    const target=Math.min((meta.highest||0)+1,81),page=Math.min(1+Math.floor((target-1)/9),unlockedPages()),pageStart=(page-1)*9+1,pageEnd=pageStart+8;
+    const carryWx=meta.wuxing&&meta.wuxing.total!==undefined?meta.wuxing:{pow:{fire:0,metal:0,wood:0,water:0,earth:0},total:0,tier:0};
     const main=selectedMain(),mainId=main.id;
     const supportHealth=characterIds.filter(id=>id!==mainId&&meta.lineup.includes(id)&&isUnlocked(id)).reduce((sum,id)=>sum+meta.growth[id].health,0);
     const startHp=6+meta.growth[mainId].health+Math.floor(supportHealth/2);
     const available=attackers.filter(c=>c.id!==mainId&&isUnlocked(c.id)&&meta.lineup.includes(c.id));
     Object.assign(state,{
-      mode:"play",stage:pageStart-1,maxStage:81,page,pageStart,pageEnd,masterHp:startHp,maxMasterHp:startHp,kills:0,charges:5,maxCharges:5,recharge:.82,
+      mode:"play",stage:target-1,maxStage:81,page,pageStart,pageEnd,masterHp:startHp,maxMasterHp:startHp,kills:0,charges:5,maxCharges:5,recharge:.82,
       selecting:false,pointer:{x:195,y:350},path:[],locked:[],enemies:[],hazards:[],arcs:[],rings:[],sparks:[],sweeps:[],elementFx:[],
       flameTrails:[],cloneJumps:[],windWaves:[],lightnings:[],vortices:[],petals:[],
       stageClock:.55,toast:`${main.name}主位 · 上半屏划线点妖 · 底部拖动闪避`,toastClock:4.5,leaksThisStage:0,seed:20260731,
       offered:[],rewardType:"",levels:{},mainSchool:"",schoolPoints:0,evolutionStage:0,evolutions:[],relics:[],specialization:"",
       shake:0,volleyCount:0,stageStartHp:startHp,currentStage:null,wave:0,wavesTotal:0,bossSpawned:false,mainCharacter:mainId,attackMult:1+meta.growth[mainId].attack*.04,
-      runCompanions:available.map(c=>c.id),companionTimers:Object.fromEntries(available.map((c,i)=>[c.id,.55+i*.2])),earnedScrolls:0,rewardQueue:[],
+      runCompanions:available.map(c=>c.id),companionTimers:Object.fromEntries(available.map((c,i)=>[c.id,.55+i*.2])),earnedScrolls:0,rewardQueue:[],pendingFinish:false,
       runLevel:1,xp:0,xpNeed:3,pendingLevelUps:0,
       masterX:195,movingMaster:false,masterStill:0,masterShield:0,skillCooldown:0,skillMax:12,
-      wuxingMult:1,wuxing:{pow:{fire:0,metal:0,wood:0,water:0,earth:0},total:0,tier:0},wuxingLeakUsed:false,
+      wuxingMult:carryWx.tier>=2?1.4:carryWx.tier>=1?1.15:1,wuxing:{pow:{...carryWx.pow},total:carryWx.total,tier:carryWx.tier},wuxingLeakUsed:false,
       focusOwner:mainId,ownerPicks:{tang:0,wukong:0,longma:0,bajie:0,wujing:0},companionShots:{},
       stats:{enemyDefeats:0,correctFocuses:0,minDoor:6,volleys:0,maxChain:0,targetsLocked:0,buildPicks:0,relicPicks:0,stagesCleared:0,elementCombos:0}
     });
@@ -553,7 +555,7 @@
   function spawnStage(n){
     const cfg=stages[n-1];
     state.stage=n;state.currentStage=cfg;state.charges=state.maxCharges;state.leaksThisStage=0;state.wuxingLeakUsed=false;state.stageStartHp=state.masterHp;
-    state.wave=1;state.wavesTotal=Math.max(1,Math.min(5,1+Math.floor((n-1)/4.5)));state.bossSpawned=false;
+    state.wave=1;state.wavesTotal=Math.max(2,Math.min(5,1+Math.floor((n-1)/4.5)));state.bossSpawned=false;
     spawnWave(1);
   }
 
@@ -562,8 +564,7 @@
     cfg.pack.forEach(entry=>addEnemy(entry,cfg,1+(w-1)*.15));
     const seenResists=[...new Set(state.enemies.map(e=>e.resist).filter(Boolean))];
     const resistText=seenResists.length?` · ${seenResists.map(id=>elements[id].name).join("")}抗`:"";
-    const local=state.stage-state.pageStart+1;
-    toast(`第 ${local}/9 难 · ${cfg.name}${resistText} · 第 ${w}/${state.wavesTotal} 波`,2.6);
+    toast(`第 ${state.stage}/81 难 · ${cfg.name}${resistText} · 第 ${w}/${state.wavesTotal} 波`,2.6);
   }
 
   function spawnBoss(){
@@ -578,7 +579,7 @@
   }
 
   function nextStagePreview(){
-    const n=state.stage+1;
+    const n=state.stage;
     if(n>state.pageEnd||!stages[n-1])return null;
     const cfg=stages[n-1];
     const tally={metal:0,wood:0,water:0,fire:0,earth:0};
@@ -821,6 +822,7 @@
     const completedType=state.rewardType;
     buildOverlay.hidden=true;
     if(state.rewardQueue.length){showNextReward();return}
+    if(state.pendingFinish){state.pendingFinish=false;finish(true);return}
     state.mode="play";state.stageClock=completedType==="power"?0:.75;
     if(completedType!=="power")state.charges=state.maxCharges;
     pauseButton.hidden=false;skillButton.hidden=false;
@@ -923,6 +925,7 @@
     if(el&&state.wuxing.pow[el]!==undefined)state.wuxing.pow[el]+=amount*mult;
     state.wuxing.total+=amount*mult;
     wuxingCheck();
+    meta.wuxing={pow:{...state.wuxing.pow},total:state.wuxing.total,tier:state.wuxing.tier};
   }
   function topWuxingEl(){
     const entries=Object.entries(state.wuxing.pow);
@@ -1372,7 +1375,6 @@
     }
     const wLead=Object.keys(wTally).sort((a,b)=>wTally[b]-wTally[a])[0];
     if(wTally[wLead]>0)wuxingGain(2,wLead);else wuxingGain(2);
-    if(state.stage===state.pageEnd){finish(true);return}
     if(state.leaksThisStage===0&&level("vajra")){
       const heal=Math.min(state.maxMasterHp-state.masterHp,level("vajra"));
       if(heal>0){state.masterHp+=heal;toast(`金刚不坏：修复 ${heal} 颗佛珠`)}
@@ -1386,8 +1388,8 @@
     if(unearned.length)state.rewardQueue.push("treasure");
     else{meta.scrolls+=2;saveMeta();toast("法宝已齐 · 妖王赠 +2 残卷",2.6)}
     if(local===5&&state.mainSchool&&!state.specialization)state.rewardQueue.push("spec");
-    if(state.rewardQueue.length)showNextReward();
-    else state.stageClock=.9;
+    if(state.rewardQueue.length){state.pendingFinish=true;showNextReward()}
+    else finish(true);
   }
 
   function update(dt){
@@ -1443,18 +1445,19 @@
     const furthest=state.pageStart+cleared-1;
     state.earnedScrolls=cleared+(win?4:0);
     meta.scrolls+=state.earnedScrolls;meta.highest=Math.max(meta.highest,furthest);
-    if(win&&state.page<9)meta.selectedPage=state.page+1;
+    meta.selectedPage=Math.min(meta.selectedPage||1,unlockedPages());
     saveMeta();
     const newlyUnlocked=characters.filter(c=>c.unlock>0&&previousHighest<c.unlock&&meta.highest>=c.unlock);
-    document.querySelector("#result-tag").textContent=win?`${chapters[state.page-1].name}通关`:"西行阵线失守";
-    document.querySelector("#result-title").textContent=win?(state.page===9?"八十一难圆满":"下一章已开启"):"本章西行中断";
+    const chapterUnlocked=Math.floor(meta.highest/9)>Math.floor(previousHighest/9);
+    document.querySelector("#result-tag").textContent=win?`第 ${state.stage}/81 难 · ${chapters[state.page-1].name}`:"西行阵线失守";
+    document.querySelector("#result-title").textContent=win?(state.stage===81?"八十一难圆满":chapterUnlocked?"新章节已开启":"本关通关"):"本关失守";
     const main=characters.find(c=>c.id===state.mainCharacter)||characters[0];
     const route=state.mainSchool?`${main.name} · ${schoolMeta[state.mainSchool].name}`:`${main.name}主位流`;
     const evo=state.evolutions.length?` · ${state.evolutions.join(" → ")}`:"";
     const fusion=fusionName()?` · ${fusionName()}`:"";
     const spec=Object.values(specializations).flat().find(s=>s.id===state.specialization);
     const unlockText=newlyUnlocked.length?` · 新伙伴：${newlyUnlocked.map(c=>c.name).join("、")}`:"";
-    document.querySelector("#result-copy").textContent=win?`九难连战完成。本局成型：${route}${evo}${spec?` · ${spec.name}`:""}${fusion}${unlockText}`:`本章已过 ${cleared} 难，带残卷回大厅整备后再来。${unlockText}`;
+    document.querySelector("#result-copy").textContent=win?`第 ${state.stage} 难已过。本局成型：${route}${evo}${spec?` · ${spec.name}`:""}${fusion}${unlockText}`:`第 ${state.stage} 难未守住，带残卷回大厅整备后再来。${unlockText}`;
     document.querySelector("#m-kill").textContent=state.kills;
     document.querySelector("#m-chain").textContent=state.stats.maxChain;
     document.querySelector("#m-build").textContent=state.stats.buildPicks+state.stats.relicPicks;
@@ -1749,6 +1752,8 @@
   document.querySelector("#resume-game").addEventListener("click",resumeGame);
   document.querySelector("#quit-game").addEventListener("click",showLobby);
   document.querySelector("#start").addEventListener("click",()=>{intro.hidden=true;reset()});
+  const nextStageBtn=document.querySelector("#next-stage");
+  if(nextStageBtn)nextStageBtn.addEventListener("click",()=>{result.hidden=true;reset()});
   document.querySelector("#restart").addEventListener("click",showLobby);
   document.querySelectorAll("[data-lobby-tab]").forEach(button=>button.addEventListener("click",()=>setLobbyTab(button.dataset.lobbyTab)));
   chapterPrev.addEventListener("click",()=>{if(meta.selectedPage>1){meta.selectedPage--;refreshLobby()}});
