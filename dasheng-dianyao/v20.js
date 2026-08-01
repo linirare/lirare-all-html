@@ -555,7 +555,7 @@
   function spawnStage(n){
     const cfg=stages[n-1];
     state.stage=n;state.currentStage=cfg;state.charges=state.maxCharges;state.leaksThisStage=0;state.wuxingLeakUsed=false;state.stageStartHp=state.masterHp;
-    state.wave=1;state.wavesTotal=Math.max(2,Math.min(5,1+Math.floor((n-1)/4.5)));state.bossSpawned=false;
+    state.wave=1;state.wavesTotal=Math.max(3,Math.min(9,3+Math.floor((n-1)/10)));state.bossSpawned=false;
     spawnWave(1);
   }
 
