@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方块军团 · 实现导航</title>
+<style>
+  :root{
+    --bg:#f4f5f9; --bg2:#fbfbfd; --bg3:#eef1f7; --panel:#ffffff;
+    --line:#e2e7f1; --line2:#c8d1e2;
+    --ink:#24304d; --ink2:#4b5874; --ink3:#7d89a3;
+    --gold:#a06f16; --gold2:#b9841f;
+    --pink:#d24a80; --blue:#2f7fd1; --yellow:#bd8e1d; --green:#33995a; --purple:#7655bd;
+    --ok:#2e8b57; --warn:#bd7a22; --bad:#cf4f4f; --todo:#6a7d9e;
+    --radius:12px;
+    --shadow:0 8px 24px rgba(30,45,90,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1200px 500px at 85% -10%, rgba(200,178,120,.14), transparent 60%),
+      radial-gradient(900px 420px at -10% 30%, rgba(120,180,160,.10), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    font-size:15px;line-height:1.7;
+  }
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:#c6cfe0;border-radius:6px}
+  ::-webkit-scrollbar-track{background:transparent}
+
+  .layout{display:flex;min-height:100vh}
+  aside{
+    position:fixed;inset:0 auto 0 0;width:300px;z-index:50;
+    background:var(--bg2);
+    border-right:1px solid var(--line);
+    display:flex;flex-direction:column;
+    transition:transform .28s ease;
+  }
+  .brand{padding:24px 22px 16px;border-bottom:1px solid var(--line)}
+  .brand .logo{font-size:21px;font-weight:800;letter-spacing:1px;color:var(--gold2)}
+  .brand .logo b{color:var(--ink)}
+  .brand .sub{margin-top:4px;font-size:12px;color:var(--ink3)}
+  .brand .badges{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+  .badge{font-size:11px;padding:2px 8px;border-radius:20px;border:1px solid var(--line2);color:var(--ink2);background:var(--panel)}
+  .badge.gold{border-color:rgba(176,120,28,.45);color:var(--gold)}
+  .badge.green{border-color:rgba(46,139,87,.45);color:var(--ok)}
+  .badge.purple{border-color:rgba(118,85,189,.45);color:var(--purple)}
+
+  nav{flex:1;overflow-y:auto;padding:10px 0 24px}
+  nav .group{padding:14px 22px 4px;font-size:11px;letter-spacing:2px;color:var(--ink3)}
+  nav a{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 22px;color:var(--ink2);text-decoration:none;
+    border-left:3px solid transparent;font-size:14px;
+  }
+  nav a .ic{width:20px;text-align:center;color:var(--ink3);font-size:14px}
+  nav a:hover{color:var(--ink);background:rgba(30,45,90,.05)}
+  nav a.active{color:var(--gold);border-left-color:var(--gold);background:linear-gradient(90deg,rgba(176,120,28,.10),transparent);font-weight:700}
+  nav a.active .ic{color:var(--gold)}
+
+  main{flex:1;margin-left:300px;min-width:0}
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    display:flex;align-items:center;gap:14px;
+    padding:12px 32px;background:rgba(251,251,253,.86);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .burger{display:none;background:var(--panel);border:1px solid var(--line2);color:var(--ink2);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px}
+  .crumb{font-size:13px;color:var(--ink3)}
+  .crumb b{color:var(--gold);font-weight:600}
+  .topbar .spacer{flex:1}
+  .topbar .ver{font-size:12px;color:var(--ink3);border:1px solid var(--line2);border-radius:20px;padding:3px 10px;background:var(--panel)}
+
+  .content{padding:28px 40px 90px;max-width:1280px}
+  section{margin-bottom:14px}
+
+  .hero{
+    position:relative;border-radius:16px;overflow:hidden;
+    background:linear-gradient(135deg,#f7f1e2 0%,#f4f2fb 45%,#eef1fa 100%);
+    border:1px solid var(--line2);
+    padding:32px 36px;margin-bottom:22px;box-shadow:var(--shadow);
+  }
+  .hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle,rgba(176,120,28,.14),transparent 70%);
+  }
+  .hero .kicker{font-size:12px;letter-spacing:3px;color:var(--gold);font-weight:700}
+  .hero h1{font-size:30px;font-weight:800;margin:6px 0 10px;letter-spacing:1px}
+  .hero h1 em{color:var(--gold2);font-style:normal}
+  .hero p{color:var(--ink2);max-width:840px}
+  .hero .chips{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+  .chip{font-size:12px;padding:4px 12px;border-radius:20px;background:rgba(30,45,90,.05);border:1px solid var(--line2);color:var(--ink2)}
+  .chip b{color:var(--gold)}
+
+  h2.sec{
+    font-size:22px;font-weight:800;margin:34px 0 6px;padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h2.sec .n{font-size:12px;color:var(--gold);border:1px solid rgba(176,120,28,.4);border-radius:8px;padding:2px 8px;font-weight:700}
+  h3.sub{font-size:16px;font-weight:700;margin:24px 0 10px;color:var(--gold2);display:flex;align-items:center;gap:8px}
+  h3.sub::before{content:"";width:4px;height:16px;border-radius:2px;background:linear-gradient(180deg,var(--gold),transparent)}
+  h4{font-size:14px;color:var(--ink);margin:14px 0 6px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin:12px 0}
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;
+    transition:transform .18s ease,border-color .18s ease;
+  }
+  .card:hover{transform:translateY(-2px);border-color:var(--line2)}
+  .card .t{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:4px}
+  .card .t i{font-style:normal;margin-right:8px}
+  .card p{font-size:13px;color:var(--ink2)}
+  .card .k{font-size:12px;color:var(--gold);margin-top:8px}
+
+  .callout{border-radius:var(--radius);padding:14px 18px;margin:14px 0;font-size:14px;border:1px solid var(--line2);background:var(--panel)}
+  .callout.gold{background:rgba(176,120,28,.07);border-color:rgba(176,120,28,.35)}
+  .callout.blue{background:rgba(47,127,209,.07);border-color:rgba(47,127,209,.35)}
+  .callout.red{background:rgba(207,79,79,.07);border-color:rgba(207,79,79,.4)}
+  .callout.green{background:rgba(51,153,90,.07);border-color:rgba(51,153,90,.35)}
+  .callout .tt{font-weight:700;color:var(--gold2);margin-bottom:4px}
+  .callout.blue .tt{color:var(--blue)}.callout.red .tt{color:var(--bad)}.callout.green .tt{color:var(--ok)}
+  .callout p{color:var(--ink2)}
+
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);margin:12px 0;background:var(--panel)}
+  table{border-collapse:collapse;width:100%;font-size:13px;min-width:640px}
+  th{
+    background:#f2f4f9;color:var(--gold);text-align:left;font-weight:700;
+    padding:10px 12px;white-space:nowrap;font-size:12px;letter-spacing:.5px;
+  }
+  td{padding:9px 12px;border-top:1px solid var(--line);color:var(--ink2);vertical-align:top}
+  tr:nth-child(even) td{background:rgba(30,45,90,.02)}
+  tr:hover td{background:rgba(176,120,28,.06)}
+  td b,td strong{color:var(--ink)}
+  .tbl-cap{font-size:12px;color:var(--ink3);margin:6px 2px 0}
+
+  .st{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;white-space:nowrap}
+  .st.done{background:rgba(46,139,87,.12);color:var(--ok);border:1px solid rgba(46,139,87,.4)}
+  .st.part{background:rgba(189,122,34,.12);color:var(--warn);border:1px solid rgba(189,122,34,.4)}
+  .st.plan{background:rgba(106,125,158,.12);color:var(--todo);border:1px solid rgba(106,125,158,.4)}
+
+  .flow{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin:14px 0}
+  .flow .step{flex:1;min-width:130px;text-align:center;padding:12px 10px;border-radius:10px;background:var(--panel);border:1px solid var(--line2)}
+  .flow .step b{display:block;font-size:13px;color:var(--gold2);margin-bottom:2px}
+  .flow .step span{font-size:12px;color:var(--ink2)}
+  .flow .arrow{display:flex;align-items:center;color:var(--ink3);font-size:16px}
+
+  .bestiary{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:12px 0}
+  .beast{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+  .beast .row1{display:flex;align-items:center;gap:8px}
+  .beast .ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;background:rgba(30,45,90,.05);border:1px solid var(--line2)}
+  .beast .nm{font-weight:700;font-size:14px;color:var(--ink)}
+  .beast .nm small{display:block;font-weight:400;font-size:11px;color:var(--ink3)}
+  .beast .meta{margin-top:8px;font-size:12px;color:var(--ink2);display:flex;flex-wrap:wrap;gap:4px 10px}
+  .beast .meta b{color:var(--gold)}
+  .beast .desc{font-size:12px;color:var(--ink3);margin-top:6px;line-height:1.5}
+
+  ul.clean{list-style:none;margin:8px 0}
+  ul.clean li{padding:5px 0 5px 22px;position:relative;color:var(--ink2);font-size:14px}
+  ul.clean li::before{content:"▸";position:absolute;left:4px;color:var(--gold);font-size:12px;top:7px}
+  ul.clean li b{color:var(--ink)}
+
+  code{font-family:Consolas,monospace;font-size:12.5px;background:rgba(30,45,90,.06);border-radius:5px;padding:1px 6px;color:var(--ink)}
+  .kbd{font-family:Consolas,monospace;font-size:12px;background:rgba(30,45,90,.06);border:1px solid var(--line2);border-radius:5px;padding:1px 6px;color:var(--gold)}
+
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+  .stat-num{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+  .stat-num .s{flex:1;min-width:110px;text-align:center;padding:14px 8px;border-radius:10px;background:var(--panel);border:1px solid var(--line2)}
+  .stat-num .s b{display:block;font-size:24px;font-weight:800;color:var(--gold2)}
+  .stat-num .s span{font-size:12px;color:var(--ink3)}
+
+  footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+  @media (max-width:900px){
+    aside{transform:translateX(-100%);width:280px;box-shadow:var(--shadow)}
+    aside.open{transform:translateX(0)}
+    main{margin-left:0}
+    .burger{display:block}
+    .content{padding:18px 16px 80px}
+    .hero{padding:22px 20px}
+    .hero h1{font-size:23px}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- ============ 侧边导航 ============ -->
+<aside id="sidebar">
+  <div class="brand">
+    <div class="logo">方块<b>军团</b></div>
+    <div class="sub">跟你拼了 · 实现导航</div>
+    <div class="badges">
+      <span class="badge gold">版本 0.4.0</span>
+      <span class="badge green">代码基线 2026-08-18</span>
+      <span class="badge purple">手机网页 · 轻联网</span>
+    </div>
+  </div>
+  <nav id="nav">
+    <div class="group">游戏概览</div>
+    <a href="#overview" data-i="0" class="active"><span class="ic">◈</span>总览</a>
+    <a href="#coreplay" data-i="1" class=""><span class="ic">▦</span>核心玩法</a>
+    <a href="#campaign" data-i="2" class=""><span class="ic">🗺</span>关卡章节</a>
+    <div class="group">养成与系统</div>
+    <a href="#meta" data-i="3" class=""><span class="ic">⬆</span>养成与宝物</a>
+    <a href="#economy" data-i="4" class=""><span class="ic">◎</span>经济与商业化</a>
+    <a href="#social" data-i="5" class=""><span class="ic">☰</span>社交与账号</a>
+    <div class="group">数据配置</div>
+    <a href="#numbers" data-i="6" class=""><span class="ic">∑</span>数值配表</a>
+  </nav>
+</aside>
+
+<!-- ============ 主内容 ============ -->
+<main>
+  <div class="topbar">
+    <button class="burger" id="burger">☰</button>
+    <div class="crumb" id="crumb">方块军团 · <b id="crumbNow">总览</b></div>
+    <div class="spacer"></div>
+    <span class="ver">代码基线 2026.08.18</span>
+  </div>
+
+  <div class="content">
+
+    <!-- ========== 0 总览 ========== -->
+    <section id="overview">
+      <div class="hero">
+        <div class="kicker">方块军团 · 实现总览</div>
+        <h1>方块军团 <em>—— 拼块布阵 · 自动战斗 · 五行宝物</em></h1>
+        <p>已实现的手机竖屏游戏：4×5 棋盘拖放彩色拼块拼出兵形，出兵后兵形自动冲向敌方城墙，与 11 种敌兵和 6 大妖王对决。彩色小格决定四项属性、最多颜色决定出战兵种，通关掉落五行宝物，攻击时概率对敌人施加破甲、中毒、减速、点燃，受击时概率获得护盾。</p>
+        <div class="chips">
+          <span class="chip">棋盘 <b>4×5</b></span>
+          <span class="chip">拼块 <b>12 形状 × 4 色</b></span>
+          <span class="chip">兵种 <b>4 个 / 1-5 星</b></span>
+          <span class="chip">敌人 <b>11 种</b></span>
+          <span class="chip">妖王 <b>6 个</b></span>
+          <span class="chip">关卡 <b>6 章 × 10 关</b></span>
+          <span class="chip">宝物 <b>10 件</b></span>
+        </div>
+      </div>
+
+      <div class="stat-num">
+        <div class="s"><b>60</b><span>关卡（6 章 × 10 关）</span></div>
+        <div class="s"><b>12-14</b><span>每关波数</span></div>
+        <div class="s"><b>10</b><span>五行宝物</span></div>
+        <div class="s"><b>16</b><span>成就</span></div>
+        <div class="s"><b>1-5</b><span>兵种星级</span></div>
+        <div class="s"><b>6</b><span>广告点位</span></div>
+      </div>
+
+      <div class="callout gold">
+        <div class="tt">📌 核心循环（代码实现）</div>
+        <p>大厅（养成 / 领奖 / 签到 / 排行）→ 选关（60 关）→ 战斗：拼块放置 → 出战 → 自动对战（12-14 波）→ 结算（金币 / 碎片 / 宝物 / 评价）→ 回大厅：碎片升星、金币点天赋、宝物穿戴 → 推进关卡。</p>
+      </div>
+
+      <div class="flow">
+        <div class="step"><b>大厅</b><span>养成 / 领奖 / 签到</span></div>
+        <div class="arrow">→</div>
+        <div class="step"><b>选关</b><span>6 章 60 关</span></div>
+        <div class="arrow">→</div>
+        <div class="step"><b>拼块</b><span>拖入 4×5 棋盘</span></div>
+        <div class="arrow">→</div>
+        <div class="step"><b>出战</b><span>自动战斗 12-14 波</span></div>
+        <div class="arrow">→</div>
+        <div class="step"><b>结算</b><span>金币 / 碎片 / 宝物</span></div>
+      </div>
+
+      <h3 class="sub">实现状态</h3>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>功能</th><th>状态</th><th>实现位置</th></tr>
+        <tr><td>战斗全系统（拼块 / 阵型 / 兵种 / 敌兵 / 妖王 / 状态 / 复活 / 翻倍）</td><td><span class="st done">已实现</span></td><td>客户端战斗引擎</td></tr>
+        <tr><td>四色属性规则（色格 + 上阵方块数倍率 + 主色定兵种）</td><td><span class="st done">已实现</span></td><td>共享战斗规则</td></tr>
+        <tr><td>固定天赋树（方块起源 + 四属交汇 + 三属交汇）</td><td><span class="st done">已实现</span></td><td>共享天赋树</td></tr>
+        <tr><td>60 关 6 章 + 波次编排 + 首领战</td><td><span class="st done">已实现</span></td><td>共享关卡编排</td></tr>
+        <tr><td>五行宝物（10 件触发化 + 穿戴槽位）</td><td><span class="st done">已实现</span></td><td>共享宝物配置 + 客户端界面</td></tr>
+        <tr><td>账号存档（游客 / 注册 / 登录 / 恢复码 / 云同步）</td><td><span class="st done">已实现</span></td><td>服务端 + 客户端大厅</td></tr>
+        <tr><td>排行榜（全服进度榜）</td><td><span class="st done">已实现</span></td><td>客户端大厅</td></tr>
+        <tr><td>广告位（6 类模拟广告 + 埋点）</td><td><span class="st done">已实现</span></td><td>客户端大厅</td></tr>
+        <tr><td>成就系统（16 个）</td><td><span class="st done">已实现</span></td><td>共享成就</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <!-- ========== 1 核心玩法 ========== -->
+    <section id="coreplay">
+      <h2 class="sec"><span class="n">01</span>核心玩法 · 拼块布阵与自动战斗</h2>
+      <p style="color:var(--ink3)">4×5 棋盘拖放四色兵块（粉=攻击 / 绿=生命 / 蓝=护甲 / 黄=攻速）拼阵型 → 出兵自动对战 → 双方城墙对攻，先拆对面城墙者胜。</p>
+
+      <h3 class="sub">1.1 拼块与棋盘</h3>
+      <div class="grid2">
+        <div>
+          <ul class="clean">
+            <li><b>棋盘</b>：4 列 × 5 行 = 20 格，任意空位落块（非固定堆叠）</li>
+            <li><b>拼块槽</b>：4 个槽位，开局随机生成，放置后自动补新块</li>
+            <li><b>拼块构成</b>：形状（12 种，2-6 格：双子横条 / 左角块 / 三连条 / 方阵块 / 战术L / 火力T / 闪电Z / 右角块 / 巨型L / 巨型J / 贯穿长条 / 重装方阵）+ 颜色（四属性之一）随机组合，单色不可旋转</li>
+            <li><b>操作</b>：拖拽进棋盘（绿/红合法性预览）→ 可再拖动调整 → 可收回</li>
+            <li><b>费用</b>：放置免费；点击「出战」清空棋盘出兵，扣 10 金币</li>
+            <li><b>刷新</b>：右上角「换一波」按钮，看广告刷新当前拼块（每日上限 20 次）</li>
+            <li><b>撞墙返还</b>：我方兵撞敌方城墙返还一半出战费（+5 金币）</li>
+          </ul>
+        </div>
+        <div class="callout blue" style="margin:0">
+          <div class="tt">四色属性规则（当前实现）</div>
+          <p>每放入一个彩色小格，只给对应属性 +1；<b>形状只决定占格数与摆放空间</b>，不携带隐藏属性或等级。四项属性：</p>
+          <p style="margin-top:8px">粉 <span style="color:var(--pink)">■</span> 攻击 · 蓝 <span style="color:var(--blue)">■</span> 护甲 · 黄 <span style="color:var(--yellow)">■</span> 攻速 · 绿 <span style="color:var(--green)">■</span> 生命</p>
+          <p style="margin-top:8px"><b>上阵方块数倍率</b>：摆 1 块 ×1、2 块 ×2、3 块 ×3、4 块及以上 ×4（只数上阵方块总数，与是否相连无关）。拼得多而整则越强。</p>
+          <p style="margin-top:8px"><b>属性账本</b>：战斗面板同时显示「色格属性值」与「实际战斗值」，并标注当前主色与并列判定。</p>
+        </div>
+      </div>
+
+      <h3 class="sub">1.2 出兵判定：颜色决定兵种</h3>
+      <ul class="clean">
+        <li>点击<b>「出战」</b>清空棋盘出兵 + 彩色纸屑特效，扣 10 金币</li>
+        <li><b>最多颜色决定本次出战兵种线</b>：粉=剑士系、蓝=盾卫系、黄=弓手系、绿=灵医系</li>
+        <li><b>数量并列</b>：以最后一次成功落下的方块颜色决定（存档记录该项）</li>
+        <li>出战兵种由棋盘主色自动决定，不手选；<b>星级只解锁技能，不改变基础属性</b></li>
+      </ul>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>家族</th><th>颜色</th><th>兵种</th><th>战斗定位（实现）</th></tr>
+        <tr><td><span style="color:var(--pink)">破阵</span></td><td>粉</td><td>剑士 ⚔</td><td>近战高攻、连斩、横扫剑气、大招直线剑气开路</td></tr>
+        <tr><td><span style="color:var(--blue)">铁壁</span></td><td>蓝</td><td>盾卫 ▰</td><td>高甲前排、入场护盾、举盾硬扛、大招为友军挡伤</td></tr>
+        <tr><td><span style="color:var(--yellow)">疾风</span></td><td>黄</td><td>弓手 ➶</td><td>远程速射、双箭齐发、扇形散射、大招箭雨</td></tr>
+        <tr><td><span style="color:var(--green)">生机</span></td><td>绿</td><td>灵医 ✚</td><td>汲取吸血、治疗队友、群疗回春、大招召唤药灵</td></tr>
+      </tbody></table></div>
+      <p class="tbl-cap">数值换算（客户端/服务端同源）：生命 / 护甲 / 攻击 =（天赋基础 5 + 对应色格数）× 上阵方块数倍率；攻速 =（0.25 + 黄格 × 0.1）× 倍率，最高 3 次/秒。兵种差异体现在攻击距离 / 目标逻辑 / 星级技能。</p>
+
+      <h3 class="sub">1.3 自动战斗</h3>
+      <ul class="clean">
+        <li>出兵后自动战斗，按帧推进</li>
+        <li><b>移动</b>：友军冲向最近敌人，敌军冲向玩家城墙；灵医特殊走位（拉向受伤队友）</li>
+        <li><b>近战</b>：普攻 + 暴击 + 克制加成 + 光环，可顺劈相邻目标</li>
+        <li><b>远程</b>：投射物飞行、护甲减伤、破甲状态结算；弓手多箭齐发</li>
+        <li><b>治疗</b>：灵医给最受伤友军连线治疗；无队友可治疗时转攻击吸血</li>
+        <li><b>城墙攻防</b>：单位到达城墙造成伤害；普通波可一路拆到 0，妖王存活时敌方城墙锁血；妖王破城直接判负</li>
+        <li><b>被动金币</b>：每 5 秒 +1；每击杀 2 名敌人 +1；我方兵撞敌方墙返还一半出战费（+5 金币）</li>
+      </ul>
+
+      <h3 class="sub">1.4 敌人（11 种，运行时波次池）</h3>
+      <div class="bestiary">
+        <div class="beast"><div class="row1"><span class="ic">▣</span><span class="nm">重甲兵<small>弱粉攻</small></span></div><div class="meta"><b>高甲</b>高血</div><div class="desc">皮糙肉厚的前排</div></div>
+        <div class="beast"><div class="row1"><span class="ic">⚔</span><span class="nm">狂战士<small>弱蓝甲</small></span></div><div class="meta"><b>高伤</b>低甲</div><div class="desc">狂暴输出</div></div>
+        <div class="beast"><div class="row1"><span class="ic">⚡</span><span class="nm">迅捷群<small>弱黄速</small></span></div><div class="meta"><b>高速</b>成群</div><div class="desc">成群压线</div></div>
+        <div class="beast"><div class="row1"><span class="ic">◆</span><span class="nm">破甲刺客<small>弱绿命</small></span></div><div class="meta"><b>无视护甲</b></div><div class="desc">专切前排</div></div>
+        <div class="beast"><div class="row1"><span class="ic">➹</span><span class="nm">弩手<small>弱黄速</small></span></div><div class="meta"><b>远程</b></div><div class="desc">后排输出</div></div>
+        <div class="beast"><div class="row1"><span class="ic">☄</span><span class="nm">萨满<small>弱粉攻</small></span></div><div class="meta"><b>远程治疗</b></div><div class="desc">奶敌方单位</div></div>
+        <div class="beast"><div class="row1"><span class="ic">✣</span><span class="nm">分裂怪<small>弱蓝甲</small></span></div><div class="meta"><b>死亡分裂 ×2</b></div><div class="desc">越打越多</div></div>
+        <div class="beast"><div class="row1"><span class="ic">✹</span><span class="nm">炸弹兵<small>弱绿命</small></span></div><div class="meta"><b>到达城墙自爆</b></div><div class="desc">威胁城墙本体</div></div>
+        <div class="beast"><div class="row1"><span class="ic">✖</span><span class="nm">禁疗怪<small>弱绿命</small></span></div><div class="meta"><b>攻击带禁疗</b></div><div class="desc">克制灵医体系</div></div>
+        <div class="beast"><div class="row1"><span class="ic">⇶</span><span class="nm">冲锋怪<small>弱蓝甲</small></span></div><div class="meta"><b>3 倍冲城伤害</b></div><div class="desc">拆城专家</div></div>
+        <div class="beast"><div class="row1"><span class="ic">◉</span><span class="nm">光环怪<small>弱黄速</small></span></div><div class="meta"><b>范围 150 内友军 +15% 伤害</b></div><div class="desc">团队光环</div></div>
+      </div>
+
+      <h3 class="sub">1.5 妖王（6 大妖王，每章 1 个）与小首领</h3>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>章节</th><th>妖王</th><th>弱点</th><th>妖王技能</th></tr>
+        <tr><td>1 · 奶油平原</td><td>奶油妖王</td><td>粉攻</td><td>震击（全屏范围攻击）</td></tr>
+        <tr><td>2 · 莓果峡谷</td><td>莓果妖王</td><td>蓝甲</td><td>震击 + 召唤援军</td></tr>
+        <tr><td>3 · 齿轮城墙</td><td>齿轮妖王</td><td>黄速</td><td>震击 + 护盾再生</td></tr>
+        <tr><td>4 · 云端哨站</td><td>云端妖王</td><td>绿命</td><td>震击 + 突进冲锋</td></tr>
+        <tr><td>5 · 星光荒漠</td><td>星光妖王</td><td>粉攻</td><td>震击 + 吸血连线</td></tr>
+        <tr><td>6 · 王冠要塞</td><td>王冠妖王</td><td>黄速</td><td>震击 + 多重震击</td></tr>
+      </tbody></table></div>
+      <ul class="clean">
+        <li>妖王是 3×3 大方块，高血量 / 高护甲 / 低速度；<b>血量与敌方城墙核心血量联动</b>（击杀妖王则城墙核心归零获胜）</li>
+        <li><b>狂暴</b>：血量 &lt; 40% 触发，伤害 +50%、攻速大幅提升，屏幕红晕 + 预警圈 + 震屏</li>
+        <li>妖王承受控制状态有衰减（眩晕 ×0.3 / 冻结·破甲·减速 ×0.5 / 中毒·燃烧 ×0.75）</li>
+        <li><b>小首领</b>：第 1-9 关终波是进化版敌人，带专属技能（护盾脉冲 / 狂暴连击 / 疾风突袭 / 破甲处决 / 穿透齐射 / 治疗图腾 / 增殖分裂 / 巨型爆破 / 禁疗领域 / 连续冲锋 / 加速光环）</li>
+      </ul>
+
+      <h3 class="sub">1.6 状态系统（7 种）</h3>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>状态</th><th>叠层上限</th><th>效果</th><th>妖王衰减</th></tr>
+        <tr><td>中毒</td><td>5</td><td>持续掉血</td><td>×0.75</td></tr>
+        <tr><td>破甲</td><td>3</td><td>减护甲</td><td>×0.5</td></tr>
+        <tr><td>霜寒</td><td>3</td><td>减速，3 层转冻结</td><td>×0.5</td></tr>
+        <tr><td>眩晕</td><td>1</td><td>无法行动</td><td>×0.3</td></tr>
+        <tr><td>冻结</td><td>1</td><td>完全定身</td><td>×0.5</td></tr>
+        <tr><td>禁疗</td><td>1</td><td>禁止治疗</td><td>—</td></tr>
+        <tr><td>燃烧</td><td>3</td><td>持续火伤</td><td>×0.75</td></tr>
+      </tbody></table></div>
+      <p class="tbl-cap">五行宝物可对敌人施加破甲 / 中毒 / 减速 / 点燃状态（见「养成与宝物 · 宝物系统」）。</p>
+
+      <h3 class="sub">1.7 胜负与结算</h3>
+      <ul class="clean">
+        <li>我方城墙与敌方城墙血量<b>逐关配置</b>（随章节递增：我方 200~400，敌方 380~3200），初始金币 <b>40</b></li>
+        <li>敌方城墙 0 → 胜利；我方城墙 0 → 失败；<b>妖王破城直接判负</b>（妖王到达我方城墙）</li>
+        <li>普通波可拆墙到 0；<b>妖王存活时敌方城墙锁血</b>，击杀妖王获胜</li>
+        <li>结算界面：下一关 / 看广告复活（回 40% 城墙 + 清空敌方非首领单位 + 重置敌军攻势）/ 看广告翻倍奖励（双倍金币，每日 1 次）/ 战败安慰奖励 / 返回首页</li>
+        <li>评价 <b>S/A/B/C/D</b>：按我方城墙剩余血量比例（≥75% S、≥50% A、≥25% B、其余 C，战败 D）</li>
+        <li>胜利宝箱：金币（首通区间随机 / 重复按每日胜次逐关表）+ 概率碎片 + 宝物掉落（见「数值配表」）</li>
+      </ul>
+    </section>
+
+    <!-- ========== 2 关卡章节 ========== -->
+    <section id="campaign">
+      <h2 class="sec"><span class="n">02</span>关卡章节 · 6 章 60 关</h2>
+
+      <h3 class="sub">2.1 章节地图</h3>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>章节</th><th>关卡</th><th>主题</th><th>首领</th></tr>
+        <tr><td>第 1 章</td><td>1-10</td><td>奶油平原</td><td>奶油妖王（弱粉攻）</td></tr>
+        <tr><td>第 2 章</td><td>11-20</td><td>莓果峡谷</td><td>莓果妖王（弱蓝甲）</td></tr>
+        <tr><td>第 3 章</td><td>21-30</td><td>齿轮城墙</td><td>齿轮妖王（弱黄速）</td></tr>
+        <tr><td>第 4 章</td><td>31-40</td><td>云端哨站</td><td>云端妖王（弱绿命）</td></tr>
+        <tr><td>第 5 章</td><td>41-50</td><td>星光荒漠</td><td>星光妖王（弱粉攻）</td></tr>
+        <tr><td>第 6 章</td><td>51-60</td><td>王冠要塞</td><td>王冠妖王（弱黄速）</td></tr>
+      </tbody></table></div>
+
+      <h3 class="sub">2.2 波次编排（显式作者编排，运行时种子不可变）</h3>
+      <ul class="clean">
+        <li>普通关 <b>12 / 13 波交替</b>；章节妖王关（10/20/…/60）固定 <b>14 波</b></li>
+        <li>敌人总量 = <code>(40 + 关数) × 1.8</code>，逐关增长</li>
+        <li>每波 1-3 组敌人：首波单组、次波双组、后期出现「精英 + 混编」</li>
+        <li><b>波次推进</b>：满清 / 残敌 ≤3 且过最短窗口提前出下一波；超过最长窗口强制下一波（防拖）</li>
+        <li>第 1-9 关最后是<b>进化版小首领</b>，第 10 关是<b>章节大妖王</b></li>
+        <li>普通关目标时长 260 秒（妖王关 340 秒），准备 5 秒（妖王 8 秒）、波间 2 秒（妖王 3 秒）</li>
+      </ul>
+
+      <h3 class="sub">2.3 关卡规则（每关一条，四家族轮换加成）</h3>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>规则</th><th>家族</th><th>加成（按章节 +step）</th></tr>
+        <tr><td>破盾演习</td><td>剑士系</td><td>攻击 +18% 起步</td></tr>
+        <tr><td>箭雨节拍</td><td>弓兵系</td><td>每秒攻击 +0.12</td></tr>
+        <tr><td>铁壁阵线</td><td>盾兵系</td><td>护甲 +5</td></tr>
+        <tr><td>生命回响</td><td>生命系</td><td>最大生命 +14%</td></tr>
+        <tr><td>远射高地</td><td>弓兵系</td><td>射程 +18</td></tr>
+        <tr><td>锋刃追击</td><td>剑士系</td><td>每秒攻击 +0.10</td></tr>
+        <tr><td>盾击反攻</td><td>盾兵系</td><td>攻击 +15%</td></tr>
+        <tr><td>战地救护</td><td>生命系</td><td>技能频率 +0.08</td></tr>
+      </tbody></table></div>
+      <p class="tbl-cap">每关规则 = 8 条轮换，随章节阶梯增强；关卡推荐属性决定通关碎片掉落的兵种家族。</p>
+
+      <h3 class="sub">2.4 奖励与宝箱</h3>
+      <ul class="clean">
+        <li>通关金币：区间 <code>28+关数×3 ~ 42+关数×5</code>（妖王关 +45/+90），结算按中值入账</li>
+        <li>碎片：首通固定 <b>L1=20、章内 3=10、章内 5=15、章节妖王=25</b>；概率碎片 <code>18%+章节×5%</code>（妖王关 +15%，上限 55%），首通全额、重复按每日胜次档位</li>
+        <li>重复胜场：每日<b>前 4 胜</b>高额金币、<b>第 5 胜起</b>减半（逐关配表整数）；<b>前 5 胜固定 4 碎片</b></li>
+        <li>宝物掉落：妖王关<b>首通必得</b>；普通关 <code>45%+章节×5%</code>（上限 70%）；重复胜场 ×0.2 折减</li>
+        <li>评价 S/A/B/C/D：按我方城墙剩余血量比例（见「核心玩法 · 胜负与结算」）</li>
+      </ul>
+    </section>
+
+    <!-- ========== 3 养成与宝物 ========== -->
+    <section id="meta">
+      <h2 class="sec"><span class="n">03</span>养成与宝物 · 兵种 · 天赋 · 五行宝物</h2>
+
+      <h3 class="sub">3.1 兵种养成（4 兵种 · 1-5 星）</h3>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>兵种</th><th>家族</th><th>定位</th><th>星级技能时间线（1 星普攻 → 2 星强化 → 3 星主动 → 4 星强化 → 5 星大招）</th></tr>
+        <tr><td>剑士 ⚔</td><td>破阵</td><td>近战高攻</td><td>迎面一刀 → 追锋连斩 → 回身横扫（每 7 秒） → 双向回锋 → 一剑开路（每 16 秒）</td></tr>
+        <tr><td>盾卫 ▰</td><td>铁壁</td><td>高甲前排</td><td>挺盾敲击（入场护盾） → 举盾硬扛（每 3 击防御减伤） → 震场喝令（每 8 秒击退） → 震场回音 → 插盾守阵（每 18 秒挡伤）</td></tr>
+        <tr><td>弓手 ➶</td><td>疾风</td><td>远程速射</td><td>瞄准一箭 → 双箭齐发 → 弧月散射（每 7 秒） → 满弦扇射 → 天降箭雨（每 16 秒）</td></tr>
+        <tr><td>灵医 ✚</td><td>生机</td><td>治疗吸血</td><td>汲取术（吸血治疗） → 双生汲取 → 全员回春（每 10 秒） → 回春余韵 → 药灵来援（每 20 秒）</td></tr>
+      </tbody></table></div>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>养成项</th><th>成本</th><th>数值</th></tr>
+        <tr><td>升星（1-5 星）</td><td>碎片 <code>20 / 50 / 100 / 180</code></td><td><b>星级只解锁技能，不提供生命 / 护甲 / 攻击 / 攻速成长</b></td></tr>
+        <tr><td>盾卫护盾</td><td>随星级</td><td>护盾条 = 护甲 × 星级系数（1 星 ×1.0 / 2-3 星 ×1.3 / 4 星 ×1.5 / 5 星 ×1.8），出场即满、破盾后不补</td></tr>
+        <tr><td>上阵</td><td>4 家族各选 1</td><td>默认剑士 / 盾卫 / 弓手 / 灵医；碎片按关卡推荐家族掉落</td></tr>
+      </tbody></table></div>
+
+      <h3 class="sub">3.2 天赋树（方块四属天赋）</h3>
+      <ul class="clean">
+        <li>固定两段结构：<b>方块起源</b>（基础 生命+5 / 护甲+5 / 攻击+5 / 攻速+0.25）→ <b>生命 / 护甲 / 攻击 / 攻速</b> 四条分支各 4 级 → <b>四属交汇</b>（四项各加） → <b>生命 / 护甲 / 攻击</b> 三条分支各 4 级 → <b>三属交汇</b>（核心）</li>
+        <li>天赋值直接平铺加成四项基础属性（不乘倍率），全阵通用</li>
+        <li>费用：分支 <code>150 / 250 / 400 / 600</code>、四属交汇 <code>1200</code>、后段分支 <code>700 / 900 / 1150 / 1450</code>、三属交汇 <code>2000</code>（金币）</li>
+        <li>天赋树配表版本升级时清空已点天赋，从「方块起源」重走</li>
+      </ul>
+
+      <h3 class="sub">3.3 宝物系统（五行触发化）</h3>
+      <div class="callout green">
+        <div class="tt">💡 五行 ↔ 状态映射（用户心智）</div>
+        <p>金=破甲、木=中毒、水=减速、火=点燃、土=护盾。每件宝物一条简单触发规则：<b>攻击命中时按概率对目标施加状态</b>，或<b>受到伤害时按概率获得护盾</b>。</p>
+      </div>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>宝物</th><th>五行</th><th>品质</th><th>触发效果</th></tr>
+        <tr><td>破甲钉</td><td>金</td><td>绿</td><td>攻击时 15% 概率使目标破甲（受击伤害提升）3 秒</td></tr>
+        <tr><td>战意玉</td><td>金</td><td>橙</td><td>攻击时 30% 概率使目标破甲 2 层 3 秒</td></tr>
+        <tr><td>嗜血藤</td><td>木</td><td>紫</td><td>攻击时 20% 概率使目标中毒（持续掉血）3 秒</td></tr>
+        <tr><td>神木心</td><td>木</td><td>红</td><td>攻击时 30% 概率使目标中毒 2 层 3 秒</td></tr>
+        <tr><td>静水镜</td><td>水</td><td>蓝</td><td>攻击时 20% 概率使目标减速（攻速下降）3 秒</td></tr>
+        <tr><td>回流玉</td><td>水</td><td>紫</td><td>攻击时 30% 概率使目标减速 2 层 3 秒</td></tr>
+        <tr><td>狂炎符</td><td>火</td><td>紫</td><td>攻击时 15% 概率点燃目标（持续灼烧）3 秒</td></tr>
+        <tr><td>焚心玉</td><td>火</td><td>橙</td><td>攻击时 25% 概率点燃目标 2 层 3 秒</td></tr>
+        <tr><td>护心玉</td><td>土</td><td>蓝</td><td>受到伤害时 20% 概率获得护盾（最大生命 10%）</td></tr>
+        <tr><td>不动印</td><td>土</td><td>橙</td><td>受到伤害时 35% 概率获得护盾（最大生命 15%）</td></tr>
+      </tbody></table></div>
+      <ul class="clean">
+        <li><b>装备</b>：4 兵种各 2 个宝物槽（全局 8 槽）；战斗出兵时兵种携带已装备宝物，命中/受击即时触发</li>
+        <li><b>穿戴</b>：宝物库点宝物 → 选兵种快捷穿戴（自动装进第一个空槽）；兵种详情可穿戴 / 卸下，装备后即时刷新槽位反馈</li>
+        <li><b>获取</b>：通关宝箱掉落（妖王关首通必得；普通关按章节 45%→70% 递增；重复胜场 ×0.2 折减）</li>
+        <li>重复获得的宝物入背包计数；状态效果对妖王按「状态系统」的妖王衰减打折</li>
+      </ul>
+
+      <h3 class="sub">3.4 成就系统（16 个）</h3>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>类别</th><th>成就</th><th>奖励（金币 + 碎片）</th></tr>
+        <tr><td>胜利场次</td><td>初露锋芒 5 胜 → 常胜小将 15 → 百战精锐 30 → 常胜将军 60</td><td>100+5 / 250+10 / 600+20 / 1200+30</td></tr>
+        <tr><td>首次通关</td><td>初窥门径 10 关 → 渐入佳境 20 → 身经百战 40 → 通关大师 60</td><td>150+10 / 300+20 / 700+35 / 1500+50</td></tr>
+        <tr><td>兵种出战</td><td>剑士 / 盾卫 / 弓手 / 灵医 各 10 / 30 局</td><td>每兵种 100+5 / 300+10</td></tr>
+      </tbody></table></div>
+      <p class="tbl-cap">一次性成就，总产出固定 6400 金币 + 240 碎片。</p>
+
+      <div class="callout gold">
+        <div class="tt">🔗 局外 → 局内注入链路</div>
+        <p>大厅收集 4 家族上阵兵种 + 星级、天赋树、宝物穿戴 → 注入战斗引擎 → <b>颜色决定出什么兵种（吃兵种星级技能），形状决定属性方向（吃四色格子数），天赋加成四项基础属性，宝物在战斗命中 / 受击时概率触发状态与护盾</b>。</p>
+      </div>
+    </section>
+
+    <!-- ========== 4 经济与商业化 ========== -->
+    <section id="economy">
+      <h2 class="sec"><span class="n">04</span>经济与商业化</h2>
+
+      <h3 class="sub">4.1 货币</h3>
+      <p style="color:var(--ink2)">仅<b>金币</b>一种货币（无钻石 / 无内购）。次级资源：<b>兵种碎片</b>（不可购，仅通关宝箱 / 成就 / 签到掉落）。</p>
+
+      <h3 class="sub">4.2 金币来源与消耗</h3>
+      <div class="grid2">
+        <div>
+          <h4>来源</h4>
+          <ul class="clean">
+            <li>关卡通关金币（首通区间随机 / 重复按每日胜次逐关表）</li>
+            <li>胜利宝箱金币；妖王关更高</li>
+            <li>看广告领金币 +100，每日上限 2 次</li>
+            <li>在线奖励 6 档（1/3/10/20/30/60 分钟：10/15/20/20/15/20 金币）</li>
+            <li>七日签到：免费逐日解锁（第 1-7 天 50~200 金币 + 5~15 碎片），广告再领（100~200 金币 + 10~22 碎片）</li>
+            <li>战败安慰奖励（本关基础奖励 40%）；胜利翻倍奖励（每日 1 次）</li>
+            <li>成就奖励（金币 + 碎片）</li>
+          </ul>
+        </div>
+        <div>
+          <h4>消耗</h4>
+          <ul class="clean">
+            <li>出战费用（每局 10 金币；拼块放置免费）</li>
+            <li>兵种升星：碎片 <code>20 / 50 / 100 / 180</code></li>
+            <li>天赋节点：金币 <code>150 ~ 2000</code>（按节点）</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="sub">4.3 广告点位（模拟激励广告 · 6 类）</h3>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>点位</th><th>触发位置</th><th>奖励</th><th>上限</th></tr>
+        <tr><td>刷新拼块</td><td>战斗中刷新拼块</td><td>更换当前拼块</td><td>每日 20 次</td></tr>
+        <tr><td>复活</td><td>战斗失败</td><td>回 40% 城墙 + 清空敌方非首领单位</td><td>每日 20 次</td></tr>
+        <tr><td>奖励翻倍</td><td>通关结算</td><td>再领一次本关金币</td><td>每日 1 次</td></tr>
+        <tr><td>金币</td><td>大厅金币按钮</td><td>+100 金币</td><td>每日 2 次</td></tr>
+        <tr><td>安慰奖励</td><td>战败</td><td>战败安慰奖励</td><td>—</td></tr>
+        <tr><td>签到</td><td>签到</td><td>签到广告奖励</td><td>按注册日解锁</td></tr>
+      </tbody></table></div>
+      <ul class="clean">
+        <li>当前为<b>模拟广告</b>（可跳过），预留接口接真实平台</li>
+        <li>埋点：广告请求 / 广告发放 / 广告跳过，全量上报服务端</li>
+        <li>每日 0 点重置计数</li>
+      </ul>
+    </section>
+
+    <!-- ========== 5 社交与账号 ========== -->
+    <section id="social">
+      <h2 class="sec"><span class="n">05</span>社交与账号</h2>
+
+      <h3 class="sub">5.1 账号体系</h3>
+      <ul class="clean">
+        <li><b>游客模式</b>：浏览器本地存档，未连服务器时自动使用；可注册继承</li>
+        <li><b>注册登录</b>：用户名 2-20 字符 + 密码 4-64 位，安全哈希存储</li>
+        <li><b>令牌</b>：短期令牌 15 分钟 + 长期续期 30 天</li>
+        <li><b>恢复码</b>：注册时一次性展示 <code>XXXXX-XXXXX</code>，可重置密码</li>
+        <li><b>安全</b>：登录失败 3 次触发验证码；5 次锁定（指数递增，最长 15 分钟）</li>
+      </ul>
+
+      <h3 class="sub">5.2 存档与多端同步</h3>
+      <ul class="clean">
+        <li>存档即玩家档案（档案版本 11），服务端存档 + 客户端副本</li>
+        <li>同步接口乐观锁（保存版本每次 +1），冲突返回服务端存档</li>
+        <li>冲突策略：服务端优先</li>
+      </ul>
+
+      <h3 class="sub">5.3 排行榜（客户端已实现）</h3>
+      <ul class="clean">
+        <li>单榜：关卡进度榜（全服前 30 + 我的排名）</li>
+      </ul>
+
+      <h3 class="sub">5.4 服务端功能</h3>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>系统</th><th>规则</th><th>状态</th></tr>
+        <tr><td>举报</td><td>举报玩家，管理员处理</td><td><span class="st done">已实现</span></td></tr>
+        <tr><td>管理后台</td><td>数据快照 / 看板 / 用户详情 / 封禁 / 处理举报</td><td><span class="st done">已实现</span></td></tr>
+      </tbody></table></div>
+      <p class="tbl-cap">公会、公会战、聊天、好友等社交系统已随产品迭代下线。</p>
+    </section>
+
+    <!-- ========== 6 数值配表 ========== -->
+    <section id="numbers">
+      <h2 class="sec"><span class="n">06</span>数值配表</h2>
+
+      <h3 class="sub">6.1 关键公式（代码内实现）</h3>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>公式</th><th>表达式</th></tr>
+        <tr><td>属性值</td><td>对应颜色格数（每格 +1，四项初始 0）</td></tr>
+        <tr><td>上阵方块数倍率</td><td>摆 1 块 ×1 / 2 块 ×2 / 3 块 ×3 / 4 块及以上 ×4（与相连无关）</td></tr>
+        <tr><td>生命 / 护甲 / 攻击</td><td>（天赋基础 5 + 对应色格数）× 上阵方块数倍率</td></tr>
+        <tr><td>攻速</td><td>（0.25 + 黄格 × 0.1）× 倍率，最高 3 次/秒</td></tr>
+        <tr><td>护甲减伤</td><td>甲 / (甲 + 35)（35 甲 = 50% 减伤）</td></tr>
+        <tr><td>升星碎片费</td><td>20 / 50 / 100 / 180（2→5 星）</td></tr>
+        <tr><td>天赋节点费</td><td>150 / 250 / 400 / 600 / 1200 / 700 / 900 / 1150 / 1450 / 2000</td></tr>
+        <tr><td>通关金币</td><td>28 + 关数×3（妖王 +45）~ 42 + 关数×5（妖王 +90）</td></tr>
+        <tr><td>敌人总量</td><td>(40 + 关数) × 1.8</td></tr>
+        <tr><td>敌方城墙</td><td>章节基值 380 / 500 / 1050 / 1550 / 2250 / 3200 × 章内倍率</td></tr>
+        <tr><td>我方城墙</td><td>章节基值 200 / 180 / 220 / 270 / 330 / 400 × 章内倍率</td></tr>
+        <tr><td>被动金币</td><td>每 5 秒 +1；每击杀 2 名 +1</td></tr>
+        <tr><td>出战 / 撞墙返还</td><td>出战扣 10 金币；我方兵撞敌方墙返还 5 金币</td></tr>
+        <tr><td>宝物触发</td><td>攻击 / 受击时 15%~35% 概率；护盾为最大生命 10% / 15%</td></tr>
+      </tbody></table></div>
+
+      <h3 class="sub">6.2 敌人战力表（60 关，服务端标定）</h3>
+      <p style="color:var(--ink2)">服务端逐关标定（对拍样本校准），整体倍率 1.0：</p>
+      <div class="tbl-wrap"><table>
+        <tbody><tr><th>关卡段</th><th>战力值范围</th></tr>
+        <tr><td>1-10</td><td>1445 → 2305（妖王关 10 为 2305）</td></tr>
+        <tr><td>11-20</td><td>2491 → 4166</td></tr>
+        <tr><td>21-30</td><td>4352 → 6027</td></tr>
+        <tr><td>31-40</td><td>6041 → 6171</td></tr>
+        <tr><td>41-50</td><td>6187 → 6316</td></tr>
+        <tr><td>51-60</td><td>6330 → 6460</td></tr>
+      </tbody></table></div>
+
+      <h3 class="sub">6.3 服务端结算模拟（确定性重放）</h3>
+      <div class="callout blue"><b>等价战力</b> = 攻击 ×8 + 生命 ×0.35 + 护甲 ×2.8 + 攻速 ×120<br>
+战斗提交：传操作日志（放置 / 移动 / 出战），服务端校验命令合法性与强化一致后结算奖励；<b>胜负以客户端实际战斗结果为准</b>。</div>
+      <p class="tbl-cap">客户端声称的胜败仅写入校准日志，不参与结算；用于调服务端公式与客户端一致。</p>
+    </section>
+
+    <footer>
+      <span>方块军团 · 实现导航 — 仅基于代码实现整理</span>
+      <span>代码基线 2026-08-18 · 数据版本 2026.08.14.1</span>
+    </footer>
+  </div>
+</main>
+</div>
+
+<script>
+  const links = [...document.querySelectorAll("#nav a")];
+  const names = ["总览","核心玩法","关卡章节","养成与宝物","经济与商业化","社交与账号","数值配表"];
+  const sections = [...document.querySelectorAll("section")];
+  const crumb = document.getElementById("crumbNow");
+  const sidebar = document.getElementById("sidebar");
+  document.getElementById("burger").addEventListener("click", () => sidebar.classList.toggle("open"));
+
+  const setActive = (i) => {
+    links.forEach((a, idx) => a.classList.toggle("active", idx === i));
+    crumb.textContent = names[i] || "";
+  };
+  const onScroll = () => {
+    let cur = 0;
+    sections.forEach((s, i) => { if (window.scrollY >= s.offsetTop - 140) cur = i; });
+    setActive(cur);
+  };
+  links.forEach((a, i) => a.addEventListener("click", () => { sidebar.classList.remove("open"); setActive(i); }));
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+</script>
+
+</body></html>
