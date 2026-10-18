@@ -1,0 +1,14 @@
+name: Game Research MCP Connection Check
+on:
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe MCP endpoint and list accessible tools
+        env:
+          GAME_RESEARCH_MCP_URL: https://ai.xianjianwendao.com/kb/mcp/mcp
+          GAME_RESEARCH_MCP_TOKEN: ${{ secrets.GAME_RESEARCH_MCP_TOKEN }}
+        run: python3 mobile-brief/integrations/probe_mcp.py
